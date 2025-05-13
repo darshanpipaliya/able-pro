@@ -1,0 +1,253 @@
+
+.p-dropdown .pi-chevron-down:before {
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    color: #000 !important;
+}
+
+.p-dropdown.p-focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border-bottom-color: transparent;
+    background-size: 100% 100%, 100% 100%;
+    transition-duration: 0.3s;
+    background-image: linear-gradient(to top, #4680ff 2px, rgba(70, 128, 255, 0) 2px), linear-gradient(to top, #ced4da 1px, rgba(206, 212, 218, 0) 1px);
+}
+
+.p-dropdown-filter-container .p-inputtext:enabled:focus,
+.p-dropdown-filter-container .p-inputtext:enabled:hover {
+    outline: 1px solid #a6d5fa !important;
+    box-shadow: none;
+}
+
+.p-inputtext {
+    padding: 0px 0 !important;
+}
+
+.p-dropdown {
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-left: 0 !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+}
+
+
+.p-dropdown-panel {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    width: auto !important;
+    border: 1px solid #CED4DA !important;
+}
+
+.p-dropdown-panel .p-dropdown-header {
+    padding: 5px !important;
+}
+
+.p-dropdown-panel .p-dropdown-header input {
+    height: 32px !important;
+}
+
+.pi-times:before {
+    font-size: 14px !important;
+    font-weight: 900 !important;
+}
+
+.p-dropdown-panel .p-dropdown-items {
+    padding: 0 !important;
+}
+
+span.p-dropdown-label.p-inputtext {
+    font-family: sans-serif !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5em !important;
+    color: #495057 !important;
+    // height: 42px !important;
+    display: flex;
+    align-items: center;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    font-family: sans-serif !important;
+    // font-size: 0.875rem !important;
+    font-size: 13px;
+    font-weight: 400 !important;
+    line-height: 1.5em !important;
+    color: #495057 !important;
+    min-height: 1.2em !important;
+    padding: 0px 3px 1px !important;
+    display: block !important;
+    white-space: nowrap !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
+    color: #fff !important;
+    background: #4680FF !important;
+}
+
+.p-dropdown .p-dropdown-trigger {
+    width: 20px !important;
+}
+
+.p-dropdown-panel.p-component {
+    z-index: 100000 !important;
+}
+
+
+.invalid-error .p-dropdown {
+    border-color: #ff5252 !important;
+}
+
+.custom-cell-class-p-dropdown {
+    overflow: visible !important;
+
+    & .p-dropdown {
+        border: none;
+        background: transparent;
+
+        & .p-dropdown-label.p-inputtext {
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            display: inline-block;
+        }
+    }
+
+    .p-dropdown-panel {
+        top: 24px !important;
+    }
+}
+
+p-table.no-row-to-show::before {
+    content: 'No Row To Show';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 35px;
+    right: calc(50% - 66px);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+    font-size: 13px;
+    color: #181d1f;
+    font-weight: 400;
+    padding: 0px 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.p-column-filter-overlay-menu {
+    background: #f8f8f8 !important;
+
+    span.p-dropdown-label.p-inputtext,
+    .p-inputtext {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        font-size: 13px !important;
+        color: #181d1f !important;
+        background: #ffffff !important;
+        padding: 1px 2px 1px 6px !important;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s !important;
+        appearance: none !important;
+        border-radius: 6px !important;
+        border-color: #babfc7 !important;
+    }
+
+    .p-inputtext:enabled {
+        &:focus {
+            border-color: #babfc7 !important;
+            box-shadow: 0 0 2px 0.1rem rgba(33, 150, 243, 0.4) !important;
+        }
+
+    }
+
+    .p-column-filter-operator {
+        padding: 12px 12px 0 !important;
+        color: #343a40 !important;
+        margin: 0 !important;
+        border-top-right-radius: 6px !important;
+        border-top-left-radius: 6px !important;
+    }
+
+    .p-column-filter-constraint {
+        padding: 0 12px 8px !important;
+        color: #343a40 !important;
+        margin-top: 9px !important;
+    }
+
+    .p-dropdown {
+        background: #ffffff !important;
+        border: 1px solid #ced4da !important;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s !important;
+        border-radius: 6px !important;
+
+        .p-dropdown-trigger {
+            background: transparent !important;
+            color: #6c757d !important;
+            width: 2rem !important;
+            border-top-right-radius: 6px !important;
+            border-bottom-right-radius: 6px !important;
+        }
+
+        .p-dropdown-panel {
+            background: #ffffff !important;
+            border: 0 none !important;
+            border-radius: 2px !important;
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !important;
+
+            .p-dropdown-items {
+                .p-dropdown-item {
+                    margin: 0 !important;
+                    border: 0 none !important;
+                    background: transparent !important;
+                    transition: box-shadow 0.2s !important;
+                    border-radius: 0 !important;
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+                    color: #181d1f !important;
+                    font-size: 13px !important;
+
+
+                    &.p-highlight {
+                        background-color: rgba(33, 150, 243, 0.3) !important;
+                        transition: 0.1s !important;
+                    }
+
+                    &:not(.p-highlight):not(.p-disabled):hover {
+                        background-color: rgba(33, 150, 243, 0.1) !important;
+                    }
+                }
+            }
+        }
+
+        .pi-chevron-down {
+            display: flex !important;
+            align-items: center !important;
+
+            &:before {
+                height: 10px !important;
+            }
+        }
+    }
+
+    .p-focus {
+        box-shadow: 0 0 2px 0.1rem rgba(33, 150, 243, 0.4) !important;
+    }
+
+    .p-column-filter-buttonbar {
+        padding: 8px 12px 12px !important;
+
+        .p-button {
+            font-size: 14px !important;
+            padding: 5px 12px !important;
+        }
+    }
+
+    .p-column-filter-add-rule {
+        padding: 0 !important;
+
+        .p-button {
+            font-size: 14px !important;
+            padding: 6px !important;
+        }
+
+    }
+
+}

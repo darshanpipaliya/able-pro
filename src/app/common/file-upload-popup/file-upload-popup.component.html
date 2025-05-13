@@ -1,0 +1,15 @@
+<div class="mat-dialog-header pb-3 justify-content-end">
+    <!-- <h5 class="modal-title {{messageData?.titleClass}}">{{messageData?.title}}</h5> -->
+    <i class="fas fa-times" [mat-dialog-close]="close"></i>
+</div>
+
+<div mat-dialog-content>
+    <div class="container-fluid">
+        <app-files-upload [hideUploadBtn]="true" (onFileUploaded)="onFileUploaded($event)"></app-files-upload>
+    </div>
+
+</div>
+<mat-dialog-actions class="py-3" align="center">
+    <!-- <button mat-button mat-dialog-close class="btn btn-primary">Cancel</button> -->
+    <button mat-button class="btn btn-primary" cdkFocusInitial (click)="chooseFile()">Upload</button>
+</mat-dialog-actions>

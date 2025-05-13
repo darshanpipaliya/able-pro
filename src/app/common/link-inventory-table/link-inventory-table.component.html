@@ -1,0 +1,28 @@
+<div class="contacts-list-popup m-0">
+    <div class="mat-dialog-header pb-1" style="border: none;">
+        <h5 class="modal-title"><button type="button" class="fas fa-check c-refresh ml-2" title="Refresh" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button> Link Wireline Inventory for Location:  {{emitedData?.LocationName}} {{emitedData?.Address1}} {{emitedData?.City}} {{emitedData?.StateName}}
+        </h5>
+        <i style="padding: 5px !important;" class="fas fa-times" [mat-dialog-close]="close"></i>
+    </div>
+
+    <div class="mat-dialog-content">
+       
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData" [defaultColDef]="defaultColDef" [getDataPath]="getDataPath"
+                    [rowSelection]="rowSelection" [suppressRowClickSelection]="true" [treeData]="true"
+                    (onAgGridReady)="onAgGridReady($event)"  (onAgGridReadyEmit)="onAgGridReadyEmit($event)"  [gridOptions]="gridOptions" [rowMultiSelectWithClick]="true" [singleClickEdit]="true" [tableHeight]="'510px'" [autoGroupColumnDef]="autoGroupColumnDef"
+                    (onSelectionChangedEvent)="onSelectionChangedEvent($event)" [excelBtnEnable]="false" [sideBar]="sideBar" >
+                </app-ag-grid-table> -->
+            </div>
+        </div>
+  
+    </div>
+
+    <mat-dialog-actions align="Center">
+        <button type="submit" uiSref="work" class="btn btn-primary btn-raised" (click)="setInventory()"
+            [disabled]="rowData?.length < 1 || saveButtonDisabled || !stopSpinner">
+            <span class="spinner-border spinner-border-sm" role="status" *ngIf="saveButtonDisabled"></span>
+            Save</button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,169 @@
+<div class="row">
+  <h4 class="modal-title1" id="exampleModalLabel">Profile</h4>
+  <!-- <button mat-button class="btn-primary" style="left: 77%;" mat-dialog-close>Close</button> -->
+  <div class="profile-closed_btn" *ngIf="!this.dialogData.disableClose">
+    <button type="button" style="padding:0 5px 5px" class="close" mat-dialog-close>
+      <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+
+</div>
+<div mat-dialog-content>
+  <mat-tab-group dynamicHeight [selectedIndex]="selectedTab" (selectedIndexChange)="selectedTab = $event">
+    <mat-tab [disabled]="this.dialogData.disableClose">
+      <ng-template mat-tab-label>
+        Personal details
+      </ng-template>
+      <ng-template matTabContent>
+        <!-- <app-card  > -->
+          <div class="card-body pb-0">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label font-weight-bolder"> Name</label>
+            <div class="col-sm-8" style="margin-top:11px;">
+              <span class="mt-2"> {{userInfo.name ? userInfo.name: ''}} </span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label font-weight-bolder">Email</label>
+            <div class="col-sm-8" style="margin-top:11px;">
+              <span class="mt-2">{{userInfo.email ? userInfo.email: ''}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label font-weight-bolder">Role</label>
+            <div class="col-sm-8" style="margin-top:11px;">
+              <span class="mt-2">{{userRole}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label font-weight-bolder">Customer Name</label>
+            <div class="col-sm-8" style="margin-top:11px;">
+              <span class="mt-2">{{userInfo.customer ?  userInfo.customer: ''}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label font-weight-bolder">Company Name</label>
+            <div class="col-sm-8" style="margin-top:11px;">
+              <span class="mt-2">{{userInfo.company ? userInfo.company: ''}}</span>
+            </div>
+          </div>
+          <ng-container *ngIf="!isTemUser && !isSuperTEMUsers" >
+          <div class="form-group row">
+           <!---- <label class="col-sm-4 col-form-label font-weight-bolder">Actions</label>-->
+            <!-- <div class="col-sm-8" style="margin-top:11px;">\
+              <i _ngcontent-gpd-c391="" class="fas fa-user-edit ng-star-inserted" style="color: #4680ff;"></i> <a role="button" (click)="editUser()" style="color: #4680ff;">Edit Details</a>
+            </div> -->
+          </div>
+        </ng-container>
+        </div>
+        <!-- </app-card> -->
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        Change Password
+      </ng-template>
+      <ng-template matTabContent>
+        <!-- <div class="card"> -->
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <div class="card-body">
+
+                <form [formGroup]="changePwdForm" (ngSubmit)="changePwd()" >
+                  <h4 class="mb-3 f-w-400" style="text-align: center;">Change your password</h4>
+
+                  <div class=" passwordCenter">
+                    <div class="mb-3">
+                      <label class="plab" for="exampleInputPassword1">Current Password</label>
+                      <mat-form-field appearance="fill">
+                        <input matInput [type]="hide2 ? 'password' : 'text'" placeholder="Current Password" formControlName="currentPassword"
+                          spaceTrimStartEndInput [allowStartWithSpace]="false"
+                          [ngClass]="{'invalid-error': !f.currentPassword.valid && (f.currentPassword.dirty || f.currentPassword.touched)}">
+                        <button type="button" class="password-hide-btn" mat-icon-button matSuffix (click)="hide2 = !hide2"
+                          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
+                          <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                      </mat-form-field>
+                      <ng-container *ngIf="!f.currentPassword.valid && (f.currentPassword.dirty || f.currentPassword.touched)">
+                        <mat-error style="font-size: 12px;" *ngIf="f.currentPassword.errors.required">Current Password is required
+                        </mat-error>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <div class=" passwordCenter">
+                    <div class="mb-3">
+                    <label class="plab" for="exampleInputPassword1">New Password</label>
+                    <mat-form-field appearance="fill">
+                      <input matInput [type]="hide ? 'password' : 'text'" placeholder="New Password"
+                        formControlName="password"
+                        spaceTrimStartEndInput [allowStartWithSpace]="false"
+                        [ngClass]="{'invalid-error': !f.password.valid && (f.password.dirty || f.password.touched)}">
+                      <button type="button" class="password-hide-btn" mat-icon-button matSuffix (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </button>
+
+                    </mat-form-field>
+                    <ng-container *ngIf="f.password.invalid && f.password.touched">
+                      <mat-error style="font-size: 12px;" *ngIf="f.password.errors.required">New Password is required</mat-error>
+                      <mat-error style="font-size: 12px;" *ngIf="f.password.errors.pattern">Password must have at least:<br>
+                        <ol>
+                            <ul style="margin-left: -45px;">
+                                <li>8 characters</li>
+                                <li>1 number and 1  special character</li>
+                                <li>1 upper case and 1 lower case letter</li>
+                            </ul>
+                        </ol>   </mat-error>
+                    </ng-container>
+                  </div>
+                  </div>
+
+                  <div class="passwordCenter">
+                    <div class="mb-3">
+                    <label class="plab" for="exampleInputPassword1">Confirm Password</label>
+                    <mat-form-field appearance="fill">
+                      <input matInput [type]="hideCp ? 'password' : 'text'" placeholder="Confirm Password"
+                      spaceTrimStartEndInput [allowStartWithSpace]="false"
+                        formControlName="crfPassword">
+                      <button type="button" class="password-hide-btn" mat-icon-button matSuffix (click)="hideCp = !hideCp"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hideCp ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </button>
+                    </mat-form-field>
+                    <ng-container *ngIf="f.crfPassword.touched && f.crfPassword.invalid">
+                      <mat-error style="font-size: 12px;" *ngIf="f.crfPassword.errors.required"> Confirm Password is required</mat-error>
+                      <mat-error style="font-size: 12px;" *ngIf="f.crfPassword.errors.confirmedValidator">Password and Confirm Password must be
+                        match</mat-error>
+                    </ng-container>
+                  </div>
+                  </div>
+                  <div class="mb-3" style="text-align: center;">
+                    <button class="btn btn-primary" >Change Password</button>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        <!-- </div> -->
+      </ng-template>
+    </mat-tab>
+    <mat-tab [disabled]="this.dialogData.disableClose">
+      <ng-template mat-tab-label>
+        Upload Image
+      </ng-template>
+      <ng-template matTabContent>
+        <!-- <div class="card"> -->
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <div class="card-body">
+                <app-files-upload  (onFileUploaded)="onFileUploaded($event)"></app-files-upload>
+              </div>
+            </div>
+          </div>
+        <!-- </div> -->
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

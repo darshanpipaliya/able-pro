@@ -1,0 +1,442 @@
+<div class="loader-spinner" *ngIf="loadingAPI">
+    <span class="spinner-border text-primary c-table-spinner" role="status"></span>
+</div>
+<div class="row" *ngIf="!loadingAPI">
+    <div [ngClass]="update==true ? 'col-lg-12 col-xl-6 px-0' : 'col-lg-12 col-xl-12 px-0'">
+        <div class="row">
+            <div
+                [ngClass]="update==true ? 'col-lg-12 col-xl-12 padding-left-none' : 'col-lg-12 col-xl-6 padding-left-none'">
+                <form [formGroup]="locationForm" class="editForm">
+                    <mat-accordion class="example-headers-align location-panel-padding">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title>
+                                    <i class="fas fa-map-marker-alt"></i>&nbsp;Location
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Customer *</label>
+                                        <span> <p-dropdown [options]="customers" optionLabel="AccountName"
+                                                [filter]="true" filterBy="AccountName" [showClear]="true"
+                                                placeholder="{{customersLoader ? 'Loading...': 'Select Customer...'}}" formControlName="customer"
+                                                [ngClass]="{'invalid-error': f.customer.invalid && (f.customer.touched || isSubmit)}"
+                                                optionValue="Id" [showClear]="false" (onChange)="onCustomerSelect()"
+                                                appendTo="body">
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="!update && f.customer.errors?.required && (f.customer.touched || isSubmit) ">
+                                            Customer is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label class="form-label">Company *</label>
+                                        <span> <p-dropdown [options]="companies" optionLabel="CompanyName" 
+                                                [filter]="true" filterBy="CompanyName" [showClear]="true"
+                                                placeholder="Select Company..." formControlName="company"
+                                                [ngClass]="{'invalid-error': f.company.invalid && (f.company.touched || isSubmit)}"
+                                                appendTo="body" optionValue="CompanyID" [showClear]="false">
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.company.errors?.required && (f.company.touched || isSubmit) ">
+                                            Company is required</mat-error>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Location Type *</label>
+                                        <span><p-dropdown [options]="locationTypes" optionLabel="DisplayName"
+                                                [filter]="true" filterBy="DisplayName" [showClear]="true"
+                                                placeholder="Select Location Type..." appendTo="body"
+                                                [ngClass]="{'invalid-error': f.locationtype.invalid && (f.locationtype.touched || isSubmit)}"
+                                                formControlName="locationtype" optionValue="Id" [showClear]="false">
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.locationtype.errors?.required && (f.locationtype.touched || isSubmit) ">
+                                            Location Type is required</mat-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Status *</label>
+                                        <span><p-dropdown [options]="locationStatus" optionLabel="DisplayText" [disabled]="!update"
+                                                filterBy="DisplayText" [showClear]="true" placeholder="Select Status..."
+                                                formControlName="status" appendTo="body" optionValue="Id"
+                                                [ngClass]="{'invalid-error': f.status.invalid && (f.status.touched || isSubmit)}"
+                                                [showClear]="false">
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.status.errors?.required && (f.status.touched || isSubmit) ">
+                                            Status is required</mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Location Name *</label>
+                                        <span><input maxlength="100" formControlName="locationName"
+                                                [ngClass]="{'invalid-error': !f.locationName.valid && (f.locationName.dirty || f.locationName.touched || isSubmit)}"
+                                                type="text" class="form-control" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.locationName.errors?.required && (f.locationName.touched || isSubmit) ">
+                                            Location Name is required</mat-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Location Code</label>
+                                        <span><input maxlength="50" formControlName="locationCode" type="text" class="form-control"
+                                                spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Alias</label>
+                                        <span> <input maxlength="100" formControlName="alias" type="text" class="form-control"
+                                                spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Location Term</label>
+                                        <span> 
+                                            <p-dropdown [options]="locationTerm" optionLabel="Name"
+                                                filterBy="Name" [showClear]="true" placeholder="Select Location Term..."
+                                                formControlName="LocationTerm" appendTo="body" optionValue="Id"
+                                                [showClear]="false">
+                                            </p-dropdown>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Location Custom 1</label>
+                                        <span> <input maxlength="120" formControlName="locationCustomField1" type="text"
+                                                class="form-control" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Location Custom 2</label>
+                                        <span><input maxlength="120" formControlName="locationCustomField2" type="text"
+                                                class="form-control" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Location Custom 3</label>
+                                        <span> <input maxlength="120" formControlName="locationCustomField3" type="text"
+                                                class="form-control" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Location Custom 4</label>
+                                        <span><input maxlength="120" formControlName="locationCustomField4" type="text"
+                                                class="form-control" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Street Address One *</label>
+                                        <span> <textarea formControlName="addressOne" class="form-control" (keyup)="streetAddress($event)" maxlength="120"
+                                                [ngClass]="{'invalid-error': !f.addressOne.valid && (f.addressOne.dirty || f.addressOne.touched || isSubmit)}"
+                                                name="validation-address" rows="1"></textarea></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.addressOne.errors?.required && (f.addressOne.touched || isSubmit) ">
+                                            Street Address One is required</mat-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Street Address Two</label>
+                                        <span><textarea  maxlength="120" formControlName="addressTwo" class="form-control" (keyup)="streetAddressTwo($event)"
+                                                rows="1"></textarea></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">City *</label>
+                                        <span> <input (keyup)="cityChange($event)" maxlength="50"
+                                                [ngClass]="{'invalid-error': !f.city.valid && (f.city.dirty || f.city.touched || isSubmit)}"
+                                                type="text" class="form-control" formControlName="city"
+                                                spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.city.errors?.required && (f.city.touched || isSubmit) ">
+                                            City is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Country *</label>
+
+                                        <span><p-dropdown [options]="countries" (onChange)="onCountrySelect(false)"
+                                                optionLabel="Name" [filter]="true" filterBy="Name" [showClear]="true"
+                                                placeholder="Select Country..." appendTo="body"
+                                                [ngClass]="{'invalid-error': f.country.invalid && (f.country.touched || isSubmit)}"
+                                                formControlName="country" optionValue="Id" [showClear]="false">
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.country.errors?.required && (f.country.touched || isSubmit) ">
+                                            Country is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">State/Province/Region *</label>
+
+                                        <span><p-dropdown [options]="states" optionLabel="Name" [filter]="true" (onChange)="onStateChange($event)"
+                                                filterBy="Name" [showClear]="true"
+                                                [ngClass]="{'invalid-error': f.state.invalid && (f.state.touched || isSubmit)}"
+                                                placeholder="Select State/Province/Region..." formControlName="state"
+                                                appendTo="body" optionValue="Id" [showClear]="false">
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.state.errors?.required && (f.state.touched || isSubmit) ">
+                                            State/Province/Region is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Zip/Postal Code *</label>
+                                        <span> <input type="text" formControlName="zip" class="form-control" (keyup)="postalChange($event)" maxlength="10"
+                                                [ngClass]="{'invalid-error': !f.zip.valid && (f.zip.dirty || f.zip.touched || isSubmit)}"
+                                                spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.zip.errors?.required && (f.zip.touched || isSubmit) ">
+                                            Zip is required</mat-error>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <div class="datepicker-c-main">
+                                        <label class="form-label" style="width: 76px;"> Start Date * </label>
+                                        <p-calendar dateFormat="mm/dd/yy" formControlName="startDate" (onSelect)="setEndDate()"
+                                            placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true"
+                                            [ngClass]="{'invalid-error': !f.startDate.valid && (f.startDate.dirty || f.startDate.touched || isSubmit)}"></p-calendar>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.startDate.errors?.required && (f.startDate.touched || isSubmit) ">
+                                            Start Date is required</mat-error>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="datepicker-c-main second-datepicker">
+                                        <label class="form-label" style="width: 60px;">End Date</label>
+                                        <p-calendar dateFormat="mm/dd/yy" formControlName="endDate"  [minDate]="endMinDate"  [disabled]="!allowEndDate"
+                                            placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" >
+                                <div class="col-md-6">
+                                  <div class="form-group mt-2" style="margin-bottom: 0 !important;" *ngIf="update">
+                                    
+                                    <label class="form-label mb-0 me-3">Location ID</label>
+                                    <span><input type="text"
+                                           class="form-control"
+                                           formControlName="locationId"
+                                           readonly
+                                           /></span>
+                                  </div>
+                                </div>
+                              </div>
+
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                </form>
+            </div>
+
+            <div
+                [ngClass]="update==true ? 'col-lg-12 col-xl-12 padding-left-none' : 'col-lg-12 col-xl-6 padding-right-none'">
+                <form [formGroup]="mailingAddressForm">
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+
+                                <mat-panel-title>
+                                    <i class="fas fa-map-marker-alt"></i>&nbsp;Mailing Address
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-2 pl-0">
+                                    <div class="form-check pl-0">
+                                        <label class="form-check-label pr-1 same-location-lable" for="defaultCheck1"
+                                            style="font-weight: 500;">
+                                            Same as Location Address
+                                        </label>
+                                        <input class="form-check-inner" type="checkbox" id="defaultCheck1" [checked]="isCheckboxChecked" [ngClass]="{'disabled': isCompanyUser}"
+                                            (change)="setLocationAddress($event)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Street Address One *</label>
+                                        <span> <textarea maxlength="120" class="form-control" name="validation-address"
+                                                formControlName="mailingAddress1" rows="1"
+                                                [ngClass]="{'invalid-error': !fm.mailingAddress1.value && (fm.mailingAddress1.dirty || fm.mailingAddress1.touched || isSubmit)}"
+                                                ></textarea></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="fm.mailingAddress1.errors?.required && (fm.mailingAddress1.touched || isSubmit) ">
+                                            Street Address One is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label class="form-label">Street Address Two</label>
+                                        <span> <textarea maxlength="120" class="form-control" name="validation-address"
+                                                formControlName="mailingAddress2" rows="1"></textarea></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">City *</label>
+                                        <span> <input maxlength="50" type="text" class="form-control" formControlName="mailingCity"
+                                            [ngClass]="{'invalid-error': !fm.mailingCity.value && (fm.mailingCity.dirty || fm.mailingCity.touched || isSubmit)}"
+                                                spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="fm.mailingCity.errors?.required && (fm.mailingCity.touched || isSubmit) ">
+                                            City is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Country *</label>
+                                        <span><p-dropdown [options]="maillingCountries" formControlName="mailingCountry"
+                                                (onChange)="onCountrySelect(true)" optionLabel="Name" [filter]="true"
+                                                filterBy="Name" [showClear]="true" placeholder="Select Country..."
+                                                [ngClass]="{'invalid-error': !fm.mailingCountry.value && (fm.mailingCountry.dirty || fm.mailingCountry.touched || isSubmit)}"
+                                                appendTo="body" optionValue="Id" [showClear]="false">
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="fm.mailingCountry.errors?.required && (fm.mailingCountry.touched || isSubmit) ">
+                                            Country is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">State/Province/Region *</label>
+                                        <span><p-dropdown [options]="maillingStates" formControlName="mailingStateId" optionLabel="Name"
+                                                [filter]="true" filterBy="Name" [showClear]="true"
+                                                placeholder="Select State/Province/Region..." appendTo="body"
+                                                optionValue="Id" [showClear]="false"
+                                                [ngClass]="{'invalid-error': !fm.mailingStateId.value && (fm.mailingStateId.dirty || fm.mailingStateId.touched || isSubmit)}"
+                                                >
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="fm.mailingStateId.errors?.required && (fm.mailingStateId.touched || isSubmit) ">
+                                            State/Province/Region is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Zip/Postal Code *</label>
+                                        <span> <input maxlength="10" type="text" class="form-control" formControlName="mailingPostalCode" 
+                                            [ngClass]="{'invalid-error': !fm.mailingPostalCode.value && (fm.mailingPostalCode.dirty || fm.mailingPostalCode.touched || isSubmit)}"
+                                                spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="fm.mailingPostalCode.errors?.required && (fm.mailingPostalCode.touched || isSubmit) ">
+                                            Zip/Postal Code is required</mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </form>
+            </div>
+            <div [ngClass]="update==true ? 'col-lg-12 col-xl-12 padding-left-none' : 'col-lg-12 col-xl-6 padding-right-none'">
+                <mat-accordion class="example-headers-align user-activity-log" *ngIf="update">
+                    <div>
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true" class="padding-none">
+                            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getLocationNotes()"></button>
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="ficon fas fa-id-card"></i>&nbsp;Recent Notes
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <p-table [columns]="cols" [value]="notesRowData" [tableStyle]="{'width': '100%'}">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                    <tr>
+                                        <td>{{rowData?.LocationNoteCreatedDate}}</td>
+                                        <td>{{rowData?.Notes}}</td>
+                                        <td>
+                                            <i *ngIf="rowData?.IsLocationNoteAttachment" class="fas fa-file cursor-pointer"
+                                                (click)="downloadLocationAttachment(rowData)"></i>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-xl-6 px-0">
+        <div class="row" *ngIf="update">
+
+            <div class="col-lg-12 col-xl-12 padding-right-none">
+                <mat-accordion class="example-headers-align map-accordian-section">
+                    <mat-expansion-panel [expanded]="true" class="map-right-accordion-height">
+                        <mat-expansion-panel-header class="math">
+                            <mat-panel-title>
+                                <i class="fas fa-map-marker-alt"></i>&nbsp;Map
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-map-section [dataAvailble]="dataAvailble" [rowData]="companyDetailData" [update]="update">
+                        </app-map-section>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="text-center">
+            <button type="button" uiSref="work" class="btn btn-primary btn-raised" [disabled]="!viewNEdit || saveButtonLoadder || disabledSaveBtn"
+                (click)="save()">
+                <span class="spinner-border spinner-border-sm mr-1" role="status" *ngIf="saveButtonLoadder"></span>
+                 Save </button>
+        </div>
+    </div>
+
+</div>

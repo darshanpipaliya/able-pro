@@ -1,0 +1,477 @@
+<div class="row #page">
+    <!-- style="margin-top: -50px !important;" -->
+    <div class="col-12 px-0">
+        <app-card  class="card-bottom-none card-body-p">
+            <mat-card-content>
+                <div class="header-btn-responsive" id="page-header-sec" *ngIf="fromPage !== 'home'">
+                    <select class="custom-select select-width" (change)="onChangeTem()" [(ngModel)]="selectedTem"
+                        *ngIf="isAllowTemDropdown">
+                        <option value="all">All</option>
+                        <option *ngFor="let tem of tems" [value]="tem.Id">
+                            {{tem.AccountName}}</option>
+                    </select>
+                    <select class="custom-select select-width" [(ngModel)]="selectedCustomer"
+                        (change)="onChangeCustomer()" *ngIf="isTemRole || isAllowTemDropdown">
+                        <option value="all">All</option>
+                        <option *ngFor="let customer of customers" [value]="customer.Id">{{customer.AccountName}}
+                        </option>
+                    </select>
+                    <select class="custom-select select-width" [(ngModel)]="selectedCompany"
+                        *ngIf="isTemRole || isAllowTemDropdown || isCustomerAdmin">
+                        <option value="all">All</option>
+                        <option *ngFor="let company of companies" [value]="company.CompanyID">{{company.CompanyName}}
+                        </option>
+                    </select>
+                    <button title="Search" class="btn btn-primary" (click)="filterData()" [disabled]="isDisableSearch">
+                        <span class="spinner-border spinner-border-sm mr-1" role="status" *ngIf="isClickFilter"></span>
+                        Search</button>
+                </div>
+
+
+                <div class="table-responsive">
+                    <mat-tab-group *ngIf="fromPage !== 'home'">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <b> <i class="fa fa-dollar-sign" style="color: #4680ff;"></i>&nbsp;Finance Dashboard</b>
+                            </ng-template>
+                            <ng-container *ngTemplateOutlet="template1"></ng-container>
+                        </mat-tab>
+                    </mat-tab-group>
+
+                    <ng-container *ngIf="fromPage == 'home'">
+                        <ng-container *ngTemplateOutlet="template1"></ng-container>
+                    </ng-container>
+                </div>
+            </mat-card-content>
+        </app-card>
+    </div>
+</div>
+
+<ng-template #template1>
+    <div class="dashboad-main mt-2">
+        <div class="row">
+            <div class="col-12 px-0">
+                <div class="dashboad-wrapper">
+                    <div class="row">
+                        <div class="col-md-12" #screen>
+
+                            <mat-card
+                                class="trinta-card invoice-summary-by-vendor-card mb-25 bg-white border-none d-block">
+                                <mat-card-header>
+                                    <mat-card-title class="d-flex w-100 align-items-center">
+                                        <h5 class="mt-0 mb-0">
+                                            Invoice Summary by Vendor
+                                        </h5>
+
+
+                                        <form class="search-box position-relative">
+                                            <button type="button" class="p-0 bg-transparent cursor-pointer border-none">
+                                                <i class="ri-search-line"></i>
+                                            </button>
+                                            <input type="text" class="d-block w-100 border-none" placeholder="Search..."
+                                                name="search" (input)="vendorSearch($event)">
+                                        </form>
+                                    </mat-card-title>
+                                    <mat-card-subtitle>
+                                        <div class="spend-vender-filter d-flex card-header-menu">
+
+                                            <button type="button" mat-button class="card-header-menu-btn"
+                                                [matMenuTriggerFor]="cardHeaderMenu">
+                                                {{selectedVendor?.value == 'current' ? 'Current Month' : 'Previous Month' }}
+                                            </button>
+                                            <mat-menu #cardHeaderMenu="matMenu"
+                                                class="card-header-menu trinta-card-header-menu" xPosition="before">
+
+                                                <button mat-menu-item [ngClass]="'card-header-menu-btn-c'"
+                                                    *ngFor="let item of chartView"
+                                                    (click)="getinvoiceSumByVendor(item)">
+
+                                                    <span>{{item.name}}</span>
+                                                </button>
+                                            </mat-menu>
+
+                                            <button type="button" mat-button [matMenuTriggerFor]="menu2"
+                                                class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto ml-2">
+                                                <i class="ri-more-2-fill"></i>
+                                            </button>
+                                            <mat-menu #menu2="matMenu">
+                                                <button (click)="downloadVendor()" mat-menu-item>
+                                                    <i class="fas fa-cloud-download-alt mr-2"
+                                                        style="color: #05a646; cursor: pointer;"></i>Chart
+                                                    Download
+                                                </button>
+                                            </mat-menu>
+                                        </div>
+                                    </mat-card-subtitle>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <ng-container *ngIf="!isSumByVendor">
+                                        <div class="spinner-border text-primary"
+                                            style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                            role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </ng-container>
+
+                                    <div class="invoice-summary-by-vendor-table invoice-monitor-table">
+                                        <div class="table-responsive">
+                                            <ng-container *ngIf="isSumByVendor">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th *ngFor="let col of cols1">{{
+                                                                col.header }}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let row of rowData" (click)="showData(row)">
+                                                            <td *ngFor="let col of cols1">
+                                                                <ng-container [ngSwitch]="col.field">
+                                                                    <div class="img-box-wrapper-isv"
+                                                                        *ngSwitchCase="'VendorAccount'">
+                                                                        <!-- <ng-container
+                                                                            *ngIf="row['VendorAccountLogo'] !== ''">
+
+                                                                            <div class="img-box">
+                                                                                <img [src]="getSafeImageUrl(row['VendorAccountLogo'])"
+                                                                                    [title]="row[col.field]"
+                                                                                    alt="Vendor Image" />
+
+                                                                                    {{}}
+                                                                            </div>
+                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="row['VendorAccountLogo'] === ''">
+                                                                            {{ row[col.field] }}
+                                                                        </ng-container> -->
+                                                                        <!-- EAB-2948 -->
+                                                                        <div class="card-info">
+                                                                            <div class="img-box-logo">
+                                                                                <img [src]="row?.VendorAccountLogo ? 'data:image/gif;base64,' + row.VendorAccountLogo : 'assets/images/image.png'"
+                                                                                    [title]="row.VendorAccount"
+                                                                                    alt="card-image">
+                                                                            </div>
+                                                                            <div class="img-box-name">
+                                                                                <span>{{row.VendorAccount}}</span>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div *ngSwitchCase="'trend'">
+                                                                        <div [id]="row['trendId']" class="tread-chart">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div *ngSwitchCase="'differenceP'">
+                                                                        {{ row[col.field] }}%
+                                                                        <span><i
+                                                                                [ngClass]="{'fas': true,
+                                                                            'fa-arrow-circle-up': (row.prevTotal < row.Total) ,
+                                                                            'fa-arrow-circle-down': (row.prevTotal > row.Total),
+                                                                            'text-success': (row.prevTotal < row.Total),
+                                                                            'text-danger': (row.prevTotal > row.Total)}"></i></span>
+                                                                    </div>
+                                                                    <div *ngSwitchCase="'differenceD'">
+                                                                        {{ row[col.field] |
+                                                                        currency:'USD':'symbol':'1.2-2' }}</div>
+                                                                    <div *ngSwitchCase="'AmountToPay'"
+                                                                        class="blue-trinta">
+                                                                        {{ row[col.field] |
+                                                                        currency:'USD':'symbol':'1.2-2' }}
+                                                                    </div>
+                                                                    <div *ngSwitchCase="'Total'" class="blue-trinta">
+                                                                        {{ row[col.field] |
+                                                                        currency:'USD':'symbol':'1.2-2' }}
+                                                                    </div>
+
+                                                                    <div *ngSwitchCase="'prevTotal'"
+                                                                        class="blue-trinta">
+                                                                        {{ row[col.field] |
+                                                                        currency:'USD':'symbol':'1.2-2' }}
+                                                                    </div>
+                                                                    <div *ngSwitchCase="'YTD'">
+                                                                        <span>{{ row[col.field] |
+                                                                        currency:'USD':'symbol':'1.2-2' }}</span>
+                                                                    </div>
+
+                                                                    <div *ngSwitchDefault>{{
+                                                                        row[col.field] }}</div>
+                                                                </ng-container>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </ng-container>
+
+                                        </div>
+                                        <mat-paginator class="paginator-isv" #paginator2 [length]="totalVendors"
+                                            [pageSize]="10" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons
+                                            (page)="onvendorChange($event)"></mat-paginator>
+                                        <a #downloadLink style="display: none;"></a>
+                                        <img #canvas style="display: none;" alt="Captured Screenshot" />
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 h-100">
+                            <div #screen2>
+
+                                <mat-card class="trinta-card spend-summary-card-f mb-25 bg-white border-none d-block">
+                                    <mat-card-header>
+                                        <mat-card-title>
+
+                                            <div class="vendor-header mt-0 mb-0">
+                                                Spend Summary
+                                                <span class="count">{{spendSummaryTotal ? (spendSummaryTotal |
+                                                    currency:'USD':'symbol':'1.2-2') : 0}}</span>
+                                            </div>
+
+                                        </mat-card-title>
+                                        <mat-card-subtitle>
+                                            <div class="spend-vender-filter d-flex card-header-menu">
+
+                                                <button type="button" mat-button class="card-header-menu-btn"
+                                                    [matMenuTriggerFor]="cardHeaderMenu2">
+                                                    {{selectedVal}}
+                                                </button>
+                                                <mat-menu #cardHeaderMenu2="matMenu"
+                                                    class="card-header-menu trinta-card-header-menu" xPosition="before">
+                                                    <button mat-menu-item [ngClass]="'card-header-menu-btn-c'"
+                                                        *ngFor="let item of spendDropodown"
+                                                        (click)="onMenuItemClick(item.value)">
+
+                                                        <span>{{item.name}}</span>
+                                                    </button>
+                                                </mat-menu>
+
+                                                <button type="button" mat-button [matMenuTriggerFor]="menu3"
+                                                    class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto ml-2">
+                                                    <i class="ri-more-2-fill"></i>
+                                                </button>
+                                                <mat-menu #menu3="matMenu">
+                                                    <button mat-menu-item (click)="downloadSummary()">
+                                                        <i class="fas fa-cloud-download-alt mr-2"
+                                                            style="color: #05a646; cursor: pointer;"></i>Chart
+                                                        Download
+                                                    </button>
+                                                </mat-menu>
+
+                                            </div>
+                                        </mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <div class="chart">
+                                            <ng-container *ngIf="!isSummaryLoad">
+                                                <div class="spinner-border text-primary"
+                                                    style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                    role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="isSummaryLoad">
+                                                <div id="spend_summary_chart"></div>
+                                            </ng-container>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+
+                            <div #screen3>
+
+                                <mat-card
+                                    class="trinta-card spend-summary-by-service-type-card mb-25 bg-white border-none d-block">
+                                    <mat-card-header>
+                                        <mat-card-title>
+                                            <div class="vendor-header mt-0 mb-0 " style="text-wrap: wrap !important">
+                                                Spend Summary: Service Type
+                                                <span class="count">{{serviceTypeTotal ? (serviceTypeTotal |
+                                                    currency:'USD':'symbol':'1.2-2') : 0 }}</span>
+                                            </div>
+                                        </mat-card-title>
+                                        <mat-card-subtitle>
+                                            <div class="spend-vender-filter d-flex card-header-menu">
+
+                                                <button type="button" mat-button class="card-header-menu-btn"
+                                                    [matMenuTriggerFor]="cardHeaderMenu3">
+                                                    {{selectedSummaryValue}}
+                                                </button>
+                                                <mat-menu #cardHeaderMenu3="matMenu"
+                                                    class="card-header-menu trinta-card-header-menu" xPosition="before">
+                                                    <button mat-menu-item [ngClass]="'card-header-menu-btn-c'"
+                                                        *ngFor="let item of chartView"
+                                                        (click)="getSpendByServiceType(item)">
+
+                                                        <span>{{item.name}}</span>
+                                                    </button>
+                                                </mat-menu>
+
+
+                                                <button mat-icon-button [matMenuTriggerFor]="menu"
+                                                    class="icon-toggle icon-button-small ml-2">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu">
+                                                    <button mat-menu-item (click)="downloadSummaryServiceType()">
+                                                        <i class="fas fa-cloud-download-alt mr-2"
+                                                            style="color: #05a646; cursor: pointer;"></i>Chart
+                                                        Download
+                                                    </button>
+                                                </mat-menu>
+
+                                            </div>
+                                        </mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <div class="chart">
+                                            <ng-container *ngIf="!isServiceTypeLoad">
+                                                <div class="spinner-border text-primary"
+                                                    style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                    role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="isServiceTypeLoad">
+                                                <div id="spend_Summary_by_service_type_chart">
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+
+
+                                <mat-card class="trinta-card invoice-monitor-card mb-25 bg-white border-none d-block">
+                                    <mat-card-header>
+                                        <mat-card-title class="d-flex w-100 align-items-center">
+                                            <h5 class="mt-0 mb-0">
+                                                Invoice Monitor
+                                            </h5>
+
+
+                                            <form class="search-box position-relative">
+                                                <button type="submit"
+                                                    class="p-0 bg-transparent cursor-pointer border-none">
+                                                    <i class="ri-search-line"></i>
+                                                </button>
+                                                <input type="text" class="d-block w-100 border-none"
+                                                    placeholder="Search..." name="search" [(ngModel)]="searchMonitor"
+                                                    (input)="invoiceMonitorSearch($event)">
+                                            </form>
+                                        </mat-card-title>
+                                        <mat-card-subtitle>
+                                            <div class="spend-vender-filter d-flex card-header-menu">
+
+
+                                                <button type="button" mat-button class="card-header-menu-btn"
+                                                    [matMenuTriggerFor]="cardHeaderMenuIM">
+                                                    {{selectedMonitor.value == 'current' ? 'Current Month' : 'Previous
+                                                    Month' }}
+                                                </button>
+                                                <mat-menu #cardHeaderMenuIM="matMenu"
+                                                    class="card-header-menu trinta-card-header-menu" xPosition="before">
+                                                    <button mat-menu-item [ngClass]="'card-header-menu-btn-c'"
+                                                        *ngFor="let item of chartView"
+                                                        (click)="getInvoiceMonitor(item, 10, 1, searchMonitor, true)">
+
+                                                        <span>{{item.name}}</span>
+                                                    </button>
+                                                </mat-menu>
+                                            </div>
+                                        </mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <div class="payment-history-table invoice-monitor-table">
+                                            <ng-container *ngIf="!isInvoiceMonitor">
+                                                <div class="spinner-border text-primary"
+                                                    style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                    role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="isInvoiceMonitor">
+                                                <div class="table-responsive">
+                                                    <table mat-table [dataSource]="dataSource">
+                                                        <ng-container matColumnDef="vendor">
+                                                            <th mat-header-cell *matHeaderCellDef class="pl-0">
+                                                                Vendor
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let element" class="pl-0">
+                                                                <div class="card-info">
+                                                                    <div class="img-box-logo">
+                                                                        <img [src]="element?.VendorAccountLogo ? 'data:image/gif;base64,' + element.VendorAccountLogo : 'assets/images/image.png'"
+                                                                            [title]="element.VendorAccount"
+                                                                            alt="card-image">
+                                                                    </div>
+                                                                    <div class="img-box-name">
+                                                                        <!-- <ng-template
+                                                                                #elseBlock> -->
+                                                                        <span>{{element.VendorAccount}}</span>
+                                                                        <!-- </ng-template> -->
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="retrievals">
+                                                            <th mat-header-cell *matHeaderCellDef>
+                                                                Retrievals
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.Retrievals}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="processing">
+                                                            <th mat-header-cell *matHeaderCellDef>
+                                                                Processing
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.Processing}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="recon">
+                                                            <th mat-header-cell *matHeaderCellDef>
+                                                                Recon
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.Recon}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="finished">
+                                                            <th mat-header-cell *matHeaderCellDef>
+                                                                Finished
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.Finished}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <tr mat-header-row *matHeaderRowDef="displayedColumns">
+                                                        </tr>
+                                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </ng-container>
+                                            <mat-paginator #paginator class="paginator-im" [length]="totalMonitor"
+                                                [pageSize]="10" [pageSizeOptions]="[5, 10, 15]"
+                                                (page)="onPageChange1($event)"></mat-paginator>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

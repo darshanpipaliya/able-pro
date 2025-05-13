@@ -1,0 +1,31 @@
+<div *ngIf="!dataAvailble && update" class="loader-spinner">
+    <span class="spinner-border text-primary c-table-spinner" role="status"></span>
+</div>
+
+
+<div *ngIf="!update">
+    <app-card class="map-card">
+        <agm-map [latitude]="''" [longitude]="''" [zoom]="8" [disableDefaultUI]="false" [zoomControl]="false">
+            <agm-marker [latitude]="''" [longitude]="''">
+            </agm-marker>
+        </agm-map>
+    </app-card>
+</div>
+
+<app-card *ngIf="dataAvailble" class="map-card"
+     [options]="false">
+
+    <!-- <button title="Edit Map" type="button" class="btn btn-icon btn-outline-primary map-btn-c"
+        (click)="onEditMap(rowData)"> <i class="fas fa-map-marker-alt"></i></button> -->
+    
+    <button *ngIf="viewNEdit" title="Edit Map" type="button" class="btn btn-icon btn-outline-primary map-btn-c"
+    (click)="onEditMap(rowData)"> <i class="fas fa-map-marker-alt"></i></button>
+    <agm-map [mapTypeControl]='true' [streetViewControl]="false" [fullscreenControl]='true'
+        [latitude]="rowData.Latitude ? rowData.Latitude: ''"
+        [longitude]="rowData.Longitude ? rowData.Longitude: ''" [zoom]="8" [disableDefaultUI]="false"
+        [zoomControl]="false">
+        <agm-marker [latitude]="rowData.Latitude ? rowData.Latitude: ''"
+            [longitude]="rowData.Longitude ? rowData.Longitude: ''">
+        </agm-marker>
+    </agm-map>
+</app-card>

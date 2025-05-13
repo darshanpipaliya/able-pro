@@ -1,0 +1,296 @@
+<div class="row #page">
+    <!-- style="margin-top: -50px !important;" -->
+    <div class="col-12 px-0">
+        <app-card   class="card-bottom-none card-body-p">
+            <mat-card-content>
+                <div class="header-btn-responsive" id="page-header-sec" *ngIf="fromPage !== 'home'">
+                    <select class="custom-select select-width" (change)="onChangeTem()" [(ngModel)]="isSelectedTem"
+                        *ngIf="isAllowTemDropdown">
+                        <option value="all">All</option>
+                        <option *ngFor="let tem of tems" [value]="tem.Id">
+                            {{tem.AccountName}}</option>
+                    </select>
+                    <select class="custom-select select-width" [(ngModel)]="isSelectedCustomer"
+                        (change)="onChangeCustomer()" *ngIf="isTemRole || isAllowTemDropdown">
+                        <option value="all">All</option>
+                        <option *ngFor="let customer of customers" [value]="customer.Id">{{customer.AccountName}}
+                        </option>
+                    </select>
+                    <select class="custom-select select-width" [(ngModel)]="isSelectedCompany"
+                        *ngIf="isTemRole || isAllowTemDropdown || isCustomerAdmin">
+                        <option value="all">All</option>
+                        <option *ngFor="let company of companies" [value]="company.CompanyID">{{company.CompanyName}}
+                        </option>
+                    </select>
+                    <button title="Search" class="btn btn-primary" (click)="filterData()" [disabled]="isDisableSearch">
+                        <span class="spinner-border spinner-border-sm mr-1" role="status" *ngIf="isClickFilter"></span>
+                        Search</button>
+                </div>
+
+
+                <div class="table-responsive">
+                    <mat-tab-group *ngIf="fromPage !== 'home'">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <b> <i class="fa fa-tools" style="color: #4680ff;"></i>&nbsp;Inventory Dashboard</b>
+                            </ng-template>
+                            <ng-container *ngTemplateOutlet="template1"></ng-container>
+                        </mat-tab>
+                    </mat-tab-group>
+
+                    <ng-container *ngIf="fromPage == 'home'">
+                        <ng-container *ngTemplateOutlet="template1"></ng-container>
+                    </ng-container>
+                </div>
+            </mat-card-content>
+        </app-card>
+    </div>
+</div>
+
+<ng-template #template1>
+
+    <div class="dashboad-main mt-2">
+        <div class="dashboad-wrapper">
+            <div class="row" style="gap: 25px 0;">
+                <div class="col-md-6 col-sm-12">
+
+
+                    <div #screen>
+                        <mat-card
+                            class="trinta-card spend-summary-by-service-type-card bg-white border-none d-block">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    <h5 class="mt-0 mb-0">
+                                        Inventory by Status
+                                    </h5>
+                                </mat-card-title>
+                                <mat-card-subtitle>
+                                    <div class="spend-vender-filter d-flex card-header-menu">
+
+                                        <button type="button" mat-button [matMenuTriggerFor]="menu"
+                                            class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto ml-2">
+                                            <i class="ri-more-2-fill"></i>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                            <button (click)="downloadInventorybyStatus()" mat-menu-item>
+                                                <i class="fas fa-cloud-download-alt mr-2"
+                                                    style="color: #05a646; cursor: pointer;"></i>Chart
+                                                Download
+                                            </button>
+                                        </mat-menu>
+
+                                    </div>
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+
+                                <ng-container *ngIf="!inventorybyStatusLoader">
+                                    <div class="spinner-border text-primary"
+                                        style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                        role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </ng-container>
+
+                                <div class="chart" *ngIf="inventorybyStatusLoader">
+                                    <div id="basic_pie_chart"></div>
+                                </div>
+
+
+                            </mat-card-content>
+                        </mat-card>
+
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <div #screen2>
+
+
+                        <mat-card class="trinta-card vendor-card bg-white border-none d-block">
+                            <mat-card-header>
+                                <mat-card-title class="d-flex w-100 align-items-center">
+                                    <div class="vendor-header mt-0 mb-0">
+                                        Vendor
+                                        <span class="count">{{vendorGrandTotal}}</span>
+                                    </div>
+
+                                    <form class="search-box position-relative">
+                                        <button type="submit" class="p-0 bg-transparent cursor-pointer border-none">
+                                            <i class="ri-search-line"></i>
+                                        </button>
+                                        <input type="text" class="d-block w-100 border-none" placeholder="Search..."
+                                            name="search" (input)="searchVendor($event)"
+                                            [(ngModel)]="vendorSearchValue">
+                                    </form>
+                                </mat-card-title>
+                                <mat-card-subtitle>
+                                    <div class="spend-vender-filter d-flex card-header-menu">
+
+                                        <button type="button" mat-button [matMenuTriggerFor]="menu1"
+                                            class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto ml-2">
+                                            <i class="ri-more-2-fill"></i>
+                                        </button>
+                                        <mat-menu #menu1="matMenu">
+                                            <button (click)="downloadInventorybyVendor()" mat-menu-item>
+                                                <i class="fas fa-cloud-download-alt mr-2"
+                                                    style="color: #05a646; cursor: pointer;"></i>Chart
+                                                Download
+                                            </button>
+                                        </mat-menu>
+
+                                    </div>
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <ng-container *ngIf="!getVendorChartLoader">
+                                    <div class="spinner-border text-primary"
+                                        style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                        role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </ng-container>
+
+                                <div class="chart" *ngIf="getVendorChartLoader">
+                                    <div id="vendor_chart"></div>
+                                    <mat-paginator [(pageIndex)]="vendorpageIndex" #paginator
+                                        [length]="vendorTotalCount" [pageSize]="10" (page)="vendorPage($event)"
+                                        [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+                                </div>
+
+                            </mat-card-content>
+                        </mat-card>
+
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <div #screen3>
+
+
+
+                        <mat-card class="trinta-card vendor-card bg-white border-none d-block">
+                            <mat-card-header>
+                                <mat-card-title class="d-flex w-100 align-items-center">
+                                    <div class="vendor-header mt-0 mb-0">
+                                        Product
+                                        <span class="count">{{productGrandTotal}}</span>
+                                    </div>
+
+                                    <form class="search-box position-relative">
+                                        <button type="submit" class="p-0 bg-transparent cursor-pointer border-none">
+                                            <i class="ri-search-line"></i>
+                                        </button>
+                                        <input type="text" class="d-block w-100 border-none" placeholder="Search..."
+                                            name="search" (input)="searchProduct($event)"
+                                            [(ngModel)]="productSearchValue">
+                                    </form>
+                                </mat-card-title>
+                                <mat-card-subtitle>
+                                    <div class="spend-vender-filter d-flex card-header-menu">
+
+                                        <button type="button" mat-button [matMenuTriggerFor]="menu2"
+                                            class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto ml-2">
+                                            <i class="ri-more-2-fill"></i>
+                                        </button>
+                                        <mat-menu #menu2="matMenu">
+                                            <button (click)="downloadInventorybyProduct()" mat-menu-item>
+                                                <i class="fas fa-cloud-download-alt mr-2"
+                                                    style="color: #05a646; cursor: pointer;"></i>Chart
+                                                Download
+                                            </button>
+                                        </mat-menu>
+
+                                    </div>
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <ng-container *ngIf="!getSpendSumByProductLoader">
+                                    <div class="spinner-border text-primary"
+                                        style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                        role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </ng-container>
+
+                                <div class="chart" *ngIf="getSpendSumByProductLoader">
+                                    <div id="Product_chart"></div>
+                                    <mat-paginator [(pageIndex)]="productpageIndex" [length]="productTotalCount"
+                                        [pageSize]="10" #paginator2 (page)="productPage($event)"
+                                        [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+                                </div>
+
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <div #screen4>
+
+
+                        <mat-card class="trinta-card vendor-card bg-white border-none d-block">
+                            <mat-card-header>
+                                <mat-card-title class="d-flex w-100 align-items-center">
+                                    
+                                    <div class="vendor-header mt-0 mb-0">
+                                        Product Type
+                                        <span class="count">{{productTypeGrandTotal}}</span>
+                                    </div>
+
+                                    <form class="search-box position-relative">
+                                        <button type="submit" class="p-0 bg-transparent cursor-pointer border-none">
+                                            <i class="ri-search-line"></i>
+                                        </button>
+                                        <input type="text" class="d-block w-100 border-none" placeholder="Search..."
+                                            name="search" (input)="searchProductType($event)"
+                                            [(ngModel)]="productTypeSearchValue">
+                                    </form>
+                                </mat-card-title>
+                                <mat-card-subtitle>
+                                    <div class="spend-vender-filter d-flex card-header-menu">
+
+                                        <button type="button" mat-button [matMenuTriggerFor]="menu3"
+                                            class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto ml-2">
+                                            <i class="ri-more-2-fill"></i>
+                                        </button>
+                                        <mat-menu #menu3="matMenu">
+                                            <button (click)="downloadInventorybyProductType()" mat-menu-item>
+                                                <i class="fas fa-cloud-download-alt mr-2"
+                                                    style="color: #05a646; cursor: pointer;"></i>Chart
+                                                Download
+                                            </button>
+                                        </mat-menu>
+
+                                    </div>
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <ng-container *ngIf="!getSpendSumByProductTypeLoader">
+                                    <div class="spinner-border text-primary"
+                                        style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                        role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </ng-container>
+
+                                <div class="chart" *ngIf="getSpendSumByProductTypeLoader">
+                                    <div id="Product_Type_chart"></div>
+                                    <mat-paginator [(pageIndex)]="productTypepageIndex" [length]="productTypeTotalCount"
+                                        [pageSize]="10" #paginator3 (page)="productTypePage($event)"
+                                        [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+                                </div>
+
+                            </mat-card-content>
+                        </mat-card>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a #downloadLink style="display: none;"></a>
+    <img #canvas style="display: none;" alt="Captured Screenshot" />
+
+</ng-template>

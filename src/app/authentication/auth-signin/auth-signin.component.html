@@ -1,0 +1,62 @@
+<form [formGroup]="loginForm">
+  <div class="auth-main">
+    <div class="auth-wrapper version-2">
+
+      <div class="auth-form">
+        <app-card   class="auth-form-card" padding="40">
+          <div class="text-center">
+            <a href="javascript:">
+              <img src="assets/images/logo-dark.png" alt="logo" />
+            </a>
+
+          </div>
+
+          <div class="text-center m-b-25 f-20 f-w-500">Signin</div>
+          <div class="text-start">
+            <label for="name" class="f-w-500">Enter Your Email</label>
+            <mat-form-field appearance="outline" class="w-100 m-t-5">
+              <input matInput placeholder="pat@example.com" formControlName="email" required spaceTrimStartEndInput
+                [allowStartWithSpace]="false">
+              <mat-error style="font-size: 12px;"
+                *ngIf="loginForm['controls']['email']['invalid']">{{getErrorMessage()}}</mat-error>
+
+            </mat-form-field>
+            <label for="name" class="f-w-500">Enter your password</label>
+            <mat-form-field appearance="outline" class="w-100 m-t-5">
+              <input matInput [type]="hide ? 'password' : 'text'" id="password" required formControlName="password"
+                spaceTrimStartEndInput [allowStartWithSpace]="false">
+              <mat-error style="font-size: 12px;"
+                *ngIf="loginForm['controls']['password']['invalid']">{{getErrorMessage1()}}</mat-error>
+              <div class="vbut" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </div>
+            </mat-form-field>
+          </div>
+
+
+          <div class="grid">
+            <button *ngIf="isClicked" mat-flat-button color="primary" class="b-rad-20 m-t-20" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status"></span>
+              Loading...
+            </button>
+            <button *ngIf="!isClicked" mat-flat-button color="primary" class="b-rad-20 m-t-20" (click)="signIn()" [disabled]="loginForm['invalid']">Login</button>
+          </div>
+          
+          
+
+          <div class="text-center">
+            <div class="separator my-4"><span>OR</span></div>
+
+            <p class="mb-2 text-muted">Forgot password? <a class="f-w-400" style="cursor: pointer;"
+                (click)="forgetPassword()"><b>Reset</b></a></p>
+
+          </div>
+
+        </app-card>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div [innerHTML]="safeHtmlContent"></div>

@@ -1,0 +1,74 @@
+<div class="app-error-warning-popup-c">
+  <div class="mat-dialog-header pb-3">
+    <h5 class="modal-title {{messageData?.titleClass}}">{{messageData?.title}}</h5>
+    <i class="fas fa-times" *ngIf="!hideOkbtn" [mat-dialog-close]="close"></i>
+  </div>
+  <div mat-dialog-content class="pt-3">
+    <div class="container">
+      <div class="row mx-0 px-2 align-items-center">
+        <div class="col-md-12 popup-main-section">
+          <div class="{{ isSuccess ? 'popup-success-icon' : 'popup-left-icon'}}">
+            <i class="{{ isSuccess ? 'fas fa-thumbs-up' : messageData.icon}} {{messageData.iconClass}}"></i>
+          </div>
+          <div class="popup-right-desc">
+            <ul class="mb-0 p-0 list-unstyled">
+              <li *ngFor="let message of messageData.message" [ngClass]="{'text-c-blue': !isRedirect}" >
+                <span *ngIf="!messageData.innerHtml">{{message}}</span>
+                <span *ngIf="messageData.innerHtml" [innerHTML]="message"></span>
+              </li>
+            </ul>
+
+            <div *ngIf="list" class="mb-0 p-0 mt-2">
+              <span *ngIf="isShowLabel" class="text-c-blue">Over 100%:</span>
+              <ul class="list-unstyled mb-0">
+                <li *ngFor="let item of list" class="text-c-blue">
+                  <span>{{item}}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div *ngIf="textValue && !isRedirect" class="mt-2 text-c-blue">
+              <span>Vendor Product: {{textValue}}</span>
+            </div>
+
+             <div *ngIf="textValue && isRedirect" class="mt-2">
+              <span class="text-c-blue" style="cursor: pointer;" (click)="redirectTab()">Vendor Product: {{textValue}}</span>
+             </div>
+
+             <div *ngIf="redirectFrom == 'link-inventory'" class="text-c-blue mt-2">
+              
+                <span>Change the Primary Inventory Assignment</span>
+                <ul class="list-unstyled mb-0 mt-2">
+                  <li *ngFor="let item of inventoryList" (click)="inventoryClick(item)">
+                    <span>{{item.fullLabel}}</span>
+                  </li>
+                </ul>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <mat-dialog-actions class="py-3" align="end">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 attention-popup-btn">
+          <button mat-button class="btn px-2 text-c-blue" [mat-dialog-close]="false" style="text-decoration: underline;"
+            *ngIf="messageData?.closeBtnName && !messageData?.removeLink">{{messageData?.closeBtnName}}</button>
+
+          <a class="px-2 text-c-blue" [mat-dialog-close]="false" style="text-decoration: underline;"
+            *ngIf="messageData?.closeBtnName && messageData?.removeLink"
+            [ngClass]="messageData?.removeLink ? 'popup-link-btn' : ''">{{messageData?.closeBtnName}}</a>
+
+          <button *ngIf="!hideOkbtn" mat-button class="btn btn-primary" style="color: #fff !important;" [mat-dialog-close]="true"
+            cdkFocusInitial>{{(messageData?.okBtnName)?messageData?.okBtnName:'Ok'}}</button>
+        </div>
+        <!-- <div class="col-md-5">
+
+      </div> -->
+      </div>
+    </div>
+
+  </mat-dialog-actions>
+</div>

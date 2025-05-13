@@ -1,0 +1,69 @@
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+.mat-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e2e5e8;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+.dialog-header-c {
+    line-height: 1.2em;
+    position: relative;
+    top: -20px;
+    left: -15px;
+    color: #37474f;
+    font-weight: 600;
+}
+
+.fa-times {
+    float: right;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    transition: all 0.3s;
+
+    &:hover {
+        opacity: .75;
+    }
+}
+
+.file-input {
+    display: none;
+}
+
+input.search-text {
+    padding: 2px 10px;
+    cursor: pointer;
+    border: 2px solid #000;
+    display: inline-block;
+    width: 300px;
+    min-width: 200px;
+    height: 40px;
+    ;
+}
+
+button.browse-btn {
+    border-radius: 0 !important;
+    height: 40px;
+    padding: 8px 19px !important;
+}
+
+.upload-invoice-btn {
+    display: flex;
+}
+
+:host ::ng-deep .p-fileupload .p-fileupload-row>div {
+    word-wrap: break-word !important;
+}

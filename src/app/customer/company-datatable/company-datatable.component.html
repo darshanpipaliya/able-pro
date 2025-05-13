@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-sm-12 px-0">
+    <mat-card>
+      <mat-card-content>
+        
+        <app-header-section
+          [buttonOptions]="buttonOptions"
+          [selectedButton]="selectedButton"
+          [temRoles]="temRoles"
+          [selectedTem]="selectedTem"
+          [disableTemSearchDD]="disableTemSearchDD"
+          [tems]="tems"
+          [disableTemSearch]="disableTemSearch"
+          [currentOpenEditPagevar]="currentOpenEditPagevar"
+          [isDisabledExport]="isDisabledExport"
+          [tableDataExist]="tableDataExist"
+          [viewNEdit]="viewNEdit"
+          [trackByIndex]="trackByIndex"
+          (buttonClick)="onButtonClick($event)"
+          (temChange)="onTemChange()"
+          (filterGridByTEMId)="filterGridByTEMId($event)"
+          (exportDataAsExcel)="onBtnExportDataAsExcel()"
+          (add)="add()"
+        ></app-header-section>
+
+
+        <div class="table-responsive">
+          <mat-tab-group preserveContent [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <i class="fas fa-building" style="color: #4680ff;"> </i>&nbsp;Company
+              </ng-template>
+
+              <ng-template matTabContent>
+                <div class="mt-2">
+                  <app-p-tree-company [selectedTem]="selectedTem" (tableDataExist)="tableDataExistFn($event)"
+                    (exportAccountData)="exportAccountData($event)" (selectedRowsEmit)="selectedRowsEmit($event)"
+                    (rowCellDoubleClicked)="rowCellDoubleClicked($event)" />
+                </div>
+              </ng-template>
+            </mat-tab>
+
+            <ng-container *ngFor="let companyData of editCompanyArray;let i = index; trackBy: trackByIndex">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;{{companyData.CompanyName}}&nbsp;<mat-icon
+                    (click)="removeTab(i)">cancel</mat-icon>
+                </ng-template>
+                <ng-template matTabContent>
+                  <div class="mt-2">
+                    <app-edit-company [companyData]="companyData" (currentOpenEditPage)="currentOpenEditPage($event)"
+                      (onCompanyUpdateEvent)="onCompanyUpdateEvent($event, i)"
+                      (setTemDDValueEvent)="setTemDDValueEvent($event, i)"></app-edit-company>
+                  </div>
+                </ng-template>
+              </mat-tab>
+            </ng-container>
+            <ng-container *ngFor="let company of addCompanyArray;let i = index; trackBy: trackByIndex">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="fas fa-building" style="color: #4680ff;"></i>&nbsp;Add Company&nbsp;<mat-icon
+                    (click)="removeCompany(i)">cancel</mat-icon>
+                </ng-template>
+
+                <ng-template matTabContent>
+                  <div class="mt-2">
+                    <app-add-company [companyData]="company.companyData" [selectedTem]="selectedTem"
+                      [clickOnSearchButton]="clickOnSearchButton" [action]="'Add'" [selected]="currentIndex"
+                      (setClickFalse)="setClickFalse($event, i)" (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                      [selectedWiseTemDD]="selectedWiseTemDD" (currentOpenEditPage)="currentOpenEditPage($event)"
+                      (onCompanyComponetDestroy)="onAddCompanyComponetDestroy($event,i)"
+                      (onCompanyAddEvent)="onCompanyAddEvent($event, i)"></app-add-company>
+                  </div>
+                </ng-template>
+              </mat-tab>
+            </ng-container>
+          </mat-tab-group>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

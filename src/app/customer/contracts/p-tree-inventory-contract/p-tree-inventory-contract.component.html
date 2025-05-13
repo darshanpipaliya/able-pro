@@ -1,0 +1,281 @@
+<mat-accordion class="example-headers-align accordion-grid ">
+    <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+        <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+            (click)="loadNodes(pTableContain, true)"></button>
+        <mat-expansion-panel-header class="math">
+            <mat-panel-title class="matt font-weight-bold">
+                <i class="icon-size fas fa-tools" style="color: #4680ff;"></i>&nbsp;Inventory for Contract: {{tabData?.DocumentName ? tabData?.DocumentName : overviewData?.Overview?.DocumentName}}
+              </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <p-treeTable #treeTable [value]="files" columnResizeMode="expand" [columns]="displaycols" [rows]="10"
+            [lazy]="true" (onLazyLoad)="loadNodes($event, true)" [totalRecords]="totalRecords"
+            (onNodeExpand)="onNodeExpand($event)" [scrollable]="true" [resizableColumns]="true" selectionMode="checkbox"
+            selectionMode="single" [reorderableColumns]="true" (onColResize)="handleColumnResize($event)">
+           
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <ng-container *ngFor="let col of columns">
+                        <col [ngStyle]="{'width': col.width || 'auto', 'min-width': col.width || '100px'}" />
+                    </ng-container>
+                </colgroup>
+            </ng-template>
+
+            <ng-template pTemplate="header" let-columns>
+                <tr class="header-row p-treetable-thead-parent">
+                    <ng-container *ngFor="let col of cols">
+                        <ng-container *ngIf="col.isChildren && col.isParentVisible">
+                            <th [attr.data-parent-id]="col.parent" [attr.colspan]="col.colspan" ttResizableColumn
+                                class="parent-header"
+                                [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                                <span>{{ col.header }}</span>
+                                <i class='pi pi-fw pi-chevron-right icon-contracted'
+                                    *ngIf="!innerLoading && col.isChildren && col.isicon == 1 && col.isToggle"
+                                    (click)="toggleColumn(col.parent , 'close')"></i>
+                                <i class='pi pi-fw pi-chevron-left icon-expanded'
+                                    *ngIf="!innerLoading && col.isChildren && col.isicon == 0 && col.isToggle"
+                                    (click)="toggleColumn(col.parent , 'open')"></i>
+                            </th>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+
+                <tr class="header-row p-treetable-thead-child">
+                    <ng-container *ngFor="let col of columns">
+                        <ng-container>
+                            <th ttResizableColumn ttReorderableColumn (click)="OrderBy(col.field  )"
+                                class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
+                                {{ col.childHeader }}
+                                <i class='pi pi-arrow-up' *ngIf="col.sorting === 'asc'"></i>
+                                <i class='pi pi-arrow-down' *ngIf="col.sorting === 'desc'"></i>
+                            </th>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+
+                <tr class="header-row p-treetable-thead-filter">
+                    <ng-container *ngFor="let col of columns">
+                        <ng-container>
+                            <th class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
+                                <input type="text" [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText
+                                    size="8" *ngIf="col.type === 'text'" (input)="filerOutSide($event, col)"
+                                    style="width: auto" />
+
+                                <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="col.valuesset" [disabled]="col.isenable"
+                                    pInputText size="8" *ngIf="col.type === 'numberFilter'"
+                                    (input)="filerOutSide($event, col)" style="width: auto" />
+
+                                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender-grid"
+                                    [disabled]="col.isenable" (ngModelChange)="filerOutSide($event, col)"
+                                    *ngIf="col.type === 'dateFilter' && !col.isenable" [(ngModel)]="col.valuesset"
+                                    placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
+                                </p-calendar>
+
+                                <input type="text" *ngIf="col.type === 'dateFilter' && col.isenable"
+                                    [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText size="8"
+                                    style="width: auto" />
+
+                                <button type="text" pButton icon="pi pi-filter-icon pi-filter icon-filter"
+                                    (click)="openContextMenu($event,col )"></button>
+                            </th>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                <tr class="body-row" (dblclick)="onRowDoubleClick(rowData)">
+                    <ng-container *ngFor="let col of columns;  let i = index">
+                        <ng-container>
+                            <td [(selection)]="selectedNode"
+                                (contextmenu)="showContextMenu($event, contextMenu , rowData[col.field])" class="cell"
+                                [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': (col.field === 'TotalCurrentChargesDisplay' || col.field === 'PreviousBillBalanceDisplay') ? 'right' : 'left'}">
+
+                                <p-treeTableToggler [rowNode]="rowNode" [ngClass]="{'disabled': innerLoading}"
+                                    *ngIf="col.childHeader == 'Service Number' && i === 0 && ( rowNode.node?.leaf === false || rowNode.parent != null )"></p-treeTableToggler>
+                                <ng-container [ngSwitch]="col.type">
+                                    <span *ngSwitchCase="'dateFilter'" >
+                                        {{ rowData[col.field] | date: 'MM/dd/yyyy' }}
+                                    </span>
+                                    <span *ngSwitchDefault>
+                                        <span *ngIf="col.field == 'LastInvoiceDate'">
+                                            {{ rowData[col.field] | date:'MMM-yyyy' }}</span>
+                                            
+                                        <span *ngIf="col.field !== 'LastInvoiceDate'">
+                                            {{ rowData[col.field] }}</span>
+                                    </span>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+
+                <tr class="body-row"
+                    *ngIf="(innerLoading && expandedNode?.data.VendorProductInventoryId === rowNode.node.data.VendorProductInventoryId && expandedNode?.data.InventoryId === rowNode.node.data.InventoryId) || (isApiAlerdayCall && lastNode?.data.VendorProductInventoryId === rowNode.node.data.VendorProductInventoryId && lastNode?.data.InventoryId === rowNode.node.data.InventoryId)">
+                    <td class="cell" [attr.colspan]="columns.length">
+                        <span class="spinner-border spinner-border-sm" role="status"></span>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td class="cell" [attr.colspan]="columns.length">
+                        <span class="spinner-border spinner-border-sm" role="status" *ngIf="loading"></span>
+                        <span *ngIf="!loading && totalRecords === 0">
+                            No Record Found
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-treeTable>
+        <div class="custome-side-buttons">
+            <div class="custome-side-button" [ngClass]="{'active-border': sidebarVisible }">
+                <a class="custom-side-button-button ag-icon ag-icon-columns" (click)="openSidebar()">
+                    Columns</a>
+            </div>
+        </div>
+
+        <div class="sidebar" *ngIf="sidebarVisible">
+            <div class="sidebar-content">
+                <p-tree [value]="filesColumns" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
+                    (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles"> </p-tree>
+            </div>
+        </div>
+        <p-contextMenu
+            [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}"
+            #contextMenu [model]="items"></p-contextMenu>
+
+    </mat-expansion-panel>
+</mat-accordion>
+<div class="text-right mt-2 mr-3">
+    {{totalRecords > 0 ? totalRecords : 0}} records
+</div>
+<p-dialog [(visible)]="displayModal" modal="true" [closable]="true" [draggable]="false" [resizable]="false"
+    [dismissableMask]="true" [header]="''" #treeTable
+    [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 mb-2">
+
+                <p-dropdown [(ngModel)]="selectedOption1" class="rounded-inputs20 select-select col-md-12"
+                    [options]="countries" optionValue="name" optionLabel="display" appendTo="body">
+                </p-dropdown>
+
+            </div>
+        </div>
+
+        <div class="row" *ngIf="fieldsName?.type === 'text' ">
+            <div class="col-md-12">
+                <input type="text" [(ngModel)]="textboxValue1"
+                    placeholder="{{selectedOption1 === 'inrange' ? 'From' : 'Filter...'}}"
+                    (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+            </div>
+        </div>
+        <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+            <div class="col-md-12">
+                <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="textboxValue1"
+                    placeholder="{{selectedOption1 === 'inrange' ? 'From' : 'Filter...'}}"
+                    (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+            </div>
+        </div>
+        <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+            <div class="col-md-12">
+                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                    (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1" placeholder="mm-dd-yyyy"
+                    appendTo="body" [showIcon]="true"></p-calendar>
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption1 == 'inrange'">
+            <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                <div class="col-md-12">
+                    <input type="text" [(ngModel)]="textboxValue1_1" placeholder="To"
+                        (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                </div>
+            </div>
+            <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                <div class="col-md-12">
+                    <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="textboxValue1_1" placeholder="To"
+                        (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                </div>
+            </div>
+            <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                <div class="col-md-12">
+                    <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                        (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1_1"
+                        placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-1" *ngIf="displayModal1">
+            <div class="col-md-12 d-flex justify-content-center condition-label">
+                <label *ngFor="let radiobutton of radioItems">
+                    <input type="radio" name="options" (click)="model.option = radiobutton"
+                        [checked]="radiobutton === model.option" />{{ radiobutton }}
+                </label>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="displayModal1">
+            <div class="col-md-12 mb-2">
+
+                <p-dropdown [(ngModel)]="selectedOption2" class="rounded-inputs20 select-select col-md-12"
+                    [options]="countries" optionValue="name" optionLabel="display" appendTo="body">
+                </p-dropdown>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'text' ">
+            <div class="col-md-12">
+                <input placeholder="{{selectedOption2 === 'inrange' ? 'From' : 'Filter...'}}" type="text"
+                    [(ngModel)]="textboxValue2" pInputText size="8" style="width: auto" />
+            </div>
+        </div>
+
+        <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'numberFilter' ">
+            <div class="col-md-12">
+                <input placeholder="{{selectedOption2 === 'inrange' ? 'From' : 'Filter...'}}" type="text" OnlyNumber [allowNegative]="true"
+                    [(ngModel)]="textboxValue2" pInputText size="8" style="width: auto" />
+            </div>
+        </div>
+
+        <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'dateFilter' ">
+            <div class="col-md-12">
+                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2"
+                placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+            </div>
+        </div>
+
+        <div *ngIf="displayModal1 && selectedOption2 == 'inrange'">
+            <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                <div class="col-md-12">
+                    <input type="text" [(ngModel)]="textboxValue2_1" placeholder="To" pInputText size="8"
+                        style="width: auto" />
+                </div>
+            </div>
+
+            <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                <div class="col-md-12">
+                    <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="textboxValue2_1" placeholder="To" pInputText size="8"
+                        style="width: auto" />
+                </div>
+            </div>
+
+            <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                <div class="col-md-12">
+                    <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2_1" placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
+                    </p-calendar>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-md-12">
+                <button type="text" class="btn btn-primary btn-sm" pButton (click)="onFilterChangedValue()">
+                    Apply
+                </button>
+            </div>
+        </div>
+    </div>
+</p-dialog>

@@ -1,0 +1,673 @@
+<div class="row mt-2">
+    <div class="col-sm-12 px-0">
+        <mat-accordion class="example-headers-align accordion-grid"  *ngIf="this.action === 'Edit'">
+            <mat-expansion-panel [expanded]="true">
+                <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getContractContainerbyId(currentContractId, true, true);"></button>
+                <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                        <img src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                            alt="Contracts Image">&nbsp;All Documents
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <i class="fas fa-info-circle" (click)="openDialog()" tooltipClass="tooltip-bg"></i>
+                <ng-template #contractMainTooltip>
+                    <div class="mat-dialog-header">
+                        <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="text-left">
+
+                        <p class="mb-0" style="font-size: 14px;">
+                            All documents listed here are either the contract or its related
+                            addendums. Addendums typically add new services or discounts to the
+                            original contract. If new terms change or replace the existing ones,
+                            the contract should be replaced with a new contract.</p>
+                    </div>
+                </ng-template>
+                <!--  -->
+                <ng-container *ngIf="isReloadGrid">
+                    <!-- <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs" [rowData]="containerData" [frameworkComponents]="frameworkComponents" [pageName]="'charge-code-assign1'"
+                        [rowSelection]="rowSelection" [suppressRowClickSelection]="true" [defaultColDef]="defaultColDef"
+                        [sideBar]="sideBar" [singleClickEdit]="true"  (onSelectionChangedEvent)="onSelectionChanged($event)">
+                    </app-ag-grid-table> -->
+                </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion class="example-headers-align accordion-grid"  *ngIf="this.action === 'NewAddm'">
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                        <img src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                            alt="Contracts Image">&nbsp;Add Addendum to Contract: {{gridData?.rowData?.data?.DocumentName}} {{gridData?.rowData?.data?.InternalDocumentNumber ? - (gridData?.rowData?.data?.InternalDocumentNumber) : '' }}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+ 
+                <i class="fas fa-info-circle" (click)="openDialog()" tooltipClass="tooltip-bg"></i>
+                <ng-template #contractMainTooltip>
+                    <div class="mat-dialog-header">
+                        <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="text-left">
+ 
+                        <p class="mb-0" style="font-size: 14px;">
+                            All documents listed here are either the contract or its related
+                            addendums. Addendums typically add new services or discounts to the
+                            original contract. If new terms change or replace the existing ones,
+                            the contract should be replaced with a new contract.</p>
+                    </div>
+                </ng-template>
+                <!-- <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs" [rowData]="containerData" [frameworkComponents]="frameworkComponents"
+                    [rowSelection]="rowSelection" [suppressRowClickSelection]="true" [defaultColDef]="defaultColDef"
+                    [sideBar]="sideBar" [singleClickEdit]="true"  [pageName]="'charge-code-assign1'"
+                    (onSelectionChangedEvent)="onSelectionChanged($event)">
+                </app-ag-grid-table> -->
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <form [formGroup]="contractForm" (ngSubmit)="saveContract()">
+            <div class="row mt-2">
+                <div class="col-sm-12 col-md-12 col-xl-6 padding-left-none">
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title>
+                                    <div class="icon-vertical">
+                                    <img src="../../../../../../assets/images/Contract/fa-thin-fa-book.svg"
+                                        alt="Overview Image">&nbsp;Overview</div>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row mx-0">
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Document
+                                            Type *</label>
+                                        
+                                        <span><input type="text" class="form-control"
+                                            formControlName="DocumentType" readonly></span>
+                                        
+                                        <mat-error style="font-size: 12px;"
+                                        *ngIf="f['DocumentType'].errors?.['required'] && (f['DocumentType'].touched || isContractFormSubmit) ">
+                                        Document Type is required</mat-error>
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor *</label>
+                                        <span><p-dropdown [options]="vendorsList" optionLabel="AccountName" [filter]="true"
+                                            filterBy="AccountName" [showClear]="true" placeholder="Select Vendor..."
+                                            formControlName="VendorId" optionValue="Id" [showClear]="false"
+                                            appendTo="body" [disabled]="action == 'NewAddm'"
+                                            (onChange)="formateLabelForDocumentName($event,'Vendor')"
+                                            [ngClass]="{'invalid-error': !f['VendorId'].valid && (f['VendorId'].dirty || f['VendorId'].touched || isContractFormSubmit)}">>
+                                        </p-dropdown> </span>
+                                        
+                                        <mat-error style="font-size: 12px;"
+                                        *ngIf="f['VendorId'].errors?.['required'] && (f['VendorId'].touched || isContractFormSubmit) ">
+                                        Vendor is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Customer *</label>
+                                        <span>
+                                            <p-dropdown [options]="customerList" optionLabel="AccountName" [filter]="true"
+                                            filterBy="AccountName" [showClear]="true" placeholder="Select Customer..."
+                                            formControlName="CustomerId" optionValue="Id" [showClear]="false"
+                                            appendTo="body" [disabled]="action == 'NewAddm'"
+                                            (onChange)="onCustomerSelect($event)"
+                                            [ngClass]="{'invalid-error': !f['CustomerId'].valid && (f['CustomerId'].dirty || f['CustomerId'].touched || isContractFormSubmit)}">
+                                        </p-dropdown>
+                                        </span>
+
+                                        <mat-error style="font-size: 12px;"
+                                        *ngIf="f['CustomerId'].errors?.['required'] && (f['CustomerId'].touched || isContractFormSubmit) ">
+                                        Customer is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Company</label>
+                                        <span><p-dropdown formControlName="CompanyId" [options]="companyList"
+                                            placeholder="{{loadingCompanyList ? 'Loading' : 'Select Company'}}..."
+                                            appendTo="body" optionValue="CompanyID" optionLabel="CompanyName"
+                                            [filter]="true" filterBy="CompanyName" [showClear]="false"
+                                            [disabled]="action == 'NewAddm'"  (onChange)="formateLabelForDocumentName($event,'company')"
+                                            [ngClass]="{'invalid-error': !f['CompanyId'].valid && (f['CompanyId'].dirty || f['CompanyId'].touched || isContractFormSubmit)}">
+                                        </p-dropdown></span>
+                                        
+                                        <!-- <mat-error style="font-size: 12px;"
+                                        *ngIf="f.CompanyId.errors?.required && (f.CompanyId.touched || isContractFormSubmit) ">
+                                        Company is required</mat-error> -->
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Document
+                                            Name</label>
+                                        <span><input type="text" id="isCheckCopy" class="form-control" [readOnly]="!documentNameLabled || disableOnCustomerChange"
+                                            formControlName="DocumentName" (input)="onInput($event.target.value)"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor
+                                            Document Name</label>
+                                        <span><input type="text" class="form-control" maxlength="50"
+                                            formControlName="VendorDocumentName"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Internal Contract Number</label>
+                                        <span><input type="text" maxlength="50" class="form-control" formControlName="InternalDocumentNumber" (input)="filterNumber($event, 'InternalDocumentNumber')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor Document Number</label>
+                                        <span><input type="text" maxlength="50" class="form-control" formControlName="VendorDocumentNumber" (input)="filterNumber($event, 'VendorDocumentNumber')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Status</label>
+                                        <span>
+                                            <p-dropdown [options]="statusList" optionLabel="Name" [filter]="false" filterBy="Name"
+                                                [showClear]="false" placeholder="Select Status..."  (onChange)="changeStatus()"
+                                                formControlName="Active" appendTo="body" optionValue="Id">
+                                            </p-dropdown>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                   
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Currency *</label>
+                                        <span>
+                                            <p-dropdown appendTo="body" [options]="currencyList"
+                                                optionLabel="label" [filter]="true" filterBy="label" [showClear]="true"
+                                                placeholder="Select Currency..." formControlName="CurrencyId" optionValue="Id" 
+                                                [showClear]="false" [ngClass]="{'invalid-error': !f['CurrencyId'].valid && (f['CurrencyId'].dirty || f['CurrencyId'].touched || isContractFormSubmit)}">
+                                            </p-dropdown>
+                                        </span>
+
+                                        <mat-error style="font-size: 12px;"
+                                        *ngIf="f['CurrencyId'].errors?.['required'] && (f['CurrencyId'].touched || isContractFormSubmit) ">
+                                        Currency is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6 mb-2">
+                                    <button type="button" class="btn btn-primary btn-raised"
+                                        style="padding: 4px 12px; margin-bottom: 2px;" (click)="ContractUploadFile(action == 'NewAddm' ? 'Addendum' : 'Contract')"
+                                        [disabled]="isDisabled || isDisableSave">Add Attachment</button>
+                                       
+                                    <span *ngIf="contractDetail?.Overview?.AttachmentFileName && uploadedFile == null">{{contractDetail.Overview.AttachmentFileName}}</span>
+                                    <input accept="image/*" type="file" class="file-input" hidden
+                                         #fileUpload formControlName="FileAttachment">
+                                        {{uploadedFile?.['name']}} <i *ngIf="uploadedFile?.['name']" class="fas fa-times" (click)="removeAttachment()"></i>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <div class="accordian-textarea">
+                                            <div class="accordian-textarea-box">
+                                                <h2>Description</h2>
+                                                <textarea class="form-control" rows="3" formControlName="Description"
+                                                maxlength="1000"></textarea>
+                                            </div>
+                                            <span class="desc-total">{{f['Description'].value.length ?
+                                                f['Description'].value.length : 0 }}/1000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title>
+                                    <div class="icon-vertical">
+                                    <img src="../../../../../../assets/images/Contract/fa-thin-fa-handshake.svg"
+                                        alt="Commitments Image">&nbsp;Commitments</div>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row mx-0">
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Annual Revenue Amount $</label>
+                                        <span><input type="text" class="form-control" formControlName="AnnualRevenueCommitment" (input)="filterNumber($event, 'AnnualRevenueCommitment')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Inventory Commitment Amount $</label>
+                                        <span><input type="text" class="form-control" formControlName="InventoryCommitment" (input)="filterNumber($event, 'InventoryCommitment')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Monthly Revenue Amount $</label>
+                                        <span><input type="text" class="form-control" formControlName="MonthlyRevenueCommitment" (input)="filterNumber($event, 'MonthlyRevenueCommitment')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Other Amount $</label>
+                                        <span><input type="text" class="form-control" formControlName="OtherCommitment" (input)="filterNumber($event, 'OtherCommitment')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <div class="accordian-textarea">
+                                            <div class="accordian-textarea-box">
+                                                <h2>Commitments Notes</h2>
+                                                <textarea class="form-control" rows="3" formControlName="CommitmentNotes"
+                                                maxlength="1000"></textarea>
+                                            </div>
+                                            <span class="desc-total">{{f['CommitmentNotes'].value.length ?
+                                                f['CommitmentNotes'].value.length : 0 }}/1000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title>
+                                    <div class="icon-vertical">
+                                    <img src="../../../../../../assets/images/Contract/fa-regular-fa-tags.svg"
+                                        alt="Discounts Image">&nbsp;Discounts</div>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row mx-0">
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Service Discount</label>
+                                        <span><input type="text" class="form-control" formControlName="ServiceDiscount" (input)="filterNumber($event, 'ServiceDiscount')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Feature Discount</label>
+                                        <span><input type="text" class="form-control" formControlName="FeatureDiscount" (input)="filterNumber($event, 'FeatureDiscount')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Equipment Discount</label>
+                                        <span><input type="text" class="form-control" formControlName="EquipmentDiscount" (input)="filterNumber($event, 'EquipmentDiscount')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Other Discount</label>
+                                        <span><input type="text" (input)="filterNumber($event, 'OtherDiscount')" class="form-control" formControlName="OtherDiscount"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <div class="accordian-textarea">
+                                            <div class="accordian-textarea-box">
+                                                <h2>Discounts Notes</h2>
+                                                <textarea class="form-control" rows="3" formControlName="DiscountNotes"
+                                                maxlength="1000"></textarea>
+                                            </div>
+                                            <span class="desc-total">{{f['DiscountNotes'].value.length ?
+                                                f['DiscountNotes'].value.length : 0 }}/1000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title>
+                                    <div class="icon-vertical">
+                                    <img src="../../../../../../assets/images/Contract/fa-thin-fa-cash-register.svg"
+                                        alt="Fees Image">&nbsp;Fees</div>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row mx-0">
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Installation Fees $</label>
+                                        <span><input type="text" (input)="filterNumber($event, 'InstallationFees')" class="form-control" formControlName="InstallationFees"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Activation Fees $</label>
+                                        <span><input type="text" class="form-control" (input)="filterNumber($event, 'ActivationFees')" formControlName="ActivationFees"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Construction Fees $</label>
+                                        <span><input type="text" class="form-control" formControlName="ConstructionFees" (input)="filterNumber($event, 'ConstructionFees')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Other Fees $</label>
+                                        <span><input type="text" class="form-control" formControlName="OtherFees" (input)="filterNumber($event, 'OtherFees')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <div class="accordian-textarea">
+                                            <div class="accordian-textarea-box">
+                                                <h2>Fees Notes</h2>
+                                                <textarea class="form-control" rows="3" formControlName="FeeNotes"
+                                                maxlength="1000"></textarea>
+                                            </div>
+                                            <span class="desc-total">{{f['FeeNotes'].value.length ?
+                                                f['FeeNotes'].value.length : 0 }}/1000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+
+                <div class="col-sm-12 col-md- 12 col-xl-6 padding-right-none">
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title>
+                                    <div class="icon-vertical">
+                                    <img src="../../../../../../assets/images/Contract/fa-thin-fa-list.svg"
+                                        alt="Terms Image">&nbsp;Terms</div>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <i class="fas fa-info-circle ml-1 position-header" (click)="openTooltipDialog()"
+                            tooltipClass="tooltip-bg"></i>
+                            <ng-template #termMainTooltip>
+                                <div class="mat-dialog-header">
+                                    <button type="button" class="close" mat-dialog-close>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="text-left">
+                                    <p class="mb-0" style="font-size: 14px;">
+                                        Enter the Contract Start and End Dates to allow the system to automatically calculate the contract term and the remaining months. The Reminder Period triggers notifications for upcoming contract expiration dates, while the Notice Period records the required notice time specified by the vendor for non-renewal of the contract.</p>
+                                </div>
+                            </ng-template>
+                            <div class="row mx-0">
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="datepicker-c-main" style="margin-bottom: 10px;">
+                                        <label class="form-label" style="width: 73px;">Start Date</label>
+                                        <p-calendar dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" appendTo="body" 
+                                            [showIcon]="true" formControlName="StartDate" (ngModelChange)="onChangeEndDate($event,'start')"
+                                            [ngClass]="{'invalid-error': !f['StartDate'].valid && (f['StartDate'].dirty || f['StartDate'].touched || isContractFormSubmit)}"
+                                            ></p-calendar>
+                                            <mat-error style="font-size: 12px;"
+                                        *ngIf="f['StartDate'].errors?.['required'] && (f['StartDate'].touched || isContractFormSubmit) ">
+                                        Start Date is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="datepicker-c-main second-datepicker" style="margin-bottom: 10px;">
+                                        <label class="form-label" style="width: 66px;">End Date</label>
+                                        <p-calendar dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" appendTo="body" [minDate]="setMindate"
+                                            [showIcon]="true" formControlName="EndDate" (ngModelChange)="onChangeEndDate($event,'end')"></p-calendar>
+                                            <mat-error style="font-size: 12px;"
+                                            *ngIf="f['EndDate'].errors?.['required'] && (f['EndDate'].touched || isContractFormSubmit) ">
+                                            End Date is required</mat-error>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Contract
+                                            Term</label>
+                                        <span><input type="text" class="form-control" formControlName="ContractTerm" disabled 
+                                            [readonly]="disableWithoutDate"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Months
+                                            Remaining</label>
+                                        <span><input type="text" class="form-control" formControlName="MonthsRemaining" disabled
+                                            [readonly]="disableWithoutDate"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Reminder
+                                            Period</label>
+                                        <span>
+                                            <p-dropdown formControlName="ReminderDaysAlarmId" [options]="monthsData"
+                                                placeholder="Select Reminder Period..."
+                                                appendTo="body" optionValue="Id" optionLabel="DisplayName"
+                                                [filter]="true" filterBy="DisplayName" [showClear]="false">
+                                            </p-dropdown></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Notice
+                                            Period</label>
+                                        <span><p-dropdown formControlName="NoticePeriodId" [options]="monthsData"
+                                            placeholder="Select Notice Period..."
+                                            appendTo="body" optionValue="Id" optionLabel="DisplayName"
+                                            [filter]="true" filterBy="DisplayName" [showClear]="false">
+                                        </p-dropdown></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Auto-Renewal</label>
+                                        <span>
+                                            <p-dropdown appendTo="body" optionLabel="Name" [filter]="true" 
+                                                filterBy="Name" [showClear]="true" optionValue="Id" [showClear]="false"
+                                                formControlName="AutoRenewal" [options]="autoRenewalList"
+                                                placeholder="Select Auto Renewal...">
+                                            </p-dropdown>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Custom
+                                            Payment Terms</label>
+                                            <span><input maxlength="50" type="text" class="form-control" formControlName="CustomPaymentTerms"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <div class="accordian-textarea">
+                                            <div class="accordian-textarea-box">
+                                                <h2>Terms Notes</h2>
+                                                <textarea class="form-control" rows="3" formControlName="TermNotes"
+                                                maxlength="1000"></textarea>
+                                            </div>
+                                            <span class="desc-total">{{f['TermNotes'].value.length ?
+                                                f['TermNotes'].value.length : 0 }}/1000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title>
+                                    <img src="../../../../../../assets/images/Contract/fa-duotone-fa-solid-fa-cannon.svg"
+                                        alt="Termination Image">&nbsp;Termination
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row mx-0">
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <label class="form-label mr-3">Early Termination Penalty</label>
+                                    <mat-radio-group formControlName="EarlyTerminationFee">
+                                        <mat-radio-button [value]="true">Yes</mat-radio-button>
+                                        <mat-radio-button [value]="false" class="m-l-10">No
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
+
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Termination Fees $</label>
+                                        <span><input type="text" class="form-control" formControlName="TerminationFees" (input)="filterNumber($event, 'TerminationFees')"></span>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <div class="accordian-textarea">
+                                            <div class="accordian-textarea-box">
+                                                <h2>Termination Notes</h2>
+                                                <textarea class="form-control" rows="3" formControlName="TerminationNotes"
+                                                maxlength="1000"></textarea>
+                                            </div>
+                                            <span class="desc-total">{{f['TerminationNotes'].value.length ?
+                                                f['TerminationNotes'].value.length : 0 }}/1000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title>
+                                    <div class="icon-vertical">
+                                    <img src="../../../../../../assets/images/Contract/fa-thin-fa-square-dollar.svg"
+                                        alt="Credits Image">&nbsp;Credits</div>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row mx-0">
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Activation Credit Amount $</label>
+                                        <span><input type="text" class="form-control" formControlName="ActivationCreditAmount" (input)="filterNumber($event, 'ActivationCreditAmount')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Spend Credits Amount $</label>
+                                        <span><input type="text" class="form-control" formControlName="SpendCreditAmount" (input)="filterNumber($event, 'SpendCreditAmount')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Other Credits Amount $</label>
+                                        <span><input type="text" class="form-control" formControlName="OtherCreditAmount" (input)="filterNumber($event, 'OtherCreditAmount')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Guaranteed Credits Amount $</label>
+                                        <span><input type="text" class="form-control" formControlName="GuaranteedCreditAmount" (input)="filterNumber($event, 'GuaranteedCreditAmount')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label"># of Activation Fee Waivers</label>
+                                        <span><input type="text" class="form-control" formControlName="NumberOfActivationFees" (input)="filterNumber($event, 'NumberOfActivationFees')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label"># of Termination Fee Waivers</label>
+                                        <span><input type="text" class="form-control" formControlName="NumberOfTerminationWaivers" (input)="filterNumber($event, 'NumberOfTerminationWaivers')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xl-12">
+                                    <div class="form-group">
+                                        <label class="form-label"># of Joint Activation/Termination Fee
+                                            Waivers</label>
+                                        <span><input type="text" class="form-control" formControlName="NumberOfJointActtermFees" (input)="filterNumber($event, 'NumberOfJointActtermFees')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <div class="accordian-textarea">
+                                            <div class="accordian-textarea-box">
+                                                <h2>Credit Notes</h2>
+                                                <textarea class="form-control" rows="3" formControlName="CreditNotes"
+                                                 maxlength="1000"></textarea>
+                                            </div>
+                                            <span class="desc-total">{{f['CreditNotes'].value.length ?
+                                                f['CreditNotes'].value.length : 0 }}/1000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary btn-raised" [disabled]="saveButtonLoadder || isDisableSave">
+                <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoadder"></span>Save</button>
+            </div>
+        </form>
+    </div>
+</div>

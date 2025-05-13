@@ -1,0 +1,27 @@
+mat-dialog-actions button{
+    color: #fff !important;
+}
+
+mat-dialog-container {
+    width: 600px;
+}
+
+.mat-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e2e5e8;
+}
+
+agm-map {
+    height: 300px;
+    width: 600px;
+}
+
+:host ::ng-deep .agm-map-container-inner{
+    width: 100% !important;
+}
+
+.form-control.map-control-c{
+    height: unset !important;
+    padding: 5px !important;
+}

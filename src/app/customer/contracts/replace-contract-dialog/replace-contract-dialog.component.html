@@ -1,0 +1,62 @@
+<div class="mat-dialog-header pb-2 mb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Replace Contract: (Document Name - Internal Contract Number)</h5>
+    </div>
+
+    <button type="button" class="close" [mat-dialog-close]="'undefined'">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content class="px-0 m-0">
+    <div class="card-body p-0">
+        <div class="container px-0">
+            <p class="mb-2" style="font-size: 14px;">
+                The following active Contract and Addendums will be marked Inactive and replaced by the new contract you
+                are adding. All assigned inventory will be associated with the new contract.
+            </p>
+            <mat-accordion class="example-headers-align accordion-grid">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt font-weight-bold">
+                            <img src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                alt="Contracts Image">&nbsp;All Documents
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <i class="fas fa-info-circle" (click)="openDialog()" tooltipClass="tooltip-bg"></i>
+                    <ng-template #ReplaceContractooltip>
+                        <div class="mat-dialog-header ReplaceContractooltip-header">
+                            <button type="button" class="close" (click)="closeModal()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="text-left dialog-data">
+                            <p class="mb-2">
+                                The active contract and addendums listed may have inventory associated with them. The
+                                replace contract action will do the following: </p>
+                            <ol class="mb-0">
+                                <li>Mark all the listed documents Inactive</li>
+                                <li>Creates a new Active Contract</li>
+                                <li>Copy the contract terms and other information from the existing contract record to
+                                    the new contract record for editing in an effort to help save time.</li>
+                                <li>Associates the existing inventory with the new contract record</li>
+                            </ol>
+                        </div>
+                    </ng-template>
+
+                    <!-- <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs" [rowData]="replaceRowData"
+                        [rowSelection]="rowSelection" [suppressRowClickSelection]="true" [defaultColDef]="defaultColDef"
+                        [sideBar]="sideBar" [singleClickEdit]="true" (onSelectionChangedEvent)="onSelectionChanged($event)" >
+                    </app-ag-grid-table> -->
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="py-3" align="center">
+
+    <button mat-button class="btn btn-primary" (click)="replaceContract()" cdkFocusInitial
+        [disabled]="saveButtonLoader">
+        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>
+        Replace Them!</button>
+
+</mat-dialog-actions>

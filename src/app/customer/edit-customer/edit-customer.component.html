@@ -1,0 +1,725 @@
+<div class="row">
+  <div class="col-12 px-0">
+    <app-card cardTitle=""  class="edit-customer-mb-none">
+      <form class="editForm" [formGroup]="editCustomerForm" (ngSubmit)="updateCustomer()">
+        <div class="row edit-customer">
+          <div class="col-sm-12 col-xl-12 text-right">
+            <span class="text-c-red">*Required field</span>
+          </div>
+          <div class="col-sm-12 col-xl-6 padding-left-none">
+
+            <mat-accordion class="example-headers-align">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <i class="ficon fas fa-hotel"></i>&nbsp;Organization
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <div class="row">
+
+                    <div class="col-md-6 col-sm-12 col-xl-6" *ngIf="isSuperTEMUsers">
+                      <div class="form-group">
+                        <label class="form-label">TEM {{temReqired ? '*' : ''}}</label>
+
+                        <span><p-dropdown [options]="tems" optionLabel="AccountName" [filter]="true"
+                            filterBy="AccountName"
+                            [ngClass]="{'invalid-error':f.ManagingAccountId.invalid && (f.ManagingAccountId.touched || isCustomerFormSubmit)}"
+                            [showClear]="true" placeholder="Select TEM..." formControlName="ManagingAccountId"
+                            appendTo="body" optionValue="Id" [showClear]="false" (onChange)="onTemChange($event)">
+                          </p-dropdown></span>
+                        <ng-container
+                          *ngIf="f.ManagingAccountId.invalid && (f.ManagingAccountId.touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f.ManagingAccountId.errors.required">TEM is
+                            required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xl-6" *ngIf="isSuperTEMUsers"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Customer *</label>
+                        <span><input type="text" class="form-control" required formControlName="AccountName" maxlength="100"
+                            [ngClass]="{'invalid-error': !f['AccountName'].valid && (f['AccountName'].dirty || f['AccountName'].touched || isCustomerFormSubmit)}"
+                            spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                        <ng-container *ngIf="f['AccountName'].invalid && (f['AccountName'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f.AccountName.errors.required">Customer is
+                            required
+                          </mat-error>
+                          <mat-error style="font-size: 12px;"
+                              *ngIf="f.AccountName.errors?.maxlength">Maximum length for the Customer is 100 characters
+                          </mat-error>
+                        </ng-container>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500" for="exampleInputPassword1"> Website </label>
+                        <span><input type="text" class="form-control" id="exampleInputPassword1" maxlength="400"
+                            formControlName="WebAddress" spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500 star-label-inline">Address One <span
+                            *ngIf="isShowAsterisk || !f['PhysicalAddress'].valid">*</span></label>
+                        <span><input type="text" class="form-control" (keyup)="checkAddressValidation()"
+                            formControlName="PhysicalAddress" maxlength="100"
+                            [ngClass]="{'invalid-error': !f['PhysicalAddress'].valid && (f['PhysicalAddress'].dirty || f['PhysicalAddress'].touched || isCustomerFormSubmit)}"
+                            spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+
+                        <ng-container
+                          *ngIf="f['PhysicalAddress'].invalid && (f['PhysicalAddress'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['PhysicalAddress'].errors.required">Address is
+                            required
+                          </mat-error>
+                          <mat-error style="font-size: 12px;"
+                            *ngIf="f['PhysicalAddress'].errors?.maxlength">Maximum length for the Address One is 100 characters
+                        </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Address Two</label>
+                        <span><input type="text" class="form-control" formControlName="PhysicalAddress2"
+                            (keyup)="checkAddressValidation2()" spaceTrimStartEndInput maxlength="100"
+                            [allowStartWithSpace]="false"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500 star-label-inline" for="exampleInputPassword1">City
+                          <span *ngIf="isShowAsterisk || !f['City'].valid">*</span></label>
+                        <span><input type="text" class="form-control" formControlName="City" id="exampleInputPassword1" maxlength="50"
+                            [ngClass]="{'invalid-error': !f['City'].valid && (f['City'].dirty && f['City'].touched || isCustomerFormSubmit)}"
+                            (keyup)="checkAddressValidation()" spaceTrimStartEndInput
+                            [allowStartWithSpace]="false"></span>
+
+                        <ng-container *ngIf="f['City'].invalid && (f['City'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['City'].errors.required">City is
+                            required
+                          </mat-error>
+                          <mat-error style="font-size: 12px;"
+                              *ngIf="f.City.errors?.maxlength">Maximum length for the City is 50 characters
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500 star-label-inline">Country <span
+                            *ngIf="isShowAsterisk || !f['CountryId'].valid">*</span> </label>
+                        <span><p-dropdown [options]="countries" optionLabel="Name" [filter]="true" filterBy="Name"
+                            [showClear]="true" placeholder="Select Country..."
+                            (onChange)="onCountrySelect(); checkAddressValidation()" appendTo="body"
+                            formControlName="CountryId" optionValue="Id" [showClear]="false">
+                          </p-dropdown></span>
+                        <ng-container *ngIf="f['CountryId'].invalid && (f['CountryId'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['CountryId'].errors.required">Country is
+                            required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500 star-label-inline">State/Province/Region <span
+                            *ngIf="isShowAsterisk || !f['StateId'].valid">*</span></label>
+                        <span><p-dropdown (onChange)="checkAddressValidation()" [options]="states" optionLabel="Name"
+                            [filter]="true" filterBy="Name" [showClear]="true"
+                            placeholder="Select State/Province/Region..." formControlName="StateId" appendTo="body"
+                            optionValue="Id" [showClear]="false">
+                          </p-dropdown></span>
+                        <ng-container *ngIf="f['StateId'].invalid && (f['StateId'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['StateId'].errors.required">State/Province/Region is
+                            required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1"
+                          class="form-label font-weight-500 star-label-inline">Zip/Postal Code <span
+                            *ngIf="isShowAsterisk || !f['PostalCode'].valid">*</span></label>
+                        <span><input type="text" class="form-control" (keyup)="checkAddressValidation()" maxlength="10"
+                            formControlName="PostalCode" id="exampleInputPassword1"
+                            [ngClass]="{'invalid-error': !f['PostalCode'].valid && (f['PostalCode'].dirty || f['PostalCode'].touched || isCustomerFormSubmit)}"
+                            spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                        <ng-container *ngIf="f['PostalCode'].invalid && (f['PostalCode'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['PostalCode'].errors.required">Zip/Postal Code is
+                            required
+                          </mat-error>
+                          <mat-error style="font-size: 12px;"
+                              *ngIf="f['PostalCode'].errors?.maxlength">Maximum length for the Zip/Postal
+                              Code is 10 characters
+                          </mat-error>
+                        </ng-container>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Status *</label>
+                        <span><p-dropdown [options]="statusList" optionLabel="Name" [filter]="false" filterBy="Name"
+                            (onChange)="onStatusChange($event)" [showClear]="true" placeholder="Select Status..."
+                            formControlName="Active" appendTo="body" optionValue="Id" [showClear]="false">
+                          </p-dropdown></span>
+                        <ng-container *ngIf="f['Active'].invalid && (f['Active'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['Active'].errors.required">Status is required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-check pl-0 d-flex">
+                        <label class="form-check-label pr-1 same-location-lable" for="defaultCheck2"
+                          style="font-weight: 500;">
+                          Keep for Production :
+                        </label>
+                        <input class="form-check-inner" type="checkbox" id="defaultCheck2"
+                          formControlName="KeepForProduction">
+                      </div>
+                    </div>
+                  </div> -->
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+
+            <mat-accordion class="example-headers-align">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="21px" height="auto"
+                        viewBox="0 0 198.000000 157.000000" preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,157.000000) scale(0.100000,-0.100000)" fill="#4680ff"
+                          stroke="none">
+                          <path d="M415 1553 c-34 -9 -53 -33 -66 -83 -11 -41 -18 -51 -50 -65 -32 -15
+-45 -16 -87 -5 -37 8 -56 9 -71 1 -40 -22 -120 -160 -121 -209 0 -13 17 -41
+40 -66 30 -32 40 -52 40 -76 0 -24 -10 -44 -40 -76 -23 -25 -40 -53 -40 -66 1
+-49 81 -187 121 -209 15 -8 34 -7 71 1 42 11 55 10 87 -5 32 -14 39 -24 50
+-65 20 -76 35 -85 156 -85 121 0 136 9 156 85 11 41 18 51 50 65 32 15 45 16
+87 5 37 -8 56 -9 71 -1 40 22 120 160 121 209 0 13 -17 41 -40 66 -54 59 -54
+93 0 152 23 25 40 53 40 66 -1 49 -81 187 -121 209 -15 8 -34 7 -71 -1 -42
+-11 -55 -10 -87 5 -32 14 -39 24 -50 65 -19 72 -36 83 -139 86 -48 2 -96 0
+-107 -3z m144 -155 c14 -57 18 -61 71 -88 25 -12 53 -29 62 -37 17 -15 53 -14
+113 3 16 4 24 -3 38 -32 l18 -37 -33 -34 c-31 -32 -32 -37 -34 -120 -1 -85 -1
+-86 33 -123 l34 -38 -18 -37 c-14 -29 -22 -35 -38 -31 -60 17 -96 18 -113 3
+-9 -8 -37 -25 -62 -37 -53 -27 -57 -31 -71 -87 -11 -42 -12 -43 -54 -43 -42 0
+-43 1 -54 43 -14 56 -18 60 -71 87 -25 12 -53 29 -63 38 -15 13 -26 14 -70 5
+-60 -12 -62 -12 -83 28 -15 30 -14 31 19 68 34 38 34 39 33 124 -2 84 -3 88
+-35 121 -32 33 -32 34 -17 64 21 41 23 41 83 29 44 -9 55 -8 70 5 10 9 38 26
+63 38 53 27 57 31 71 88 11 41 12 42 54 42 42 0 43 -1 54 -42z" />
+                          <path d="M431 1144 c-87 -73 -38 -214 74 -214 32 0 51 7 74 26 87 73 38 214
+-74 214 -32 0 -51 -7 -74 -26z" />
+                          <path d="M1235 960 c-33 -16 -77 -43 -97 -60 -41 -34 -46 -56 -27 -123 15 -54
+-16 -102 -74 -118 -23 -7 -52 -23 -64 -36 -21 -22 -23 -34 -23 -123 0 -89 2
+-101 23 -123 12 -13 41 -29 64 -36 58 -16 89 -64 74 -118 -19 -67 -14 -89 27
+-123 41 -34 150 -90 176 -90 9 0 36 18 60 40 60 56 102 56 162 0 24 -22 49
+-40 57 -40 22 0 150 66 185 94 35 30 39 54 21 119 -15 54 16 102 74 118 23 7
+52 23 65 36 20 22 22 34 22 123 0 89 -2 101 -22 123 -13 13 -42 29 -65 36 -58
+16 -89 64 -74 118 19 67 14 89 -26 123 -42 34 -151 90 -177 90 -9 0 -36 -18
+-60 -40 -34 -32 -51 -40 -81 -40 -30 0 -47 8 -81 40 -24 22 -52 40 -61 40 -10
+0 -45 -14 -78 -30z m100 -140 c28 -29 32 -30 120 -30 88 0 92 1 120 30 33 34
+46 37 81 14 23 -16 24 -21 18 -73 -5 -50 -3 -61 18 -93 14 -20 31 -50 38 -67
+9 -23 22 -34 54 -43 55 -15 66 -25 66 -58 0 -33 -11 -43 -66 -58 -35 -10 -44
+-19 -64 -62 -13 -28 -30 -56 -37 -62 -14 -11 -16 -66 -4 -108 6 -21 2 -28 -21
+-43 -39 -23 -50 -22 -83 13 -28 29 -32 30 -119 30 -88 0 -91 -1 -123 -32 l-32
+-31 -40 17 c-37 17 -39 20 -30 50 13 45 11 92 -4 104 -7 6 -24 34 -37 62 -20
+43 -29 52 -64 62 -55 15 -66 25 -66 58 0 33 11 43 66 58 32 9 45 20 54 43 7
+17 24 47 38 67 21 32 23 43 18 93 -7 56 -6 58 21 73 39 21 45 20 78 -14z" />
+                          <path d="M1381 595 c-40 -34 -56 -84 -41 -130 37 -113 193 -113 230 0 36 109
+-101 203 -189 130z" />
+                        </g>
+                      </svg>&nbsp;Internal Settings
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <div class="col-md-12 px-0">
+                      <div class="form-group">
+
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">TEM Account *
+
+                          <i class="fas fa-info-circle" (click)="TEMAccountTooltip()" tooltipClass="tooltip-bg"></i>
+                          <ng-template #TEMAccount>
+                            <div class="mat-dialog-header">
+                              <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                              <p class="mb-0">Internal link to Financial systems for this customer</p>
+                            </div>
+                          </ng-template>
+                        </label>
+                        <span><input type="text" class="form-control" [required]="isBillPay"
+                            [ngClass]="{'invalid-error': !f['TEMAccountNumber'].valid && (f['TEMAccountNumber'].dirty || f['TEMAccountNumber'].touched || isCustomerFormSubmit)}"
+                            formControlName="TEMAccountNumber" spaceTrimStartEndInput
+                            [allowStartWithSpace]="false"></span>
+                        <ng-container
+                          *ngIf="f['TEMAccountNumber'].invalid && (f['TEMAccountNumber'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['TEMAccountNumber'].errors.required">TEM Account
+                            is
+                            required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+
+            <mat-accordion class="example-headers-align">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <i class="fas fa-shield-alt"></i>&nbsp;Security
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <div class="col-12 px-0">
+                      <p class="mb-2" style="font-size: 14px;">Two-factor authentication is an
+                        extra layer of security that requires users to enter a code from
+                        their email when logging into their account from an untrusted
+                        device. When active all users of the system will be required to use
+                        MFA.</p>
+                      <div class="mb-2">
+                        <mat-radio-group class="mt-2" formControlName="TwoFactorEnabled"
+                          (change)="changeMFAvalue($event.value)">
+                          <mat-radio-button [value]="true"> MFA Required
+                          </mat-radio-button>
+                          <mat-radio-button [value]="false" class="m-l-10"> MFA not
+                            required
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+
+                    </div>
+                    <p class="mb-2" style="font-size: 14px;">Contact information for MFA-related
+                      emails or issues with MFA</p>
+
+                    <div class="col-md-12 px-0">
+                      <div class="form-group">
+                        <label class="form-label star-label-inline">Contact Email <span *ngIf="isMFAon">*</span></label>
+                        <span>
+                          <input type="text" class="form-control" formControlName="MFAContactEmail"
+                            [ngClass]="{'invalid-error': !f['MFAContactEmail'].valid && (f['MFAContactEmail'].dirty || f['MFAContactEmail'].touched || isCustomerFormSubmit)}"
+                            maxlength="60" [readOnly]="!isMFAon" />
+                        </span>
+
+                        <ng-container
+                          *ngIf="f['MFAContactEmail'].invalid && (f['MFAContactEmail'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['MFAContactEmail'].errors.required">Contact Email is
+                            required
+                          </mat-error>
+
+                          <mat-error style="font-size: 12px;"
+                            *ngIf="f['MFAContactEmail'].errors.pattern && !f['MFAContactEmail'].errors.required">
+                            Contact Email is invalid.</mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 px-0">
+                      <div class="form-group">
+                        <label class="form-label star-label-inline">Contact Name <span *ngIf="isMFAon">*</span></label>
+                        <span>
+                          <input type="text" class="form-control" formControlName="MFAContactName"
+                            [ngClass]="{'invalid-error': !f['MFAContactName'].valid && (f['MFAContactName'].dirty || f['MFAContactName'].touched || isCustomerFormSubmit)}"
+                            maxlength="60" [readOnly]="!isMFAon" />
+                        </span>
+
+                        <ng-container
+                          *ngIf="f['MFAContactName'].invalid && (f['MFAContactName'].touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['MFAContactName'].errors.required">Contact Name is
+                            required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+          </div>
+          <div class="col-sm-12 col-xl-6 padding-right-none">
+            <!-- <mat-accordion class="example-headers-align">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <i class="fas fa-credit-card" style="margin-top:3px;"></i>&nbsp;
+                      Payment Settings
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Bill Pay *</label>
+                        <span><p-dropdown (onChange)="onBillPayChange()" [options]="billPayList" optionLabel="Name"
+                            [filter]="false" filterBy="Name" [showClear]="true" placeholder="Select Bill Pay..."
+                            formControlName="BillPayOption" appendTo="body" optionValue="Id" [showClear]="false"
+                            [ngClass]="{'invalid-error': f.BillPayOption.invalid && (f.BillPayOption.touched || isCustomerFormSubmit)}">
+                          </p-dropdown></span>
+                        <ng-container
+                          *ngIf="f.BillPayOption.invalid && (f.BillPayOption.touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f.BillPayOption.errors.required">Bill Pay is
+                            required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">TEM Account *</label>
+                        <span><input type="text" class="form-control" [required]="isBillPay"
+                            [ngClass]="{'invalid-error': !f.TEMAccountNumber.valid && (f.TEMAccountNumber.dirty || f.TEMAccountNumber.touched || isCustomerFormSubmit)}"
+                            formControlName="TEMAccountNumber" spaceTrimStartEndInput
+                            [allowStartWithSpace]="false"></span>
+                        <ng-container
+                          *ngIf="f.TEMAccountNumber.invalid && (f.TEMAccountNumber.touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f.TEMAccountNumber.errors.required">TEM Account
+                            is
+                            required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+            <mat-accordion class="example-headers-align">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <i class="fas fa-cogs" style="margin-top:3px;"></i>&nbsp;
+                      Approval Settings
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Approval Days <i class="fas fa-info-circle"
+                            [placement]="'auto'" container="body"
+                            ngbTooltip="Total Number of days for approval after an invoice is posted to the system"
+                            tooltipClass="tooltip-bg"></i></label>
+                        <span><p-dropdown [options]="days" appendTo="body" optionLabel="stringValue"
+                            placeholder="Select Approval Days..." formControlName="ApprovalDays"
+                            optionValue="stringValue">
+                          </p-dropdown></span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Notification Frequency (Days) <i
+                            class="fas fa-info-circle" [placement]="'auto'" container="body"
+                            ngbTooltip="Frequency of reminders an approver will receive on an invoice until they take action"
+                            tooltipClass="tooltip-bg"></i></label>
+                        <span><p-dropdown [options]="days" appendTo="body" optionLabel="stringValue"
+                            placeholder="Select Notification Frequency (Days)..."
+                            formControlName="NotificationFrequencyDays" optionValue="stringValue">
+                          </p-dropdown></span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Cost Center Edits * <i class="fas fa-info-circle"
+                            [placement]="'auto'" container="body"
+                            ngbTooltip="‘Yes’ allows for manual edits of cost centers. For customers using cost center imports each month, the best practice is to set this to ‘No’."
+                            tooltipClass="tooltip-bg"></i></label>
+                        <span><p-dropdown [options]="yesNoList" appendTo="body" optionLabel="Name"
+                            placeholder="Select Cost Center Edits..." formControlName="AllowCCManualEditOptions"
+                            optionValue="Name">
+                          </p-dropdown></span>
+                        <ng-container
+                          *ngIf="f.AllowCCManualEditOptions.invalid && (f.AllowCCManualEditOptions.touched || isCustomerFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f.AllowCCManualEditOptions.errors.required">Cost
+                            Center
+                            Edits are required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion> -->
+
+            <mat-accordion class="example-headers-align invoice-setting-main">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <i class="fas fa-toolbox" style="margin-top:3px;"></i>&nbsp;Invoice Settings
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+
+                    <div class="col-12">
+                      <!-- <div class="invoice-settings-heading">
+                        <label class="form-label">Task</label>
+                        <label class="form-label">Status</label>
+                        <label class="form-label">Selection</label>
+                      </div> -->
+                      <div class="form-group invoice-setting-section">
+                        <label class="form-label">Inventory Assignment
+                          <i class="fas fa-info-circle" (click)="ReconciliationTooltip()" tooltipClass="tooltip-bg"></i>
+                          <ng-template #Reconciliation>
+                            <div class="mat-dialog-header">
+                              <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                              <p class="mb-0">Reconciliation involves assigning a Primary User or Location to inventory items, which is essential for accurate cost allocation, approvals, and company-level dashboard reporting. Please designate the primary responsible party for each inventory item, either by person or location.</p>
+                            </div>
+                          </ng-template>
+
+                        </label>
+                        <!-- <mat-radio-group formControlName="ReconStatus" (change)="onChangeReconciliation($event)">
+                          <mat-radio-button [value]="true"> On
+                          </mat-radio-button>
+                          <mat-radio-button [value]="false" class="m-l-10"> Off
+                          </mat-radio-button>
+                        </mat-radio-group> -->
+
+                        <span><p-dropdown [disabled]="!this.viewNEdit || this.f['ReconStatus'].value == false"
+                            [filter]="true" formControlName="ReconOption" [showClear]="false" appendTo="body"
+                            [options]="reconciliationList" optionLabel="Name" filterBy="Name"
+                            placeholder="Select Reconciliation..." optionValue="Id">
+                          </p-dropdown></span>
+                      </div>
+
+                      <div class="form-group invoice-setting-section"
+                        [ngClass]="isCostAllocationValue ? 'child-main-section' : ''">
+                        <label class="form-label">Cost Allocation
+                          <i class="fas fa-info-circle" (click)="CostAllocationTooltip()" tooltipClass="tooltip-bg"></i>
+                          <ng-template #CostAllocation>
+                            <div class="mat-dialog-header">
+                              <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                              <!-- <p class="mb-0">Cost Allocation involves attributing all charges on an invoice to specific
+                                Cost Center(s). Cost Allocation helps ensure all charges are allocated 100%. To utilize
+                                Cost Allocation, Reconciliation must also be activated. Please designate the responsible
+                                party for managing Cost Allocation process when it is ‘On.’</p> -->
+
+                                <p class="mb-0">
+                                  Selecting <i class="bold-me">‘Yes’ allows manual edits to Cost Centers. </i>However, if your company <i class="bold-me">imports Cost Centers to the Cost Center Repository, it’s best to keep this set to ‘No’ </i>to maintain data consistency. Companies using the <i class="bold-me">Cost Center Repository should always select ‘No’ </i>since updates come directly from the import file. Additionally, <i class="bold-me">manual edits can cause spaces in GL codes to be lost.</i>
+                              </p>
+                            </div>
+                          </ng-template>
+                        </label>
+                        <mat-radio-group formControlName="CostAllocationStatus"
+                          (change)="onCostAllocationChange($event)">
+                          <mat-radio-button [value]="true"> On
+                          </mat-radio-button>
+                          <mat-radio-button [value]="false" class="m-l-10"> Off
+                          </mat-radio-button>
+                        </mat-radio-group>
+                        <span><p-dropdown [filter]="true"
+                            [disabled]="!this.viewNEdit || this.f['CostAllocationStatus'].value == false"
+                            [showClear]="false" placeholder="Select Cost Allocation..." appendTo="body"
+                            formControlName="CostAllocationOption" [options]="costAllocationList" optionLabel="Name"
+                            filterBy="Name" optionValue="Id">
+                          </p-dropdown></span>
+                      </div>
+
+                      <div class="form-group invoice-setting-section child-section"
+                        *ngIf="this.f['CostAllocationStatus'].value == true">
+                        <label class="form-label pre-space-label">Allow Additional Cost Centers?
+                          <i class="fas fa-info-circle" (click)="CostCenterEditsTooltip()"
+                            tooltipClass="tooltip-bg"></i>
+                          <ng-template #CostCenterEdits>
+                            <div class="mat-dialog-header">
+                              <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                              <p class="mb-0">‘Yes’ allows for manual edits of cost centers. For customers using cost
+                                center imports each month, the best practice is to set this to ‘No’.</p>
+                            </div>
+                          </ng-template>
+                        </label>
+                        <mat-radio-group formControlName="CostAllocationEditStatus">
+                          <mat-radio-button [value]="true"> On
+                          </mat-radio-button>
+                          <mat-radio-button [value]="false" class="m-l-10"> Off
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+
+                      <div class="form-group invoice-setting-section"
+                        [ngClass]="{'child-main-section' : isApprovalValue}">
+                        <label class="form-label">Approvals
+                          <i class="fas fa-info-circle" (click)="ApprovalsTooltip()" tooltipClass="tooltip-bg"></i>
+                          <ng-template #Approvals>
+                            <div class="mat-dialog-header">
+                              <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                              <p class="mb-0">Approvals are required when a customer requests a thorough review and
+                                authorization of all costs before payment or integration into a financial system.
+                                Activation of Approvals is contingent upon the Reconciliation feature being enabled.</p>
+                            </div>
+                          </ng-template>
+                        </label>
+                        <mat-radio-group formControlName="ApprovalStatus" (change)="onApprovalStatus($event)">
+                          <mat-radio-button [value]="true"> On
+                          </mat-radio-button>
+                          <mat-radio-button [value]="false" class="m-l-10"> Off
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+
+                      <div class="form-group invoice-setting-section child-section-multi"
+                        *ngIf="this.f['ApprovalStatus'].value == true">
+                        <label class="form-label pre-space-label pre-dropdown-width">Approval Days
+
+                          <i class="fas fa-info-circle" (click)="ApprovalDaysTooltip()" tooltipClass="tooltip-bg"></i>
+                          <ng-template #ApprovalDays>
+                            <div class="mat-dialog-header">
+                              <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                              <p class="mb-0">Total Number of days for approval after an invoice is posted to the system
+                              </p>
+                            </div>
+                          </ng-template>
+
+                        </label>
+                        <span><p-dropdown [options]="days" appendTo="body" optionLabel="stringValue"
+                            placeholder="Select Approval Days..." formControlName="ApprovalDays"
+                            optionValue="stringValue">
+                          </p-dropdown></span>
+                      </div>
+
+
+                      <div class="form-group invoice-setting-section child-section"
+                        *ngIf="this.f['ApprovalStatus'].value == true">
+                        <label class="form-label pre-space-label pre-dropdown-width">Notification Frequency (Days)
+
+                          <i class="fas fa-info-circle" (click)="NotificationFrequencyTooltip()"
+                            tooltipClass="tooltip-bg"></i>
+                          <ng-template #NotificationFrequency>
+                            <div class="mat-dialog-header">
+                              <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                              <p class="mb-0">Frequency of reminders an approver will receive on an invoice until they
+                                take action</p>
+                            </div>
+                          </ng-template>
+
+                        </label>
+                        <span><p-dropdown [options]="days" appendTo="body" optionLabel="stringValue"
+                            placeholder="Select Notification Frequency (Days)..."
+                            formControlName="NotificationFrequencyDays" optionValue="stringValue">
+                          </p-dropdown></span>
+                      </div>
+
+                      <div class="form-group invoice-setting-section">
+                        <label class="form-label">Bill Pay
+
+                          <i class="fas fa-info-circle" (click)="BillPayTooltip()" tooltipClass="tooltip-bg"></i>
+                          <ng-template #BillPay>
+                            <div class="mat-dialog-header">
+                              <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                              <p class="mb-0">When Bill Pay is activated, the system manages the payment of invoices on
+                                behalf of the customer. Please designate the responsible party for managing the Bill Pay
+                                process when it is ‘On.’</p>
+                            </div>
+                          </ng-template>
+                        </label>
+                        <mat-radio-group formControlName="BillPayStatus">
+                          <mat-radio-button [value]="true"> On
+                          </mat-radio-button>
+                          <mat-radio-button [value]="false" class="m-l-10"> Off
+                          </mat-radio-button>
+                        </mat-radio-group>
+                        <span><p-dropdown [disabled]="!this.viewNEdit || this.f['BillPayStatus'].value == false"
+                            [options]="billPayList" optionLabel="Name" [filter]="true" filterBy="Name"
+                            [showClear]="true" placeholder="Select Bill Pay..." formControlName="BillPayOption"
+                            appendTo="body" optionValue="Id" [showClear]="false">
+                          </p-dropdown></span>
+                      </div>
+                      <ng-container
+                        *ngIf="f['ReconStatus'].value == false && f['CostAllocationStatus'].value == true && f['ApprovalStatus'].value == false && isCustomerFormSubmit">
+                        <mat-error style="font-size: 12px;position: relative;top: -8px; left: 11px;">Inventory
+                          Assignment must be ‘On’ to
+                          use Cost Allocation and Approvals.
+                        </mat-error>
+                      </ng-container>
+
+                      <ng-container
+                        *ngIf="f['ApprovalStatus'].value == true && (f['CostAllocationStatus'].value == false || f['ReconStatus'].value == false) && isCustomerFormSubmit">
+                        <!-- <mat-error style="font-size: 12px;position: relative;top: -8px; left: 11px;">Inventory
+                          Assignment and Cost
+                          Allocation must be ‘On’ to use Approvals.
+                        </mat-error> -->
+
+                        <mat-error style="font-size: 12px;position: relative;top: -8px; left: 11px;">Cost
+                          Allocation must be ‘On’ to use Approvals.
+                        </mat-error>
+                      </ng-container>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+
+          </div>
+
+          <div class="col-12 text-center">
+            <button type="submit" [disabled]="!viewNEdit || saveButtonLoadder" class="btn btn-primary"> <span
+                class="spinner-border spinner-border-sm mr-1" role="status"
+                *ngIf="saveButtonLoadder"></span>Save</button>
+          </div>
+        </div>
+
+        <!-- Change Log Section Start -->
+        <app-change-log [title]="'Customer'" [customerID]="accountData.AccountId" [logLoader]="logLoader" [changelogData]="changelogData" [className]="'change-log-sec-multi2'"
+          [column]="columns"></app-change-log>
+      </form>
+
+    </app-card>
+  </div>
+</div>

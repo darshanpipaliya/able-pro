@@ -1,0 +1,30 @@
+<div class="mat-dialog-header pb-3">
+    <!-- <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button> -->
+    <h5 class="modal-title text-c-blue">Upload {{dialogData}}</h5>
+    <i class="fas fa-times" type="button" [mat-dialog-close]="close"></i>
+</div>
+<div class="row mt-1">
+    <div class="col-sm-12 px-0">
+        <div>
+            <p style="font-size: 14px;">
+                Use this page to upload an {{dialogData}}. Select ‘Browse’ to location and select the {{dialogData}}. Select the ‘Upload’ button to initiate the upload. 
+            </p>
+        </div>
+        <div class="mt-2">
+
+            <p-fileUpload name="upload-addendum" [showCancelButton]="false" [chooseLabel]="'Browse'" [multiple]="false" [showUploadButton]="false"
+                (onSelect)="onUpload($event)" (onRemove)="onRemove($event)"
+            ></p-fileUpload>
+
+            <ng-container>
+                <div class="text-center m-t-20">
+                    <button class="btn btn-primary" (click)="uploadAttachment()" [disabled]="!selectedFile">
+                        <!-- <span *ngIf="saveButtonDisabled" class="spinner-border spinner-border-sm mr-2" role="status"></span> -->
+                        Upload</button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

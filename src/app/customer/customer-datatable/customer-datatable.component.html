@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-sm-12 px-0">
+    <mat-card>
+      <mat-card-content>
+
+        <app-header-section
+          [buttonOptions]="buttonOptions"
+          [selectedButton]="selectedButton"
+          [temRoles]="temRoles"
+          [selectedTem]="selectedTem"
+          [disableTemSearchDD]="disableTemSearchDD"
+          [tems]="tems"
+          [disableTemSearch]="disableTemSearch"
+          [currentOpenEditPagevar]="currentOpenEditPagevar"
+          [isDisabledExport]="isDisabledExport"
+          [tableDataExist]="tableDataExist"
+          [viewNEdit]="viewNEdit"
+          [trackByIndex]="trackByIndex"
+          (buttonClick)="onButtonClick($event)"
+          (temChange)="onTemChange()"
+          (filterGridByTEMId)="filterGridByTEMId($event)"
+          (exportDataAsExcel)="onBtnExportDataAsExcel()"
+          (add)="add()"
+        ></app-header-section>
+
+        <div class="table-responsive">
+          <mat-tab-group preserveContent [selectedIndex]="currentIndex" (selectedIndexChange)="changeTab($event)">
+
+            <ng-container *ngFor="let customer of customerTabArray;let i = index; trackBy: trackByIndex">
+
+              <mat-tab>
+                <ng-template mat-tab-label *ngIf="customer.tabType === 'Table'">
+                  <i class="fas fa-hotel" style="color: #4680ff;"> </i>&nbsp;Customer
+                </ng-template>
+                <ng-template mat-tab-label *ngIf="customer['tabType'] === 'Add'">
+                  <i *ngIf="customer['tabType'] === 'Add'" class="fas fa-hotel" style="color: #4680ff;"></i>&nbsp;Add
+                  Customer&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                </ng-template>
+                <ng-template mat-tab-label *ngIf="customer['tabType'] === 'Edit'">
+                  <i class="fas fa-edit"
+                    style="color: #4680ff;"></i>&nbsp;{{customer.accountData.AccountName}}&nbsp;<mat-icon
+                    (click)="removeTab(i)">cancel</mat-icon>
+                </ng-template>
+
+
+                <ng-template matTabContent>
+
+                  <div class="mt-2">
+                    <app-p-tree-customer *ngIf="customer['tabType'] === 'Table'"
+                      (tableDataExist)="tableDataExistFn($event)" (exportAccountData)="exportAccountData($event)"
+                      (selectedRowsEmit)="selectedRowsEmit($event)"
+                      (rowCellDoubleClicked)="rowCellDoubleClicked($event)" />
+
+                    <app-add-customer *ngIf="customer['tabType'] === 'Add'" [clickOnSearchButton]="clickOnSearchButton"
+                      [selected]="currentIndex" (setClickFalse)="setClickFalse($event, i)"
+                      (currentOpenEditPage)="currentOpenEditPage($event)"
+                      (onCustomerAddEvent)="onCustomerAddEvent($event, i)"
+                      (onCustomerComponetDestroy)="onCustomerComponetDestroy($event,i)"
+                      [selectedTemCustomer]="selectedTem" [accountData]="customer.accountData"
+                      [selectedTem]="selectedTem" [selectedWiseTemDD]="selectedWiseTemDD" [currentIndexPage]="i" />
+
+                    <app-edit-customer *ngIf="customer['tabType'] === 'Edit'"
+                      (currentOpenEditPage)="currentOpenEditPage($event)" [accountData]="customer.accountData"
+                      (onCustomerEditEvent)="onCustomerEditEvent($event, i)"
+                      (customerTemValue)="customerTemValue($event)" />
+                  </div>
+                </ng-template>
+              </mat-tab>
+            </ng-container>
+
+          </mat-tab-group>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

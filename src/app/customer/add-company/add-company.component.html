@@ -1,0 +1,311 @@
+<div class="row">
+  <div class="col-12 px-0">
+    <app-card cardTitle=""     class="edit-company-mb-none">
+      <form [formGroup]="addCompanyForm" (ngSubmit)="saveCompany()" class="editForm" novalidate>
+        <div class="row" id="FixedDiv">
+          <div class="col-sm-12 col-xl-12 text-right">
+            <span class="text-c-red">*Required field</span>
+          </div>
+          <div class="col-sm-12 col-xl-6 padding-left-none">
+            <mat-accordion class="example-headers-align">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <i class="ficon fas fa-building"></i>&nbsp;Organization
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Customer *</label>
+
+                        <span><p-dropdown [options]="customers" appendTo="body" optionLabel="AccountName"
+                            [filter]="true" filterBy="AccountName" formControlName="AccountId"
+                            placeholder="{{customersLoader ? 'Loading...': 'Select customer...'}}" optionValue="Id"
+                            [showClear]="false"
+                            [ngClass]="{'invalid-error': f['AccountId'].invalid && (f['AccountId'].touched || isCompanyFormSubmit)}">
+                          </p-dropdown></span>
+
+                        <ng-container *ngIf="f['AccountId'].invalid && (f['AccountId'].touched || isCompanyFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['AccountId'].errors.required">Customer is
+                            required</mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">Company *</label>
+                        <span><input type="text" class="form-control" id="exampleInputPassword1" required
+                            formControlName="CompanyName" maxlength="100"
+                            [ngClass]="{'invalid-error': !f['CompanyName'].valid && (f['CompanyName'].dirty || f['CompanyName'].touched || isCompanyFormSubmit)}"
+                            spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                        <ng-container *ngIf="f['CompanyName'].invalid && (f['CompanyName'].touched || isCompanyFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['CompanyName'].errors.required">Company is
+                            required
+                          </mat-error>
+                          <mat-error style="font-size: 12px;"
+                              *ngIf="f['CompanyName'].errors?.maxlength">Maximum length for the Company is 100 characters
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+          </div>
+          <div class="col-sm-12 col-xl-6 padding-right-none">
+            <mat-accordion class="example-headers-align">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <i class="fas fa-list" style="margin-top:3px;"></i>&nbsp;Status
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <!-- <div class="col-md-12   btn  had hdec">Account</div> -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Status *</label>
+                        <span><p-dropdown [options]="statusList" optionLabel="Name" [filter]="false" filterBy="Name"
+                            [showClear]="true" placeholder="Select Status..." formControlName="Active" appendTo="body"
+                            optionValue="Id" [showClear]="false" [disabled]="true"
+                            [ngClass]="{'invalid-error': f['Active'].invalid && (f['Active'].touched || isCompanyFormSubmit)}">
+                          </p-dropdown></span>
+                        <ng-container *ngIf="f['Active'].invalid && (f['Active'].touched || isCompanyFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['Active'].errors.required">Status is required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Primary * <i class="fas fa-info-circle"
+                             container="body"
+                            ngbTooltip="One Company must be defined as primary in the Customer structure"
+                            tooltipClass="tooltip-bg"></i></label>
+                        <span> <p-dropdown [options]="yesNoList" appendTo="body" optionLabel="Name"
+                            placeholder="Select Primary..." formControlName="Primary" optionValue="Id"
+                            [ngClass]="{'invalid-error': f['Primary'].invalid && (f['Primary'].touched || isCompanyFormSubmit)}">
+                          </p-dropdown></span>
+                        <ng-container *ngIf="f['Primary'].invalid && (f['Primary'].touched || isCompanyFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f['Primary'].errors.required">Primary is required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+          </div>
+          <div class="col-sm-12 col-xl-6 padding-left-none">
+            <mat-accordion class="example-headers-align ap-setting-section">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <i class="fas fa-cogs" style="margin-top:3px;"></i>&nbsp;AP Setting
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <!-- <div class="col-md-12   btn  had hdec">Account</div> -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">AP System </label>
+
+                        <span><p-dropdown (onChange)="onAPSystemChange()" [options]="apsystems" appendTo="body"
+                            optionLabel="Name" filterBy="Name" placeholder="Select AP System..."
+                            formControlName="APSystemId" optionValue="Id" [showClear]="false">
+                          </p-dropdown></span>
+
+
+                        <!-- <ng-container *ngIf="f.APSystemId.invalid && (f.APSystemId.touched || isCompanyFormSubmit)">
+                      <mat-error style="font-size: 12px;" *ngIf="f.APSystemId.errors.required">AP System is
+                        required</mat-error>
+                    </ng-container> -->
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">AP ID <i
+                            class="fas fa-info-circle" container="body"
+                            ngbTooltip="Customer assigned ID from the accounting application"
+                            tooltipClass="tooltip-bg"></i></label>
+                        <span><input type="text" OnlyNumber class="form-control" id="exampleInputPassword1"
+                            formControlName="RefNumber" [maxlength]="10" spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 px-0" style="padding: 0 1px !important;">
+                      <div class="form-group">
+
+                        <label class="form-label font-weight-500">AP Export Type </label>
+                        <span><p-dropdown [options]="apsystemexports" appendTo="body" optionLabel="DisplayName"
+                            filterBy="DisplayName" placeholder="Select AP System Export..."
+                            formControlName="APSystemExportTypeId" optionValue="Id" [showClear]="false">
+                          </p-dropdown></span>
+
+                        <!-- <ng-container
+                      *ngIf="f.APSystemExportTypeId.invalid && (f.APSystemExportTypeId.touched || isCompanyFormSubmit)">
+                      <mat-error style="font-size: 12px;" *ngIf="f.APSystemExportTypeId.errors.required">AP Export Type
+                        is
+                        required</mat-error>
+                    </ng-container> -->
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 px-0" style="padding: 0 1px !important;">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">Import Company Name <i
+                            class="fas fa-info-circle" container="body"
+                            ngbTooltip="Company name in the accounting application"
+                            tooltipClass="tooltip-bg"></i></label>
+                        <span> <input type="text" class="form-control" id="exampleInputPassword1"
+                            formControlName="Alias" [maxlength]="100" spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">GL Structure *</label>
+                        <span> <p-dropdown [options]="structureJobData" appendTo="body" [showClear]="false"
+                            optionLabel="CompanyDisplayRefNumber" placeholder="Select GL Structure" optionValue="RefNumber"
+                            formControlName="GLRefNumber" [filter]="true" filterBy="CompanyDisplayRefNumber">
+                          </p-dropdown></span>
+
+                        <ng-container *ngIf="f.GLRefNumber.invalid && (f.GLRefNumber.touched || isCompanyFormSubmit)">
+                          <mat-error style="font-size: 12px;" *ngIf="f.GLRefNumber.errors.required">GL Structure is required
+                          </mat-error>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Job Structure</label>
+                        <span> <p-dropdown [options]="structureJobData" appendTo="body" [showClear]="false"
+                            optionLabel="CompanyDisplayRefNumber" placeholder="Select Job Structure..." optionValue="RefNumber"
+                            formControlName="JobRefNumber" [filter]="true" filterBy="CompanyDisplayRefNumber">
+                          </p-dropdown></span>
+                      </div>
+    
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+            <mat-accordion class="example-headers-align">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="20px" height="auto"
+                        viewBox="0 0 184.000000 144.000000" preserveAspectRatio="xMidYMid meet">
+    
+                        <g transform="translate(0.000000,144.000000) scale(0.100000,-0.100000)" fill="#4680ff"
+                          stroke="none">
+                          <path d="M30 720 l0 -700 895 0 895 0 0 700 0 700 -895 0 -895 0 0 -700z m420
+    575 l0 -75 -60 0 -60 0 0 -100 0 -100 60 0 60 0 0 -65 0 -65 -187 2 -188 3 -3
+    238 -2 237 190 0 190 0 0 -75z m400 0 l0 -75 -60 0 -60 0 0 -100 0 -100 60 0
+    60 0 0 -65 0 -65 -175 0 -175 0 0 65 0 65 60 0 60 0 0 100 0 100 -60 0 -60 0
+    0 75 0 75 175 0 175 0 0 -75z m500 0 l0 -75 -60 0 -60 0 0 -100 0 -100 60 0
+    60 0 0 -65 0 -65 -225 0 -225 0 0 65 0 65 60 0 60 0 0 100 0 100 -60 0 -60 0
+    0 75 0 75 225 0 225 0 0 -75z m428 -162 l-3 -238 -187 -3 -188 -2 0 65 0 65
+    60 0 60 0 0 100 0 100 -60 0 -60 0 0 75 0 75 190 0 190 0 -2 -237z m-1198 -13
+    l0 -50 -105 0 -105 0 0 50 0 50 105 0 105 0 0 -50z m400 0 l0 -50 -105 0 -105
+    0 0 50 0 50 105 0 105 0 0 -50z m500 0 l0 -50 -105 0 -105 0 0 50 0 50 105 0
+    105 0 0 -50z m-1030 -335 l0 -65 -60 0 -60 0 0 -100 0 -100 60 0 60 0 0 -50 0
+    -50 -60 0 -60 0 0 -100 0 -100 60 0 60 0 0 -75 0 -75 -190 0 -190 0 0 383 c0
+    211 3 387 7 390 3 4 89 7 190 7 l183 0 0 -65z m400 0 l0 -65 -60 0 -60 0 0
+    -100 0 -100 60 0 60 0 0 -50 0 -50 -60 0 -60 0 0 -100 0 -100 60 0 60 0 0 -75
+    0 -75 -175 0 -175 0 0 75 0 75 60 0 60 0 0 100 0 100 -60 0 -60 0 0 50 0 50
+    60 0 60 0 0 100 0 100 -60 0 -60 0 0 65 0 65 175 0 175 0 0 -65z m500 -150 l0
+    -215 -60 0 -60 0 0 -100 0 -100 60 0 60 0 0 -75 0 -75 -225 0 -225 0 0 75 0
+    75 60 0 60 0 0 100 0 100 -60 0 -60 0 0 50 0 50 60 0 60 0 0 100 0 100 -60 0
+    -60 0 0 65 0 65 225 0 225 0 0 -215z m428 -177 l2 -388 -190 0 -190 0 0 75 0
+    75 60 0 60 0 0 100 0 100 -60 0 -60 0 0 215 0 215 188 -2 187 -3 3 -387z
+    m-1198 162 l0 -50 -105 0 -105 0 0 50 0 50 105 0 105 0 0 -50z m400 0 l0 -50
+    -105 0 -105 0 0 50 0 50 105 0 105 0 0 -50z m-400 -300 l0 -50 -105 0 -105 0
+    0 50 0 50 105 0 105 0 0 -50z m400 0 l0 -50 -105 0 -105 0 0 50 0 50 105 0
+    105 0 0 -50z m500 0 l0 -50 -105 0 -105 0 0 50 0 50 105 0 105 0 0 -50z" />
+                        </g>
+                      </svg>&nbsp;Cost Allocation Profile
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                      <div class="form-group">
+                        <label class="form-label">Overview Cost Allocation Rules</label>
+                        <textarea class="form-control textarea-full-section" maxlength="1000" rows="4"
+                          formControlName="CostAllocationProfile"></textarea>
+                        <span style="text-align: end;color: gray;">{{f.CostAllocationProfile.value.length ?
+                          f.CostAllocationProfile.value.length : 0 }}/1000</span>
+                          
+                      </div>
+                    </div>
+                  </div> -->
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+          </div>
+          <div class="col-sm-12 col-xl-6 padding-right-none">
+            <mat-accordion class="example-headers-align">
+              <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <i class="fas fa-image" style="margin-top:3px;"></i>&nbsp;Logo
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <div class="row">
+                    <div class="col-md-12 px-0" style="padding-bottom: 10px;">
+                      <div>
+                        <div class="mb-2">Upload Logo
+                          <i class="fas fa-info-circle" container="body"
+                            ngbTooltip="Image should be a PNG file and should not be blurry for best results "
+                            tooltipClass="tooltip-bg"></i>
+                        </div>
+                        <button type="button" class="btn sbubtn btn-primary btn-raised"
+                          (click)="fileUpload.click()">Upload
+                          Logo</button>
+                        <input type="file" accept="image/*" class="file-input" hidden (change)="onFileUploaded($event)"
+                          #fileUpload>
+                      </div>
+                    </div>
+                    <ng-container *ngIf="logoImage">
+                      <div class="col-md-12 text-center m-t-10">
+                        <div class="wrapper">
+                          <div class="content">
+                            <img class="logoimg" alt="test" width="200" height="100" [src]="logoImage">
+                            <a (click)="onFileUploadedRemove()"><i class="fas fa-times"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </mat-accordion>
+          </div>
+
+          <div class="col-12 text-center">
+            <button type="submit" [disabled]="saveButtonLoadder" class="btn btn-primary"> <span
+                class="spinner-border spinner-border-sm mr-1" role="status"
+                *ngIf="saveButtonLoadder"></span>Save</button>
+          </div>
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>

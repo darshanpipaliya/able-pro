@@ -1,0 +1,151 @@
+::-webkit-scrollbar {
+    height: 3px;
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    -webkit-border-radius: 1ex;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.contract-overview-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.contract-overview-label h2 {
+    font-size: 22px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #181d1f;
+}
+
+.contract-overview-left {
+    width: 200px;
+}
+
+.contract-overview-right {
+    width: calc(100% - 200px);
+    overflow: auto;
+
+    ul {
+        flex-direction: row;
+        display: flex;
+        justify-content: space-between;
+        overflow: auto;
+        gap: 15px;
+
+
+        li {
+            padding: 0;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            justify-content: space-between;
+
+            h3 {
+                font-size: 14px;
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                letter-spacing: normal;
+                font-weight: 500;
+                margin-bottom: 0;
+                color: #181d1f;
+                white-space: nowrap;
+            }
+
+            p {
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+.contract-overview-main {
+    margin-bottom: 9px;
+    background-color: #EAEAEA;
+    padding: 12px 10px 10px;
+    border-radius: 12px;
+
+    li.list-group-item {
+        background-color: transparent;
+
+       > div{
+            min-height: 37px;
+        }
+    }
+}
+
+.single-button {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+}
+
+
+.differences-red {
+    color: #f44336;
+}
+
+p.differences-value-r-set {
+    padding-right: 35px;
+}
+
+@media only screen and (max-width: 1366px) {
+    p.differences-value-r-set {
+        padding-right: 15px;
+    }
+}
+
+@media (min-width: 1200px) {}
+
+@media only screen and (max-width: 1199px) {
+
+    :host ::ng-deep .padding-1-3,
+    :host ::ng-deep .padding-1-1,
+    :host ::ng-deep .padding-3-1 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .contract-overview-label h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .contract-overview-wrapper {
+        display: block;
+
+        .contract-overview-left,
+        .contract-overview-right {
+            width: 100%;
+        }
+    }
+
+    p {
+        font-size: 13px !important;
+    }
+
+    .contract-overview-label h2 {
+        font-size: 20px !important;
+    }
+
+    .contract-overview-right ul  li {
+        gap: 8px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    p {
+        font-size: 13px !important;
+    }
+
+    .contract-overview-label h2 {
+        font-size: 20px !important;
+    }
+}

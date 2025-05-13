@@ -1,0 +1,710 @@
+<div class="row #page">
+    <!-- style="margin-top: -50px !important;" -->
+    <div class="col-12 px-0">
+        <app-card   class="card-bottom-none card-body-p">
+            <mat-card-content>
+                <div class="header-btn-responsive" id="page-header-sec">
+                    <select class="custom-select select-width" (change)="onChangeTem()" [(ngModel)]="selectedTem"
+                        *ngIf="isAllowTemDropdown">
+                        <option value="all">All</option>
+                        <option *ngFor="let tem of tems" [value]="tem.Id">
+                            {{tem.AccountName}}</option>
+                    </select>
+                    <select class="custom-select select-width" [(ngModel)]="selectedCustomer"
+                        (change)="onChangeCustomer()" *ngIf="isTemRole || isAllowTemDropdown">
+                        <option value="all">All</option>
+                        <option *ngFor="let customer of customers" [value]="customer.Id">{{customer.AccountName}}
+                        </option>
+                    </select>
+                    <select class="custom-select select-width" [(ngModel)]="selectedCompany"
+                        *ngIf="isTemRole || isAllowTemDropdown || isCustomerAdmin">
+                        <option value="all">All</option>
+                        <option *ngFor="let company of companies" [value]="company.CompanyID">{{company.CompanyName}}
+                        </option>
+                    </select>
+                    <button title="Search" class="btn btn-primary" (click)="filterData()" [disabled]="isDisableSearch">
+                        <span class="spinner-border spinner-border-sm mr-1" role="status" *ngIf="isClickFilter"></span>
+                        Search</button>
+                </div>
+
+                <div class="table-responsive">
+                    <mat-tab-group (selectedTabChange)="onTabChange($event)">
+                        <mat-tab>
+                            <div>
+                                <ng-template mat-tab-label>
+                                    <b> <i class="fa fa-home" style="color: #4680ff;"></i>&nbsp;Home Dashboard</b>
+                                </ng-template>
+                               
+
+                            </div>
+
+                            <div class="dashboad-main mt-2">
+                                <div class="dashboad-wrapper">
+                                    <div class="row">
+                                        <div class="col-xl-3 col-md-6 col-sm-12">
+                                           
+                                            <mat-card
+                                                class="trinta-card spend-summary-card order-details-card mb-25 border-none d-block">
+                                                <mat-card-header>
+                                                    <mat-card-title>
+                                                        <h5 class="mt-0 mb-0 color-code">
+                                                            Spend Summary
+                                                        </h5>
+                                                    </mat-card-title>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                    <ul class="p-0 m-0 list-unstyled">
+                                                        <ng-container *ngIf="!isLoading; else loading">
+                                                            <li class="text-black position-relative">
+                                                                <span class="fw-medium"> Current *
+                                                                </span>{{currentSpend |
+                                                                currency:'USD':'symbol':'1.2-2'}}
+                                                            </li>
+                                                            <li class="text-black position-relative">
+                                                                <span class="fw-medium"> Previous *
+                                                                </span>{{previousSpend |
+                                                                currency:'USD':'symbol':'1.2-2'}}
+                                                            </li>
+                                                            <li class="text-black position-relative">
+                                                                <span class="fw-medium"> 6 Mth Avg
+                                                                </span>{{sixMonthAverage |
+                                                                currency:'USD':'symbol':'1.2-2'}}
+                                                            </li>
+                                                            <li class="text-black position-relative">
+                                                                <span class="fw-medium">YTD</span>{{yearToDateSpend |
+                                                                currency:'USD':'symbol':'1.2-2'}}
+                                                            </li>
+
+
+                                                        </ng-container>
+                                                    </ul>
+                                                    <em>* Periods May Not Be Complete</em>
+                                                    <ng-template #loading>
+                                                        <div>Loading...</div>
+                                                    </ng-template>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+
+                                        <div class="col-xl-5 col-md-6 col-sm-12" #screen2>
+                                            
+
+                                            <mat-card
+                                                class="trinta-card spend-overview-card mb-25 bg-white border-none d-block">
+                                                <mat-card-header>
+                                                    <mat-card-title>
+                                                        <h5 class="mt-0 mb-0">
+                                                            Spend Overview
+                                                        </h5>
+                                                    </mat-card-title>
+                                                    <mat-card-subtitle>
+                                                        <div class="spend-vender-filter d-flex card-header-menu">
+                                                            
+                                                            <button type="button" mat-button
+                                                                class="card-header-menu-btn"
+                                                                [matMenuTriggerFor]="cardHeaderMenu">
+                                                                {{selectedVal}}
+                                                            </button>
+
+                                                            <mat-menu #cardHeaderMenu="matMenu"
+                                                                class="card-header-menu trinta-card-header-menu"
+                                                                xPosition="before">
+                                                                <button mat-menu-item
+                                                                    [ngClass]="'card-header-menu-btn-c'"
+                                                                    *ngFor="let item of spendOverviewDd"
+                                                                    (click)="onMenuItemClick(item.value)">
+
+                                                                    <span>{{item.name}}</span>
+                                                                </button>
+                                                            </mat-menu>
+
+                                                            <button type="button" mat-button [matMenuTriggerFor]="menu3"
+                                                                class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto ml-2">
+                                                                <i class="ri-more-2-fill"></i>
+                                                            </button>
+                                                            <mat-menu #menu3="matMenu">
+                                                                <button mat-menu-item (click)="downloadChart1()">
+                                                                    <i class="fas fa-cloud-download-alt mr-2"
+                                                                        style="color: #05a646; cursor: pointer;"></i>Chart
+                                                                    Download
+                                                                </button>
+                                                            </mat-menu>
+                                                        </div>
+                                                    </mat-card-subtitle>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                    <div class="chart" *ngIf="isShowSpend">
+                                                        <ng-container *ngIf="!isOverviewLoad">
+                                                            <div class="spinner-border text-primary center-calc"
+                                                                style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                                role="status">
+                                                                <span class="sr-only">Loading...</span>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="isOverviewLoad">
+                                                            <div id="crm_balance_overview_chart"></div>
+                                                        </ng-container>
+                                                    </div>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+
+                                        <a #downloadLink style="display: none;"></a>
+                                        <img #canvas style="display: none;" alt="Captured Screenshot" />
+
+                                        <div class="col-xl-4 col-md-6 col-sm-12" #screen4>
+                                            
+                                            <mat-card
+                                                class="trinta-card invoice-processing-card mb-25 bg-white border-none d-block">
+                                                <mat-card-header>
+                                                    <mat-card-title>
+                                                        <h5 class="mt-0 mb-0">
+                                                            Invoice Processing
+                                                        </h5>
+                                                    </mat-card-title>
+                                                    <mat-card-subtitle>
+                                                        <button type="button" mat-button
+                                                            class="card-header-menu-btn"
+                                                            [matMenuTriggerFor]="cardHeaderMenu4">
+                                                            {{selectedProcessing}}
+                                                        </button>
+
+                                                        <mat-menu #cardHeaderMenu4="matMenu"
+                                                            class="card-header-menu trinta-card-header-menu"
+                                                            xPosition="before">
+                                                            <button mat-menu-item
+                                                                [ngClass]="'card-header-menu-btn-c'"
+                                                                *ngFor="let item of chartView"
+                                                                (click)="getInvoiceProcessing(item)">
+                                                                <span>{{item.name}}</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                        
+                                                        <button type="button" mat-button [matMenuTriggerFor]="menu4"
+                                                            class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto ml-2">
+                                                            <i class="ri-more-2-fill"></i>
+                                                        </button>
+                                                        <mat-menu #menu4="matMenu">
+                                                            <button mat-menu-item (click)="downloadInvoiceProcessing()">
+                                                                <i class="fas fa-cloud-download-alt mr-2"
+                                                                    style="color: #05a646; cursor: pointer;"></i>Chart
+                                                                Download
+                                                            </button>
+                                                        </mat-menu>
+
+                                                    </mat-card-subtitle>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                    <div class="chart">
+                                                        <ng-container *ngIf="!isProcessingLoad">
+                                                            <div class="spinner-border text-primary center-calc"
+                                                                style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                                role="status">
+                                                                <span class="sr-only">Loading...</span>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="isProcessingLoad">
+                                                            <div id="crm_organic_sessions_chart"></div>
+                                                        </ng-container>
+                                                    </div>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12" #screen3>
+                                            
+
+                                            <mat-card
+                                                class="trinta-card spend-by-vendor-card mb-25 bg-white border-none">
+                                                <mat-card-header>
+                                                    <mat-card-title>
+                                                        <h5 class="mt-0 mb-0">
+                                                            Spend by Vendor
+                                                        </h5>
+                                                        <p class="text-secondary mt-2">Last month there was
+                                                            <span>{{previousYearData?.GrandTotal ?
+                                                                (previousYearData?.GrandTotal |
+                                                                currency:'USD':'symbol':'1.2-2') : 0}}</span> in spend
+                                                            on <span>{{previousYearData?.TotalVendor ?
+                                                                previousYearData?.TotalVendor : 0}}</span>
+                                                            Vendors, on <span>{{previousYearData?.TotalInvoices ?
+                                                                previousYearData?.TotalInvoices : 0}}</span> invoices
+                                                        </p>
+                                                    </mat-card-title>
+                                                    <mat-card-subtitle>
+                                                        <button type="button" mat-button class="card-header-menu-btn"
+                                                            [matMenuTriggerFor]="cardHeaderMenu3">
+                                                            {{selectedVendor ? selectedVendor : 'Current Month' }}
+                                                        </button>
+                                                        <mat-menu #cardHeaderMenu3="matMenu"
+                                                            class="card-header-menu trinta-card-header-menu"
+                                                            xPosition="before">
+                                                            <button mat-menu-item [ngClass]="'card-header-menu-btn-c'"
+                                                                *ngFor="let item of chartView"
+                                                                (click)="vendorData(item)">
+
+                                                                <span>{{item.name}}</span>
+                                                            </button>
+                                                        </mat-menu>
+
+                                                        <button type="button" mat-button [matMenuTriggerFor]="menu"
+                                                            class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto ml-2">
+                                                            <i class="ri-more-2-fill"></i>
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item (click)="downloadSpendVendor()">
+                                                                <i class="fas fa-cloud-download-alt mr-2"
+                                                                    style="color: #05a646; cursor: pointer;"></i>Chart
+                                                                Download
+                                                            </button>
+                                                        </mat-menu>
+
+                                                    </mat-card-subtitle>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                    <div class="spend-vender-details">
+                                                        <ng-container *ngIf="!isVendorLoad">
+                                                            <div class="spinner-border text-primary center-calc"
+                                                                style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                                role="status">
+                                                                <span class="sr-only">Loading...</span>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="isVendorLoad">
+                                                            <div class="expense-card"
+                                                                *ngFor="let item of spendVendorData">
+                                                                <div class="company-box-wrapper">
+                                                                    <div class="company-logo">
+
+
+                                                                        <ng-container>
+                                                                            <img [src]="item?.VendorAccountLogo ? 'data:image/gif;base64,' + item?.VendorAccountLogo : 'assets/images/image.png'"
+                                                                                alt="Logo" />
+
+                                                                        </ng-container>
+                                                                    </div>
+                                                                    <div class="company-name">
+                                                                        <!-- <ng-template> -->
+                                                                        <span>{{item.VendorAccount}}</span>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="details">
+                                                                    <div class="amount">{{item.Total |
+                                                                        currency:'USD':'symbol':'1.2-2'}}
+                                                                    </div>
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar"
+                                                                            [style.background-color]="item.color"
+                                                                            [ngStyle]="{ 'width': item.progress +'%'}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="percentage-box align-items-end justify-content-end">
+                                                                    <div class="percentage">
+                                                                        {{item.persentage ?
+                                                                        item.persentage : 0}}%
+                                                                        <i [ngClass]="{'fas': true,
+                                                                    'fa-arrow-up': item.arraw === 1 ,
+                                                                    'fa-arrow-down': item.arraw === -1,
+                                                                    'text-success': item.arraw === 1,
+                                                                    'text-danger': item.arraw === -1}"></i>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </ng-container>
+                                                    </div>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="row" #screen>
+                                                <div class="col-12 px-0">
+                                                    <div class="Dashboard-box box-5 d-none">
+                                                        <div
+                                                            class="spend-vender-header d-flex justify-content-between primary-header">
+                                                            <h2>Inventory Overview</h2>
+                                                            <div class="spend-vender-filter d-flex">
+                                                                <button mat-icon-button [matMenuTriggerFor]="menu1"
+                                                                    class="icon-toggle icon-button-small ml-2">
+                                                                    <mat-icon>more_vert</mat-icon>
+                                                                </button>
+                                                                <mat-menu #menu1="matMenu">
+                                                                    <button (click)="downloadChart()" mat-menu-item>
+                                                                        <i class="fas fa-cloud-download-alt mr-2"
+                                                                            style="color: #05a646; cursor: pointer;"></i>Chart
+                                                                        Download
+                                                                    </button>
+                                                                </mat-menu>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inventory-overview-body">
+
+                                                            <ng-container *ngIf="!isInventoryLoad">
+                                                                <div class="spinner-border text-primary"
+                                                                    style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                                    role="status">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="isInventoryLoad">
+
+                                                                <p-table #dt [columns]="cols" [value]="tutorials"
+                                                                    styleClass="p-datatable-striped"
+                                                                    responsiveLayout="scroll" class="p-table-io">
+                                                                    <ng-template pTemplate="header" let-columns>
+                                                                        <tr>
+                                                                            <th *ngFor="let col of columns">
+                                                                                {{ col.header }}
+                                                                            </th>
+                                                                        </tr>
+                                                                    </ng-template>
+                                                                    <ng-template pTemplate="body" let-rowData
+                                                                        let-columns="columns">
+                                                                        <tr [pSelectableRow]="rowData">
+                                                                            <td *ngFor="let col of columns">
+                                                                                {{ rowData[col.field] }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </ng-template>
+                                                                </p-table>
+                                                            </ng-container>
+                                                            <div class="text-right mt-2">
+                                                                <em>* Periods May Not Be Complete</em>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <mat-card
+                                                        class="trinta-card inventory-overview-card mb-25 bg-white border-none d-block">
+                                                        <mat-card-header>
+                                                            <mat-card-title>
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Inventory Overview
+                                                                </h5>
+                                                            </mat-card-title>
+                                                            <mat-card-subtitle>
+                                                                <button type="button" mat-button
+                                                                    class="card-header-dot-btn lh-1 p-0 min-w-auto h-auto"
+                                                                    [matMenuTriggerFor]="menu1">
+                                                                    <i class="ri-more-2-fill"></i>
+                                                                </button>
+                                                                <mat-menu #menu1="matMenu">
+                                                                    <button (click)="downloadChart()" mat-menu-item>
+                                                                        <i class="fas fa-cloud-download-alt mr-2"
+                                                                            style="color: #05a646; cursor: pointer;"></i>Chart
+                                                                        Download
+                                                                    </button>
+                                                                </mat-menu>
+                                                               
+                                                            </mat-card-subtitle>
+                                                        </mat-card-header>
+                                                        <mat-card-content>
+                                                            <div class="inventory-overview-body">
+                                                                <ng-container *ngIf="!isInventoryLoad">
+                                                                    <div class="spinner-border text-primary"
+                                                                        style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                                        role="status">
+                                                                        <span class="sr-only">Loading...</span>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="isInventoryLoad">
+
+                                                                    <p-table #dt [columns]="cols" [value]="tutorials"
+                                                                        responsiveLayout="scroll" class="p-table-io">
+                                                                        <ng-template pTemplate="header" let-columns>
+                                                                            <tr>
+                                                                                <th *ngFor="let col of columns">
+                                                                                    {{ col.header }}
+                                                                                </th>
+                                                                            </tr>
+                                                                        </ng-template>
+                                                                        <ng-template pTemplate="body" let-rowData
+                                                                            let-columns="columns">
+                                                                            <tr [pSelectableRow]="rowData">
+                                                                                <td *ngFor="let col of columns">
+                                                                                    {{ rowData[col.field] }}
+                                                                                </td>
+                                                                            </tr>
+                                                                        </ng-template>
+                                                                    </p-table>
+                                                                </ng-container>
+                                                                <div class="text-right mt-2">
+                                                                    <em>* Periods May Not Be Complete</em>
+                                                                </div>
+                                                            </div>
+                                                        </mat-card-content>
+                                                    </mat-card>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12 px-0">
+                                                    
+
+                                                    <mat-card
+                                                        class="trinta-card savings-opportunities-card mb-25 border-none d-block">
+                                                        <mat-card-header>
+                                                            <mat-card-title>
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Savings Opportunities...
+                                                                </h5>
+                                                            </mat-card-title>
+                                                        </mat-card-header>
+                                                        <mat-card-content>
+                                                            <div
+                                                                class="savings-opportunities-card-body grid flex-auto grid-cols-4 gap-4">
+                                                                <div
+                                                                    class="saving-op-fuse-card box-1 contracts col-span-2 flex flex-col">
+                                                                    
+                                                                    <div class="contracts-wrapper">
+                                                                        <div class="contracts-box-header">
+                                                                            <h2>Contracts</h2>
+                                                                        </div>
+                                                                        <div
+                                                                            class="d-flex align-items-center justify-content-between gap-4">
+                                                                            <div class="contracts-box">
+                                                                                <h2>{{expiredContracts}}</h2>
+                                                                                <div class="secondary-title">
+                                                                                    Expired Contracts
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="contracts-box">
+                                                                                <h2>{{nearingExpirationContracts}}</h2>
+                                                                                <div class="secondary-title">
+                                                                                    Nearing Expiration
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Disconnected with Billing -->
+                                                                <div
+                                                                    class="saving-op-fuse-card box-2 col-span-2 flex flex-col">
+                                                                    <div class="sav-op-chart">
+                                                                        <ng-container *ngIf="!isBillingLoad">
+                                                                            <div class="spinner-border text-primary"
+                                                                                style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                                                role="status">
+                                                                                <span class="sr-only">Loading...</span>
+                                                                            </div>
+                                                                        </ng-container>
+
+                                                                        <ng-container *ngIf="isBillingLoad">
+                                                                            <div
+                                                                                class="saving-op-card-wrapper d-flex flex-auto flex-col">
+                                                                                <div class="wrapper-box">
+                                                                                    <div class="saving-op-card-header">
+                                                                                        <h3>
+                                                                                            <!-- Disconnected with Billing -->
+                                                                                            Disco'd and Billing
+
+                                                                                        </h3>
+                                                                                        
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="saving-op-card-body flex-col">
+                                                                                        <ul
+                                                                                            class="list-unstyled d-flex">
+                                                                                            <li>
+                                                                                                <h4>{{billingGrandTotal
+                                                                                                    |
+                                                                                                    currency:'USD':'symbol':'1.2-2'}}
+                                                                                                </h4>
+
+                                                                                            </li>
+                                                                                            <li>on</li>
+                                                                                            <li>
+                                                                                                <h4>{{billingInventory}}
+                                                                                                </h4>
+                                                                                            </li>
+                                                                                            <li>inventory items</li>
+                                                                                            <li>
+                                                                                                <div><i class="fas"
+                                                                                                        [ngClass]="{'fa-arrow-circle-up text-success': isArrowValue, 'fa-arrow-circle-down text-danger': !isArrowValue}">&nbsp;{{billingProgress}}%</i>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="flex h-20 flex-auto flex-col sv-box-chart">
+                                                                                    <div id="disconnect_billing">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ng-container>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!-- Closed Locations -->
+                                                                <div
+                                                                    class="saving-op-fuse-card box-3 col-span-2 flex flex-col">
+                                                                    <div class="sav-op-chart">
+                                                                        <ng-container *ngIf="!isClosedLocationLoad">
+                                                                            <div class="spinner-border text-primary"
+                                                                                style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                                                role="status">
+                                                                                <span class="sr-only">Loading...</span>
+                                                                            </div>
+                                                                        </ng-container>
+
+                                                                        <ng-container *ngIf="isClosedLocationLoad">
+
+                                                                            <div
+                                                                                class="saving-op-card-wrapper d-flex flex-auto flex-col">
+                                                                                <div class="saving-op-card-header">
+                                                                                    <h3>Closed Locations</h3>
+                                                                                    
+                                                                                </div>
+                                                                                <div
+                                                                                    class="saving-op-card-body flex-col">
+                                                                                    <ul class="list-unstyled d-flex">
+                                                                                        <li>
+                                                                                            <h4>{{closedLocationTotal |
+                                                                                                currency:'USD':'symbol':'1.2-2'}}
+                                                                                            </h4>
+                                                                                        </li>
+                                                                                        <li>at</li>
+                                                                                        <li>
+                                                                                            <h4>{{locationCount}}
+                                                                                            </h4>
+                                                                                        </li>
+                                                                                        <li>Locations</li>
+                                                                                        <li>
+                                                                                            <div><i class="fas"
+                                                                                                    [ngClass]="{'fa-arrow-circle-up text-success': isArrowLocation, 'fa-arrow-circle-down text-danger': !isArrowLocation}">&nbsp;{{closedLocationProgress}}%</i>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="flex h-20 flex-auto flex-col sv-box-chart">
+                                                                                    <div id="closed_location">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ng-container>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!-- Inactive People -->
+                                                                <div
+                                                                    class="saving-op-fuse-card box-4 col-span-2 flex flex-col">
+                                                                    <div class="sav-op-chart">
+                                                                        <ng-container *ngIf="!isInactivePeopleLoad">
+                                                                            <div class="spinner-border text-primary"
+                                                                                style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+                                                                                role="status">
+                                                                                <span class="sr-only">Loading...</span>
+                                                                            </div>
+                                                                        </ng-container>
+
+                                                                        <ng-container *ngIf="isInactivePeopleLoad">
+
+                                                                            <div
+                                                                                class="saving-op-card-wrapper d-flex flex-auto flex-col">
+                                                                                <div class="saving-op-card-header">
+                                                                                    <h3>Inactive People</h3>
+                                                                                   
+                                                                                </div>
+                                                                                <div
+                                                                                    class="saving-op-card-body flex-col">
+                                                                                    <ul class="list-unstyled d-flex">
+                                                                                        <li>
+                                                                                            <h4>{{inactivePeopleTotal |
+                                                                                                currency:'USD':'symbol':'1.2-2'}}
+                                                                                            </h4>
+                                                                                        </li>
+                                                                                        <li>on</li>
+                                                                                        <li>
+                                                                                            <h4>{{peopleCount}}
+                                                                                            </h4>
+                                                                                        </li>
+                                                                                        <li>People</li>
+                                                                                        <li>
+                                                                                            <div><i class="fas"
+                                                                                                    [ngClass]="{'fa-arrow-circle-up text-success': isArrowPeople, 'fa-arrow-circle-down text-danger': !isArrowPeople}">&nbsp;{{inactivePeopleProgress}}%</i>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="flex h-20 flex-auto flex-col sv-box-chart">
+                                                                                    <div id="inactive_people">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ng-container>
+
+                                                                    </div>
+                                                                </div>
+
+                                                              
+                                                            </div>
+                                                        </mat-card-content>
+                                                    </mat-card>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <b style="  margin-right: 5%;">
+                                    <i class="fa fa-dollar-sign" style="color: #4680ff;">
+                                    </i>
+                                    Finance Dashboard
+                                </b>
+                            </ng-template>
+                            <ng-template matTabContent>
+                                <div class="col-sm-12 px-0">
+                                    <!--  -->
+                                    <app-finance-dashboard [InSelectedCompany]="selectedCompany"
+                                        [InIsClickFilter]="isClickFilter" [InSelectedCustomer]="selectedCustomer"
+                                        [InSelectedTem]="selectedTem" [fromPage]="'home'"
+                                        (isClickFilterEmit)="isClickFilterEmit($event)"
+                                        (isDisableSearchEmit)="isDisableSearchEmit($event)"></app-finance-dashboard>
+                                </div>
+                            </ng-template>
+
+                        </mat-tab>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <b style="  margin-right: 5%;">
+                                    <i class="fa fa-tools" style="color: #4680ff;">
+                                    </i>
+                                    Inventory Dashboard
+                                </b>
+                            </ng-template>
+                            <ng-template matTabContent>
+                                <div class="col-sm-12 px-0">
+                                    <app-inventory-dashboard [selectedCompany]="selectedCompany"
+                                        [isClickFilter]="isClickFilter" [fromPage]="'home'"
+                                        [selectedCustomer]="selectedCustomer" [selectedTem]="selectedTem"
+                                        (isClickFilterEmit)="isClickFilterEmit($event)"
+                                        (isDisableSearchEmit)="isDisableSearchEmit($event)"></app-inventory-dashboard>
+                                </div>
+                            </ng-template>
+
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </app-card>
+    </div>
+</div>

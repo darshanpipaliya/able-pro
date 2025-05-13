@@ -1,0 +1,31 @@
+.mat-form-field {
+    width: 280px !important;
+    margin-bottom: -15px;
+   
+}
+.mat-tab-body-content { overflow: hidden!important}
+
+.modal-title1{
+    padding-left:20px;
+}
+::ng-deep .profile-closed_btn{
+    text-align:right; width:100%; margin-top:-40px; 
+}
+.password-hide-btn {
+    border: solid 2px #cfcfcf;
+    color: #cfcfcf;
+    margin-bottom: -36px !important;
+}
+::ng-deep div.mat-form-field-flex {
+    background-color: white !important;
+    padding: 0 0.05em 0 0 !important;
+}
+.plab {
+    display: block !important;
+    margin-bottom: -0.3rem;
+}
+
+.passwordCenter{
+    display: flex;
+    justify-content: center;
+}

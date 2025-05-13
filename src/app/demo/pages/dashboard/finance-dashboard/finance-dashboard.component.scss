@@ -1,0 +1,985 @@
+#page-header-sec {
+
+    margin: 0 13px !important;
+
+    select,
+    button {
+        z-index: 100000 !important;
+        font-family: "Poppins", sans-serif !important;
+    }
+}
+
+:host ::ng-deep {
+    .card-body-p {
+        .card .card-body {
+            padding: 4px 0 0 !important;
+        }
+    }
+
+    .mat-tab-header {
+        margin: 0 13px !important;
+
+        .mat-tab-label {
+            font-family: "Poppins", sans-serif !important;
+            color: #262626 !important;
+        }
+    }
+}
+
+
+.select.custom-select {
+    cursor: pointer;
+}
+
+.row {
+    margin: 0 !important;
+    max-width: 100%;
+}
+
+.row>* {
+    padding-left: 12.5px;
+    padding-right: 12.5px;
+}
+
+.header-btn-responsive {
+    display: flex;
+}
+
+h2 {
+    margin-bottom: 0 !important;
+}
+
+.primary-header {
+    margin-bottom: 15px !important;
+}
+
+.mat-card-content {
+    margin-bottom: 0 !important;
+}
+
+.icon-toggle.icon-button-small {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.spend-vender-filter {
+    align-items: center;
+
+    .material-icons {
+        font-size: 20px;
+    }
+}
+
+.invoice-monitor-body {
+
+    .logo-img img {
+        max-width: 70px;
+    }
+
+    .mat-card {
+        padding: 0;
+        box-shadow: none;
+    }
+}
+
+
+
+:host ::ng-deep {
+
+    .mat-paginator-container {
+        min-height: auto !important;
+    }
+
+    .mat-paginator {
+        padding-top: 15px !important;
+        font-family: "Poppins", sans-serif;
+        color: #5b5b98;
+        font-size: 14px;
+
+        &.paginator-isv {
+
+            .mat-paginator-range-actions {
+                gap: 4px !important;
+
+                .mat-icon-button.mat-paginator-navigation-next {
+                    margin-left: 0 !important;
+                }
+            }
+        }
+
+        &.paginator-im {
+            .mat-paginator-range-actions {
+                padding: 4px;
+            }
+        }
+    }
+
+    .mat-paginator-page-size {
+        display: none;
+    }
+
+    .mat-paginator-range-label {
+        margin: 0 15px 0 0 !important;
+    }
+
+    .mat-paginator-range-actions {
+        background: #fff;
+
+        .mat-icon-button {
+            height: 38px;
+            width: 32px;
+            line-height: 0;
+            border: 1px solid #cfcfcf;
+            border-radius: 4px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.mat-paginator-navigation-next {
+                margin-left: 4px !important;
+            }
+
+            .mat-button-wrapper>* {
+                vertical-align: baseline !important;
+            }
+
+            .mat-paginator-icon {
+                width: 24px !important;
+            }
+        }
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+        background: #f5f7fa;
+        border-bottom: 0;
+    }
+
+}
+
+
+.invoice-summary-by-vendor-table {
+    table.table{
+        overflow: hidden;
+    }
+    .table {
+        margin-bottom: 0;
+        width: 100% !important;
+    }
+
+    .table thead {
+        height: auto;
+    }
+
+    thead>tr>th,
+    tbody>tr>td {
+        font-family: "Poppins", sans-serif !important;
+        color: #262626;
+        text-wrap: nowrap;
+        font-size: 14px;
+        background: #ffffff;
+        vertical-align: middle;
+        border: none;
+        line-height: initial;
+        // white-space: nowrap;
+        white-space: pre-wrap;
+        text-align: center;
+    }
+
+    thead>tr>th {
+        padding: 0 13px 15px;
+        font-weight: 500 !important;
+        overflow: unset;
+        letter-spacing: normal;
+        border-bottom: 2px solid #edeff5;
+        text-transform: unset;
+        color: #262626;
+        font-size: 13px;
+    }
+
+    tbody>tr>td {
+        padding: 15px 13px;
+        overflow: hidden;
+        border-bottom: 1px solid #edeff5;
+        color: #5b5b98;
+        font-weight: 400;
+        letter-spacing: .14px;
+        font-size: 13px;
+
+        .tread-chart {
+            min-height: unset !important;
+            display: flex;
+            justify-content: center;
+        }
+
+    }
+
+    thead>tr>th:last-child {
+        padding: 0 0 15px 13px;
+    }
+
+    tbody>tr>td:last-child {
+        padding: 2px 0 5px 13px;
+        overflow: visible !important;
+        overflow-y: visible !important;
+    }
+
+    thead>tr>th:nth-of-type(1) {
+        padding: 0 13px 15px 0;
+    }
+
+    tbody>tr>td:nth-of-type(1) {
+        padding: 0 13px 0 0;
+    }
+
+}
+
+:host ::ng-deep .invoice-summary-by-vendor-table {
+
+    .tread-chart {
+        .apexcharts-tooltip {
+
+            overflow: visible !important;
+
+        }
+
+        min-height: unset !important;
+
+        .apexcharts-tooltip-title {
+            padding: 3px !important;
+        }
+
+        .apexcharts-tooltip-series-group {
+            padding: 3px 5px 3px 3px !important;
+        }
+
+        .apexcharts-tooltip-marker {
+            margin-right: 5px !important;
+        }
+
+        .apexcharts-tooltip-text .apexcharts-tooltip-y-group {
+            padding: 0 !important;
+        }
+    }
+}
+.invoice-summary-by-vendor-card{
+    .img-box-wrapper-isv{
+        display: flex;
+        justify-content: center;
+    }
+    .img-box{
+        display: flex;
+        align-items: center;
+        width: 60px;
+        height: 40px;
+
+        img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+    }
+}
+:host ::ng-deep .invoice-monitor-table {
+
+    .card-info {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .card-info .img-box-name {
+        inline-size: 115px;
+        overflow-wrap: break-word;
+    }
+
+    .card-info .img-box-name span {
+        font-size: 13px;
+    }
+
+    .img-box-logo {
+        display: flex;
+        align-items: center;
+        width: 60px;
+        height: 40px;
+
+        img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+    }
+
+    table.mat-table {
+        margin-bottom: 0;
+        width: 100% !important;
+    }
+
+    table.mat-table thead {
+        height: auto;
+    }
+
+    th.mat-header-cell,
+    td.mat-cell {
+        font-family: "Poppins", sans-serif !important;
+        color: #262626;
+        text-wrap: nowrap;
+        font-size: 14px;
+        background: #ffffff;
+        vertical-align: middle;
+        border: none;
+        line-height: auto !important;
+        white-space: nowrap;
+        background: transparent !important;
+    }
+
+    th.mat-header-cell {
+        padding: 0 6px 13px;
+        font-weight: 500 !important;
+        overflow: unset;
+        letter-spacing: normal;
+        border-bottom: 2px solid #edeff5;
+        text-transform: unset;
+        color: #262626;
+    }
+
+    td.mat-cell {
+        padding: 13px 6px;
+        overflow: hidden;
+        border-bottom: 1px solid #edeff5;
+        color: #5b5b98;
+        font-weight: 400;
+        letter-spacing: .14px;
+
+    }
+
+    thead>tr.mat-row>th.mat-header-cell:last-child {
+        padding: 0 0 13px 6px;
+    }
+
+    tbody>tr.mat-row>td.mat-cell:last-child {
+        padding: 2px 0 5px 6px;
+        overflow: visible !important;
+        overflow-y: hidden !important;
+    }
+
+    thead>tr.mat-row>th.mat-header-cell:nth-of-type(1) {
+        padding: 0 6px 13px 0;
+    }
+
+    tbody>tr.mat-row>td.mat-cell:nth-of-type(1) {
+        padding: 0 6px 0 0;
+        text-wrap: wrap !important;
+    }
+}
+
+@media only screen and (max-width : 991px) {
+    .invoice-summary-by-vendor-table {
+
+        td {
+            padding: 15px;
+        }
+    }
+}
+
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    :host ::ng-deep {
+        .mat-paginator-range-actions .mat-icon-button {
+            height: 30px !important;
+            width: 30px !important;
+        }
+    }
+
+}
+
+/* Trinta Template Style */
+
+.card-header-menu-btn-c {
+    line-height: 1.25rem !important;
+    height: 1.25rem !important;
+    min-height: auto;
+    padding: 7px 12px;
+    color: #5b5b98;
+    transition: .5s;
+    font-weight: 500;
+    font-family: "Inter", sans-serif;
+    line-height: unset !important;
+    height: unset !important;
+    font-size: 12px;
+}
+
+
+::ng-deep .mat-menu-panel.trinta-card-header-menu {
+    margin-top: 10px !important;
+}
+
+::ng-deep .mat-elevation-z4 {
+    box-shadow: 0 4px 20px #2f8fe812 !important;
+}
+
+.mat-menu-item{
+    font-family: "Poppins", sans-serif !important;
+}
+
+.card-header-menu-btn-c.mat-menu-item:hover {
+    color: #3761ee !important;
+}
+
+:host ::ng-deep {
+
+    .blue-trinta {
+        color: #3761ee;
+    }
+
+    .mat-menu-panel .mat-menu-content {
+        padding: 10px 0;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        flex: 1;
+        white-space: normal;
+        font-family: "Poppins", sans-serif;
+        line-height: 1.25rem;
+        font-size: .875rem;;
+        letter-spacing:  normal;
+        font-weight: 500;
+    }
+
+    .mat-card.trinta-card .mat-button.card-header-menu-btn {
+        height: auto;
+        min-width: auto;
+        padding: 0 0 0 17px;
+        letter-spacing: .14px;
+        color: #5b5b98;
+        // font-size: var(--fontSize) !important;
+        font-size: 12px !important;
+        line-height: 1.25rem;
+        font-family: "Poppins", sans-serif !important;
+    }
+
+    .mat-card.trinta-card .mat-button.card-header-menu-btn:after {
+        top: 50%;
+        left: -4px;
+        content: "\ea4e";
+        margin-top: -.5px;
+        position: absolute;
+        color: #a9a9c8;
+        transform: translateY(-50%);
+        font-size: 18px;
+        font-family: remixicon
+    }
+
+    .mat-card.trinta-card .mat-button.card-header-menu-btn span.mat-button-focus-overlay {
+        background: #3761ee;;
+    }
+
+
+    .card {
+        background-color: #F5F7FA !important;
+    }
+
+    .mb-25 {
+        margin-bottom: 25px !important;
+    }
+
+    .fw-medium {
+        font-weight: 500 !important;
+    }
+
+    .border-none {
+        border: none !important;
+    }
+
+    .bg-white {
+        background-color: #ffffff !important;
+    }
+
+    .mb-0 {
+        margin-bottom: 0 !important
+    }
+
+    .mt-0 {
+        margin-top: 0 !important;
+    }
+
+    .p-0 {
+        padding: 0 !important;
+    }
+
+    .min-w-auto {
+        min-width: auto !important;
+    }
+
+    .h-auto {
+        height: auto !important;
+    }
+
+    .lh-1 {
+        line-height: 1 !important;
+    }
+
+    .flex-auto {
+        flex: 1 1 auto !important;
+    }
+
+    .mat-card-header-text {
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+    }
+
+    .mat-card.trinta-card .mat-card-header {
+        display: block;
+        padding: 0;
+    }
+
+    .mat-card.trinta-card {
+        box-shadow: unset;
+        border-radius: 6px;
+        padding: 30px 25px;
+        // height: 100% !important;
+    }
+
+    .trinta-card .mat-card-header {
+        margin-bottom: 25px;
+    }
+
+    .mat-card-subtitle {
+        margin: 0;
+    }
+
+    .mat-card.trinta-card .mat-card-header .mat-card-header-text .mat-card-subtitle {
+        display: flex;
+        align-items: center;
+    }
+
+    .mat-card-header .mat-card-subtitle:not(:first-child) {
+        margin-top: 0 !important;
+    }
+
+    .mat-card-header .mat-card-title {
+        display: block;
+        margin: 0;
+    }
+
+
+    .mat-card.trinta-card .mat-card-header .mat-card-header-text {
+        margin-left: 0;
+        margin-right: 0;
+
+        .mat-card-title h5 {
+            font-size: 18px !important;
+            color: #262626;
+            letter-spacing: .18px;
+            font-family: "Inter", sans-serif;
+            font-weight: 600;
+        }
+    }
+
+    .trinta-card.spend-summary-card-f .mat-card-content ul li {
+        margin-bottom: 14px;
+        padding-left: 82px;
+        line-height: 1.8;
+        color: #5b5b98 !important;
+        font-size: 14px;
+        font-family: "Poppins", sans-serif;
+        letter-spacing: .15px;
+        text-align: right;
+
+        span {
+            top: 0;
+            left: 0;
+            position: absolute;
+        }
+
+        // &:last-child {
+        //     margin-bottom: 0;
+        // }
+    }
+
+    .trinta-card.spend-summary-card-f .mat-card-content em,
+    .trinta-card.inventory-overview-card .mat-card-content em {
+        font-size: 12px;
+        color: #262626 !important;
+        font-family: "Poppins", sans-serif;;
+        position: absolute;
+        right: 30px;
+    }
+
+
+
+
+    /*Apex Chart (Spend Overview)*/
+    .mat-card.trinta-card .mat-card-content .apexcharts-canvas .apexcharts-text {
+        font-size: 12px;
+        color: #262626;
+
+        tspan {
+            font-family: "Poppins", sans-serif;
+        }
+    }
+
+    .mat-card.trinta-card.invoice-processing-card .apexcharts-legend-series {
+        display: flex;
+        align-items: center;
+    }
+
+    .mat-card.trinta-card.invoice-processing-card span.apexcharts-legend-marker {
+        height: 13px !important;
+        width: 13px !important;
+        margin-right: 8px;
+    }
+
+    .mat-card.trinta-card.invoice-processing-card .mat-card-content .apexcharts-canvas .apexcharts-legend-text {
+        font-family: "Poppins", sans-serif !important;
+        letter-spacing: 1px;
+        line-height: 1;
+    }
+
+    .trinta-card.invoice-processing-card .apexcharts-canvas .apexcharts-legend {
+        top: 0 !important;
+        right: 0 !important;
+        padding-right: 0;
+    }
+
+
+
+
+    // .mat-card.trinta-card.invoice-processing-card .apexcharts-legend-series {
+    //     display: flex;
+    //     align-items: center;
+    // }
+
+    #crm_balance_overview_chart {
+        min-height: 0 !important;
+    }
+
+    .ri-more-2-fill::before {
+        content: "\ef76" !important;
+    }
+
+    .mat-card.trinta-card .mat-card-header .mat-card-header-text .mat-card-subtitle .mat-button.card-header-dot-btn {
+        margin-right: -5px;
+        color: #b2b2b2;
+        // font-size: 20px;
+        font-size: 17px;
+        letter-spacing: normal;
+        font-weight: 500;
+    }
+
+    .mat-card.trinta-card.spend-overview-card span.apexcharts-legend-marker {
+        height: 13px !important;
+        width: 13px !important;
+        margin-right: 8px;
+    }
+
+    .mat-card.trinta-card.spend-overview-card .mat-card-content .apexcharts-canvas .apexcharts-legend-text {
+        font-family: "Poppins", sans-serif !important;
+        letter-spacing: 1px;
+        // line-height: 1;
+    }
+
+    // .trinta-card.invoice-processing-card .apexcharts-canvas .apexcharts-legend{
+    //     top: 0 !important;
+    //     right: 0 !important;
+    //     padding-right: 0;
+    // }
+
+
+
+    .trinta-card.spend-by-vendor-card {
+        .img-box {
+            img {
+                height: 56px;
+                width: 56px;
+                object-fit: contain;
+            }
+        }
+    }
+
+
+
+    .trinta-card.inventory-overview-card {
+        .p-table-io {
+
+            .p-datatable-wrapper {
+                overflow-x: auto;
+                margin-top: 8px;
+            }
+
+            .p-datatable table {
+                table-layout: auto !important;
+            }
+
+            .p-datatable .p-datatable-thead>tr>th,
+            .p-datatable .p-datatable-tbody>tr>td {
+                font-family: "Poppins", sans-serif !important;
+                color: #262626;
+                text-wrap: nowrap;
+                font-size: 14px;
+                text-align: right !important;
+                background: #ffffff;
+            }
+
+            .p-datatable .p-datatable-thead>tr>th {
+                padding: 0 17px 17px;
+                font-weight: 500 !important;
+            }
+
+            .p-datatable .p-datatable-tbody>tr>td {
+                color: #5b5b98;
+                padding: 17px;
+            }
+
+            .p-datatable .p-datatable-thead>tr>th:last-child {
+                padding: 0 0 17px 17px;
+            }
+
+            .p-datatable .p-datatable-tbody>tr>td:last-child {
+                padding: 17px 0 17px 17px;
+            }
+
+            .p-datatable .p-datatable-tbody>tr:nth-of-type(1)>td {
+                color: #3761ee;
+            }
+
+            .p-datatable .p-datatable-thead>tr>th:nth-of-type(1) {
+                padding: 0 17px 0 0;
+            }
+
+            .p-datatable .p-datatable-tbody>tr>td:nth-of-type(1) {
+                text-align: left !important;
+                padding: 17px 17px 17px 0;
+                color: #262626;
+            }
+        }
+    }
+
+
+    .ri-search-line:before {
+        content: "\f0d1" !important;
+    }
+
+    .trinta-card.invoice-monitor-card{
+        background-color: #fff !important;
+
+        .mat-paginator{
+            background: transparent !important;
+        }
+    }
+
+    .mat-table,
+    .invoice-monitor-table table.mat-table thead,
+    .mat-header-row{
+        background-color: transparent !important;
+    }
+    .invoice-monitor-table th.mat-header-cell,
+    .invoice-monitor-table td.mat-cell{
+        background-color: transparent !important;
+    }
+
+    .trinta-card.invoice-summary-by-vendor-card,
+    .trinta-card.invoice-monitor-card {
+
+        .mat-card-title {
+            gap: 20px;
+
+            h5 {
+                text-wrap: nowrap;
+            }
+        }
+
+        .search-box {
+            width: 100%;
+            margin-right: 30px;
+
+            input {
+                height: 38px;
+                border-radius: 6px;
+                background: #f5f7fa;
+                color: #5b5b98;
+                font-weight: 400;
+                font-size: 14px;
+                font-family: "Poppins", sans-serif;
+
+                padding: {
+                    left: 40px;
+                    right: 20px;
+                    top: 10px;
+                    bottom: 10px
+                }
+
+                ;
+
+                &::placeholder {
+                    transition: .5s;
+                    color: #a9a9c8;
+                }
+
+                &:focus {
+                    outline: 0 !important;
+
+                    &::placeholder {
+                        color: transparent;
+                    }
+                }
+            }
+
+            button {
+                top: 50%;
+                left: 10px;
+                // font-size: 22px;
+                font-size: 18px;
+                position: absolute;
+                color: #3761ee;
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+}
+
+
+@media only screen and (max-width: 767px) {
+    :host ::ng-deep {
+
+        .mb-25 {
+            margin-bottom: 20px !important;
+        }
+
+        // .trinta-card.spend-summary-card .mat-card-header,
+        // .trinta-card.spend-overview-card .mat-card-header,
+        // .trinta-card.invoice-processing-card .mat-card-header,
+        // .trinta-card.spend-by-vendor-card .mat-card-header {
+        //     margin-bottom: 20px;
+        // }
+
+        .trinta-card .mat-card-header {
+            margin-bottom: 20px;
+        }
+
+        .mat-card.trinta-card {
+            padding: 20px;
+        }
+
+        .mat-card.trinta-card .mat-card-header .mat-card-header-text {
+            .mat-card-title h5 {
+                font-size: 16px !important;
+            }
+        }
+
+        .trinta-card.spend-summary-card-f .mat-card-content ul li {
+            margin-bottom: 10px;
+            padding-left: 117px;
+            font-size: 13px !important;
+        }
+
+        .trinta-card.inventory-overview-card {
+            .p-table-io {
+
+                .p-datatable .p-datatable-thead>tr>th {
+                    padding: 0 12px 12px !important;
+                }
+
+                .p-datatable .p-datatable-tbody>tr>td {
+                    padding: 12px !important;
+                }
+
+                .p-datatable .p-datatable-thead>tr>th:last-child {
+                    padding: 0 0 12px 12px !important;
+                }
+
+                .p-datatable .p-datatable-tbody>tr>td:last-child {
+                    padding: 12px 0 12px 12px !important;
+                }
+
+                .p-datatable .p-datatable-thead>tr>th:nth-of-type(1) {
+                    padding: 0 12px 0 0 !important;
+                }
+
+                .p-datatable .p-datatable-tbody>tr>td:nth-of-type(1) {
+                    padding: 12px 12px 12px 0 !important;
+                }
+            }
+        }
+    }
+}
+
+.vendor-header {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 18px; /* Adjust the font size */
+    // font-weight: bold; /* Make the text bold */
+    color: #262626; /* Use a neutral text color */
+    text-align: left; /* Align the text to the left */
+    margin-bottom: 0.5rem; /* Add some spacing below */
+    display: flex; /* Use flex for alignment */
+    align-items: center; /* Vertically align items */
+    text-wrap: nowrap;
+  }
+ 
+  /* Style for the number (21) */
+  .vendor-header .count {
+    background-color: #5579f1;
+    color: white; /* White text */
+    font-size: 16px; /* Slightly smaller font for the badge */
+    // font-weight: bold; /* Bold font for emphasis */
+    padding: 5px 5px; /* Padding for the badge */
+    border-radius: 0.5rem; /* Rounded corners for the badge */
+    margin-left: 0.5rem; /* Spacing between text and badge */
+    display: inline-block;
+    line-height: 1em;
+  }
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+    :host ::ng-deep {
+
+        .mat-card.trinta-card {
+            padding: 25px 20px;
+        }
+
+        .mat-card.trinta-card .mat-card-header .mat-card-header-text {
+            .mat-card-title h5 {
+                font-size: 17px !important;
+                padding: 15px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1704px) {
+    .dashboad-main .contracts .contracts-body h5 {
+        font-size: 14px !important;
+    }
+
+    .dashboad-main .contracts .contracts-body h1 {
+        font-size: 36px !important;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .dashboad-main {
+        .Dashboard-box-body {
+            ul {
+                gap: 5px !important;
+
+                li.list-group-item {
+
+                    h4,
+                    span {
+                        font-size: 13px !important;
+                    }
+                }
+            }
+        }
+    }
+
+}

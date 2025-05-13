@@ -1,0 +1,6 @@
+<div class="mt-2">
+  <app-contract-overview [tabData]="tabData" (onOverviewLoaded)="onOverviewLoaded($event)"></app-contract-overview>
+</div>
+
+<app-p-tree-inventory-contract [tabData]="tabData" [overviewData]="overviewData" (disableLinkDialog)="disableLinkDialogfn($event)" (rowCellDoubleClicked)="onCellDoubleClickedEvent($event)">
+</app-p-tree-inventory-contract>

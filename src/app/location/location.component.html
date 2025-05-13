@@ -1,0 +1,234 @@
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content>
+
+                <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton"
+                    [temRoles]="temRoles" [selectedTem]="selectedTem" [disableTemSearchDD]="disableTemSearchDD"
+                    [tems]="tems" [disableTemSearch]="disableTemSearch"
+                    [currentOpenEditPagevar]="currentOpenEditPagevar" [isDisabledExport]="isDisabledExport"
+                    [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit" [trackByIndex]="trackByIndex"
+                    (buttonClick)="onButtonClick($event)" (temChange)="onTemChange()" [CompanyRoles]="CompanyRoles"
+                    (filterGridByTEMId)="filterGridByTEMId($event)" (exportDataAsExcel)="onBtnExportDataAsExcel()"
+                    (add)="add()"></app-header-section>
+
+                <div class="table-responsive">
+                    <mat-tab-group preserveContent [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)">
+
+                        <ng-container>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-map-marker-alt" style="color: #4680ff;"> </i>&nbsp; Locations
+                                </ng-template>
+
+                                <ng-template matTabContent>
+                                    <div class="mt-2">
+                                        <app-p-tree-location (tableDataExist)="tableDataExistFn($event)"
+                                            (exportAccountData)="exportAccountData($event)"
+                                            (selectedRowsEmit)="selectedRowsEmit($event)"
+                                            (rowCellDoubleClicked)="rowCellDoubleClicked($event)">
+
+                                        </app-p-tree-location>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                        <ng-container *ngFor="let location of listOfLocations;let i = index; trackBy: trackByIndex">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-edit" style="color: #4680ff;"> </i>&nbsp;{{ (location?.Location
+                                    && location?.Location?.Name) ? location.Location.Name :
+                                    (location.LocationName) ?location.LocationName : location.Name}}&nbsp;<mat-icon
+                                        (click)="removeTab(i)">cancel</mat-icon>
+                                </ng-template>
+
+                                <ng-template matTabContent>
+                                    <mat-tab-group preserveContent [(selectedIndex)]="selectedSubTab">
+                                        <ng-container>
+                                            <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <i class="fas fa-map-marker-alt" style="color: #4680ff;">
+                                                        </i>
+                                                        Location
+                                                    </b>
+                                                </ng-template>
+
+                                                <ng-template matTabContent>
+                                                    <div class="row p-l-r">
+                                                        <div class="col-sm-12 col-xl-12 text-right">
+                                                            <span class="text-c-red">*Required field</span>
+                                                        </div>
+                                                        <div class="col-lg-12 col-xl-12 px-0">
+                                                            <app-add-edit-location-new [rowData]="location"
+                                                                [action]="'Edit'"
+                                                                (currentOpenEditPage)="currentOpenEditPage($event)"
+                                                                [selectedTem]="selectedTem" [update]="true"
+                                                                (diabledEmit)="diabledEmit($event)"
+                                                                (contactDataEmit)="contactDataEmit($event, i)"
+                                                                (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                                                (onLocationUpdateEvent)="onLocationUpdateEvent($event, i)">
+                                                            </app-add-edit-location-new>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </mat-tab>
+                                            <mat-tab [disabled]="disabled">
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <i class="fas fa-users" style="color: #4680ff;"> </i>
+                                                        People
+                                                    </b>
+                                                </ng-template>
+                                                <ng-template matTabContent>
+                                                    <div class="col-sm-12">
+                                                        <app-location-contact-data-table [location]="location"
+                                                            [contactDataEmit]="contactDatas[i]"
+                                                            (peopleEmit)="peopleEmit($event)">
+                                                        </app-location-contact-data-table>
+                                                    </div>
+                                                </ng-template>
+                                            </mat-tab>
+                                            <mat-tab [disabled]="disabled">
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <i class="fas fa-clipboard-list" style="color: #4680ff;">
+                                                        </i>
+                                                        Inventory
+                                                    </b>
+                                                </ng-template>
+                                                <ng-template matTabContent>
+                                                    <div class="col-sm-12 px-0">
+                                                        <app-location-inventory-data-table
+                                                            (InventoryEmit)="InventoryEmit($event)"
+                                                            (stopSpinnerEmit)="stopSpinnerEmit($event)"
+                                                            [contactDataEmit]="contactDatas[i]"
+                                                            (disableEditEmit)="disableEditEmit($event)"
+                                                            (disableExport)="disableInvExcel($event)"
+                                                            (redirectTab)="redirectTab($event)">
+                                                        </app-location-inventory-data-table>
+                                                    </div>
+                                                </ng-template>
+                                            </mat-tab>
+
+                                            <mat-tab [disabled]="disabled">
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <i class="fas fa-sticky-note" style="color: #4680ff;"> </i>
+                                                        Notes
+                                                    </b>
+                                                </ng-template>
+                                                <ng-template matTabContent>
+                                                    <div class="col-sm-12 px-0">
+                                                        <app-add-notes-location [locationaData]="location"
+                                                            (onAddNotesEmit)="onAddNotesEmit($event)"></app-add-notes-location>
+                                                    </div>
+                                                </ng-template>
+                                            </mat-tab>
+                                            <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                    <i class="icon-size fas fa-file-invoice-dollar"
+                                                        style="color: #4680ff;"></i>&nbsp;Billing
+                                                </ng-template>
+
+                                                <ng-template matTabContent>
+                                                    <app-add-billing-l [rowData]="location"
+                                                        (getIdsArray)="getIdsArray($event)"
+                                                        (redirectTab)="redirectTabCCS()"></app-add-billing-l>
+                                                </ng-template>
+
+                                            </mat-tab>
+
+                                            <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <img src="../../../../../../assets/images/fa-sharp-fas-fa-swap.svg"
+                                                            alt="Change Log Image">
+                                                        Change Log
+                                                    </b>
+                                                </ng-template>
+                                                <ng-template matTabContent>
+                                                    <div class="col-sm-12 px-0">
+                                                        <app-change-log [column]="columns" [locationId]="location.Id"
+                                                            [title]="'Location'"></app-change-log>
+                                                    </div>
+                                                </ng-template>
+                                            </mat-tab>
+
+                                            <mat-tab *ngIf="isOpenWirelineTab">
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <i class="fas fa-edit" style="color: #4680ff;">
+                                                        </i>{{inventoryData?.ServiceNumber}}
+
+                                                    </b>&nbsp;<mat-icon (click)="removeWirelineTab()">cancel</mat-icon>
+                                                </ng-template>
+                                                <ng-template matTabContent>
+                                                    <div class="col-sm-12 px-0">
+                                                        <app-add-wireline [fromTab]="'location'" [action]="'Edit'"
+                                                            (redirectTab)="redirectTab($event)"
+                                                            [rowData]="inventoryData"></app-add-wireline>
+                                                    </div>
+                                                </ng-template>
+                                            </mat-tab>
+
+                                            <mat-tab *ngIf="isOpenCCSTab">
+                                                <ng-template mat-tab-label>
+                                                    <svg class="pc-icon">
+                                                        <use xlink:href="assets/fonts/custome-icon-able.svg#custom-ccs">
+                                                        </use>
+
+                                                    </svg>&nbsp;
+                                                    Cost Center Structure&nbsp;<mat-icon
+                                                        (click)="removeCCSTab()">cancel</mat-icon>
+                                                </ng-template>
+
+                                                <ng-template matTabContent>
+                                                    <app-common-ccs-location
+                                                        [payload]="payload"></app-common-ccs-location>
+                                                </ng-template>
+
+                                            </mat-tab>
+                                        </ng-container>
+                                    </mat-tab-group>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                        <ng-container *ngFor="let location of addLocationArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="{{location?.LocationName ? 'fas fa-edit' : 'fas fa-map-marker-alt' }}"
+                                        style="color: #4680ff;"> </i>&nbsp;{{ location.LocationName ?
+                                    location.LocationName : 'Add Location'}}&nbsp;<mat-icon
+                                        (click)="removeLocation(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <div class="row new-location-tab-box">
+                                        <div class="col-sm-12 col-xl-12 text-right">
+                                            <span class="text-c-red">*Required field</span>
+                                        </div>
+                                        <div class="col-lg-12 col-xl-12 px-0 ">
+                                            <app-add-edit-location-new [update]="false" [selectedTem]="selectedTem"
+                                                (setClickFalse)="setClickFalse($event, i)"
+                                                [addData]="location.AddlocationData" [action]="'Add'"
+                                                [clickOnSearchButton]="clickOnSearchButton" [selected]="currentIndex"
+                                                (currentOpenEditPage)="currentOpenEditPage($event)"
+                                                [selectedWiseTemDD]="selectedWiseTemDD"
+                                                (onLocationComponetDestroy)="onAddLocationComponetDestroy($event,i)"
+                                                (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                                (onLocationAddEvent)="onLocationAddEvent($event, i)">
+                                            </app-add-edit-location-new>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

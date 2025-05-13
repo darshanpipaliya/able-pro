@@ -1,0 +1,292 @@
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12 top-btn-group-container header-btn-responsive d-flex px-0"
+                        style="flex-wrap: wrap;">
+                        <ng-container *ngFor="let option of buttonOptions">
+                            <button ngDefaultControl class="btn btn-outline-primary" type="button"
+                                [ngClass]="(option.value === selectedButton) ? 'btn btn-primary active round bg' : 'btn round'"
+                                [value]="option.value" [(ngModel)]="selectedButton"
+                                (click)="goToPage(option);selectedTab=0;">
+                                <i [ngClass]="option.class"></i>&nbsp;{{option.label}}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="!temRoles">
+                            <select class="custom-select select-width" [disabled]="variableManageService.mobilityWhichPageEnabled !== 'Table'" [(ngModel)]="selectedTem" *ngIf="variableManageService.mobilityWhichPageEnabled == 'Table' || variableManageService.mobilityWhichPageEnabled == 'Edit'"
+                                (change)="onChangeTem($event)" [ngModelOptions]="{standalone: true}">
+                                <option value="all" [disabled]="this.locationService.isDisableTemDD()">All</option>
+                                <option *ngFor="let tem of tems" [value]="tem.Id" [disabled]="this.locationService.isDisableTemDD()">
+                                    {{tem.AccountName}}
+                                </option>
+                            </select>
+                        </ng-container>
+
+                        <ng-container>
+                            <select class="custom-select select-width" [disabled]="variableManageService.mobilityWhichPageEnabled !== 'Table'" [(ngModel)]="selectedCustomer" *ngIf="variableManageService.mobilityWhichPageEnabled == 'Table' || variableManageService.mobilityWhichPageEnabled == 'Edit'"
+                                [ngModelOptions]="{standalone: true}">
+                                <option value="" *ngIf="loadingCustomerAPI">Loading...</option>
+                                <option value="all" *ngIf="!loadingCustomerAPI">All</option>
+                                <option *ngFor="let customer of customers"
+                                    [value]="(customer.AccountID) ? customer.AccountID : customer.Id">
+                                    {{customer.AccountName}}
+                                </option>
+                            </select>
+                        </ng-container>
+                        <ng-container>
+                            <button title="Search" class="btn btn-primary"
+                            *ngIf="variableManageService.mobilityWhichPageEnabled == 'Table' || variableManageService.mobilityWhichPageEnabled == 'Edit'"
+                            (click)="getAllContracts()">Search</button>
+                        </ng-container>
+
+                    </div>
+                </div>
+                <div class="main-banner-section">
+                    <div class="table-responsive">
+                        <div class="demo2 main">
+                            <nav mat-tab-nav-bar>
+                                <!-- <a mat-tab-link style="color: unset;"><b><img
+                                            src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                            alt="Contracts Image"><span>&nbsp;Contracts Main</span></b></a>
+                                <a mat-tab-link style="color: unset;"><b><img
+                                            src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                            alt="Contracts Image"><span>&nbsp;Contracts</span></b></a> -->
+                                <span (click)="changeParentTab(0)" mat-tab-link [active]="selectedTab === 0"
+                                    style="color: unset;">
+                                    <img src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                        alt="Contracts Image">
+                                    <span class="mat-tab-list-title">&nbsp;Contracts</span>
+                                </span>
+
+                                <span style="display: table-cell !important;" *ngIf="tabsMainArray.length > 0">
+                                    <span style="display: table-cell !important;"
+                                        *ngFor="let tab of tabsMainArray;let i = index">
+                                        <span *ngIf="tab.tabType=='New'" (click)="changeParentTab(i+1)" mat-tab-link
+                                            [active]="(i+1) === selectedTab">
+                                            <img src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                                alt="Contracts Image">&nbsp;
+                                            Add Contract&nbsp;
+                                            <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                        </span>
+
+                                        <span *ngIf="tab.tabType=='Edit'" (click)="changeParentTab(i+1)"
+                                            [active]="(i+1) === selectedTab" mat-tab-link>
+                                            <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;
+                                            <ng-container *ngIf="tab?.parentServiceID">
+                                                {{tab.parentServiceID}}&nbsp;
+                                                <i class="fas fa-angle-right"></i>&nbsp;
+                                            </ng-container>
+                                            {{ tab?.rowData?.DocumentName ? tab?.rowData?.DocumentName :
+                                            tab?.rowData?.DocumentName ? tab?.rowData?.DocumentName :
+                                            (tab?.rowData?.data?.DocumentName) ? tab?.rowData?.data?.DocumentName :
+                                            'Contract'}}&nbsp;
+                                            <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                        </span>
+                                    </span>
+                                </span>
+                            </nav>
+
+                            <div class="row mat-tab-link-btn-border d-flex align-items-center px-0 mx-0"
+                                *ngIf="selectedTab === 0 && variableManageService.mobilityWhichPageEnabled == 'Table'">
+
+                                <button title="Export" type="button" class="btn btn-icon btn-outline-success mr-2"
+                                    (click)="contractExport()" [disabled]="isDisabledExport || rowData.length < 1">
+                                    <i class="fas fa-file-excel"></i></button>
+
+                                <button title="Add Contract" type="button" (click)="addNewContract('New')"
+                                    class="btn btn-icon btn-outline-primary">
+                                    <i class="fas fa-plus "></i></button>
+
+
+                            </div>
+
+                            <div class="row mat-tab-link-btn-border d-flex align-items-center px-0 mx-0"
+                                *ngIf="variableManageService.mobilityWhichPageEnabled === 'Edit' && selectedChild === 0">
+                                <button type="button" class="btn btn-icon btn-outline-primary" [placement]="'left'"
+                                    [ngbPopover]="htmlContent1" popoverClass="cost-center-tooltip"
+                                    [disabled]="disablePlusOptions">
+                                    <i class="fas fa-plus"></i></button>
+                                <ng-template #htmlContent1>
+                                    <div class="text-left">
+                                        <div>
+                                            <ul class="d-block mb-0 pl-0">
+                                                <span class="inner-option" (click)="ReplaceContract()">
+                                                    <a> <i class="fas fa-angle-right"></i>
+                                                        Replace Contract </a> </span><br>
+
+                                                <span class="inner-option" (click)="AddAdemdum()">
+                                                    <a> <i class="fas fa-angle-right"></i> Add Addendum </a>
+                                                </span>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+
+                            <div class="row mat-tab-link-btn-border d-flex align-items-center px-0 mx-0"
+                                *ngIf="variableManageService.mobilityWhichPageEnabled === 'Edit' && (selectedChild === 1 || opentabsFromInventory_Inventory)">
+                                <button type="button" class="btn btn-icon btn-outline-warning ng-star-inserted" title="Link Inventory"
+                                    [placement]="'left'" [disabled]="isDisablLinkInventory" (click)="LinkInventoryCDialog()"
+                                    popoverClass="cost-center-tooltip"><i class="fas fa-edit f-14"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2" *ngIf="selectedTab === 0">
+                            <div class="col-sm-12 px-0">
+                                <mat-accordion class="example-headers-align accordion-grid">
+                                    <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                                        <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                                        <mat-expansion-panel-header class="math">
+                                            <mat-panel-title class="matt font-weight-bold">
+                                                <img src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                                    alt="Contracts Image">&nbsp;Contracts
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="">
+                                            <div class="col-sm-12 mb-15 px-0 ">
+                                                <div class="main-banner-section">
+
+                                                    <ng-container>
+                                                        <!-- <app-ag-grid-table [sideBar]="sideBar" [singleClickEdit]="true"
+                                                            [columnDefs]="columnDefs" [rowData]="rowData"
+                                                            [defaultColDef]="defaultColDef"
+                                                            [rowSelection]="rowSelection"
+                                                            [rowMultiSelectWithClick]="true" [gridOptions]="gridOptions"
+                                                            [exportFilename]="'Contracts.xlsx'"
+                                                            [sheetName]="'Contracts'"
+                                                            (onAgGridReady)="onAgGridReady($event)"
+                                                            (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                                            (onCellDoubleClickedEvent)="onCellDoubleClicked('Edit',$event)">
+                                                        </app-ag-grid-table> -->
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                        </div>
+
+                        <div *ngIf="selectedTab !== 0">
+                            <span *ngFor="let tab of tabsMainArray;let i = index">
+                                <div *ngIf="tab.tabType=='New' && selectedTab === i+1">
+                                    <app-add-edit-contracts [action]="tab.tabType" 
+                                    (closeAddContractTab)="closeAddContractTab($event, i)"
+                                    (onContractDetail)="onContractDetail($event)" (onContractAddEvent)="onContractAddEvent($event, i)"
+                                    ></app-add-edit-contracts>
+                                </div>
+
+                                <div *ngIf="tab.tabType=='Edit' && selectedTab === i+1">
+                                    <!-- ahiya aapde jo Edit ma multiple tabs avti hoi to aaa mukvanu rhese -->
+                                    <div class="demo2 main">
+                                        <nav mat-tab-nav-bar>
+                                            <span (click)="childrenChange(0)" mat-tab-link style="color: unset;"
+                                                [active]="selectedChild === 0">
+                                                <img src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                                    alt="Contracts Image">&nbsp;
+                                                Contracts
+                                            </span>
+                                            <span (click)="childrenChange(1)" mat-tab-link style="color: unset;"
+                                                [active]="selectedChild === 1">
+                                                <i class="icon-size fas fa-tools" style="color: #4680ff;"></i>&nbsp;
+                                                Inventory
+                                            </span>
+
+                                            <span *ngIf="isOpenWirelineTab" (click)="childrenChange(2)" mat-tab-link
+                                                style="color: unset;" [active]="selectedChild === 2">
+                                                <i class="icon-size fas fa-tools" style="color: #4680ff;"></i>&nbsp;
+                                                {{inventoryData?.ServiceNumber}}&nbsp;
+                                                <mat-icon (click)="removeWirelineTab('wireline')">cancel</mat-icon>
+                                            </span>
+
+                                            <span *ngIf="opentabsFromInventory_Contract" (click)="childrenChange(3)" mat-tab-link
+                                                style="color: unset;" [active]="selectedChild === 3">
+                                                <i class="icon-size fas fa-tools" style="color: #4680ff;"></i>&nbsp;
+                                                Contract Details - {{editContractDataFromLinkedInventory?.Overview?.DocumentName}}&nbsp;
+                                                <mat-icon (click)="removeWirelineTab('contract')">cancel</mat-icon>
+                                            </span>
+
+                                            <span *ngIf="opentabsFromInventory_Inventory" (click)="childrenChange(4)" mat-tab-link
+                                                style="color: unset;" [active]="selectedChild === 4">
+                                                <i class="icon-size fas fa-tools" style="color: #4680ff;"></i>&nbsp;
+                                                Contract Inventory - {{editContractDataFromLinkedInventory?.Overview?.DocumentName}}&nbsp;
+                                                <mat-icon (click)="removeWirelineTab('inventory')">cancel</mat-icon>
+                                            </span>
+
+                                            <span *ngFor="let tabb of tab['tabAddemArray'];let k = index" mat-tab-link
+                                                style="color: unset;" [active]="(k+1) == selectedAddedm"
+                                                (click)="selectedChild = null;clickToSelectedAdded(k+1)">
+                                                <img src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                                alt="Contracts Image">&nbsp;
+                                                Add Addendum&nbsp;
+                                                <mat-icon (click)="removeAddemTab(k)">cancel</mat-icon>
+                                            </span>
+                                        </nav>
+                                    </div>
+
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 0">
+                                        <app-add-edit-contracts [action]="tab.tabType" [rowData]="tab.rowData.data"
+                                            (onLoadEditContract)="onLoadEditContract($event)" (setCustomerDDValueEvent)="setCustomerDDValueEvent($event, i)"
+                                            (onDisablePlusButton)="onDisablePlusButton($event)" (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                            (onContractDetail)="onContractDetail($event)" (contractName)="contractName($event, i)"
+                                            (onLoadEditContractFromInventory)="onLoadEditContractFromInventory($event, true, i)"
+                                            ></app-add-edit-contracts>
+                                    </div>
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 1">
+                                        <app-inventory-c [action]="tab.tabType" [tabData]="tab.rowData.data"
+                                            (onLoadContractInventory)="onLoadContractInventory($event)"
+                                            (disableLinkDialog)="disableLinkDialog($event)"
+                                            (onCellDoubleClickedEventInventory)="onCellDoubleClickedEventInventory($event)"></app-inventory-c>
+                                    </div>
+
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 2">
+
+                                        <div class="col-sm-12 px-0">
+                                            <app-add-wireline [fromTab]="'Contract'" [action]="'Edit'"
+                                                (redirectTab)="redirectTab($event)"
+                                                [rowData]="inventoryData"></app-add-wireline>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 3">
+                                        <app-add-edit-contracts [action]="tab.tabType" [rowData]="linkedData"
+                                            (onLoadEditContract)="onLoadEditContract($event)" [fromInventory]="true"
+                                            (onDisablePlusButton)="onDisablePlusButton($event)"
+                                            (onContractDetail)="onContractDetail($event)"
+                                            (onLoadEditContractFromInventory)="onLoadEditContractFromInventory($event)"
+                                            ></app-add-edit-contracts>
+                                    </div>
+
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 4">
+                                        <app-inventory-c [action]="tab.tabType" [tabData]="linkedData" [fromTab]="'inventory-popup'"
+                                            (onLoadContractInventory)="onLoadContractInventory($event)"
+                                            (disableLinkDialog)="disableLinkDialog($event)" [fromInventory]="true"
+                                            (fromInventoryLinkDialog)="fromInventoryLinkDialog($event)"
+                                            (onCellDoubleClickedEventInventory)="onCellDoubleClickedEventInventory($event)"></app-inventory-c>
+                                    </div>
+
+                                    <div
+                                        *ngIf="tab.tabType =='Edit' && selectedChild == null && tab['tabAddemArray'].length > 0">
+                                        <span *ngFor="let tabs of tab['tabAddemArray'];let k = index; ">
+                                            <span *ngIf="selectedAddedm == k+1">
+                                                <app-add-edit-contracts [action]="tabs.tabType" [gridData]="tab"
+                                                    [index]="k+1"
+                                                    (closeAddAddmTab)="closeAddAddmTab($event, k)"
+                                                    (onContractDetail)="onContractDetail($event)"
+                                                    ></app-add-edit-contracts>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

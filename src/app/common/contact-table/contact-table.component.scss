@@ -1,0 +1,85 @@
+@use '../../../scss/custom-p-tree-table.scss' as *;
+
+.mat-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e5e8;
+}
+
+.mat-dialog-content {
+  padding: 0;
+  overflow: hidden !important;
+}
+
+.mat-expansion-panel {
+  height: calc(100% - 20px) !important;
+}
+
+.text-c-red {
+  color: #4680ff;
+  font-size: 12px;
+}
+
+.form-label {
+  font-weight: 500 !important;
+}
+
+.example-delete-tab-button {
+  margin: 8px;
+}
+
+.example-card {
+  max-width: 1000px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+mat-expansion-panel {
+  border: solid;
+  border-radius: 8px;
+  margin-bottom: 12px !important;
+  border-color: #80808061;
+}
+
+i {
+  cursor: pointer;
+}
+
+.spinner-center {
+  display: flex;
+  justify-content: center;
+}
+
+.contacts-list-popup .mat-dialog-header i.fa-times::before {
+  color: black !important;
+}
+
+.contacts-list-popup .mat-dialog-content {
+  margin: 0 !important;
+  max-height: unset !important;
+}
+
+.contacts-list-popup .mat-dialog-actions {
+  margin-bottom: 0 !important;
+  padding: 5px 0 0 !important;
+}
+
+
+
+@media only screen and (max-width: 991px) {
+  button.btn.btn-primary {
+    padding: 8px 12px;
+  }
+}

@@ -1,0 +1,97 @@
+<div class="contract-overview-main">
+    <div class="row mx-0">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+            <div class="contract-overview-wrapper">
+                <div class="contract-overview-left">
+                    <div class="contract-overview-label">
+                        <h2>Contract Overview</h2>
+                    </div>
+                </div>
+
+                <div class="contract-overview-right">
+                    <div class="billing-detail-group">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div>
+                                    <h3>Customer</h3>
+                                    <p>{{overviewData?.Overview.CustomerName}}</p>
+                                </div>
+
+                                <div>
+                                    <h3>Company</h3>
+                                    <p>{{overviewData?.Overview.CompanyName}}</p>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item">
+                                <div>
+                                    <h3>Document Name</h3>
+                                    <p style="white-space: pre-wrap;">{{overviewData?.Overview.DocumentName}}</p>
+                                </div>
+
+                                <div>
+                                    <h3>Internal Contract Number</h3>
+                                    <p>{{overviewData?.Overview.InternalDocumentNumber}}</p>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item">
+                                <div>
+                                    <h3>Type of Document</h3>
+                                    <p>{{overviewData?.Overview.DocumentType}}</p>
+                                </div>
+
+                                <div>
+                                    <h3>Status</h3>
+                                    <p>{{overviewData?.Overview.StatusDisplay}}</p>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item">
+                                <div>
+                                    <h3>Vendor Name</h3>
+                                    <p>{{overviewData?.Overview.VendorName}}</p>
+                                </div>
+                                <div>
+                                    <h3>Auto-Renewal</h3>
+                                    <p>{{overviewData?.Terms.AutoRenewalDisplay}}</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div>
+                                    <h3>Start Date</h3>
+                                    <p>{{overviewData?.Terms.StartDate}}</p>
+                                </div>
+
+                                <div>
+                                    <h3>Notice Period </h3>
+                                    <p>{{overviewData?.Terms.NoticePeriod}}</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div>
+                                    <h3>End Date</h3>
+                                    <p>{{overviewData?.Terms.EndDate}}</p>
+                                </div>
+                                <div>
+                                    <h3>Reminder Period</h3>
+                                    <p>{{overviewData?.Terms.ReminderPeriod}}</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div>
+                                    <h3>Months Remaining</h3>
+                                    <p>{{overviewData?.Terms.MonthsRemaining}}</p>
+                                </div>
+                                <div>
+                                    <h3>Custom Payment Terms</h3>
+                                    <p>{{overviewData?.Terms.CustomPaymentTerms}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

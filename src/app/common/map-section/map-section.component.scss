@@ -1,0 +1,50 @@
+agm-map {
+    height: 540px;
+}
+
+.loader-spinner {
+    text-align: center;
+    margin-top: 50px;
+    color: #4680FF;
+}
+
+:host ::ng-deep .card-body {
+    padding: 0 !important;
+}
+
+:host ::ng-deep .card {
+    margin-bottom: 0 !important;
+}
+
+// agm-map {
+//     height: 400px;
+// }
+
+.btn.btn-icon.map-btn-c {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    z-index: 2;
+    position: relative;
+    bottom: -10px;
+    left: 212px;
+    background: #fff;
+    transition: all 0.3s;
+}
+
+.btn.btn-icon.map-btn-c:hover{
+    background: #4680ff;
+}
+
+:host ::ng-deep .sebm-google-map-container .agm-map-container-inner.sebm-google-map-container-inner{
+    margin-top: -40px !important;
+}
+
+:host ::ng-deep .card-header {
+    display: none;
+ }
+ 
+
+ :host ::ng-deep .map-card .card-body {
+    padding-top: 0 !important;
+ }

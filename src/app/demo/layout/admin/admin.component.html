@@ -1,0 +1,54 @@
+<mat-drawer-container class="drawer-container" [dir]="direction">
+  <mat-drawer
+    #sidebar
+    class="pc-sidebar"
+    [mode]="modeValue"
+    opened
+    [ngClass]="{
+      compact: currentLayout === 'compact',
+      horizontal: currentLayout === 'horizontal'
+    }"
+  >
+    <nav>
+      <div class="navbar-wrapper">
+        <div class="m-header">
+            
+            <a [routerLink]="['/dashboard/home']" class="flex align-item-center">
+              <img id="main-logo" [src]='headerImageSrc' style="width: 95%; max-height:50px; padding:3px 3px;" alt="" class="logo">
+            </a>
+        </div>
+        @if (currentLayout === 'vertical') {
+          <app-vertical-menu [menus]="menus" />
+        }
+        @if (currentLayout === 'compact') {
+          <app-compact-menu [menus]="menus" />
+        }
+      </div>
+    </nav>
+  </mat-drawer>
+  <div>
+    <app-nav-bar
+      [ngClass]="{
+        'horizontal-navbar': currentLayout === 'horizontal'
+      }"
+    />
+    @if (currentLayout === 'horizontal') {
+      <app-horizontal-menu
+        [menus]="menus"
+        [ngClass]="{
+          'horizontal-menu': currentLayout === 'horizontal'
+        }"
+      />
+    }
+    <div class="app-container">
+      <div class="main-body">
+        <div class="page-wrapper">
+          <router-outlet />
+        </div>
+      </div>
+    </div>
+    <!-- <app-footer></app-footer> -->
+  </div>
+</mat-drawer-container>
+<app-configuration />
+

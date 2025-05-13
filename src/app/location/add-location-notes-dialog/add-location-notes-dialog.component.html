@@ -1,0 +1,323 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Add Location Note</h5>
+    </div>
+
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="card-body py-0">
+        <div class="container px-0">
+            <form class="editForm px-0" [formGroup]="locationNotesForm">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                        <div class="col-sm-12 col-xl-12 text-right pr-0">
+                            <span class="text-c-red">*Required field</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                                <div class="form-group">
+                                    <label class="form-label">Note *</label>
+                                    <textarea class="form-control textarea-full-section" rows="4"
+                                            formControlName="noteText" maxlength="1000" spaceTrimStartEndInput
+                                            [allowStartWithSpace]="false"
+                                            [ngClass]="{'invalid-error': f['noteText'].invalid && (f['noteText'].touched || isSubmit)}"></textarea>
+                                    <span class="textarea-error-span" style="position: relative;">
+                                        <mat-error style="font-size: 12px; position: absolute;"
+                                            class="textarea-error-disc"
+                                            *ngIf="f['noteText'].errors?.['required'] && (f['noteText'].touched || isSubmit) ">
+                                            Note is required</mat-error>
+                                        <span style="text-align: end;color: gray;">{{f['noteText'].value.length ?
+                                            f['noteText'].value.length : 0 }}/1000</span>
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group" style="margin-bottom: 0 !important;">
+                                            <div>
+                                                <label class="form-label">Note Type</label>&nbsp;
+                                                <mat-radio-group class="m-l-8" formControlName="privateNote">
+                                                    <mat-radio-button [value]="false">Public
+                                                    </mat-radio-button>
+                                                    <mat-radio-button *ngIf="hasSsuperTemUsers" [value]="true"
+                                                        class="m-l-10">Private
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                            <mat-error style="font-size: 12px; position: relative; top: -10px;"
+                                                *ngIf="f['privateNote'].errors?.['required'] && (f['privateNote'].touched || isSubmit) ">
+                                                Note Type is required</mat-error>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <div>
+                                                <label class="form-label">Note Status</label>&nbsp;
+                                                <mat-radio-group class="m-l-8" formControlName="active">
+                                                    <mat-radio-button [value]="true">Active
+                                                    </mat-radio-button>
+                                                    <mat-radio-button [value]="false" class="m-l-10">Inactive
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                            <mat-error style="font-size: 12px; position: relative; top: -10px;"
+                                                *ngIf="f['active'].errors?.['required'] && (f['active'].touched || isSubmit) ">
+                                                Note Status is required</mat-error>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-xl-12 px-0  mb-3">
+                                <button class="btn btn-primary atc-btn mr-2" (click)="openFileUpload()">Add
+                                    Attachment</button>
+                                <span>{{selectedFileName}}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="row py-3">
+                            <div class="col-md-12 col-xl-12 px-0 text-center  mb-3">
+                                <button mat-button class="btn btn-primary" (click)="saveNotes()"
+                                    [disabled]="saveButtonDisabled">
+                                    <span class="spinner-border spinner-border-sm mr-1" role="status"
+                                        *ngIf="saveButtonDisabled"></span>Save</button>
+                            </div>
+                        </div>
+
+                        <mat-accordion class="example-headers-align">
+                            <div>
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                    <mat-expansion-panel-header class="math">
+                                        <mat-panel-title class="matt">
+                                            <i class="ficon fas fa-id-card"></i>&nbsp;Location
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Customer *</label>
+                                                <span> <p-dropdown [options]="customers" optionLabel="AccountName"
+                                                        [filter]="true" filterBy="AccountName" [showClear]="true"
+                                                        placeholder="Select Customer..." formControlName="customer"
+                                                        [ngClass]="{'invalid-error': f['customer'].invalid && (f['customer'].touched || isSubmit)}"
+                                                        optionValue="Id" [showClear]="false" appendTo="body"
+                                                        [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 ">
+                                            <div class="form-group">
+                                                <label class="form-label">Company *</label>
+                                                <span> <p-dropdown [options]="companies" optionLabel="CompanyName"
+                                                        [filter]="true" filterBy="CompanyName" [showClear]="true"
+                                                        placeholder="Select Company..." formControlName="company"
+                                                        [ngClass]="{'invalid-error': f['company'].invalid && (f['company'].touched || isSubmit)}"
+                                                        appendTo="body" optionValue="CompanyID" [showClear]="false"
+                                                        [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Location Type *</label>
+                                                <span><p-dropdown [options]="locationTypes" optionLabel="DisplayName"
+                                                        [filter]="true" filterBy="DisplayName" [showClear]="true"
+                                                        placeholder="Select Location Type..." appendTo="body"
+                                                        [ngClass]="{'invalid-error': f['locationtype'].invalid && (f['locationtype'].touched || isSubmit)}"
+                                                        formControlName="locationtype" optionValue="Id"
+                                                        [showClear]="false" [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Status *</label>
+                                                <span><p-dropdown [options]="locationStatus" optionLabel="DisplayText"
+                                                        [disabled]="true" filterBy="DisplayText" [showClear]="true"
+                                                        placeholder="Select Status..." formControlName="status"
+                                                        appendTo="body" optionValue="Id"
+                                                        [ngClass]="{'invalid-error': f['status'].invalid && (f['status'].touched || isSubmit)}"
+                                                        [showClear]="false" [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Location Name *</label>
+                                                <span><input formControlName="locationName"
+                                                        [ngClass]="{'invalid-error': !f['locationName'].valid && (f['locationName'].dirty || f['locationName'].touched || isSubmit)}"
+                                                        type="text" class="form-control" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Location Code</label>
+                                                <span><input formControlName="locationCode" type="text"
+                                                        class="form-control" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Alias</label>
+                                                <span> <input formControlName="alias" type="text" class="form-control"
+                                                        spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                                        disabled></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Location Term</label>
+                                                <span>
+                                                    <p-dropdown [options]="locationTerm" optionLabel="Name"
+                                                        filterBy="Name" [showClear]="true"
+                                                        placeholder="Select Location Term..."
+                                                        formControlName="LocationTerm" appendTo="body" optionValue="Id"
+                                                        [showClear]="false" [disabled]="true">
+                                                    </p-dropdown>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Location Custom 1</label>
+                                                <span> <input formControlName="locationCustomField1" type="text"
+                                                        class="form-control" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Location Custom 2</label>
+                                                <span><input formControlName="locationCustomField2" type="text"
+                                                        class="form-control" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Location Custom 3</label>
+                                                <span> <input formControlName="locationCustomField3" type="text"
+                                                        class="form-control" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Location Custom 4</label>
+                                                <span><input formControlName="locationCustomField4" type="text"
+                                                        class="form-control" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Street Address One *</label>
+                                                <span> <textarea formControlName="addressOne" class="form-control"
+                                                        [ngClass]="{'invalid-error': !f['addressOne'].valid && (f['addressOne'].dirty || f['addressOne'].touched || isSubmit)}"
+                                                        name="validation-address" rows="1" disabled></textarea></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Street Address Two</label>
+                                                <span><textarea formControlName="addressTwo" class="form-control"
+                                                        rows="1" disabled></textarea></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">City *</label>
+                                                <span> <input disabled
+                                                        [ngClass]="{'invalid-error': !f['city'].valid && (f['city'].dirty || f['city'].touched || isSubmit)}"
+                                                        type="text" class="form-control" formControlName="city"
+                                                        spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Country *</label>
+
+                                                <span><p-dropdown [options]="countries" (onChange)="onCountrySelect()"
+                                                        optionLabel="Name" [filter]="true" filterBy="Name"
+                                                        [showClear]="true" placeholder="Select Country..."
+                                                        appendTo="body" [disabled]="true"
+                                                        [ngClass]="{'invalid-error': f['country'].invalid && (f['country'].touched || isSubmit)}"
+                                                        formControlName="country" optionValue="Id" [showClear]="false">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">State/Province/Region *</label>
+
+                                                <span><p-dropdown [options]="states" optionLabel="Name" [filter]="true"
+                                                        filterBy="Name" [showClear]="true"
+                                                        [ngClass]="{'invalid-error': f['state'].invalid && (f['state'].touched || isSubmit)}"
+                                                        placeholder="Select State/Province/Region..."
+                                                        formControlName="state" appendTo="body" optionValue="Id"
+                                                        [showClear]="false" [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Zip/Postal Code *</label>
+                                                <span> <input type="text" formControlName="zip" class="form-control"
+                                                        [ngClass]="{'invalid-error': !f['zip'].valid && (f['zip'].dirty || f['zip'].touched || isSubmit)}"
+                                                        spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                                        disabled></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="datepicker-c-main">
+                                                <label class="form-label" style="width: 76px;"> Start Date * </label>
+                                                <p-calendar dateFormat="mm/dd/yy" formControlName="startDate"
+                                                    placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true" 
+                                                    [disabled]="true"></p-calendar>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="datepicker-c-main second-datepicker">
+                                                <label class="form-label" style="width: 60px;">End Date</label>
+                                                <p-calendar dateFormat="mm/dd/yy" formControlName="endDate"
+                                                    placeholder="mm/dd/yyyy" appendTo="body"
+                                                    [showIcon]="true" [disabled]="true"></p-calendar>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

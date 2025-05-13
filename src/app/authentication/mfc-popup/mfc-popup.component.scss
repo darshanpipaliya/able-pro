@@ -1,0 +1,59 @@
+.link-section {
+  text-align: end;
+
+  button {
+    background: transparent;
+    padding: 0;
+    border: none;
+  }
+
+}
+
+
+.popup-main-section {
+  display: flex;
+  align-items: center;
+}
+
+.popup-left-icon i {
+  font-size: 45px;
+}
+
+.popup-left-icon,
+.popup-success-icon {
+  width: 70px;
+}
+
+.popup-right-desc {
+  width: calc(100% - 70px);
+}
+
+.mat-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e5e8;
+}
+
+.mat-dialog-content {
+  max-height: calc(100vh - 160px) !important;
+  padding: 0;
+}
+
+.italic {
+  font-style: italic;
+}
+
+:host ::ng-deep .form-control.otp{
+  height: 35px !important;
+  padding: 8px 10px !important;
+  max-width: 250px !important;
+  border: 1px solid #ced4da !important;
+  &:focus{
+    border-color: #c6d8ff;
+    outline: 0;
+  }
+}
+
+:host ::ng-deep .invalid-error.otp{
+  border-color: #ff5252 !important;
+}

@@ -1,0 +1,445 @@
+#page-header-sec {
+
+    margin: 0 13px !important;
+
+    select,
+    button {
+        z-index: 100000 !important;
+        font-family: "Poppins", sans-serif !important;
+    }
+}
+
+.header-btn-responsive {
+    display: flex;
+}
+
+:host ::ng-deep {
+    .card-body-p {
+        .card .card-body {
+            padding: 4px 0 20px !important
+        }
+    }
+
+    .mat-tab-header {
+        margin: 0 13px !important;
+
+        .mat-tab-label {
+            font-family: "Poppins", sans-serif !important;
+            color: #262626 !important;
+        }
+    }
+}
+
+.select.custom-select {
+    cursor: pointer;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.row>* {
+    padding-left: 12.5px;
+    padding-right: 12.5px;
+}
+.mat-menu-item{
+    font-family: "Poppins", sans-serif !important;
+}
+
+h2 {
+    margin-bottom: 0 !important;
+}
+
+.primary-header {
+    margin-bottom: 15px !important;
+}
+
+.mat-card-content {
+    margin-bottom: 0 !important;
+}
+
+.icon-toggle.icon-button-small {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.spend-vender-filter {
+    align-items: center;
+
+    .material-icons {
+        font-size: 20px;
+    }
+}
+
+
+/* Trinta Template Style */
+
+:host ::ng-deep {
+    .mat-paginator-page-size {
+        display: none;
+    }
+
+    .mat-paginator-range-label {
+        margin-right: 15px;
+    }
+
+    .mat-paginator-range-actions {
+        background: #fff;
+        padding: 4px 6px 4px 0;
+
+        .mat-icon-button {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #cfcfcf;
+            border-radius: 4px !important;
+
+            &.mat-paginator-navigation-next {
+                margin-left: 4px !important;
+            }
+
+            .mat-button-wrapper>* {
+                vertical-align: baseline !important;
+            }
+        }
+    }
+}
+
+
+::ng-deep .mat-elevation-z4 {
+    box-shadow: 0 4px 20px #2f8fe812 !important;
+}
+
+
+:host ::ng-deep {
+
+    .mat-paginator-container {
+        min-height: auto !important;
+    }
+
+    .mat-paginator {
+        // padding-top: 15px !important;
+        padding-top: 0 !important;
+        font-family: "Poppins", sans-serif;
+        color: #5b5b98;
+        font-size: 14px;
+
+        &.paginator-isv {
+
+            .mat-paginator-range-actions {
+                gap: 4px !important;
+
+                .mat-icon-button.mat-paginator-navigation-next {
+                    margin-left: 0 !important;
+                }
+            }
+        }
+    }
+
+    .mat-paginator-page-size {
+        display: none;
+    }
+
+    .mat-paginator-range-label {
+        margin: 0 15px 0 0 !important;
+    }
+
+    .mat-paginator-range-actions {
+        background: #fff;
+
+        .mat-icon-button {
+            height: 38px;
+            width: 32px;
+            line-height: 0;
+            border: 1px solid #cfcfcf;
+            border-radius: 4px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.mat-paginator-navigation-next {
+                margin-left: 4px !important;
+            }
+
+            .mat-button-wrapper>* {
+                vertical-align: baseline !important;
+            }
+
+            .mat-paginator-icon {
+                width: 24px !important;
+            }
+        }
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+        background: #f5f7fa;
+        border-bottom: 0;
+    }
+
+}
+
+
+:host ::ng-deep {
+
+    .blue-trinta {
+        color: #3761ee;
+    }
+
+    .card {
+        background-color: #F5F7FA !important;
+    }
+
+    .mb-25 {
+        margin-bottom: 25px !important;
+    }
+
+    .fw-medium {
+        font-weight: 500 !important;
+    }
+
+    .border-none {
+        border: none !important;
+    }
+
+    .bg-white {
+        background-color: #ffffff !important;
+    }
+
+    .mb-0 {
+        margin-bottom: 0 !important
+    }
+
+    .mt-0 {
+        margin-top: 0 !important;
+    }
+
+    .p-0 {
+        padding: 0 !important;
+    }
+
+    .min-w-auto {
+        min-width: auto !important;
+    }
+
+    .h-auto {
+        height: auto !important;
+    }
+
+    .lh-1 {
+        line-height: 1 !important;
+    }
+
+    .flex-auto {
+        flex: 1 1 auto !important;
+    }
+
+    .mat-card-header-text {
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+    }
+
+    .mat-card.trinta-card .mat-card-header {
+        display: block;
+        padding: 0;
+    }
+
+    .mat-card.trinta-card {
+        box-shadow: unset;
+        border-radius: 6px;
+        padding: 30px 25px;
+        height: 440px;
+        .spinner-border.text-primary{
+            position: absolute;
+            top: calc(50% - 1.75rem);
+        }
+    }
+
+    .trinta-card .mat-card-header {
+        margin-bottom: 25px;
+    }
+
+    .trinta-card.vendor-card .mat-card-header{
+        margin-bottom: 0;
+    }
+
+    .mat-card-subtitle {
+        margin: 0;
+    }
+
+    .mat-card.trinta-card .mat-card-header .mat-card-header-text .mat-card-subtitle {
+        display: flex;
+        align-items: center;
+    }
+
+    .mat-card-header .mat-card-subtitle:not(:first-child) {
+        margin-top: 0 !important;
+    }
+
+    .mat-card-header .mat-card-title {
+        display: block;
+        margin: 0;
+    }
+
+
+    .mat-card.trinta-card .mat-card-header .mat-card-header-text {
+        margin-left: 0;
+        margin-right: 0;
+
+        .mat-card-title h5 {
+            font-size: 18px !important;
+            color: #262626;
+            letter-spacing: .18px;
+            font-family: "Inter", sans-serif;
+            font-weight: 600;
+        }
+    }
+
+    /*Apex Chart (Spend Overview)*/
+    .mat-card.trinta-card .mat-card-content .apexcharts-canvas .apexcharts-text {
+        font-size: 12px;
+        color: #262626;
+
+        tspan {
+            font-family: "Poppins", sans-serif;
+        }
+    }
+
+    .ri-more-2-fill::before {
+        content: "\ef76" !important;
+    }
+
+    .ri-search-line:before {
+        content: "\f0d1" !important;
+    }
+
+    .vendor-card {
+
+        // .apexcharts-inner.apexcharts-graphical{
+        //     transform: translate(0, 0);
+        // }
+        .mat-card-title {
+            gap: 20px;
+
+            h5 {
+                text-wrap: nowrap;
+            }
+        }
+
+        .search-box {
+            width: 100%;
+            margin-right: 30px;
+
+            input {
+                height: 38px;
+                border-radius: 6px;
+                background: #f5f7fa;
+                color: #5b5b98;
+                font-weight: 400;
+                font-size: 14px;
+                font-family: "Poppins", sans-serif;
+
+                padding: {
+                    left: 40px;
+                    right: 20px;
+                    top: 10px;
+                    bottom: 10px
+                }
+
+                ;
+
+                &::placeholder {
+                    transition: .5s;
+                    color: #a9a9c8;
+                }
+
+                &:focus {
+                    outline: 0 !important;
+
+                    &::placeholder {
+                        color: transparent;
+                    }
+                }
+            }
+
+            button {
+                top: 50%;
+                left: 10px;
+                font-size: 18px;
+                position: absolute;
+                color: #3761ee;
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+}
+
+
+@media only screen and (max-width: 767px) {
+    :host ::ng-deep {
+
+        .mb-25 {
+            margin-bottom: 20px !important;
+        }
+
+        .trinta-card .mat-card-header {
+            margin-bottom: 20px;
+        }
+
+        .mat-card.trinta-card {
+            padding: 20px;
+        }
+
+        .mat-card.trinta-card .mat-card-header .mat-card-header-text {
+            .mat-card-title h5 {
+                font-size: 16px !important;
+            }
+        }
+
+    }
+}
+
+.vendor-header {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 18px; /* Adjust the font size */
+    // font-weight: bold; /* Make the text bold */
+    color: #262626; /* Use a neutral text color */
+    text-align: left; /* Align the text to the left */
+    margin-bottom: 0.5rem; /* Add some spacing below */
+    display: flex; /* Use flex for alignment */
+    align-items: center; /* Vertically align items */
+    text-wrap: nowrap;
+  }
+ 
+  /* Style for the number (21) */
+  .vendor-header .count {
+    background-color: #5579f1;
+    color: white; /* White text */
+    font-size: 16px; /* Slightly smaller font for the badge */
+    // font-weight: bold; /* Bold font for emphasis */
+    padding: 5px 5px; /* Padding for the badge */
+    border-radius: 0.5rem; /* Rounded corners for the badge */
+    margin-left: 0.5rem; /* Spacing between text and badge */
+    display: inline-block;
+    line-height: 1em;
+  }
+  
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+    :host ::ng-deep {
+
+        .mat-card.trinta-card {
+            padding: 25px 20px;
+        }
+
+        .mat-card.trinta-card .mat-card-header .mat-card-header-text {
+            .mat-card-title h5 {
+                font-size: 17px !important;
+                padding: 15px;
+            }
+        }
+    }
+}

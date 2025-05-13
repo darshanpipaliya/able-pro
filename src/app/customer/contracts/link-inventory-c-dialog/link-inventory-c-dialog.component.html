@@ -1,0 +1,25 @@
+<div class="mat-dialog-header pb-2 mb-3 dialog-close-icon">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Link Inventory to {{dialogData?.DocumentName ? '('+dialogData?.DocumentName+')' : dialogData?.ContractDocumentName ? '('+dialogData?.ContractDocumentName+')' : ''}}</h5>
+    </div>
+
+    <button type="button" class="close" [mat-dialog-close]="'undefined'">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content class="px-0 m-0">
+
+    <app-p-tree-select-invtry-contract [dialogData]="dialogData" [isSendVendorProductInventoryId]="isSendVendorProductInventoryId" (selectedRowsEmit)="onSelectionChanged($event)" (rowDatas)="rowDatas($event)">
+
+    </app-p-tree-select-invtry-contract>
+</div>
+
+<mat-dialog-actions class="py-3" align="center">
+
+    <button mat-button class="btn btn-primary" (click)="saveAssociatedInventory()" cdkFocusInitial
+        [disabled]="saveButtonLoader">
+        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>
+        Save</button>
+
+
+</mat-dialog-actions>

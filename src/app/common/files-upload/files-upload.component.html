@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-sm-12">
+    <!-- <app-card cardTitle="" [options]="false"> -->
+      <form [formGroup]="demoForm">
+        <file-upload formControlName="files"></file-upload>
+      </form>
+      <ng-container *ngIf="!hideUploadButton">
+        <div class="text-center m-t-20">
+          <button class="btn btn-primary" (click)="uploadFiles()" [disabled]="saveButtonLoadder">
+            <span class="spinner-border spinner-border-sm" role="status" *ngIf="saveButtonLoadder"></span> Upload Now</button>
+        </div>
+      </ng-container>
+    <!-- </app-card> -->
+
+  </div>
+</div>
