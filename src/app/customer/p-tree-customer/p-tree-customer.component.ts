@@ -255,7 +255,7 @@ export class PTreeCustomerComponent implements OnInit {
           )
         });
         this.filesColumns.push(data)
-
+        console.log(' filesColumns ', this.filesColumns);
         const closedColumns = this.cols.filter((item: any) => item.parent === col.parent && item.columnGroupShow === 'close');
         col.colspan = closedColumns.length;
         col.Parentwidth = closedColumns.map((value: any) => parseInt(value.width.replace('px', ''))).reduce(
@@ -283,7 +283,7 @@ export class PTreeCustomerComponent implements OnInit {
       this.lastNode = this.files[this.files.length - 1];
       this.isApiAlerdayCall = true;
       this.pTableContain.first = this.pTableContain.first ? this.pTableContain.first + 100 : 101;
-      this.loadNodes(true);
+      this.loadNodes();
     }
   }
 
@@ -297,8 +297,8 @@ export class PTreeCustomerComponent implements OnInit {
       if (node.isparent && this.cols.some(e => e.header === node.label && e.displayCheckboxColumns === false) || !node.isparent && this.cols.some(e => e.childHeader === node.label && e.displayCheckboxColumns === false)) {
       } else {
         this.selectedFiles.push(node);
+        console.log(' selectedFiles ', this.selectedFiles);
         if (node.children) {
-
           this.selectAllNodes(node.children);
         }
       }
@@ -363,8 +363,6 @@ export class PTreeCustomerComponent implements OnInit {
 
   loadNodes(allOptionsClear = false) {
     this.loading = true;
-
-    this.isApiAlerdayCall = true;
     this.pTableContain.first = this.pTableContain?.first || 1;
     if (allOptionsClear) {
       this.pTableContain.first = 1;
@@ -459,14 +457,13 @@ export class PTreeCustomerComponent implements OnInit {
     if (response?.Data?.$values?.length) {
       const resData = response.Data.$values.map(extractDataAndLeaf.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
-      this.isApiAlerdayCall = false;
 
     } else {
       this.files = [];
-      this.isApiAlerdayCall = false;
     }
-
+    
     this.files.length > 0 ? this.tableDataExist.emit(true) : this.tableDataExist.emit(false);
+    this.isApiAlerdayCall = false;
   }
 
   handleError() {
@@ -897,16 +894,17 @@ export class PTreeCustomerComponent implements OnInit {
     menu.show(event);
   }
 
-  nodeSelect(e: { node: { isparent: any; parentid: number; label: any; }; }) {
+  nodeSelect(e: any) { 
+  console.log('www ', e);
     this.cols.forEach(item => {
-      if (e.node.isparent && item.parent === e.node.parentid || !e.node.isparent && item.parent === e.node.parentid && item.childHeader === e.node.label) {
+      if (e['node']['isparent'] && item.parent === e['node']['parentid'] || !e['node']['isparent'] && item['parent'] === e['node']['parentid'] && item.childHeader === e['node']['label']) {
         let closedColumns = false;
-        if (e.node.isparent && this.cols.some(it => it.parent === e.node.parentid && it.isChildren && it.isicon === 0)) {
+        if (e['node']['isparent'] && this.cols.some(it => it['parent'] === e['node']['parentid'] && it['isChildren'] && it['isicon'] === 0)) {
           closedColumns = true;
         } else {
-          closedColumns = this.colsshow.some(it => it.parent === e.node.parentid && it.columnGroupShow === 'close' && (!item.isChildren && it.childHeader === item.childHeader) || (item.isChildren && it.header === item.header));
+          closedColumns = this.colsshow.some(it => it['parent'] === e['node']['parentid'] && it['columnGroupShow'] === 'close' && (!item['isChildren'] && it['childHeader'] === item['childHeader']) || (item['isChildren'] && it['header'] === item['header']));
         }
-        if (!e.node.isparent && !item.isChildren && e.node.parentid === item.parent) {
+        if (!e['node']['isparent'] && !item['isChildren'] && e['node']['parentid'] === item['parent']) {
           closedColumns = true;
         }
         if (closedColumns) {
@@ -917,33 +915,33 @@ export class PTreeCustomerComponent implements OnInit {
       }
     });
 
-    if (this.cols.some(it => it.parent === e.node.parentid && it.isChildren && it.isicon === 1)) {
-      this.toggleColumn(e.node.parentid, 'open')
+    if (this.cols.some(it => it['parent'] === e['node']['parentid'] && it['isChildren'] && it['isicon'] === 1)) {
+      this.toggleColumn(e['node']['parentid'], 'open')
     }
 
     this.commonColumnsFn();
   }
 
-  nodeUnselect(e: { node: { isparent: any; parentid: any; label: any; parent: { children: any; }; }; }) {
-
+  nodeUnselect(e: any) {
+    console.log('qqq', e);
     this.cols.forEach(item => {
-      if (e.node.isparent && item.parent === e.node.parentid) {
+      if (e['node']['isparent'] && item['parent'] === e['node']['parentid']) {
         item.columnGroupShow = 'open';
         item.displayCheckboxColumns = false;
-      } else if (!e.node.isparent && item.parent === e.node.parentid && item.childHeader === e.node.label) {
+      } else if (!e['node']['isparent'] && item['parent'] === e['node']['parentid'] && item['childHeader'] === e['node']['label']) {
 
         item.columnGroupShow = 'open';
         item.displayCheckboxColumns = false;
 
-        if (!this.cols.some(it => it.parent === e.node.parentid && it.displayCheckboxColumns)) {
+        if (!this.cols.some(it => it.parent === e['node']['parentid'] && it.displayCheckboxColumns)) {
           item.isParentVisible = false;
         } else {
           item.isParentVisible = true;
-          if (!this.cols.some(it => it.parent === e.node.parentid && it.columnGroupShow === 'close')) {
+          if (!this.cols.some(it => it.parent === e['node']['parentid'] && it.columnGroupShow === 'close')) {
 
-            for (let child of e.node.parent.children) {
+            for (let child of e['node']['parent']['children']) {
               if (this.selectedFiles.includes(child)) {
-                let i = this.cols.findIndex(k => k.parent === e.node.parentid && k.childHeader === child.label)
+                let i = this.cols.findIndex(k => k.parent === e['node']['parentid'] && k.childHeader === child.label)
                 if (i !== -1) {
                   this.cols[i].columnGroupShow = 'close';
                 }

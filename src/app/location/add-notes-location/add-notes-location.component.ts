@@ -509,9 +509,6 @@ export class AddNotesLocationComponent implements OnInit {
   loadNodes(event?: any, allOptionsClear = false) {
     if (!event?.sortField) {
       this.loading = true;
-
-      // Initialize pagination if not set
-      this.isApiAlerdayCall = true;
       this.pTableContain.first = this.pTableContain?.first || 1;
       if (allOptionsClear) {
         this.pTableContain.first = 1;
@@ -571,12 +568,11 @@ export class AddNotesLocationComponent implements OnInit {
     if (response?.Data?.$values?.length) {
       const resData = response.Data.$values.map(this.extractDataAndLeaf.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
-      this.isApiAlerdayCall = false;
 
     } else {
       this.files = [];
-      this.isApiAlerdayCall = false;
     }
+    this.isApiAlerdayCall = false;
   }
 
   // Extract data and leaf status

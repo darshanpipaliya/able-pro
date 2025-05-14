@@ -383,8 +383,6 @@ export class PTreeSelectInvtryContractComponent implements OnInit {
 
   loadNodes(event?: any, allOptionsClear = false, fromHeaderCheckBox = false) {
     this.loading = true;
-
-    this.isApiAlerdayCall = true;
     this.pTableContain.first = this.pTableContain?.first || 1;
     if (allOptionsClear) {
       this.pTableContain.first = 1;
@@ -536,14 +534,13 @@ export class PTreeSelectInvtryContractComponent implements OnInit {
       if (this.headerCheckboxData) {
         this.selectedRecords = this.files;
       }
-      this.isApiAlerdayCall = false;
 
     } else {
       this.files = [];
-      this.isApiAlerdayCall = false;
     }
-
+    
     this.files.length > 0 ? this.isBillingAccountExist.emit(true) : this.isBillingAccountExist.emit(false);
+    this.isApiAlerdayCall = false;
   }
 
   handleError() {

@@ -17,6 +17,23 @@
   text-align: center;
 }
 
+.right-column-bar {
+  display: flex;
+  flex-direction: row;
+  
+  ::ng-deep {
+    .p-treetable-scrollable-header-box {
+      padding-right: 0 !important;  
+    }
+    .p-tree {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+    }
+  }
+}
+
+
 
 
 :host ::ng-deep .mat-expansion-panel-body {
@@ -45,7 +62,7 @@ p-treetable {
 }
 
 :host ::ng-deep .p-treetable-scrollable-body {
-  height: 300px;
+  height: 350px;
   overflow-y: auto;
 }
 
@@ -559,6 +576,7 @@ p-treetable {
     }
 
     .p-treenode-content {
+      padding: 0 !important;
       gap: 12px;
 
       .p-checkbox {
@@ -601,16 +619,14 @@ p-treetable {
   .p-checkbox-box {
     border-radius: 2px !important;
     border: 1px solid #babfc7 !important;
+    width: 14px !important;
+    height: 14px !important;
   }
 
   .p-checkbox-box.p-highlight,
   .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
     border: none !important;
   }
-
-  // .p-checkbox-box:hover{
-  //   border: 1px solid #babfc7 !important;
-  // }
   .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
     background: #2196F3;
   }

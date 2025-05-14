@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SharedModule } from '../../demo/shared/shared.module';
+import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 
 @Component({
   selector: 'app-header-section',
-  imports: [SharedModule],
+  imports: [SharedModule, PrimgModule],
   templateUrl: './header-section.component.html',
   styleUrl: './header-section.component.scss',
-  standalone: true
+  standalone: true,
 })
 export class HeaderSectionComponent {
   @Input() buttonOptions: any[] = [];

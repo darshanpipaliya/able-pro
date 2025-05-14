@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, forwardRef, HostListener, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { WirelineService } from 'src/app/services/wireline.service';
 import { VariableManageService } from 'src/app/services/variable-manage.service';
 import { LocationService } from 'src/app/services/location.service';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 interface arrDate {
   filterKey: any;
@@ -50,7 +51,13 @@ interface ColumnDefinition {
     SharedModule,
     PrimgModule,
   ],
-  providers: [WirelineService, VariableManageService, LocationService],
+  providers: [WirelineService, VariableManageService, LocationService,
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => PTreeCompanyComponent),
+      multi: true,
+    },
+  ],
   templateUrl: './p-tree-company.component.html',
   styleUrl: './p-tree-company.component.scss'
 })
@@ -68,7 +75,6 @@ export class PTreeCompanyComponent implements OnInit {
   sidebarVisible: boolean = false;
 
   files: TreeNode[];
-  TotalCount = 0;
 
   @ViewChild('myModal') myModal: any;
   filterArray: arrDate[];
@@ -79,7 +85,7 @@ export class PTreeCompanyComponent implements OnInit {
   displaycols: any[];
   items: any[];
   colsshow: any[];
-  totalRecords: number;
+  totalRecords: number = 0;
   loading: boolean;
   radioItems: Array<any>;
 
@@ -280,7 +286,7 @@ export class PTreeCompanyComponent implements OnInit {
       this.lastNode = this.files[this.files.length - 1];
       this.isApiAlerdayCall = true;
       this.pTableContain.first = this.pTableContain.first ? this.pTableContain.first + 100 : 101;
-      this.loadNodes(true);
+      this.loadNodes();
     }
   }
 
@@ -361,7 +367,6 @@ export class PTreeCompanyComponent implements OnInit {
   loadNodes(allOptionsClear = false) {
     this.loading = true;
 
-    this.isApiAlerdayCall = true;
     this.pTableContain.first = this.pTableContain?.first || 1;
     if (allOptionsClear) {
       this.pTableContain.first = 1;
@@ -448,21 +453,20 @@ export class PTreeCompanyComponent implements OnInit {
     // Optionally, log the error or provide feedback
   }
 
-  handleResponse(response: { TotalCount: number; Data: { $values: any[]; }; }, allOptionsClear: boolean) {
+  handleResponse(response: any, allOptionsClear: boolean) {
     this.loading = false;
     this.totalRecords = response.TotalCount;
 
     if (response?.Data?.$values?.length) {
       const resData = response.Data.$values.map(extractDataAndLeaf.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
-      this.isApiAlerdayCall = false;
-
+      
     } else {
       this.files = [];
-      this.isApiAlerdayCall = false;
     }
-
+    
     this.files.length > 0 ? this.tableDataExist.emit(true) : this.tableDataExist.emit(false);
+    this.isApiAlerdayCall = false;
   }
 
   handleError() {

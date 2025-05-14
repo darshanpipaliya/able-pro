@@ -414,8 +414,6 @@ export class LocationInventoryDataTableComponent implements OnInit {
   loadNodes(event?: any, allOptionsClear = false) {
     this.loading = true;
 
-    // Initialize pagination if not set
-    this.isApiAlerdayCall = true;
     this.pTableContain.first = this.pTableContain?.first || 1;
     if (allOptionsClear) {
       this.pTableContain.first = 1;
@@ -500,13 +498,12 @@ export class LocationInventoryDataTableComponent implements OnInit {
     if (response?.Data?.$values?.length) {
       const resData = response.Data.$values.map(this.extractDataAndLeaf.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
-      this.isApiAlerdayCall = false;
 
     } else {
       this.files = [];
-      this.isApiAlerdayCall = false;
     }
     this.files.length > 0 ? this.disableExport.emit(false) : this.disableExport.emit(true);
+    this.isApiAlerdayCall = false;
 
   }
 

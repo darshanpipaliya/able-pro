@@ -201,8 +201,6 @@ export class ContactTableComponent implements OnInit {
   
   loadNodes(allOptionsClear = false) {
     this.loading = true;
-
-    this.isApiAlerdayCall = true;
     this.pTableContain.first = this.pTableContain?.first || 1;
     if (allOptionsClear) {
       this.pTableContain.first = 1;
@@ -310,17 +308,14 @@ export class ContactTableComponent implements OnInit {
     if (response?.Data?.$values?.length) {
       const resData = response.Data.$values.map(extractDataAndLeaf.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
-
-      
       this.selectedRecords = this.getCheckedNodes(this.files);
-      this.isApiAlerdayCall = false;
 
     } else {
       this.files = [];
-      this.isApiAlerdayCall = false;
     }
-
+    
     this.files.length > 0 ? this.tableDataExist.emit(true) : this.tableDataExist.emit(false);
+    this.isApiAlerdayCall = false;
   }
 
   handleError() {
@@ -1349,7 +1344,7 @@ export class ContactTableComponent implements OnInit {
       this.lastNode = this.files[this.files.length - 1];
       this.isApiAlerdayCall = true;
       this.pTableContain.first = this.pTableContain.first ? this.pTableContain.first + 100 : 101;
-      this.loadNodes(true);
+      this.loadNodes();
     }
   }
 

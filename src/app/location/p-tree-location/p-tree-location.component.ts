@@ -69,7 +69,6 @@ export class PTreeLocationComponent implements OnInit {
   sidebarVisible: boolean = false;
 
   files: TreeNode[];
-  TotalCount = 0;
 
   @ViewChild('myModal') myModal: any;
   filterArray: arrDate[];
@@ -80,7 +79,7 @@ export class PTreeLocationComponent implements OnInit {
   displaycols: any[];
   items: any[];
   colsshow: any[];
-  totalRecords: number;
+  totalRecords: number = 0;
   loading: boolean;
   radioItems: Array<any>;
 
@@ -381,7 +380,6 @@ export class PTreeLocationComponent implements OnInit {
   loadNodes(allOptionsClear = false) {
     this.loading = true;
 
-    this.isApiAlerdayCall = true;
     this.pTableContain.first = this.pTableContain?.first || 1;
     if (allOptionsClear) {
       this.pTableContain.first = 1;
@@ -469,21 +467,20 @@ export class PTreeLocationComponent implements OnInit {
     // Optionally, log the error or provide feedback
   }
 
-  handleResponse(response: { TotalRecordCount: number; _companyLocationDto: { $values: any[]; }; }, allOptionsClear: boolean) {
+  handleResponse(response: any, allOptionsClear: boolean) {
     this.loading = false;
     this.totalRecords = response.TotalRecordCount;
 
     if (response?._companyLocationDto?.$values?.length) {
       const resData = response._companyLocationDto.$values.map(extractDataAndLeaf.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
-      this.isApiAlerdayCall = false;
-
     } else {
       this.files = [];
-      this.isApiAlerdayCall = false;
     }
 
     this.files.length > 0 ? this.tableDataExist.emit(true) : this.tableDataExist.emit(false);
+    this.isApiAlerdayCall = false;
+
   }
 
   handleError() {

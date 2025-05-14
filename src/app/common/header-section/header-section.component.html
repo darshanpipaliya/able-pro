@@ -13,13 +13,19 @@
     </div>
 
     <div *ngIf="!temRoles">
-      <select class="form-select" [(ngModel)]="selectedTem" [ngModelOptions]="{standalone: true}"
+      <!-- <select class="form-select" [(ngModel)]="selectedTem" [ngModelOptions]="{standalone: true}"
         [disabled]="disableTemSearchDD" (change)="temChange.emit()">
         <option value="all">All</option>
         <option *ngFor="let tem of tems" [value]="tem.Id">
           {{tem.AccountName}}
         </option>
-      </select>
+      </select> -->
+
+      <p-dropdown class="custom-p-dropdown-outer" [options]="tems" [(ngModel)]="selectedTem" [ngModelOptions]="{standalone: true}" [disabled]="disableTemSearchDD" (onChange)="temChange.emit()" [filter]="true" [filterFields]="['AccountName']">
+        <ng-template pTemplate="item" let-tem>
+          {{tem.AccountName}}
+        </ng-template>
+      </p-dropdown>
     </div>
 
     <div>
