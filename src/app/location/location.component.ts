@@ -24,7 +24,7 @@ import { LocationInventoryDataTableComponent } from '../common/location-inventor
     AddEditLocationNewComponent,
     LocationContactDataTableComponent,
     HeaderSectionComponent,
-    LocationInventoryDataTableComponent
+    LocationInventoryDataTableComponent,
   ],
   encapsulation: ViewEncapsulation.None,
 })
@@ -120,7 +120,7 @@ export class LocationComponent {
   }
 
   onLocationAddEvent(event: any, i: any) {
-    this.PTreeLocationComponent.loadNodes(true);
+    this.PTreeLocationComponent.refreshbuttonEmitFn(true);
 
     this.removeLocation(i);
     this.listOfLocations.push(event);
@@ -136,7 +136,7 @@ export class LocationComponent {
     this.listOfLocations[i]['LocationName'] = data.name ? data.name : this.listOfLocations[i].LocationName;
     this.listOfLocations[i] = _.cloneDeep(this.listOfLocations[i]);
     this.updatedLocationData = this.listOfLocations[i];
-    this.PTreeLocationComponent.loadNodes(true);
+    this.PTreeLocationComponent.refreshbuttonEmitFn(true);
   }
 
   removeTab(index: number) {
@@ -347,8 +347,12 @@ export class LocationComponent {
   filterGridByTEMId(selectedTem: any) {
     this.selectedWiseTemDD[this.selected] = { id: Number(selectedTem), type: this.currentOpenEditPagevar };
     if (this.currentOpenEditPagevar === 'Table') {
-      this.PTreeLocationComponent.selectedTem = selectedTem;
-      this.PTreeLocationComponent.loadNodes(true);
+      if (selectedTem !== 'all') {
+        this.PTreeLocationComponent['payload']['TemAccountId'] = selectedTem;
+      } else {
+        this.PTreeLocationComponent['payload'] = {};
+      }
+      this.PTreeLocationComponent.refreshbuttonEmitFn(true);
     }
   }
 

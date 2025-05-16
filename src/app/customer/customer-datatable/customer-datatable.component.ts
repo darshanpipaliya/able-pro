@@ -11,6 +11,7 @@ import { PTreeCustomerComponent } from '../p-tree-customer/p-tree-customer.compo
 import { EditCustomerComponent } from '../edit-customer/edit-customer.component';
 import { AddCustomerComponent } from '../add-customer/add-customer.component';
 import { HeaderSectionComponent } from "../../common/header-section/header-section.component";
+import { api_list } from 'src/app/services/api-list';
 @Component({
   selector: 'app-customer-datatable',
   templateUrl: './customer-datatable.component.html',
@@ -22,7 +23,7 @@ import { HeaderSectionComponent } from "../../common/header-section/header-secti
     PTreeCustomerComponent,
     AddCustomerComponent,
     EditCustomerComponent,
-    HeaderSectionComponent
+    HeaderSectionComponent,
 ]
 })
 export class CustomerDatatableComponent implements OnInit {
@@ -135,7 +136,7 @@ export class CustomerDatatableComponent implements OnInit {
     this.locationService.getTemLists().pipe(takeUntil(this._unsubscribeTemLists)).subscribe((data) => {
       if (data && data.$values) {
         this.tems = data.$values;
-
+        const newObj = { AccountName: 'All', Id: 'all' };
         if (this.hasSsuperTemUsers) {
           let id = sessionStorage.getItem("LoggedAccountId");
           const found = this.tems.find((element: any) => Number(element.Id) === Number(id));
@@ -144,6 +145,7 @@ export class CustomerDatatableComponent implements OnInit {
           this.tems = this.tems.filter((object: any, index: number): boolean => {
             return object && this.tems.indexOf(object) === index;
           });
+          this.tems.unshift(newObj);
         }
 
       }
@@ -178,7 +180,7 @@ export class CustomerDatatableComponent implements OnInit {
     if (event) {
       this.customerTabArray.splice(index, 1);
       this.customerTabArray = _.cloneDeep(this.customerTabArray);
-      this.PTreeCustomerComponent.loadNodes(true);
+      this.PTreeCustomerComponent.refreshbuttonEmitFn(true);
     }
   }
 
@@ -186,7 +188,7 @@ export class CustomerDatatableComponent implements OnInit {
     if (event) {
       this.customerTabArray.splice(index, 1);
       this.customerTabArray = _.cloneDeep(this.customerTabArray);
-      this.PTreeCustomerComponent.loadNodes(true);
+      this.PTreeCustomerComponent.refreshbuttonEmitFn(true);
     }
   }
 
@@ -212,8 +214,12 @@ export class CustomerDatatableComponent implements OnInit {
   filterGridByTEMId(selectedTem: any) {
     this.selectedWiseTemDD[this.selected] = { id: Number(selectedTem) };
     if (this.currentOpenEditPagevar === 'Table') {
-        this.PTreeCustomerComponent.selectedTem = selectedTem;
-        this.PTreeCustomerComponent.loadNodes(true);
+        if (selectedTem !== 'all') {
+          this.PTreeCustomerComponent['payload']['TemAccountId'] = selectedTem;
+        } else {
+          this.PTreeCustomerComponent['payload'] = {};
+        }
+        this.PTreeCustomerComponent.refreshbuttonEmitFn(true);
     }
   }
 
@@ -226,7 +232,7 @@ export class CustomerDatatableComponent implements OnInit {
     this.PTreeCustomerComponent.setColumnDefs();
     this.isDisabledExport = true;
     this.locationService
-      .getAllCustomerExportUrl(this.exportData)
+      .callPTreeTabAPIExport(api_list.Organisation.Cusotmer.Grid,this.exportData,'POST')
       .subscribe({
         next: (data: any) => {
           this.isDisabledExport = false;

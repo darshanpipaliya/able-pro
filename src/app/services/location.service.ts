@@ -665,7 +665,7 @@ export class LocationService {
       })
     );
   }
-  
+
   getCompanyByCustomerIdNew(Id: any): Observable<any> {
     return this.http.get(this.urlTools.addDynamicURL(this.getCompanyByCustomerIdUrlNew, { Id: Id })).pipe(
       catchError((err) => {
@@ -885,7 +885,7 @@ export class LocationService {
     );
   }
 
-  
+
   checkPasswordExpiration(logon: any): any {
     const data = {
       userName: logon
@@ -1516,7 +1516,7 @@ export class LocationService {
       })
     );
   }
- 
+
   getCCRepoExcelData(data: any): Observable<any> {
     return this.http.post(this.CostCentersUrl + 'CCRepo/LoggedInUser', data, { responseType: 'blob' }).pipe(
 
@@ -1643,7 +1643,7 @@ export class LocationService {
       })
     );
   }
-  
+
   lockUser(email: any): Observable<any> {
     const data = {
       userName: email,
@@ -1664,7 +1664,7 @@ export class LocationService {
     if (vpId !== undefined) {
       key = key + `&groupXVendorProductTypeId=${vpId}`;
     }
-   
+
     return this.http.put(this.urlTools.addDynamicURL(this.groupActiveInactiveUrl + key, { id: id }), '').pipe(
       catchError((err) => {
         this.tokenExpired(err)
@@ -1690,14 +1690,7 @@ export class LocationService {
       })
     );
   }
-  getAllCustomerExportUrl(value: any): any {
-    return this.http.post(this.urlTools.addDynamicURL(api_list.Organisation.Cusotmer.Grid), value, { responseType: 'blob' }).pipe(
-      catchError((err) => {
-        this.tokenExpired(err);
-        return throwError(err);
-      })
-    );
-  }
+
   getAllCompanysUrl(value: any): Observable<any> {
     return this.http.post(this.urlTools.addDynamicURL(api_list.Organisation.Company.Grid), value).pipe(
       catchError((err) => {
@@ -2468,7 +2461,7 @@ export class LocationService {
   }
 
 
-  getChargeCodeTypes(queryParams ?: any): Observable<any> {
+  getChargeCodeTypes(queryParams?: any): Observable<any> {
     return this.http.get(this.urlTools.addDynamicURL(this.getChargeCodeTypeUrl), queryParams ? this.urlTools.addQueryParams(queryParams) : {}).pipe(
       catchError((err) => {
         this.tokenExpired(err)
@@ -2497,7 +2490,7 @@ export class LocationService {
     );
   }
 
-  getTaxRegulatoryTypes(id: any, queryParams ?: any): Observable<any> {
+  getTaxRegulatoryTypes(id: any, queryParams?: any): Observable<any> {
     return this.http.get(this.urlTools.addDynamicURL(this.getTaxRegulatoryTypesUrl + id), queryParams ? this.urlTools.addQueryParams(queryParams) : {}).pipe(
 
       catchError((err) => {
@@ -2521,7 +2514,7 @@ export class LocationService {
 
     if (isMultipleCreate) {
       return this.http.post(this.addChargeCodeBulkUrl, data).pipe(
-  
+
         catchError((err) => {
           this.tokenExpired(err)
           return throwError(err);
@@ -2530,7 +2523,7 @@ export class LocationService {
     } else {
 
       return this.http.post(this.addChargeCodeUrl, data).pipe(
-  
+
         catchError((err) => {
           this.tokenExpired(err)
           return throwError(err);
@@ -3232,15 +3225,6 @@ export class LocationService {
     );
   }
 
-  getCompanylocationsURL(params: any): Observable<any> {
-    return this.http.post(this.urlTools.addDynamicURL(api_list.Location.Location.Grid, {}), params).pipe(
-
-      catchError((err) => {
-        this.tokenExpired(err)
-        return throwError(err);
-      })
-    );
-  }
 
   getCompanylocationsExportData(params: any): Observable<any> {
     return this.http.post(this.urlTools.addDynamicURL(api_list.Location.Location.Grid), params, { responseType: 'blob' }).pipe(
@@ -3690,7 +3674,7 @@ export class LocationService {
       })
     );
   }
-  
+
   getCustomerDropDown(): Observable<any> {
     return this.http.get(this.urlTools.addDynamicURL(this.getCustomerDropDownUrl)).pipe(
 
@@ -4039,7 +4023,7 @@ export class LocationService {
   }
 
   getBillingPeroidForUser(): Observable<any> {
-    return this.http.get(this.urlTools.addDynamicURL(this.getBillingPeroidForUserUrl) ).pipe(
+    return this.http.get(this.urlTools.addDynamicURL(this.getBillingPeroidForUserUrl)).pipe(
 
       catchError((err) => {
         this.tokenExpired(err)
@@ -4170,7 +4154,7 @@ export class LocationService {
       })
     );
 
-    
+
   }
 
   copyChargeCodeData(data: any): Observable<any> {
@@ -4302,7 +4286,7 @@ export class LocationService {
 
   getCCImportGrid(): Observable<any> {
     return this.http.get(this.getCCImportUrl).pipe(
- 
+
       catchError((err) => {
         this.tokenExpired(err)
         return throwError(err);
@@ -4310,24 +4294,74 @@ export class LocationService {
     );
   }
 
-  uploadCCFile( cId?: any, data?: FormData): Observable<any> {
- 
-    let uploadCCFileUrlI = this.uploadCCFileUrl+'?accountId='+cId;
-    return this.http.post(this.urlTools.addDynamicURL(uploadCCFileUrlI, {} ), data).pipe(
- 
+  uploadCCFile(cId?: any, data?: FormData): Observable<any> {
+
+    let uploadCCFileUrlI = this.uploadCCFileUrl + '?accountId=' + cId;
+    return this.http.post(this.urlTools.addDynamicURL(uploadCCFileUrlI, {}), data).pipe(
+
       catchError((err) => {
         this.tokenExpired(err)
         return throwError(err);
       })
     );
   }
- 
+
   getCCblanktemplate() {
     return this.http.get(this.urlTools.addDynamicURL(this.getCCblanktemplateUrl), { responseType: 'blob', observe: 'response' });
   }
-  
-  downloadCCFile(fileId: any,accountId: any): Observable<any> {
-    return this.http.get(this.urlTools.addDynamicURL(this.downloadCCFileUrl, { fileId: fileId , accountId: accountId}), { responseType: 'blob', observe: 'response'});
+
+  downloadCCFile(fileId: any, accountId: any): Observable<any> {
+    return this.http.get(this.urlTools.addDynamicURL(this.downloadCCFileUrl, { fileId: fileId, accountId: accountId }), { responseType: 'blob', observe: 'response' });
+  }
+
+
+  callPTreeTabAPI(API: any, payload: any, method: string): Observable<any> {
+
+    if (method === 'POST') {
+
+      return this.http.post(this.urlTools.addDynamicURL(API, {}), payload).pipe(
+
+        catchError((err) => {
+          this.tokenExpired(err)
+          return throwError(err);
+        })
+      );
+    } else {
+      return this.http.get(this.urlTools.addDynamicURL(API, {})).pipe(
+
+        catchError((err) => {
+          this.tokenExpired(err)
+          return throwError(err);
+        })
+      );
+    }
+  }
+
+  callPTreeTabAPIExport(API: any, payload: any, method: string): any {
+    if (method === 'POST') {
+      return this.http.post(this.urlTools.addDynamicURL(API), payload, { responseType: 'blob' }).pipe(
+        catchError((err) => {
+          this.tokenExpired(err);
+          return throwError(err);
+        })
+      );
+    } else {
+      return this.http.get(this.urlTools.addDynamicURL(API), { responseType: 'blob' }).pipe(
+        catchError((err) => {
+          this.tokenExpired(err);
+          return throwError(err);
+        })
+      );
+    }
+  }
+  getCompanylocationsURL(params: any): Observable<any> {
+    return this.http.post(this.urlTools.addDynamicURL(api_list.Location.Location.Grid, {}), params).pipe(
+
+      catchError((err) => {
+        this.tokenExpired(err)
+        return throwError(err);
+      })
+    );
   }
 
 }

@@ -13,7 +13,7 @@ export class HeaderSectionComponent {
   @Input() buttonOptions: any[] = [];
   @Input() selectedButton: string = '';
   @Input() temRoles: boolean = false;
-  @Input() selectedTem: string = '';
+  @Input() selectedTem: string = 'all';
   @Input() disableTemSearchDD: boolean = false;
   @Input() tems: any[] = [];
   @Input() isDisableTemDD: boolean = false;

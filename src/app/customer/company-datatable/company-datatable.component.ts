@@ -13,6 +13,7 @@ import { PTreeCompanyComponent } from '../p-tree-company/p-tree-company.componen
 import { AddCompanyComponent } from '../add-company/add-company.component';
 import { EditCompanyComponent } from '../edit-company/edit-company.component';
 import { HeaderSectionComponent } from 'src/app/common/header-section/header-section.component';
+import { api_list } from 'src/app/services/api-list';
 
 @Component({
   selector: 'app-company-datatable',
@@ -118,6 +119,7 @@ export class CompanyDatatableComponent implements OnInit {
     this.locationService.getTemLists().pipe(takeUntil(this._unsubscribeTemLists)).subscribe((data) => {
       if (data && data.$values) {
         this.tems = data.$values;
+        const newObj = { AccountName: 'All', Id: 'all' };
         if (this.hasSsuperTemUsers) {
           let id = sessionStorage.getItem("LoggedAccountId");
           const found = this.tems.find((element: any) => Number(element.Id) === Number(id));
@@ -126,6 +128,7 @@ export class CompanyDatatableComponent implements OnInit {
           this.tems = this.tems.filter((object: any, index: number): boolean => {
             return object && this.tems.indexOf(object) === index;
           });
+          this.tems.unshift(newObj);
         }
       }
     }, error => {
@@ -149,7 +152,7 @@ export class CompanyDatatableComponent implements OnInit {
     if (event) {
       this.editCompanyArray.splice(index, 1);
       this.editCompanyArray = _.cloneDeep(this.editCompanyArray);
-      this.PTreeCompanyComponent.loadNodes(true);
+      this.PTreeCompanyComponent.refreshbuttonEmitFn(true);
     }
   }
 
@@ -178,7 +181,7 @@ export class CompanyDatatableComponent implements OnInit {
     if (event) {
       this.addCompanyArray.splice(index, 1);
       this.addCompanyArray = _.cloneDeep(this.addCompanyArray);
-      this.PTreeCompanyComponent.loadNodes(true);
+      this.PTreeCompanyComponent.refreshbuttonEmitFn(true);
     }
   }
 
@@ -241,8 +244,12 @@ export class CompanyDatatableComponent implements OnInit {
   filterGridByTEMId(selectedTem: any) {
     this.selectedWiseTemDD[this.selected] = { id: Number(selectedTem), type: this.currentOpenEditPagevar };
     if (this.currentOpenEditPagevar === 'Table') {
-      this.PTreeCompanyComponent.selectedTem = selectedTem;
-      this.PTreeCompanyComponent.loadNodes(true);
+      if (selectedTem !== 'all') {
+        this.PTreeCompanyComponent['payload']['TemAccountId'] = selectedTem;
+      } else {
+        this.PTreeCompanyComponent['payload'] = {};
+      }
+      this.PTreeCompanyComponent.refreshbuttonEmitFn(true);
     }
 
   }
@@ -256,9 +263,9 @@ export class CompanyDatatableComponent implements OnInit {
     this.PTreeCompanyComponent.setColumnDefs();
     this.isDisabledExport = true;
     this.locationService
-      .getCompanyExportUrl(this.exportData)
+      .callPTreeTabAPIExport(api_list.Organisation.Company.Grid,this.exportData,'POST')
       .subscribe({
-        next: data => {
+        next: (data: any) => {
           this.isDisabledExport = false;
           let bolbUrl = URL.createObjectURL(data);
           var link = document.createElement("a");
@@ -269,7 +276,7 @@ export class CompanyDatatableComponent implements OnInit {
           link.click();
           document.body.removeChild(link);
         },
-        error: error => {
+        error: (error: any) => {
           this.isDisabledExport = false;
         }
       });
