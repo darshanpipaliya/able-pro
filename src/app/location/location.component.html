@@ -5,7 +5,7 @@
 
                 <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton"
                     [temRoles]="temRoles" [selectedTem]="selectedTem" [disableTemSearchDD]="disableTemSearchDD"
-                    [tems]="tems" [disableTemSearch]="disableTemSearch"
+                    [tems]="tems" [disableTemSearch]="disableTemSearch" [loaderParent]="loaderParent"
                     [currentOpenEditPagevar]="currentOpenEditPagevar" [isDisabledExport]="isDisabledExport"
                     [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit" [trackByIndex]="trackByIndex"
                     (buttonClick)="onButtonClick($event)" (temChange)="onTemChange()" [CompanyRoles]="CompanyRoles"
@@ -26,6 +26,7 @@
                                         <app-p-tree-location [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)"
                                             (exportAccountData)="exportAccountData($event)"
                                             (selectedRowsEmit)="selectedRowsEmit($event)"
+                                            (loaderEmitParent)="loaderEmitParentFn($event)"
                                             (rowCellDoubleClicked)="rowCellDoubleClicked($event)">
 
                                         </app-p-tree-location>

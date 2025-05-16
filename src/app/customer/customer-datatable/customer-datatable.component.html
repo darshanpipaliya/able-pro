@@ -18,6 +18,7 @@
           [trackByIndex]="trackByIndex"
           (buttonClick)="onButtonClick($event)"
           (temChange)="onTemChange()"
+          [loaderParent]="loaderParent"
           (filterGridByTEMId)="filterGridByTEMId($event)"
           (exportDataAsExcel)="onBtnExportDataAsExcel()"
           (add)="add()"
@@ -49,7 +50,7 @@
                     <app-p-tree-customer *ngIf="customer['tabType'] === 'Table'" [GridAPI]="GridAPI"
                       (tableDataExist)="tableDataExistFn($event)" (exportAccountData)="exportAccountData($event)"
                       (selectedRowsEmit)="selectedRowsEmit($event)"
-                      (rowCellDoubleClicked)="rowCellDoubleClicked($event)" />
+                      (rowCellDoubleClicked)="rowCellDoubleClicked($event)" (loaderEmitParent)="loaderEmitParentFn($event)" />
 
                     <app-add-customer *ngIf="customer['tabType'] === 'Add'" [clickOnSearchButton]="clickOnSearchButton"
                       [selected]="currentIndex" (setClickFalse)="setClickFalse($event, i)"

@@ -79,6 +79,7 @@ export class PTreeCompanyComponent implements OnInit {
   @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
 
   selectedNode: any;
+  @Output() loaderEmitParent: EventEmitter<any> = new EventEmitter();
 
   payload: any = {};
   @Input() GridAPI: any;
@@ -198,5 +199,6 @@ export class PTreeCompanyComponent implements OnInit {
   }
   loaderEmitFn(event: any) {
     this.loader = event;
+    this.loaderEmitParent.emit(event);
   }
 }

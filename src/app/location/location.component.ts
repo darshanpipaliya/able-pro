@@ -84,6 +84,7 @@ export class LocationComponent {
   disableEditInv = true;
   disableInvExport = false;
   GridAPI: any = api_list.Location.Location.Grid;
+  loaderParent: any = false;
   constructor(private router: Router, private locationService: LocationService) { }
 
   ngOnInit(): void {
@@ -474,4 +475,8 @@ export class LocationComponent {
     this.selectedWiseTemDD[this.currentIndex] = { id: Number(this.selectedTem) };
   }
   
+  
+  loaderEmitParentFn(event: any) {
+    this.loaderParent = event;
+  }
 }

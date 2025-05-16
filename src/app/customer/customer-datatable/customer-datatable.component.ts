@@ -64,6 +64,7 @@ export class CustomerDatatableComponent implements OnInit {
   @ViewChild(PTreeCustomerComponent) PTreeCustomerComponent!: PTreeCustomerComponent;
   tableDataExist: any;
   GridAPI: any = api_list.Organisation.Cusotmer.Grid;
+  loaderParent: any = false;
   constructor(private router: Router,
     public dialog: MatDialog,
     public locationService: LocationService) {
@@ -281,6 +282,10 @@ export class CustomerDatatableComponent implements OnInit {
     this.selectedButton = value;
     this.selected = 0;
     setTimeout(() => this.goToPage(value), 0);  // Avoid layout thrash
+  }
+
+  loaderEmitParentFn(event: any) {
+    this.loaderParent = event;
   }
 }
 

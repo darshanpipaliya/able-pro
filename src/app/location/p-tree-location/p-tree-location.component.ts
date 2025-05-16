@@ -71,6 +71,7 @@ export class PTreeLocationComponent implements OnInit {
   @Input() GridAPI: any;
   refreshbutton: boolean = false;
   loader: boolean = false;
+  @Output() loaderEmitParent: EventEmitter<any> = new EventEmitter();
   @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
 
   constructor(public wirelineService: WirelineService,
@@ -206,5 +207,6 @@ export class PTreeLocationComponent implements OnInit {
 
   loaderEmitFn(event: any) {
     this.loader = event;
+    this.loaderEmitParent.emit(event);
   }
 }

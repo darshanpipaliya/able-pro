@@ -72,6 +72,7 @@ export class PTreeCustomerComponent implements OnInit {
   @Input() GridAPI: any;
   refreshbutton: boolean = false;
   loader: boolean = false;
+  @Output() loaderEmitParent: EventEmitter<any> = new EventEmitter();
 
   constructor(public wirelineService: WirelineService,
     public variableManageService: VariableManageService,
@@ -191,6 +192,7 @@ export class PTreeCustomerComponent implements OnInit {
   }
   loaderEmitFn(event: any) {
     this.loader = event;
+    this.loaderEmitParent.emit(event);
   }
 }
 

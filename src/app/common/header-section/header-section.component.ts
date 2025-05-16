@@ -23,6 +23,7 @@ export class HeaderSectionComponent {
   @Input() tableDataExist: boolean = false;
   @Input() viewNEdit: boolean = false;
   @Input() CompanyRoles: boolean = false;
+  @Input() loaderParent: boolean = false;
   @Input() trackByIndex: (index: number, item: any) => any = (index: number, item: any) => index;
 
   @Output() buttonClick = new EventEmitter<string>();

@@ -67,6 +67,7 @@ export class CompanyDatatableComponent implements OnInit {
 
   tableDataExist: any;
   public exportCustomerData: any;
+  loaderParent: any = false;
 
 
   GridAPI = api_list.Organisation.Company.Grid;
@@ -316,6 +317,9 @@ export class CompanyDatatableComponent implements OnInit {
 
   onTemChange() {
     this.selectedWiseTemDD[this.currentIndex] = { id: Number(this.selectedTem) };
+  }
+  loaderEmitParentFn(event: any) {
+    this.loaderParent = event;
   }
 }
 

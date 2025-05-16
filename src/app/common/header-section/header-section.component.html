@@ -12,13 +12,13 @@
       
     </div>
 
-    <div *ngIf="!temRoles">
+    <div *ngIf="!temRoles" [ngClass]="{'disabled': loaderParent}">
       <p-dropdown class="custom-p-dropdown-outer" [options]="tems" [(ngModel)]="selectedTem" [ngModelOptions]="{standalone: true}" [disabled]="disableTemSearchDD" (onChange)="temChange.emit()" [filter]="true" [filterFields]="['AccountName']"  optionValue="Id" optionLabel="AccountName">
       </p-dropdown>
     </div>
 
-    <div>
-      <div class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20" [ngClass]="{'disabled': disableTemSearch}"
+    <div  [ngClass]="{'disabled': loaderParent || disableTemSearch}">
+      <div class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20"
         (click)="filterGridByTEMId.emit(selectedTem)">
         <svg class="pc-icon">
           <use xlink:href="assets/fonts/custom-icon.svg#custom-search-normal-1"></use>
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div class="col-auto ms-auto d-flex align-items-center gap-2" *ngIf="currentOpenEditPagevar === 'Table' && (viewNEdit || CompanyRoles)">
+  <div [ngClass]="{'disabled': loaderParent}" class="col-auto ms-auto d-flex align-items-center gap-2" *ngIf="currentOpenEditPagevar === 'Table' && (viewNEdit || CompanyRoles)">
     <div title="Export" class="avatar avatar-s bg-success-50 text-success-500 cp b-rad-20"
       [ngClass]="{'disabled': isDisabledExport || !tableDataExist}"
       (click)="!isDisabledExport ? exportDataAsExcel.emit() : ''">
