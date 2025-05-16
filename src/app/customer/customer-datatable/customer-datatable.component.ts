@@ -63,6 +63,7 @@ export class CustomerDatatableComponent implements OnInit {
 
   @ViewChild(PTreeCustomerComponent) PTreeCustomerComponent!: PTreeCustomerComponent;
   tableDataExist: any;
+  GridAPI: any = api_list.Organisation.Cusotmer.Grid;
   constructor(private router: Router,
     public dialog: MatDialog,
     public locationService: LocationService) {
@@ -232,7 +233,7 @@ export class CustomerDatatableComponent implements OnInit {
     this.PTreeCustomerComponent.setColumnDefs();
     this.isDisabledExport = true;
     this.locationService
-      .callPTreeTabAPIExport(api_list.Organisation.Cusotmer.Grid,this.exportData,'POST')
+      .callPTreeTabAPIExport(this.GridAPI,this.exportData,'POST')
       .subscribe({
         next: (data: any) => {
           this.isDisabledExport = false;

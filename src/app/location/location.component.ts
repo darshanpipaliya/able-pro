@@ -12,6 +12,7 @@ import { AddNotesLocationComponent } from './add-notes-location/add-notes-locati
 import { LocationContactDataTableComponent } from './location-contact-data-table/location-contact-data-table.component';
 import { HeaderSectionComponent } from '../common/header-section/header-section.component';
 import { LocationInventoryDataTableComponent } from '../common/location-inventory-data-table/location-inventory-data-table.component';
+import { api_list } from '../services/api-list';
 @Component({
   selector: 'app-location',
 
@@ -82,6 +83,7 @@ export class LocationComponent {
   stopSpinnerInv = true;
   disableEditInv = true;
   disableInvExport = false;
+  GridAPI: any = api_list.Location.Location.Grid;
   constructor(private router: Router, private locationService: LocationService) { }
 
   ngOnInit(): void {
@@ -358,11 +360,13 @@ export class LocationComponent {
 
   onBtnExportDataAsExcel() {
 
+    this.PTreeLocationComponent.setColumnDefs();
     this.isDisabledExport = true;
     this.locationService
-      .getCompanylocationsExportData(this.exportData)
+      .callPTreeTabAPIExport(this.GridAPI,this.exportData,'POST')
+
       .subscribe({
-        next: data => {
+        next: (data: any) => {
           this.isDisabledExport = false;
           let bolbUrl = URL.createObjectURL(data);
           var link = document.createElement("a");
@@ -373,7 +377,7 @@ export class LocationComponent {
           link.click();
           document.body.removeChild(link);
         },
-        error: error => {
+        error: (error:any) => {
           this.isDisabledExport = false;
         }
       });

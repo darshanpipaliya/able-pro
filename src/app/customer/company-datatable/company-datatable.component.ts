@@ -67,6 +67,9 @@ export class CompanyDatatableComponent implements OnInit {
 
   tableDataExist: any;
   public exportCustomerData: any;
+
+
+  GridAPI = api_list.Organisation.Company.Grid;
   @ViewChild(PTreeCompanyComponent) PTreeCompanyComponent!: PTreeCompanyComponent;
   constructor(private router: Router,
     public dialog: MatDialog,
@@ -263,7 +266,7 @@ export class CompanyDatatableComponent implements OnInit {
     this.PTreeCompanyComponent.setColumnDefs();
     this.isDisabledExport = true;
     this.locationService
-      .callPTreeTabAPIExport(api_list.Organisation.Company.Grid,this.exportData,'POST')
+      .callPTreeTabAPIExport(this.GridAPI,this.exportData,'POST')
       .subscribe({
         next: (data: any) => {
           this.isDisabledExport = false;

@@ -81,7 +81,7 @@ export class PTreeCompanyComponent implements OnInit {
   selectedNode: any;
 
   payload: any = {};
-  GridAPI: any = api_list.Organisation.Company.Grid;
+  @Input() GridAPI: any;
   refreshbutton: boolean = false;
 
   constructor(public wirelineService: WirelineService,

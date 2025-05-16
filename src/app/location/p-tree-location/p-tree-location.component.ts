@@ -67,9 +67,10 @@ export class PTreeLocationComponent implements OnInit {
   @ViewChild('ccText') ccText!: TemplateRef<any>;
   selectedNode: any;
 
-  payload: any;
-  GridAPI: any = api_list.Location.Location.Grid;
+  payload: any = {};
+  @Input() GridAPI: any;
   refreshbutton: boolean = false;
+  @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
 
   constructor(public wirelineService: WirelineService,
     public variableManageService: VariableManageService,
@@ -194,5 +195,9 @@ export class PTreeLocationComponent implements OnInit {
   }
   totalRecordsEmitFn(event: any) {
     this.totalRecords = event;
+  }
+
+  setColumnDefs() {
+    this.CommonPTreeTableComponent.setColumnDefs();
   }
 }

@@ -33,7 +33,7 @@
 
               <ng-template matTabContent>
                 <div class="mt-2">
-                  <app-p-tree-company [selectedTem]="selectedTem" (tableDataExist)="tableDataExistFn($event)"
+                  <app-p-tree-company [GridAPI]="GridAPI" [selectedTem]="selectedTem" (tableDataExist)="tableDataExistFn($event)"
                     (exportAccountData)="exportAccountData($event)" (selectedRowsEmit)="selectedRowsEmit($event)"
                     (rowCellDoubleClicked)="rowCellDoubleClicked($event)" />
                 </div>

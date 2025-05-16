@@ -23,7 +23,7 @@
 
                                 <ng-template matTabContent>
                                     <div class="mt-2">
-                                        <app-p-tree-location (tableDataExist)="tableDataExistFn($event)"
+                                        <app-p-tree-location [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)"
                                             (exportAccountData)="exportAccountData($event)"
                                             (selectedRowsEmit)="selectedRowsEmit($event)"
                                             (rowCellDoubleClicked)="rowCellDoubleClicked($event)">
@@ -128,8 +128,9 @@
                                             </mat-tab>
                                             <mat-tab>
                                                 <ng-template mat-tab-label>
-                                                    <i class="icon-size fas fa-file-invoice-dollar"
+                                                    <b><i class="icon-size fas fa-file-invoice-dollar"
                                                         style="color: #4680ff;"></i>&nbsp;Billing
+                                                    </b>
                                                 </ng-template>
 
                                                 <ng-template matTabContent>
