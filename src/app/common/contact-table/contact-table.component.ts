@@ -274,7 +274,6 @@ export class ContactTableComponent implements OnInit {
   // Handle error case
   handleNodeError() {
     this.innerLoading = false;
-    // Optionally, log the error or provide feedback
   }
 
   getCheckedNodes(nodes: TreeNode[]): TreeNode[] {
