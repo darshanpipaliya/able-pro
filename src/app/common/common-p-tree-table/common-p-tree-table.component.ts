@@ -168,34 +168,44 @@ export class CommonPTreeTableComponent {
     this.loaderEmit.emit(this.loading);
     this.setColumnDefs();
 
+    this.filesColumns = [];
+    const parentMap = new Map();
+    let parentIndex = 0;
+
     this.cols.forEach((col: any) => {
+      // Only process rows marked as children
+      if (col.isChildren && !parentMap.has(col.parent)) {
+        const parentKey = parentIndex.toString();
 
+        const parentNode: any = {
+          key: parentKey,
+          label: col.header,
+          isparent: true,
+          parentid: col.parent,
+          expanded: true,
+          children: []
+        };
 
-      if (col.isChildren) {
-
-        let data: any = {
-          "label": col.header,
-          "isparent": true,
-          "parentid": col.parent,
-          "expanded": true,
-          "children": []
-        }
-        const colParent = this.cols.filter((item: any) => item.parent === col.parent);
-        colParent.forEach((element: any) => {
-          data['children'].push(
-            {
-              "label": element.childHeader,
-              "isparent": false,
-              "parentid": element.parent
-            }
-          )
-        });
-        this.filesColumns.push(data)
-
+        this.filesColumns.push(parentNode);
         const closedColumns = this.cols.filter((item: any) => item.parent === col.parent && item.columnGroupShow === 'close');
         col.colspan = closedColumns.length;
         col.Parentwidth = closedColumns.map((value: any) => parseInt(value.width.replace('px', ''))).reduce(
           (accumulator: any, currentValue: any) => accumulator + currentValue, 0) + 'px';
+        parentMap.set(col.parent, { node: parentNode, index: parentIndex });
+        parentIndex++;
+      }
+
+      const parentData = parentMap.get(col.parent);
+
+      if (parentData) {
+        const childKey = `${parentData.index}-${parentData.node.children.length}`;
+
+        parentData.node.children.push({
+          key: childKey,
+          label: col.childHeader,
+          isparent: false, // optional flag
+          parentid: col.parent
+        });
       }
     });
 
@@ -289,10 +299,10 @@ export class CommonPTreeTableComponent {
       .callPTreeTabAPI(this.GridAPI, payloadData, 'POST', this.ids)
       .pipe(takeUntil(this._unsubscribeGRid))
       .subscribe(
-       {
-        next: (response: any) => this.handleResponse(response, allOptionsClear),
-        error: () => this.handleError()
-       }
+        {
+          next: (response: any) => this.handleResponse(response, allOptionsClear),
+          error: () => this.handleError()
+        }
       );
   }
 
@@ -660,19 +670,10 @@ export class CommonPTreeTableComponent {
     this.selectAllNodes(this.filesColumns);
   }
 
-
-  ngOnDestroy(): void {
-    this._unsubscribeGRid.next(null);
-    this._unsubscribeGRid.complete();
-  }
-
-  closeSidebar() {
-    this.sidebarVisible = false;
-  }
-
+  
   private selectAllNodes(nodes: TreeNode[]) {
     nodes.forEach((node: any) => {
-      if (node.isparent && this.cols.some((e: any) => e.header === node.label && e.displayCheckboxColumns === false) || !node.isparent && this.cols.some((e: any) => e.childHeader === node.label && e.displayCheckboxColumns === false)) {
+      if (node.isparent && this.cols.some((e: any) => e.header === node.label && e.displayCheckboxColumns === false) || !node.isparent && this.cols.some((e: any)  => e.childHeader === node.label && e.displayCheckboxColumns === false)) {
       } else {
         this.selectedFiles.push(node);
         if (node.children) {
@@ -681,6 +682,16 @@ export class CommonPTreeTableComponent {
         }
       }
     });
+  }
+
+
+  ngOnDestroy(): void {
+    this._unsubscribeGRid.next(null);
+    this._unsubscribeGRid.complete();
+  }
+
+  closeSidebar() {
+    this.sidebarVisible = false;
   }
 
   onNodeSelect(event: any) {
@@ -842,25 +853,24 @@ export class CommonPTreeTableComponent {
   }
 
   nodeUnselect(e: any) {
-
+    const ee = e.node;
     this.cols.forEach((item: any) => {
-      if (e.node.isparent && item.parent === e.node.parentid) {
+      if (ee.isparent && item.parent === ee.parentid) {
         item.columnGroupShow = 'open';
         item.displayCheckboxColumns = false;
-      } else if (!e.node.isparent && item.parent === e.node.parentid && item.childHeader === e.node.label) {
-
+      } else if (!ee.isparent && item.parent === ee.parentid && item.childHeader === ee.label) {
         item.columnGroupShow = 'open';
         item.displayCheckboxColumns = false;
 
-        if (!this.cols.some((it: any) => it.parent === e.node.parentid && it.displayCheckboxColumns)) {
+        if (!this.cols.some((it: any) => it.parent === ee.parentid && it.displayCheckboxColumns)) {
           item.isParentVisible = false;
         } else {
           item.isParentVisible = true;
-          if (!this.cols.some((it: any) => it.parent === e.node.parentid && it.columnGroupShow === 'close')) {
+          if (!this.cols.some((it: any) => it.parent === ee.parentid && it.columnGroupShow === 'close')) {
 
-            for (let child of e.node.parent.children) {
+            for (let child of ee.parent.children) {
               if (this.selectedFiles.includes(child)) {
-                let i = this.cols.findIndex((k: any) => k.parent === e.node.parentid && k.childHeader === child.label)
+                let i = this.cols.findIndex((k: any) => k.parent === ee.parentid && k.childHeader === child.label)
                 if (i !== -1) {
                   this.cols[i].columnGroupShow = 'close';
                 }
@@ -909,13 +919,13 @@ export class CommonPTreeTableComponent {
     this.rowCellDoubleClicked.emit(datas);
   }
 
-  
-  onHeaderCheckboxChange(e?:any) {
+
+  onHeaderCheckboxChange(e?: any) {
     this.headerCheckboxData = e.target.checked;
     if (this.headerCheckboxData) {
       this.loadNodes();
     }
-    if (this.files.length > 0 && this.headerCheckboxData ) {
+    if (this.files.length > 0 && this.headerCheckboxData) {
       this.selectedRecords = this.files;
     }
     if (!this.headerCheckboxData) {

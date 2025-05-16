@@ -2,7 +2,8 @@
     <p-treeTable #treeTable [value]="files" columnResizeMode="expand" [columns]="displaycols" [lazy]="true"
         (onLazyLoad)="loadNodes(true)" [totalRecords]="totalRecords" (onNodeExpand)="onNodeExpand($event)"
         [scrollable]="true" [resizableColumns]="true" selectionMode="checkbox" selectionMode="single"
-        [reorderableColumns]="true" (onColResize)="handleColumnResize($event)" class="{{ innerLoading || isApiAlerdayCall ? 'disabled':''}}">
+        [reorderableColumns]="true" (onColResize)="handleColumnResize($event)"
+        class="{{ innerLoading || isApiAlerdayCall ? 'disabled':''}}">
 
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
@@ -41,8 +42,8 @@
                         <th *ngSwitchCase="'checkbox'" class="child-header"
                             [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
                             <input *ngIf="headerCheckboxVisible" (change)="onHeaderCheckboxChange($event)"
-                            [(ngModel)]="headerCheckboxData" [checked]="headerCheckboxData"
-                            class="checkBox" type="checkbox">
+                                [(ngModel)]="headerCheckboxData" [checked]="headerCheckboxData" class="checkBox"
+                                type="checkbox">
                         </th>
                         <th *ngSwitchDefault ttResizableColumn ttReorderableColumn (click)="OrderBy(col.field  )"
                             class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
@@ -140,7 +141,7 @@
         </ng-template>
     </p-treeTable>
 
-    <div class="custome-side-buttons" (click)="openSidebar()">
+    <div class="custome-side-buttons cp" (click)="openSidebar()">
         <div class="custome-side-button" [ngClass]="{'active-border': sidebarVisible }">
             <i class="fas fa-grip-vertical "></i>
             Columns
@@ -149,8 +150,14 @@
 
     <div class="sidebar" *ngIf="sidebarVisible">
         <div class=" ">
-            <p-tree [value]="filesColumns" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
-                (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles"> </p-tree>
+            <p-tree [value]="filesColumns" selectionMode="checkbox" [(selection)]="selectedFiles"
+            (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
+            [propagateSelectionUp]="true"
+            [propagateSelectionDown]="true"
+                > </p-tree>
+
+                <!-- (onNodeExpand)="nodeExpand($event)" (onNodeCollapse)="nodeCollapse($event)"
+                 -->
         </div>
     </div>
 
