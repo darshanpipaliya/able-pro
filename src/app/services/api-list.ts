@@ -13,7 +13,8 @@ export const api_list = {
     },
     "Location" : {
         "Location" : {
-            "Grid" : baseUrl + 'companylocations/LoggedInUserData'
+            "Grid" : baseUrl + 'companylocations/LoggedInUserData',
+            "getLocationPeople" : baseUrl + 'companylocations/{id}/Peoples'
         }
     },
     "Inventory": {

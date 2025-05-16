@@ -11,15 +11,6 @@ import { ErrorWarningPopupComponent } from '../error-warning-popup/error-warning
 import { TreeNode } from 'primeng/api';
 import { extractDataAndLeaf, filterOptionsDate, filterOptionsNumber, filterOptionsText, onChangeEndDate } from 'src/app/services/common-p-table';
 import _ from 'lodash';
-// import { LocationService } from '../../location.service';
-
-// import { ErrorWarningPopupComponent } from '../../common-component/error-warning-popup/error-warning-popup.component';
-// import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-// import { takeUntil } from 'rxjs/operators';
-// import { Subject } from 'rxjs';
-// import { DomSanitizer } from '@angular/platform-browser';
-// import { rolePermission } from '../../../../../services/helper';
-// import _ from 'lodash';
 
 interface arrDate {
   filterKey: any;
@@ -62,9 +53,6 @@ interface ColumnDefinition {
 })
 export class ContactTableComponent implements OnInit {
 
-
-  // public rowData: any = [];
-  // stopSpinner: any = false;
   locationRowData: any;
   saveButtonDisabled = false;
   companyLocationId: any;

@@ -76,7 +76,7 @@
             <tr class="body-row" (dblclick)="onRowDoubleClick(rowData)">
                 <ng-container *ngFor="let col of columns;  let i = index">
                     <ng-container>
-                        <td [(selection)]="selectedNode"
+                        <td [(selection)]="nodeCopy"
                             (contextmenu)="showContextMenu($event, contextMenu , rowData[col.field])" class="cell"
                             [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': (col.field === 'TotalCurrentChargesDisplay' || col.field === 'PreviousBillBalanceDisplay') ? 'right' : 'left'}">
 

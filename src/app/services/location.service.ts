@@ -4032,16 +4032,6 @@ export class LocationService {
     );
   }
 
-  getLocationPeople(id: any, data: any): Observable<any> {
-    return this.http.post(this.urlTools.addDynamicURL(this.getLocationPeopleUrl, { id: id }), data).pipe(
-
-      catchError((err) => {
-        this.tokenExpired(err)
-        return throwError(err);
-      })
-    );
-  }
-
 
   getLocationPeopleExport(id: any, data: any): Observable<any> {
     return this.http.post(this.urlTools.addDynamicURL(this.getLocationPeopleUrl, { id: id }), data, { responseType: 'blob' }).pipe(
@@ -4315,11 +4305,11 @@ export class LocationService {
   }
 
 
-  callPTreeTabAPI(API: any, payload: any, method: string): Observable<any> {
+  callPTreeTabAPI(API: any, payload: any, method: string, ids?: any): Observable<any> {
 
     if (method === 'POST') {
 
-      return this.http.post(this.urlTools.addDynamicURL(API, {}), payload).pipe(
+      return this.http.post(this.urlTools.addDynamicURL(API, ids), payload).pipe(
 
         catchError((err) => {
           this.tokenExpired(err)
@@ -4327,7 +4317,7 @@ export class LocationService {
         })
       );
     } else {
-      return this.http.get(this.urlTools.addDynamicURL(API, {})).pipe(
+      return this.http.get(this.urlTools.addDynamicURL(API, ids)).pipe(
 
         catchError((err) => {
           this.tokenExpired(err)
@@ -4337,16 +4327,16 @@ export class LocationService {
     }
   }
 
-  callPTreeTabAPIExport(API: any, payload: any, method: string): any {
+  callPTreeTabAPIExport(API: any, payload: any, method: string, ids?: any): any {
     if (method === 'POST') {
-      return this.http.post(this.urlTools.addDynamicURL(API), payload, { responseType: 'blob' }).pipe(
+      return this.http.post(this.urlTools.addDynamicURL(API, ids), payload, { responseType: 'blob' }).pipe(
         catchError((err) => {
           this.tokenExpired(err);
           return throwError(err);
         })
       );
     } else {
-      return this.http.get(this.urlTools.addDynamicURL(API), { responseType: 'blob' }).pipe(
+      return this.http.get(this.urlTools.addDynamicURL(API, ids), { responseType: 'blob' }).pipe(
         catchError((err) => {
           this.tokenExpired(err);
           return throwError(err);
@@ -4356,6 +4346,16 @@ export class LocationService {
   }
   getCompanylocationsURL(params: any): Observable<any> {
     return this.http.post(this.urlTools.addDynamicURL(api_list.Location.Location.Grid, {}), params).pipe(
+
+      catchError((err) => {
+        this.tokenExpired(err)
+        return throwError(err);
+      })
+    );
+  }
+
+  getLocationPeople(id: any, data: any): Observable<any> {
+    return this.http.post(this.urlTools.addDynamicURL(this.getLocationPeopleUrl, { id: id }), data).pipe(
 
       catchError((err) => {
         this.tokenExpired(err)

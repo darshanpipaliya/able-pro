@@ -36,6 +36,7 @@ export class CommonPTreeTableComponent {
   @Input() payload: any;
   @Input() GridAPI: any;
   @Input() cols: any;
+  @Input() ids: any;
   files: TreeNode[];
   displaycols: any[];
   loading: boolean;
@@ -79,7 +80,7 @@ export class CommonPTreeTableComponent {
   sidebarVisible: boolean = false;
   radioItems: Array<any>;
   contextMenuPosition: { x: number; y: number } = { x: 0, y: 0 };
-  selectedNode: any;
+  nodeCopy: any;
   items: any[];
   public exportAccounts: any;
   selectedRecords: any = [];
@@ -145,7 +146,6 @@ export class CommonPTreeTableComponent {
     this.variableManageService.getCallAPIForInventoryDta$.subscribe((res: any) => {
       if (res) {
         this.loadNodes(true);
-      } else {
       }
     });
 
@@ -283,7 +283,7 @@ export class CommonPTreeTableComponent {
 
     if (allOptionsClear) this.files = [];
     this.locationService
-      .callPTreeTabAPI(this.GridAPI, payloadData, 'POST')
+      .callPTreeTabAPI(this.GridAPI, payloadData, 'POST', this.ids)
       .pipe(takeUntil(this._unsubscribeGRid))
       .subscribe(
         (response: any) => this.handleResponse(response, allOptionsClear),
@@ -343,7 +343,7 @@ export class CommonPTreeTableComponent {
 
       // Make the API call
       this.locationService
-        .callPTreeTabAPI(this.GridAPI, data, 'POST')
+        .callPTreeTabAPI(this.GridAPI, data, 'POST', this.ids)
         .pipe(takeUntil(this._unsubscribeGRid))
         .subscribe(
           (response: any) => this.handleNodeResponse(response, node),
@@ -675,11 +675,11 @@ export class CommonPTreeTableComponent {
   }
 
   onNodeSelect(event: any) {
-    this.selectedNode = event.node;
+    this.nodeCopy = event.node;
   }
 
   dropdownOptionSelected() {
-    navigator.clipboard.writeText(this.selectedNode).then(
+    navigator.clipboard.writeText(this.nodeCopy).then(
       () => {
       },
       (err) => {
@@ -690,7 +690,7 @@ export class CommonPTreeTableComponent {
 
   showContextMenu(event: MouseEvent, menu: any, event1: any) {
     event.preventDefault();
-    this.selectedNode = event1;
+    this.nodeCopy = event1;
     this.contextMenuPosition.x = event.clientX;
     this.contextMenuPosition.y = event.clientY;
     menu.show(event);
