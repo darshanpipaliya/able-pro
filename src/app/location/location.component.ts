@@ -142,7 +142,6 @@ export class LocationComponent {
   }
 
   removeTab(index: number) {
-    console.log('index ', index);
     this.isOpenWirelineTab = false;
     const aa = this.selectedWiseTemDD;
     const find = aa.findIndex((a: any) => a.type === 'Add');
@@ -336,13 +335,11 @@ export class LocationComponent {
       if (this.selectedTem !== 'all') {
         this.selectedTem = 'all';
         this.selectedWiseTemDD[this.currentIndex] = { id: this.selectedTem, type: this.currentOpenEditPagevar };
-        console.log('selectedWiseTemDD 4', this.selectedWiseTemDD);
       }
       this.disableTemSearch = false;
       this.disableTemSearchDD = false;
     }
     this.currentOpenEditPagevar = (event === 0) ? 'Table' : this.currentOpenEditPagevar;
-    console.log('selectedWiseTemDD ', this.selectedWiseTemDD);
   }
 
 
@@ -412,7 +409,6 @@ export class LocationComponent {
       if (from === 'editLocation') {
         this.selected = this.listOfLocations.length;
         this.currentOpenEditPagevar = 'Edit';
-        console.log('selectedWiseTemDD 6', this.selectedWiseTemDD);
       } else if (from === 'addLocation') {
         this.currentOpenEditPagevar = 'Add';
         this.selected = this.listOfLocations.length + this.addLocationArray.length;
@@ -462,12 +458,9 @@ export class LocationComponent {
       this.selectedTem = data;
       if (this.currentOpenEditPagevar !== 'Add') {
         this.selectedWiseTemDD[this.currentIndex] = { id: data, type: this.currentOpenEditPagevar };
-        console.log('selectedWiseTemDD 2', this.selectedWiseTemDD);
       }
     } else if (data == '' && this.currentIndex <= 0) {
       this.selectedWiseTemDD[this.currentIndex] = { id: '', type: this.currentOpenEditPagevar };
-      console.log('selectedWiseTemDD 3', this.selectedWiseTemDD);
-
     }
 
     if (this.currentOpenEditPagevar === 'Add' && this.selectedWiseTemDD.length > 0) {

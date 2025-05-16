@@ -2,7 +2,7 @@
     <p-treeTable #treeTable [value]="files" columnResizeMode="expand" [columns]="displaycols" [lazy]="true"
         (onLazyLoad)="loadNodes(true)" [totalRecords]="totalRecords" (onNodeExpand)="onNodeExpand($event)"
         [scrollable]="true" [resizableColumns]="true" selectionMode="checkbox" selectionMode="single"
-        [reorderableColumns]="true" (onColResize)="handleColumnResize($event)">
+        [reorderableColumns]="true" (onColResize)="handleColumnResize($event)" class="{{ innerLoading || isApiAlerdayCall ? 'disabled':''}}">
 
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
@@ -14,10 +14,15 @@
 
         <ng-template pTemplate="header" let-columns>
             <tr class="header-row p-treetable-thead-parent">
-                <ng-container *ngFor="let col of cols">
-                    <ng-container *ngIf="col.isChildren && col.isParentVisible">
-                        <th [attr.data-parent-id]="col.parent" [attr.colspan]="col.colspan" ttResizableColumn
-                            class="parent-header" [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                <ng-container *ngFor="let col of cols" [ngSwitch]="col.type">
+                    <ng-container *ngSwitchCase="'checkbox'">
+                        <th class="parent-header" [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                        </th>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <th *ngIf="col.isChildren && col.isParentVisible" [attr.data-parent-id]="col.parent"
+                            [attr.colspan]="col.colspan" ttResizableColumn class="parent-header"
+                            [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
                             <span>{{ col.header }}</span>
                             <i class='pi pi-fw pi-chevron-right icon-contracted'
                                 *ngIf="!innerLoading && col.isChildren && col.isicon == 1 && col.isToggle"
@@ -32,9 +37,15 @@
 
             <tr class="header-row p-treetable-thead-child">
                 <ng-container *ngFor="let col of columns">
-                    <ng-container>
-                        <th ttResizableColumn ttReorderableColumn (click)="OrderBy(col.field  )" class="child-header"
+                    <ng-container [ngSwitch]="col.field">
+                        <th *ngSwitchCase="'checkbox'" class="child-header"
                             [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
+                            <input *ngIf="headerCheckboxVisible" (change)="onHeaderCheckboxChange($event)"
+                            [(ngModel)]="headerCheckboxData" [checked]="headerCheckboxData"
+                            class="checkBox" type="checkbox">
+                        </th>
+                        <th *ngSwitchDefault ttResizableColumn ttReorderableColumn (click)="OrderBy(col.field  )"
+                            class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
                             {{ col.childHeader }}
                             <i class='pi pi-arrow-up' *ngIf="col.sorting === 'asc'"></i>
                             <i class='pi pi-arrow-down' *ngIf="col.sorting === 'desc'"></i>
@@ -45,28 +56,36 @@
 
             <tr class="header-row p-treetable-thead-filter">
                 <ng-container *ngFor="let col of columns">
-                    <ng-container>
-                        <th class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
-                            <input type="text" [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText size="8"
-                                *ngIf="col.type === 'text'" (input)="filerOutSide($event, col)" style="width: auto" />
+                    <ng-container [ngSwitch]="col.type">
+                        <ng-container *ngSwitchCase="'checkbox'">
+                            <th class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
 
-                            <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="col.valuesset"
-                                [disabled]="col.isenable" pInputText size="8" *ngIf="col.type === 'numberFilter'"
-                                (input)="filerOutSide($event, col)" style="width: auto" />
+                            </th>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <th class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
+                                <input type="text" [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText
+                                    size="8" *ngIf="col.type === 'text'" (input)="filerOutSide($event, col)"
+                                    style="width: auto" />
 
-                            <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender-grid"
-                                [disabled]="col.isenable" (ngModelChange)="filerOutSide($event, col)"
-                                *ngIf="col.type === 'dateFilter' && !col.isenable" [(ngModel)]="col.valuesset"
-                                placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
-                            </p-calendar>
+                                <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="col.valuesset"
+                                    [disabled]="col.isenable" pInputText size="8" *ngIf="col.type === 'numberFilter'"
+                                    (input)="filerOutSide($event, col)" style="width: auto" />
 
-                            <input type="text" *ngIf="col.type === 'dateFilter' && col.isenable"
-                                [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText size="8"
-                                style="width: auto" />
+                                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender-grid"
+                                    [disabled]="col.isenable" (ngModelChange)="filerOutSide($event, col)"
+                                    *ngIf="col.type === 'dateFilter' && !col.isenable" [(ngModel)]="col.valuesset"
+                                    placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
+                                </p-calendar>
 
-                            <i class="pi pi-filter icon-filter" (click)="openContextMenu($event,col )"></i>
+                                <input type="text" *ngIf="col.type === 'dateFilter' && col.isenable"
+                                    [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText size="8"
+                                    style="width: auto" />
 
-                        </th>
+                                <i class="pi pi-filter icon-filter" (click)="openContextMenu($event,col )"></i>
+
+                            </th>
+                        </ng-container>
                     </ng-container>
                 </ng-container>
             </tr>
@@ -78,11 +97,15 @@
                     <ng-container>
                         <td [(selection)]="nodeCopy"
                             (contextmenu)="showContextMenu($event, contextMenu , rowData[col.field])" class="cell"
-                            [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': (col.field === 'TotalCurrentChargesDisplay' || col.field === 'PreviousBillBalanceDisplay') ? 'right' : 'left'}">
+                            [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': (col.type === 'numberFilter') ? 'right' : 'left'}">
 
                             <p-treeTableToggler [rowNode]="rowNode" [ngClass]="{'disabled': innerLoading}"
                                 *ngIf="col.childHeader == 'Service Number' && i === 0 && ( rowNode.node?.leaf === false || rowNode.parent != null )"></p-treeTableToggler>
                             <ng-container [ngSwitch]="col.type">
+                                <span *ngSwitchCase="'checkbox'">
+                                    <p-treeTableCheckbox [value]="rowNode" (click)="selectChildCheckbox()">
+                                    </p-treeTableCheckbox>
+                                </span>
                                 <span *ngSwitchCase="'dateFilter'">
                                     {{ rowData[col.field] | date: 'MM/dd/yyyy' }}
                                 </span>
@@ -98,13 +121,6 @@
                     </ng-container>
                 </ng-container>
             </tr>
-
-            <tr class="body-row"
-                *ngIf="(innerLoading && expandedNode?.data.Id === rowNode.node.data.Id ) || (isApiAlerdayCall && lastNode?.data.Id === rowNode.node.data.Id)">
-                <td class="cell" [attr.colspan]="columns.length">
-                    <span class="spinner-border spinner-border-sm" role="status"></span>
-                </td>
-            </tr>
         </ng-template>
 
         <ng-template pTemplate="emptymessage" let-columns>
@@ -116,6 +132,11 @@
                     </span>
                 </td>
             </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <td class="cell" *ngIf="innerLoading || isApiAlerdayCall">
+                <span class="spinner-border spinner-border-sm" role="status"></span>
+            </td>
         </ng-template>
     </p-treeTable>
 

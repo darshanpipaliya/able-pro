@@ -37,9 +37,10 @@ export class CommonPTreeTableComponent {
   @Input() GridAPI: any;
   @Input() cols: any;
   @Input() ids: any;
+  @Input() headerCheckboxVisible: any = false;
   files: TreeNode[];
   displaycols: any[];
-  loading: boolean;
+  loading: boolean = false;
   pTableContain = { first: 1 };
   finalFilterdArr: any;
   sorting: any;
@@ -70,6 +71,7 @@ export class CommonPTreeTableComponent {
   filterArrayNumber: arrDate[];
 
   displayModal: boolean = false;
+  headerCheckboxData = false;
 
   @ViewChild('treeTable') treeTable!: any;
   @ViewChild('contextMenu') contextMenu: any;
@@ -92,6 +94,7 @@ export class CommonPTreeTableComponent {
   @Output() rowCellDoubleClicked: EventEmitter<any> = new EventEmitter();
   @Output() refreshbuttonEmit: EventEmitter<any> = new EventEmitter();
   @Output() totalRecordsEmit: EventEmitter<any> = new EventEmitter();
+  @Output() loaderEmit: EventEmitter<any> = new EventEmitter();
 
   @HostListener('document:click', ['$event']) onClick(event: Event) {
     const clickedInsideMenu = this.contextMenu?.el?.nativeElement.contains(event.target);
@@ -135,7 +138,6 @@ export class CommonPTreeTableComponent {
 
 
   ngOnChanges(changes: SimpleChanges) {
-
     if (changes['refreshbutton'] && changes['refreshbutton'].currentValue === true) {
       this.loadNodes(true);
     }
@@ -163,6 +165,7 @@ export class CommonPTreeTableComponent {
     this.files = [];
 
     this.loading = false;
+    this.loaderEmit.emit(this.loading);
     this.setColumnDefs();
 
     this.cols.forEach((col: any) => {
@@ -251,6 +254,7 @@ export class CommonPTreeTableComponent {
 
   loadNodes(allOptionsClear = false) {
     this.loading = true;
+    this.loaderEmit.emit(this.loading);
 
     this.pTableContain.first = this.pTableContain?.first || 1;
     if (allOptionsClear) {
@@ -280,21 +284,20 @@ export class CommonPTreeTableComponent {
       ...(this.payload ? this.payload : {})
     }
     this._unsubscribeGRid.next(null);
-
     if (allOptionsClear) this.files = [];
     this.locationService
       .callPTreeTabAPI(this.GridAPI, payloadData, 'POST', this.ids)
       .pipe(takeUntil(this._unsubscribeGRid))
       .subscribe(
-        (response: any) => this.handleResponse(response, allOptionsClear),
-        () => this.handleError()
+       {
+        next: (response: any) => this.handleResponse(response, allOptionsClear),
+        error: () => this.handleError()
+       }
       );
   }
 
 
   handleResponse(response: any, allOptionsClear: boolean) {
-    this.loading = false;
-  console.log(' response ', response);
     this.totalRecords = response?.TotalCount ?? response?.TotalRecordCount;
     this.totalRecordsEmit.emit(this.totalRecords);
 
@@ -313,12 +316,14 @@ export class CommonPTreeTableComponent {
     this.files.length > 0 ? this.tableDataExist.emit(true) : this.tableDataExist.emit(false);
     this.refreshbuttonEmit.emit(false);
     this.isApiAlerdayCall = false;
-
+    this.loading = false;
+    this.loaderEmit.emit(this.loading);
   }
 
   handleError() {
     this.loading = false;
     this.files = [];
+    this.loaderEmit.emit(this.loading);
   }
 
   onNodeExpand(event: any) {
@@ -327,7 +332,7 @@ export class CommonPTreeTableComponent {
     // Check if the node has children
     if (!node.children || node.children.length === 0) {
       this.innerLoading = true;
-
+      this.loaderEmit.emit(this.loading);
       this.expandedNode = node;
       // Build the data request object
       const data = {
@@ -346,14 +351,17 @@ export class CommonPTreeTableComponent {
         .callPTreeTabAPI(this.GridAPI, data, 'POST', this.ids)
         .pipe(takeUntil(this._unsubscribeGRid))
         .subscribe(
-          (response: any) => this.handleNodeResponse(response, node),
-          () => this.handleNodeError()
+          {
+            next: (response: any) => this.handleNodeResponse(response, node),
+            error: () => this.handleNodeError()
+          }
         );
     }
   }
 
   handleNodeResponse(response: any, node: any) {
     this.innerLoading = false;
+    this.loaderEmit.emit(this.loading);
     const data = response?.Data?.$values ?? response?._companyLocationDto?.$values;
     if (data.length) {
       node.children = data.map(extractDataAndLeaf.bind(this));
@@ -365,6 +373,7 @@ export class CommonPTreeTableComponent {
 
   handleNodeError() {
     this.innerLoading = false;
+    this.loaderEmit.emit(this.loading);
   }
 
   handleColumnResize(event: any) {
@@ -900,4 +909,19 @@ export class CommonPTreeTableComponent {
     this.rowCellDoubleClicked.emit(datas);
   }
 
+  
+  onHeaderCheckboxChange(e?:any) {
+    this.headerCheckboxData = e.target.checked;
+    if (this.headerCheckboxData) {
+      this.loadNodes();
+    }
+    if (this.files.length > 0 && this.headerCheckboxData ) {
+      this.selectedRecords = this.files;
+    }
+    if (!this.headerCheckboxData) {
+      this.selectedRecords = [];
+    }
+
+    this.selectChildCheckbox();
+  }
 }

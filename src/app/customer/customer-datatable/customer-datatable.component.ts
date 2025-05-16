@@ -73,7 +73,6 @@ export class CustomerDatatableComponent implements OnInit {
 
   ngOnInit(): void {
 
-   console.log('74',this.buttonOptions );
     this.temRoles = rolePermission(['TEMAdmin', 'TEMUser', 'TEMManager']);
     this.viewNEdit = rolePermission(['SuperTEMAdmin', 'SuperTEMManager', 'SuperTEMUser', 'SuperTEM', 'TEMAdmin', 'TEMUser', 'TEMManager']);
     this.getTemLists();

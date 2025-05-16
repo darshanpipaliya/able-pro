@@ -77,6 +77,7 @@ export class LocationContactDataTableComponent implements OnInit {
 
   @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
   refreshbutton: boolean = false;
+  loader: boolean = false;
   payload: any = {};
   GridAPI: any = api_list.Location.Location.getLocationPeople;
   ids: any = {};
@@ -279,5 +280,8 @@ export class LocationContactDataTableComponent implements OnInit {
 
   setColumnDefs() {
     this.CommonPTreeTableComponent.setColumnDefs();
+  }
+  loaderEmitFn(event: any) {
+    this.loader = event;
   }
 }

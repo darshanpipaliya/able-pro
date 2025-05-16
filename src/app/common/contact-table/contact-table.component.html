@@ -108,7 +108,7 @@
                                     <td [(selection)]="selectedNode"
                                         (contextmenu)="showContextMenu($event, contextMenu , rowData[col.field])"
                                         class="cell"
-                                        [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': (col.field === 'TotalCurrentChargesDisplay' || col.field === 'PreviousBillBalanceDisplay') ? 'right' : 'left'}">
+                                        [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': (col.type === 'numberFilter') ? 'right' : 'left'}">
 
                                         <p-treeTableToggler [rowNode]="rowNode" [ngClass]="{'disabled': innerLoading}"
                                             *ngIf=" i === 0 && ( rowNode.node?.leaf === false || rowNode.parent != null )"></p-treeTableToggler>

@@ -83,7 +83,7 @@ export class PTreeCompanyComponent implements OnInit {
   payload: any = {};
   @Input() GridAPI: any;
   refreshbutton: boolean = false;
-
+  loader: boolean = false;
   constructor(public wirelineService: WirelineService,
     public variableManageService: VariableManageService,
     public locationService: LocationService,
@@ -195,5 +195,8 @@ export class PTreeCompanyComponent implements OnInit {
   }
   totalRecordsEmitFn(event: any) {
     this.totalRecords = event;
+  }
+  loaderEmitFn(event: any) {
+    this.loader = event;
   }
 }

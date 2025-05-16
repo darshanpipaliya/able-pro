@@ -52,7 +52,7 @@ export class ContractService {
     return this.http.post(this.urlTools.addDynamicURL(this.getAllContractsUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -61,7 +61,7 @@ export class ContractService {
     return this.http.post(this.urlTools.addDynamicURL(this.getAllContractsUrl), data, { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -70,7 +70,7 @@ export class ContractService {
     return this.http.get(this.urlTools.addDynamicURL(this.getContractContainerbyIdUrl, { contractId: contractId, type: type })).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -79,7 +79,7 @@ export class ContractService {
     return this.http.get(this.urlTools.addDynamicURL(this.getGetContractMonthsUrl)).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -88,7 +88,7 @@ export class ContractService {
     return this.http.get(this.urlTools.addDynamicURL(this.getContractOrAddendumDetailsUrl, { id: id, type: type })).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -97,7 +97,7 @@ export class ContractService {
     return this.http.get(this.urlTools.addDynamicURL(this.DownloadAttachmentUrl, { id: id, type: type }), { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -106,7 +106,7 @@ export class ContractService {
     return this.http.put(this.urlTools.addDynamicURL(this.UpdateContractOrAddendumUrl, {id: id}), data).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -115,7 +115,7 @@ export class ContractService {
     return this.http.post(this.urlTools.addDynamicURL(this.saveContractUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -124,7 +124,7 @@ export class ContractService {
     return this.http.get(this.urlTools.addDynamicURL(this.getReplaceContractGridUrl, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -159,7 +159,7 @@ export class ContractService {
   //   return this.http.get(this.urlTools.addDynamicURL(this.loggedInUserUrl)).pipe(
   //     catchError((err) => {
   //       this.tokenExpired(err);
-  //       return throwError(err);
+  //       return throwError(() => err);
   //     })
   //   );
   // }
@@ -172,7 +172,7 @@ export class ContractService {
     return this.http.get(this.urlTools.addDynamicURL(this.loggedInUserUrl+key, {})).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -181,7 +181,7 @@ export class ContractService {
     return this.http.post(this.urlTools.addDynamicURL(this.addProduct), data).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -190,7 +190,7 @@ export class ContractService {
     return this.http.post(this.urlTools.addDynamicURL(this.getinventoriesForContractUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -199,7 +199,7 @@ export class ContractService {
     return this.http.post(this.urlTools.addDynamicURL(this.getLinkedinventoriesForContractUrl, { id: id, documentType: documentType }), {}).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -208,7 +208,7 @@ export class ContractService {
     return this.http.put(this.urlTools.addDynamicURL(this.linkInventoryUrl, { id: id, documentType: documentType }), data).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -217,7 +217,7 @@ export class ContractService {
     return this.http.post(this.urlTools.addDynamicURL(this.saveNewAddumUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }

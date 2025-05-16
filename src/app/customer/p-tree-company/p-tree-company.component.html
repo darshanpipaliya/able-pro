@@ -2,7 +2,7 @@
     <mat-expansion-panel class="custom-panel border" [expanded]="true" [hideToggle]="true" [disabled]="true">
         <mat-expansion-panel-header class="custom-header">
             <div class="header-content">
-                <svg class="pc-icon text-primary circle-icon" (click)="refreshbuttonEmitFn(true)">
+                <svg [ngClass]="{'disabled': loader}" class="pc-icon text-primary circle-icon" (click)="refreshbuttonEmitFn(true)">
                     <use xlink:href="assets/fonts/custom-icon.svg#refreshCircle"></use>
                 </svg>
                 <mat-panel-title class="panel-title">
@@ -15,6 +15,7 @@
             (exportAccountData)="exportAccountDataFn($event)" (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
             (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
             (totalRecordsEmit)="totalRecordsEmitFn($event)"
+            (loaderEmit)="loaderEmitFn($event)"
             />
     </mat-expansion-panel>
 </mat-accordion>

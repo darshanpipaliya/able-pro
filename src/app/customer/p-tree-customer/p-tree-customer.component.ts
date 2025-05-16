@@ -71,6 +71,7 @@ export class PTreeCustomerComponent implements OnInit {
   payload: any = {};
   @Input() GridAPI: any;
   refreshbutton: boolean = false;
+  loader: boolean = false;
 
   constructor(public wirelineService: WirelineService,
     public variableManageService: VariableManageService,
@@ -187,6 +188,9 @@ export class PTreeCustomerComponent implements OnInit {
 
   setColumnDefs() {
     this.CommonPTreeTableComponent.setColumnDefs();
+  }
+  loaderEmitFn(event: any) {
+    this.loader = event;
   }
 }
 

@@ -466,7 +466,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getCompanyLocationUrl), this.urlTools.addQueryParams(queryParams)).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -476,7 +476,7 @@ export class LocationService {
   //   return this.http.get(url, { responseType: 'blob' }).pipe(
   //     catchError((err) => {
   //       this.tokenExpired(err);
-  //       return throwError(err);
+  //       return throwError(() => err);
   //     })
   //   );
   // }
@@ -484,7 +484,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.vendorproducttypesDropDownURL, { Id: Id }), this.urlTools.addQueryParams(queryParams)).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -494,7 +494,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -504,7 +504,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -514,7 +514,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -524,7 +524,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -534,7 +534,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -544,7 +544,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -553,7 +553,7 @@ export class LocationService {
     return this.http.put(this.updatePeopleUrl + 'Assign', value).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -563,7 +563,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -573,7 +573,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -583,7 +583,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -593,7 +593,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -603,7 +603,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -612,7 +612,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -622,7 +622,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -632,7 +632,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -642,7 +642,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -652,7 +652,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -661,7 +661,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getCompanyByCustomerIdUrl, { Id: Id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -670,7 +670,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getCompanyByCustomerIdUrlNew, { Id: Id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -679,7 +679,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -689,7 +689,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -699,7 +699,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -708,7 +708,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -718,7 +718,7 @@ export class LocationService {
     return this.http.put(this.urlTools.addDynamicURL(this.saveLocationInventoriesUrl, { Id: Id }), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -728,7 +728,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -738,7 +738,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -751,7 +751,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -761,7 +761,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -771,7 +771,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -793,7 +793,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -802,7 +802,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -811,7 +811,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -821,7 +821,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -831,7 +831,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
 
@@ -842,7 +842,7 @@ export class LocationService {
 
       catchError((err) => {
         // this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -852,7 +852,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -866,7 +866,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -880,7 +880,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -895,7 +895,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -905,7 +905,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -916,7 +916,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -927,7 +927,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -937,7 +937,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -949,7 +949,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -959,7 +959,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -970,7 +970,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -985,7 +985,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -996,7 +996,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1010,7 +1010,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1020,7 +1020,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1034,7 +1034,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1049,7 +1049,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1060,7 +1060,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1070,7 +1070,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1081,7 +1081,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1092,7 +1092,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1103,7 +1103,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1114,7 +1114,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1125,7 +1125,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1136,7 +1136,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1146,7 +1146,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1156,7 +1156,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1166,7 +1166,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1177,7 +1177,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1187,7 +1187,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1197,7 +1197,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1207,7 +1207,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1218,7 +1218,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1228,7 +1228,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1239,7 +1239,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1249,7 +1249,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1259,7 +1259,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1269,7 +1269,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1278,7 +1278,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1286,7 +1286,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.dataretrievalVatemplatesURL, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1295,7 +1295,7 @@ export class LocationService {
     return this.http.put(this.dataretrievalVaimporttemplateURL + id, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1305,7 +1305,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1314,7 +1314,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1324,7 +1324,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1334,7 +1334,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1343,7 +1343,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1352,7 +1352,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1362,7 +1362,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1371,7 +1371,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1381,7 +1381,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1391,7 +1391,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1400,7 +1400,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1409,7 +1409,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1418,7 +1418,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1427,7 +1427,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1436,7 +1436,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1446,7 +1446,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1455,7 +1455,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1465,7 +1465,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1475,7 +1475,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1485,7 +1485,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1494,7 +1494,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1503,7 +1503,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1512,7 +1512,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1522,7 +1522,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1531,7 +1531,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1540,7 +1540,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1549,7 +1549,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1558,7 +1558,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1568,7 +1568,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1578,7 +1578,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1588,7 +1588,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1598,7 +1598,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1609,7 +1609,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1619,7 +1619,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1629,7 +1629,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1639,7 +1639,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1653,7 +1653,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1668,7 +1668,7 @@ export class LocationService {
     return this.http.put(this.urlTools.addDynamicURL(this.groupActiveInactiveUrl + key, { id: id }), '').pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1678,7 +1678,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1686,7 +1686,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(api_list.Organisation.Cusotmer.Grid), value).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1695,7 +1695,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(api_list.Organisation.Company.Grid), value).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1703,7 +1703,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(api_list.Organisation.Company.Grid), value, { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1713,7 +1713,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1723,7 +1723,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1733,7 +1733,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1743,7 +1743,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1754,7 +1754,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1764,7 +1764,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1774,7 +1774,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1783,7 +1783,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1792,7 +1792,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1802,7 +1802,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1812,7 +1812,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1823,7 +1823,7 @@ export class LocationService {
       catchError((err) => {
 
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1833,7 +1833,7 @@ export class LocationService {
     return this.http.post(this.getVendorProductLoggedUrl, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1842,7 +1842,7 @@ export class LocationService {
     return this.http.post(this.getVendorProductLoggedUrl, data, { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1852,7 +1852,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1861,7 +1861,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getDataretrieval, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1871,7 +1871,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1881,7 +1881,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1891,7 +1891,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1901,7 +1901,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1911,7 +1911,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1921,7 +1921,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1931,7 +1931,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1945,7 +1945,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1955,7 +1955,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -1965,7 +1965,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1975,7 +1975,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1987,7 +1987,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -1997,7 +1997,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2007,7 +2007,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2017,7 +2017,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2027,7 +2027,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2036,7 +2036,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2045,7 +2045,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2054,7 +2054,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2063,7 +2063,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2073,7 +2073,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2083,7 +2083,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2092,7 +2092,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2101,7 +2101,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2110,7 +2110,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2119,7 +2119,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2129,7 +2129,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2140,7 +2140,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2149,7 +2149,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2158,7 +2158,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2167,7 +2167,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2176,7 +2176,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2185,7 +2185,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2194,7 +2194,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2204,7 +2204,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2214,7 +2214,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2224,7 +2224,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2234,7 +2234,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2244,7 +2244,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2254,7 +2254,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2264,7 +2264,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2274,7 +2274,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2284,7 +2284,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2294,7 +2294,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2304,7 +2304,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2314,7 +2314,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2324,7 +2324,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2334,7 +2334,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2344,7 +2344,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2354,7 +2354,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2364,7 +2364,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2374,7 +2374,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2383,7 +2383,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2392,7 +2392,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2401,7 +2401,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2410,7 +2410,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2419,7 +2419,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2428,7 +2428,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2437,7 +2437,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2446,7 +2446,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2455,7 +2455,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2465,7 +2465,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getChargeCodeTypeUrl), queryParams ? this.urlTools.addQueryParams(queryParams) : {}).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2475,7 +2475,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2485,7 +2485,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2495,7 +2495,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2505,7 +2505,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2517,7 +2517,7 @@ export class LocationService {
 
         catchError((err) => {
           this.tokenExpired(err)
-          return throwError(err);
+          return throwError(() => err);
         })
       );
     } else {
@@ -2526,7 +2526,7 @@ export class LocationService {
 
         catchError((err) => {
           this.tokenExpired(err)
-          return throwError(err);
+          return throwError(() => err);
         })
       );
     }
@@ -2537,7 +2537,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2548,7 +2548,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2558,7 +2558,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2568,7 +2568,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2578,7 +2578,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2589,7 +2589,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2598,7 +2598,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2608,7 +2608,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2618,7 +2618,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2628,7 +2628,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2638,7 +2638,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2647,7 +2647,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2657,7 +2657,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2666,7 +2666,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2676,7 +2676,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2685,7 +2685,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2695,7 +2695,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2705,7 +2705,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2715,7 +2715,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2739,7 +2739,7 @@ export class LocationService {
         } else if (err && err.status === 401) {
           this.tokenExpired(err);
         }
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -2764,7 +2764,7 @@ export class LocationService {
         else if (err && err.status === 401) {
           this.tokenExpired(err);
         }
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -2774,7 +2774,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2799,7 +2799,7 @@ export class LocationService {
         else if (err && err.status === 401) {
           this.tokenExpired(err);
         }
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -2824,7 +2824,7 @@ export class LocationService {
         else if (err && err.status === 401) {
           this.tokenExpired(err);
         }
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -2849,7 +2849,7 @@ export class LocationService {
         else if (err && err.status === 401) {
           this.tokenExpired(err);
         }
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -2858,7 +2858,7 @@ export class LocationService {
     return this.http.post(this.productStructureDetail, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2867,7 +2867,7 @@ export class LocationService {
     return this.http.post(this.getServiceslist, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2876,7 +2876,7 @@ export class LocationService {
     return this.http.post(this.getServiceTypelist, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2885,7 +2885,7 @@ export class LocationService {
     return this.http.post(this.getProductlist, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2894,7 +2894,7 @@ export class LocationService {
     return this.http.post(this.getProductTypelist, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -2903,7 +2903,7 @@ export class LocationService {
     return this.http.post(this.getVendorProductTypelist, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3102,7 +3102,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3112,7 +3112,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3122,7 +3122,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3132,7 +3132,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3141,7 +3141,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3151,7 +3151,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3161,7 +3161,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3171,7 +3171,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3181,7 +3181,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3191,7 +3191,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3201,7 +3201,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3210,7 +3210,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3220,7 +3220,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3231,7 +3231,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3241,7 +3241,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3251,7 +3251,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3265,7 +3265,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3274,7 +3274,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3284,7 +3284,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3293,7 +3293,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3303,7 +3303,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3313,7 +3313,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3323,7 +3323,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3333,7 +3333,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3343,7 +3343,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3353,7 +3353,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3362,7 +3362,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.DownloadInvoiceAttachmentURL, { id: id }), { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -3371,7 +3371,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getInvoiceRetrievalDataUrl, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -3380,7 +3380,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getDataRetrievalFilesUrl, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -3391,14 +3391,14 @@ export class LocationService {
       return this.http.put(this.urlTools.addDynamicURL(this.terminateInvoiceRetrievalUrl + '?inactivePayableAccount=' + isInactive, { id: id }), {}).pipe(
         catchError((err) => {
           this.tokenExpired(err)
-          return throwError(err);
+          return throwError(() => err);
         })
       );
     } else {
       return this.http.put(this.urlTools.addDynamicURL(this.terminateInvoiceRetrievalUrl, { id: id }), {}).pipe(
         catchError((err) => {
           this.tokenExpired(err)
-          return throwError(err);
+          return throwError(() => err);
         })
       );
     }
@@ -3409,7 +3409,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3419,7 +3419,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3428,7 +3428,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3438,7 +3438,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3448,7 +3448,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3457,7 +3457,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.vendorProductTypesVendorAccountIdURL, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3466,7 +3466,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.vendorproducttypesChangeLogsUrl, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3475,7 +3475,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.chargecodesChangeLogUrl, { id: id }), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3484,7 +3484,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.vendorProductTypesVendorIdURL, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3493,7 +3493,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.vendorProductTypesDetailsURL, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3502,7 +3502,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.vendorProductTypesDetailsURL, { id: id }), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3511,7 +3511,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.VendorAccountChargeCodeURL, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3520,7 +3520,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.VendorAccountChargeCodeURLNew, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3529,7 +3529,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.vendorProductTypesChargeCodeGroupsURL, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3539,7 +3539,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3549,7 +3549,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3558,7 +3558,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3568,7 +3568,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3578,7 +3578,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3588,7 +3588,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3598,7 +3598,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3607,7 +3607,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3616,7 +3616,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3624,7 +3624,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getProducttypesURL, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3632,7 +3632,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.DownloadInvoiceAttachmentURL, { id: id }), { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3641,7 +3641,7 @@ export class LocationService {
     return this.http.put(this.urlTools.addDynamicURL(this.UpdateInvoiceRetrieval, { id: id }), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3650,7 +3650,7 @@ export class LocationService {
     return this.http.delete(this.urlTools.addDynamicURL(this.removeInvoiceAttachmentURL, { id: id }),).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3660,7 +3660,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3670,7 +3670,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3680,7 +3680,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3690,7 +3690,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3700,7 +3700,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3710,7 +3710,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3720,7 +3720,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3730,7 +3730,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3740,7 +3740,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3749,7 +3749,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3759,7 +3759,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3768,7 +3768,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3777,7 +3777,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3787,7 +3787,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3797,7 +3797,7 @@ export class LocationService {
     return this.http.put(this.urlTools.addDynamicURL(this.updateCompanyLocationContactsURL, { Id: Id }), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3806,7 +3806,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.inventorystatusesCode)).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3815,7 +3815,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.vendorproductinventoryorigins)).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3824,7 +3824,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.vendorproductinventoryoriginsName)).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3833,7 +3833,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.inventories), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3842,7 +3842,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.contactUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3852,7 +3852,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3861,7 +3861,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.savePeopleNotesUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3870,7 +3870,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.downloadPeopleNotesUrl, { Id: Id }), { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3879,7 +3879,7 @@ export class LocationService {
     return this.http.put(this.makePeopleNotesStatusActiveUrl, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3889,7 +3889,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3898,7 +3898,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.saveLocationNotesUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3908,7 +3908,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.saveAccountNotesUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3917,7 +3917,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.getbillingAccountNotesUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3926,7 +3926,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.downloadNoteAttachmentForAccount, { Id: Id }), { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3939,7 +3939,7 @@ export class LocationService {
     return this.http.put(this.makeLocationNotesStatusActiveUrl, data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3948,7 +3948,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.downloadLocationNotesUrl, { Id: Id }), { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3957,7 +3957,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.peopleUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3966,7 +3966,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.peopleUrl), data, { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3975,7 +3975,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.peopleManagerUrl, queryParams), this.urlTools.addQueryParams(queryParams)).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3984,7 +3984,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.addPeopleUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -3993,7 +3993,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.billingaccountsLoggedURL), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4007,7 +4007,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4017,7 +4017,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4027,7 +4027,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4038,7 +4038,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4048,7 +4048,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4057,7 +4057,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.peopleManagerUrl + KeyString), this.urlTools.addQueryParams(queryParams)).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4067,7 +4067,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4076,7 +4076,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4085,7 +4085,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4095,7 +4095,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4105,7 +4105,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4115,7 +4115,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4123,7 +4123,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getCompanyByTem, queryParams), this.urlTools.addQueryParams(queryParams)).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4131,7 +4131,7 @@ export class LocationService {
     return this.http.get(this.urlTools.addDynamicURL(this.getCompanyByTem)).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4140,7 +4140,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
 
@@ -4151,7 +4151,7 @@ export class LocationService {
     return this.http.post(this.urlTools.addDynamicURL(this.copyChargeCode), data).pipe(
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4181,7 +4181,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4279,7 +4279,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4291,7 +4291,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4308,12 +4308,11 @@ export class LocationService {
   callPTreeTabAPI(API: any, payload: any, method: string, ids?: any): Observable<any> {
 
     if (method === 'POST') {
-
       return this.http.post(this.urlTools.addDynamicURL(API, ids), payload).pipe(
 
         catchError((err) => {
           this.tokenExpired(err)
-          return throwError(err);
+          return throwError(() => err);
         })
       );
     } else {
@@ -4321,7 +4320,7 @@ export class LocationService {
 
         catchError((err) => {
           this.tokenExpired(err)
-          return throwError(err);
+          return throwError(() => err);
         })
       );
     }
@@ -4332,14 +4331,14 @@ export class LocationService {
       return this.http.post(this.urlTools.addDynamicURL(API, ids), payload, { responseType: 'blob' }).pipe(
         catchError((err) => {
           this.tokenExpired(err);
-          return throwError(err);
+          return throwError(() => err);
         })
       );
     } else {
       return this.http.get(this.urlTools.addDynamicURL(API, ids), { responseType: 'blob' }).pipe(
         catchError((err) => {
           this.tokenExpired(err);
-          return throwError(err);
+          return throwError(() => err);
         })
       );
     }
@@ -4349,7 +4348,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -4359,7 +4358,7 @@ export class LocationService {
 
       catchError((err) => {
         this.tokenExpired(err)
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }

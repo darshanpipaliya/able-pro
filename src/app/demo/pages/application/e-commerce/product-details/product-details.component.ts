@@ -133,7 +133,6 @@ export class ProductDetailsComponent implements OnInit {
     // Toggle the value
     item.isWhitelisted = !isWhitelistedBool;
 
-    // Optionally, perform additional actions like emitting an event or making an API call
-    console.log(`Whitelist status updated: ${item.isWhitelisted}`);
+    // Optionally, perform additional actions like emitting a
   }
 }

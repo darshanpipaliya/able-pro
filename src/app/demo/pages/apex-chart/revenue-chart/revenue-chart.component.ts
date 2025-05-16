@@ -81,7 +81,6 @@ export class RevenueChartComponent implements OnInit {
         mode: LIGHT
       }
     };
-    console.log(this.themeService.drawerOpen());
   }
 
   // private methods

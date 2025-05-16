@@ -70,6 +70,7 @@ export class PTreeLocationComponent implements OnInit {
   payload: any = {};
   @Input() GridAPI: any;
   refreshbutton: boolean = false;
+  loader: boolean = false;
   @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
 
   constructor(public wirelineService: WirelineService,
@@ -122,6 +123,8 @@ export class PTreeLocationComponent implements OnInit {
     const getParentId = (isChild: boolean) => isChild ? ++currentParent : currentParent;
 
     this.cols = [
+      createColumn(getParentId(true), '60px', true, 'checkbox', 'checkbox', 'checkbox', 'checkbox', 'close'),
+
       createColumn(getParentId(true), '190px', true, 'text', 'Location', 'LocationName', 'Location Name', 'close'),
       createColumn(currentParent, '190px', false, 'text', '', 'Id', 'Location ID', 'close'),
       createColumn(currentParent, '180px', false, 'text', '', 'LocationCode', 'Location Code', 'open'),
@@ -152,12 +155,12 @@ export class PTreeLocationComponent implements OnInit {
       createColumn(currentParent, '220px', false, 'text', '', 'MailingAddressPostalCode', 'Mailing Zip/Postal Code', 'open'),
       createColumn(currentParent, '180px', false, 'text', '', 'MailingAddressCountryName', 'Mailing Country', 'open'),
 
-      createColumn(getParentId(true), '185px', true, 'date', 'Date', 'StartDate', 'Location Start Date', 'close'),
-      createColumn(currentParent, '120px', false, 'date', '', 'EndDate', 'Location End Date', 'open'),
+      createColumn(getParentId(true), '185px', true, 'dateFilter', 'Date', 'StartDate', 'Location Start Date', 'close'),
+      createColumn(currentParent, '120px', false, 'dateFilter', '', 'EndDate', 'Location End Date', 'open'),
 
-      createColumn(getParentId(true), '175px', true, 'number', 'Inventory', 'TotalCurrentLocChargeCount', 'Inventory Count', 'close'),
-      createColumn(currentParent, '175px', false, 'number', '', 'TotalCurrentLocChargeDisplay', 'Current Charges', 'close'),
-      createColumn(currentParent, '175px', false, 'number', '', 'PreviousTotalCurrentLocChargeDisplay', 'Previous Charges', 'open'),
+      createColumn(getParentId(true), '175px', true, 'numberFilter', 'Inventory', 'TotalCurrentLocChargeCount', 'Inventory Count', 'close'),
+      createColumn(currentParent, '175px', false, 'numberFilter', '', 'TotalCurrentLocChargeDisplay', 'Current Charges', 'close'),
+      createColumn(currentParent, '175px', false, 'numberFilter', '', 'PreviousTotalCurrentLocChargeDisplay', 'Previous Charges', 'open'),
     ];
   }
 
@@ -199,5 +202,9 @@ export class PTreeLocationComponent implements OnInit {
 
   setColumnDefs() {
     this.CommonPTreeTableComponent.setColumnDefs();
+  }
+
+  loaderEmitFn(event: any) {
+    this.loader = event;
   }
 }

@@ -5,20 +5,20 @@
 
                 <div title="Export"
                     class="d-flex align-items-center justify-content-center rounded-circle border border-success text-success circle-icon"
-                    [ngClass]="{'disabled': isDisabledExport || totalRecords === 0}"
+                    [ngClass]="{'disabled': loader || isDisabledExport || totalRecords === 0}"
                     (click)="onBtnExportDataAsExcel()">
                     <i
                         class="text-success {{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-solid fas fa-file-excel'}}"></i>
 
                 </div>
                 <div class="d-flex  circle-icon align-items-center justify-content-center rounded-circle border border-warning text-warning"
-                    [ngClass]="{'disabled pointer-events-none': CompanyUser}" (click)="openContactGrid()"
+                    [ngClass]="{'disabled pointer-events-none': loader || CompanyUser}" (click)="openContactGrid()"
                     title="Link / Unlink People">
                     <i class="fas fa-edit text-warning"></i>
                 </div>
 
                 <span class="">
-                    <svg class="pc-icon text-primary circle-icon" (click)="refreshbuttonEmitFn(true)">
+                    <svg [ngClass]="{'disabled': loader}" class="pc-icon text-primary circle-icon" (click)="refreshbuttonEmitFn(true)">
                         <use xlink:href="assets/fonts/custom-icon.svg#refreshCircle"></use>
                     </svg></span>
                 <mat-panel-title class="panel-title">
@@ -33,6 +33,7 @@
         (exportAccountData)="exportAccountDataFn($event)" (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
         (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
         (totalRecordsEmit)="totalRecordsEmitFn($event)"
+        (loaderEmit)="loaderEmitFn($event)"
         />
     
     </mat-expansion-panel>

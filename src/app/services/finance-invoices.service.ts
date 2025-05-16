@@ -39,7 +39,7 @@ export class FinanceInvoicesService {
     return this.http.post(this.urlTools.addDynamicURL(api_list.finance_invoice.getInvoiceGridUrl), data, { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -60,7 +60,7 @@ export class FinanceInvoicesService {
     return this.http.post(this.urlTools.addDynamicURL(api_list.finance_invoice.getInvoiceServiceSummeryUrl), data, { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }
@@ -94,7 +94,7 @@ export class FinanceInvoicesService {
     return this.http.post(this.urlTools.addDynamicURL(api_list.finance_invoice.saveInvoiceNotesUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }  
@@ -103,7 +103,7 @@ export class FinanceInvoicesService {
     return this.http.post(this.urlTools.addDynamicURL(api_list.finance_invoice.getInoviceNotesUrl), data).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
@@ -112,7 +112,7 @@ export class FinanceInvoicesService {
     return this.http.post(this.urlTools.addDynamicURL(api_list.finance_invoice.getInoviceNotesUrl), data, { responseType: 'blob' }).pipe(
       catchError((err) => {
         this.tokenExpired(err);
-        return throwError(err);
+        return throwError(() => err);
       })
     )
   }

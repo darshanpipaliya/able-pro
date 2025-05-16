@@ -21,6 +21,5 @@ export interface FormModel {
 export class ReCaptchaComponent {
   formModel: FormModel = {};
   resolved(captchaResponse: string) {
-    console.log(`Resolved captcha with response: ${captchaResponse}`);
   }
 }

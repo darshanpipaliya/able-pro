@@ -65,7 +65,7 @@ export class CostStructureService {
         return this.http.get(this.urlTools.addDynamicURL(api_list.coststructure.getApproverDropdown, {}), queryParams ? this.urlTools.addQueryParams(queryParams) : {}).pipe(
             catchError((err) => {
                 this.tokenExpired(err)
-                return throwError(err);
+                return throwError(() => err);
             })
         );
 

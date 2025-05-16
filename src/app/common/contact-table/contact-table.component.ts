@@ -130,6 +130,7 @@ export class ContactTableComponent implements OnInit {
   @ViewChild('VendorProductInventory') VendorProductInventory!: TemplateRef<any>;
   exportCustomerDetail: any;
 
+  headerCheckboxVisible = false;
   @Output() tableDataExist: EventEmitter<any> = new EventEmitter();
   @Output() exportAccountData: EventEmitter<any> = new EventEmitter();
   @Output() selectedRowsEmit: EventEmitter<any> = new EventEmitter();
@@ -1312,7 +1313,6 @@ export class ContactTableComponent implements OnInit {
 
     this.selectedFiles = _.cloneDeep(this.filesColumns);
     this.colsshow = JSON.parse(JSON.stringify(this.cols));
-    console.log(this.cols);
     this.displaycols = this.cols.filter((col: any) => col.columnGroupShow == 'close');
     this.commonColumnsFn();
 

@@ -243,7 +243,6 @@ export class AuthSigninComponent implements OnInit {
   getLoggedinUserInfo(): Promise<any> {
     let promise = new Promise((resolve, reject) => {
       this.locationService.getLoggedinUserInfo().subscribe((result: any) => {
-        console.log('result', result);
         sessionStorage.setItem("LoggedAccountId", result.AccountId)
         if (result && result.Roles && result.Roles.$values && result.Roles.$values.length > 0) {
           const userRoles = result.Roles.$values;
