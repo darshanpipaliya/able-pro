@@ -5,19 +5,22 @@
         class="btn btn-shadow btn-outline-primary btn-size b-rad-20" [ngClass]="{
                 'm-l-10': i !== 0,
                 'btn-primary active text-white': option.value === selectedButton
-              }" [value]="option.value" [(ngModel)]="selectedButton" (click)="selectedButton = option.value; buttonClick.emit(option.value)">
+              }" [value]="option.value" [(ngModel)]="selectedButton"
+        (click)="selectedButton = option.value; buttonClick.emit(option.value)">
         <i [class]="option.icon" class="m-r-2"></i>
         {{option.label}}
       </button>
-      
+
     </div>
 
     <div *ngIf="!temRoles" [ngClass]="{'disabled': loaderParent}">
-      <p-dropdown class="custom-p-dropdown-outer" [options]="tems" [(ngModel)]="selectedTem" [ngModelOptions]="{standalone: true}" [disabled]="disableTemSearchDD" (onChange)="temChange.emit()" [filter]="true" [filterFields]="['AccountName']"  optionValue="Id" optionLabel="AccountName">
+      <p-dropdown class="custom-p-dropdown-outer" [options]="tems" [(ngModel)]="selectedTem"
+        [ngModelOptions]="{standalone: true}" [disabled]="disableTemSearchDD" (onChange)="temChange.emit(selectedTem)"
+        [filter]="true" [filterFields]="['AccountName']" optionValue="Id" optionLabel="AccountName">
       </p-dropdown>
     </div>
 
-    <div  [ngClass]="{'disabled': loaderParent || disableTemSearch}">
+    <div [ngClass]="{'disabled': loaderParent || disableTemSearch}">
       <div class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20"
         (click)="filterGridByTEMId.emit(selectedTem)">
         <svg class="pc-icon">
@@ -27,16 +30,29 @@
     </div>
   </div>
 
-  <div [ngClass]="{'disabled': loaderParent}" class="col-auto ms-auto d-flex align-items-center gap-2" *ngIf="currentOpenEditPagevar === 'Table' && (viewNEdit || CompanyRoles)">
+  <div [ngClass]="{'disabled': loaderParent}" class="col-auto ms-auto d-flex align-items-center gap-2"
+    *ngIf="currentOpenEditPagevar === 'Table' && (viewNEdit || CompanyRoles)">
     <div title="Export" class="avatar avatar-s bg-success-50 text-success-500 cp b-rad-20"
       [ngClass]="{'disabled': isDisabledExport || !tableDataExist}"
       (click)="!isDisabledExport ? exportDataAsExcel.emit() : ''">
       <i class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}}"></i>
     </div>
 
-    <div title="Add Customer" class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20" 
-      (click)="add.emit()">
+    <div title="Add Customer" class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20" (click)="add.emit()">
       <i class="fas fa-plus"></i>
     </div>
   </div>
+
+  <div [ngClass]="{'disabled': loaderParent}" class="col-auto ms-auto d-flex align-items-center gap-2"
+    *ngIf="currentOpenEditPagevar === 'Edit' && currentTabName === 'Notes'">
+    <div class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20" (click)="setLocationNotes.emit('add')"
+      title="Add Location Note"><i class="fas fa-plus"></i></div>
+
+    <button type="button" class="btn btn-shadow btn-outline-primary btn-size b-rad-20 btn-primary text-white"  (click)="setLocationNotes.emit('inactive')">Make
+      Inactive</button>
+
+    <button type="button" class="btn btn-shadow btn-outline-primary btn-size b-rad-20 btn-primary text-white"  (click)="setLocationNotes.emit('active')">Make
+      Active</button>
+  </div>
+
 </div>

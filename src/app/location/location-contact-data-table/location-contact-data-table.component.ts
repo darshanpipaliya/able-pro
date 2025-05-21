@@ -53,7 +53,7 @@ interface ColumnDefinition {
     SharedModule,
     PrimgModule,
     CommonPTreeTableComponent
-  ]
+  ],
 })
 
 

@@ -1,0 +1,38 @@
+<div class="mt-2">
+    <app-billing-l-p-table [rowData]="rowData" [pageName]="'location-tab'">
+    </app-billing-l-p-table>
+</div>
+
+<div class="mt-2">
+
+    <mat-accordion>
+        <mat-expansion-panel class="custom-panel border" [expanded]="true" [hideToggle]="true" [disabled]="true">
+            <mat-expansion-panel-header class="custom-header">
+                <div class="header-content">
+                    <div class="d-flex  circle-icon align-items-center justify-content-center rounded-circle border border-warning text-warning"
+                    [ngClass]="{'disabled': loader || rowDataCCS?.length < 1}" (click)="redirectToCCS()"
+                    title="Add Billing">
+                    <i class="fas fa-edit text-warning"></i>
+                    </div>
+                    <span class="">
+                        <svg [ngClass]="{'disabled': loader}" class="pc-icon text-primary circle-icon"
+                            (click)="refreshbuttonEmitFn(true)">
+                            <use xlink:href="assets/fonts/custom-icon.svg#refreshCircle"></use>
+                        </svg>
+                    </span>
+                    <mat-panel-title class="panel-title">
+                        <i class="fas fa-file-invoice-dollar text-primary"></i> &nbsp;
+                        <span class="fs-14 fw-bold text-dark">Cost Center Structures</span>
+                    </mat-panel-title>
+
+                </div>
+            </mat-expansion-panel-header>
+            <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI"
+                (tableDataExist)="tableDataExistFn($event)" [cols]="cols" (exportAccountData)="exportAccountDataFn($event)"
+                (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
+                (refreshbuttonEmit)="refreshbuttonEmitFn($event)" (totalRecordsEmit)="totalRecordsEmitFn($event)"
+                (loaderEmit)="loaderEmitFn($event)" />
+        </mat-expansion-panel>
+    </mat-accordion>
+
+</div>

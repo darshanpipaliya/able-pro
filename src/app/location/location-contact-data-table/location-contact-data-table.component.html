@@ -22,14 +22,14 @@
                         <use xlink:href="assets/fonts/custom-icon.svg#refreshCircle"></use>
                     </svg></span>
                 <mat-panel-title class="panel-title">
-                    <i class="fas fa-users" style="color: #4680ff;"></i>
+                    <i class="fas fa-users" style="color: #4680ff;"></i> &nbsp;
                     <span class="fs-6 fw-bold text-dark">People</span>
                 </mat-panel-title>
             </div>
 
         </mat-expansion-panel-header>
 
-        <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)" [cols]="cols"  [ids]="ids"
+        <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)" [cols]="cols"  [ids]="ids" [multipleSelection]="true"
         (exportAccountData)="exportAccountDataFn($event)" (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
         (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
         (totalRecordsEmit)="totalRecordsEmitFn($event)"

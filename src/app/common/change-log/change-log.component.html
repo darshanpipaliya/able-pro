@@ -1,13 +1,17 @@
-<!-- Change Log Section Start -->
-<mat-accordion class="example-headers-align change-log-sec-multi"
-  [ngClass]="className ? className : 'change-log-sec-multi'">
-  <mat-expansion-panel style="width: 100%; margin: 10px 0 0 !important;" [expanded]="true" [disabled]="true"
-    class="padding-none">
-    <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="changeLogData()"></button>
-    <mat-expansion-panel-header class="math">
-      <mat-panel-title class="matt">
-        <img src="assets/images/fa-sharp-fas-fa-swap.svg" alt="Change Log Image">&nbsp;{{title}} Change Log
-      </mat-panel-title>
+<mat-accordion [ngClass]="className ? className : 'change-log-sec-multi'">
+  <mat-expansion-panel class="custom-panel border" [expanded]="true" [hideToggle]="true" [disabled]="true">
+    <mat-expansion-panel-header class="custom-header">
+      <div class="header-content">
+        <span class="">
+          <svg class="pc-icon text-primary circle-icon" (click)="changeLogData()">
+            <use xlink:href="assets/fonts/custom-icon.svg#refreshCircle"></use>
+          </svg>
+        </span>
+        <mat-panel-title class="panel-title">
+          <img src="assets/images/fa-sharp-fas-fa-swap.svg" class="text-primary " alt="Change Log Image"> &nbsp;
+          <span class="fs-14 fw-bold text-dark">{{title}} Change Log</span>
+        </mat-panel-title>
+      </div>
     </mat-expansion-panel-header>
     <ng-container *ngIf="loadingDataFromApi || logLoader">
       <div class="col-md-12 col-sm-12 col-xl-12 padding-1-3 padding-1-3-wireline shimmer-res">
@@ -30,7 +34,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="!loadingDataFromApi && !logLoader">
-      <div class="tbData">
+      <div class="tbData" [style]="{'height': height}">
         <p-table [columns]="column" [tableStyle]="{ 'width': '100%' }" [value]="changelogData">
           <ng-template pTemplate="header" let-columns>
             <tr>
@@ -64,4 +68,3 @@
     </ng-container>
   </mat-expansion-panel>
 </mat-accordion>
-<!-- Change Log Section End -->

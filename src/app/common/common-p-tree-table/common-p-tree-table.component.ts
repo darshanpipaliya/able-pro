@@ -32,12 +32,24 @@ export class CommonPTreeTableComponent {
 
 
   @Input() APIParams: any;
+  @Input() childPayload: any;
   @Input() refreshbutton: any = false;
   @Input() payload: any;
   @Input() GridAPI: any;
   @Input() cols: any;
   @Input() ids: any;
   @Input() headerCheckboxVisible: any = false;
+  @Input() selectionField: string | string[] = 'IsSelected';
+  @Input() selectionCondition: 'AND' | 'OR' = 'OR';
+  @Input() preAppliedfilterArr: any;
+  @Input() toggler: any = false;
+  @Input() checkboxes: any = false;
+  @Input() togglerWithCheckbox: any = false;
+  @Input() doubleHeader: any = true;
+  @Input() filters: any = true;
+  @Input() multipleSelection: any = false;
+  @Input() SSRWithHeaderCheckbox: any = false;
+  @Input() buttonTemplate!: TemplateRef<any>;
   files: TreeNode[];
   displaycols: any[];
   loading: boolean = false;
@@ -139,12 +151,13 @@ export class CommonPTreeTableComponent {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['refreshbutton'] && changes['refreshbutton'].currentValue === true) {
+      this.selectedRecords = [];
+      this.headerCheckboxData = false;
       this.loadNodes(true);
     }
   }
 
   ngOnInit() {
-
     this.variableManageService.getCallAPIForInventoryDta$.subscribe((res: any) => {
       if (res) {
         this.loadNodes(true);
@@ -174,6 +187,10 @@ export class CommonPTreeTableComponent {
 
     this.cols.forEach((col: any) => {
       // Only process rows marked as children
+
+      if (col.field === 'checkbox') {
+        return;
+      }
       if (col.isChildren && !parentMap.has(col.parent)) {
         const parentKey = parentIndex.toString();
 
@@ -279,6 +296,17 @@ export class CommonPTreeTableComponent {
       this.finalFilterdArr['advanceFilter'] = [];
     }
 
+    if (Array.isArray(this.preAppliedfilterArr) && this.preAppliedfilterArr.length > 0) {
+      if (!Array.isArray(this.finalFilterdArr['advanceFilter'])) {
+        this.finalFilterdArr['advanceFilter'] = [];
+        this.finalFilterdArr['advanceFilter'] = [...this.preAppliedfilterArr];
+      } else {
+        const existingFilters = new Map(this.finalFilterdArr['advanceFilter'].map(item => [JSON.stringify(item), item]));
+        this.preAppliedfilterArr.forEach((filter: any) => existingFilters.set(JSON.stringify(filter), filter));
+        this.finalFilterdArr['advanceFilter'] = Array.from(existingFilters.values());
+      }
+    }
+
     this.finalFilterdArr['advanceFilter'] = Array.from(
       new Map(this.finalFilterdArr['advanceFilter'].map((item: any) => [JSON.stringify(item), item])).values()
     );
@@ -319,6 +347,7 @@ export class CommonPTreeTableComponent {
     if (data.length) {
       const resData = data.map(extractDataAndLeaf.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
+      this.selectedRecords = this.getCheckedNodes(this.files);
     } else {
       this.files = [];
     }
@@ -330,6 +359,45 @@ export class CommonPTreeTableComponent {
     this.loaderEmit.emit(this.loading);
   }
 
+
+  getCheckedNodes(nodes: TreeNode[]): TreeNode[] {
+    let selected: TreeNode[] = [];
+
+    for (const node of nodes) {
+      // Skip nodes without data
+      if (!node.data) continue;
+
+      // Case 1: Single selection key
+      if (typeof this.selectionField === 'string') {
+        if (node.data.hasOwnProperty(this.selectionField) && !!node.data[this.selectionField]) {
+          selected.push(node);
+        }
+      }
+      // Case 2: Multiple selection keys
+      else if (Array.isArray(this.selectionField) && this.selectionField.length > 0) {
+        let isSelected = false;
+
+        if (this.selectionCondition === 'AND') {
+          // All specified fields must be truthy
+          isSelected = this.selectionField.every(field =>
+            node.data.hasOwnProperty(field) && !!node.data[field]
+          );
+        } else {
+          // At least one of the specified fields must be truthy
+          isSelected = this.selectionField.some(field =>
+            node.data.hasOwnProperty(field) && !!node.data[field]
+          );
+        }
+
+        if (isSelected) {
+          selected.push(node);
+        }
+      }
+    }
+
+    return selected;
+  }
+
   handleError() {
     this.loading = false;
     this.files = [];
@@ -339,6 +407,12 @@ export class CommonPTreeTableComponent {
   onNodeExpand(event: any) {
     const node = event.node;
 
+    if(this.childPayload) {
+      const dynamicKey = Object.keys(this.childPayload)[0];
+      if(dynamicKey) {
+        this.childPayload[dynamicKey] = node.data['InvoiceChargeDetailsId'];  
+      }
+    }
     // Check if the node has children
     if (!node.children || node.children.length === 0) {
       this.innerLoading = true;
@@ -351,7 +425,8 @@ export class CommonPTreeTableComponent {
         level: node.data.Level,
         maximumRows: 10000,
         ...(this.sorting ? { OrderBy: this.sorting, SortOrder: this.sortingType } : {}),
-        ...(this.payload ? this.payload : {})
+        ...(this.payload ? this.payload : {}),
+        ...(this.childPayload ? this.childPayload : {})
       };
 
       this._unsubscribeGRid.next(null);
@@ -537,6 +612,15 @@ export class CommonPTreeTableComponent {
     return regex.test(value);
   }
 
+  updateFilterArray(targetArray: any, newFilter: any) {
+    const index = targetArray.findIndex((f: any) => f.filterKey === newFilter.filterKey);
+    if (index !== -1) {
+      targetArray[index] = newFilter;
+    } else {
+      targetArray.push(newFilter);
+    }
+  }
+
   onFilterChangedValue() {
 
     let txtVal1 = this.textboxValue1;
@@ -572,38 +656,14 @@ export class CommonPTreeTableComponent {
         arrDate['filterOptionValue2_2'] = this.textboxValue2_1 ? this.textboxValue2_1 : null;
       }
     }
-
     if (this.fieldsName.type === 'text') {
-      const index = this.filterArray.findIndex(
-        (user) => user.filterKey === this.fieldsName.field
-      );
-
-      if (index !== -1) {
-        this.filterArray[index] = arrDate;
-      } else {
-        this.filterArray.push(arrDate);
-      }
+      this.updateFilterArray(this.filterArray, arrDate);
     } else if (this.fieldsName.type === 'numberFilter') {
-      const index = this.filterArrayNumber.findIndex(
-        (user) => user.filterKey === this.fieldsName.field
-      );
-
-      if (index !== -1) {
-        this.filterArrayNumber[index] = arrDate;
-      } else {
-        this.filterArrayNumber.push(arrDate);
-      }
+      this.updateFilterArray(this.filterArrayNumber, arrDate);
     } else {
-      const index = this.filterArrayDate.findIndex(
-        (user) => user.filterKey === this.fieldsName.field
-      );
-
-      if (index !== -1) {
-        this.filterArrayDate[index] = arrDate;
-      } else {
-        this.filterArrayDate.push(arrDate);
-      }
+      this.updateFilterArray(this.filterArrayDate, arrDate);
     }
+
 
     this.displayModal = false;
 
@@ -670,10 +730,10 @@ export class CommonPTreeTableComponent {
     this.selectAllNodes(this.filesColumns);
   }
 
-  
+
   private selectAllNodes(nodes: TreeNode[]) {
     nodes.forEach((node: any) => {
-      if (node.isparent && this.cols.some((e: any) => e.header === node.label && e.displayCheckboxColumns === false) || !node.isparent && this.cols.some((e: any)  => e.childHeader === node.label && e.displayCheckboxColumns === false)) {
+      if (node.isparent && this.cols.some((e: any) => e.header === node.label && e.displayCheckboxColumns === false) || !node.isparent && this.cols.some((e: any) => e.childHeader === node.label && e.displayCheckboxColumns === false)) {
       } else {
         this.selectedFiles.push(node);
         if (node.children) {
@@ -885,31 +945,30 @@ export class CommonPTreeTableComponent {
     this.commonColumnsFn();
   }
 
-  selectChildCheckbox() {
-    const a = this.selectedRecords;
-    if (a.length > 1) {
-      this.selectedRecords = [];
-      this.selectedRecords.push(a[a.length - 1]);
+  selectChildCheckbox(): void {
+    if (!this.multipleSelection && this.selectedRecords.length > 1) {
+      this.selectedRecords = [this.selectedRecords[this.selectedRecords.length - 1]];
     }
-    let b = this.selectedRecords.map((item: { data: any; }) => item?.data);
-    this.selectedRowsEmit.emit(b)
+  
+    const selectedData = this.selectedRecords.map((item:any) => item?.data);
+    this.headerCheckboxData = this.selectedRecords.length === this.files.length;
+  
+    this.selectedRowsEmit.emit(selectedData);
   }
-
-  onSelectionChange(event: TreeNode[]) {
-    if (event && event.length) {
-      const last = event[event.length - 1];
+  
+  onHeaderCheckboxChange(event?: any): void {
+    this.headerCheckboxData = event?.target?.checked ?? false;
+  
+    if (this.headerCheckboxData) {
+      if (this.SSRWithHeaderCheckbox) {
+        this.loadNodes();
+      }
+      this.selectedRecords = [...this.files];
     } else {
+      this.selectedRecords = [];
     }
-  }
-
-  onSelectionChanged(event: any[]) {
-    this.selectedRows = event.length;
-    const selectedInventory: any = [];
-
-    event.forEach((e: { VendorProductInventoryId: any; }) => {
-      selectedInventory.push(e.VendorProductInventoryId)
-    });
-    this.selectedInventory = selectedInventory;
+  
+    this.selectChildCheckbox();
   }
 
   onRowDoubleClick(data: any) {
@@ -917,21 +976,5 @@ export class CommonPTreeTableComponent {
       data: data
     }
     this.rowCellDoubleClicked.emit(datas);
-  }
-
-
-  onHeaderCheckboxChange(e?: any) {
-    this.headerCheckboxData = e.target.checked;
-    if (this.headerCheckboxData) {
-      this.loadNodes();
-    }
-    if (this.files.length > 0 && this.headerCheckboxData) {
-      this.selectedRecords = this.files;
-    }
-    if (!this.headerCheckboxData) {
-      this.selectedRecords = [];
-    }
-
-    this.selectChildCheckbox();
   }
 }

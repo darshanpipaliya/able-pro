@@ -13,6 +13,8 @@ import { LocationContactDataTableComponent } from './location-contact-data-table
 import { HeaderSectionComponent } from '../common/header-section/header-section.component';
 import { LocationInventoryDataTableComponent } from '../common/location-inventory-data-table/location-inventory-data-table.component';
 import { api_list } from '../services/api-list';
+import { AddBillingLComponent } from './add-billing-l/add-billing-l.component';
+import { ChangeLogComponent } from '../common/change-log/change-log.component';
 @Component({
   selector: 'app-location',
 
@@ -26,12 +28,14 @@ import { api_list } from '../services/api-list';
     LocationContactDataTableComponent,
     HeaderSectionComponent,
     LocationInventoryDataTableComponent,
+    AddNotesLocationComponent,
+    AddBillingLComponent,
+    ChangeLogComponent
   ],
   encapsulation: ViewEncapsulation.None,
 })
 export class LocationComponent {
 
-  selected: any = 0;
   temRoles = false;
   disableTemSearchDD: any;
   disableTemSearch: any;
@@ -41,9 +45,8 @@ export class LocationComponent {
   isOpenWirelineTab: boolean = false;
   isOpenCCSTab: boolean = false;
   selectedTem: string = 'all';
-  selectedWiseTemDD: any = [];
+  TemDDArray: any = [];
   clickOnSearchButton = false;
-  selectedTemDD: string = 'all';
   isDisabledExport = false;
   exportData: any;
   addLocationArray: any = [];
@@ -66,13 +69,11 @@ export class LocationComponent {
   @ViewChild(PTreeLocationComponent) PTreeLocationComponent!: PTreeLocationComponent;
   @ViewChild(AddNotesLocationComponent) addNotesLocationComponent!: AddNotesLocationComponent;
   private readonly getTEMAPIDestroy = new Subject<void>();
-  private readonly _unsubscribeCustomer = new Subject<void>();
   private readonly _unsubscribeGetLocationTerm = new Subject<void>();
   customers: any = [];
   locationTerm: any = [];
   companies: any = [];
   columns: { field: string; header: string; }[];
-  isLocationNotes: boolean = false;
   showHeaderButton: boolean = false;
   showHeaderButtonInventory: boolean = false;
   inventoryData: any;
@@ -86,21 +87,23 @@ export class LocationComponent {
   GridAPI: any = api_list.Location.Location.Grid;
   loaderParent: any = false;
   constructor(private router: Router, private locationService: LocationService) { }
+  tabNames = ['Location', 'People', 'Inventory', 'Notes', 'Billing', 'ChangeLog'];
+  currentTabName = this.tabNames[this.currentIndex];
+
 
   ngOnInit(): void {
+    this.TemDDArray[this.currentIndex] = { id: 'all', type: this.currentOpenEditPagevar };
     this.viewNEdit = rolePermission(['SuperTEMAdmin', 'SuperTEMManager', 'SuperTEMUser', 'SuperTEM', 'TEMAdmin', 'TEMUser', 'TEMManager']);
     this.temRoles = rolePermission(['TEMAdmin', 'TEMUser', 'TEMManager']);
     this.CompanyRoles = rolePermission(['CompanyAdmin', 'CustomerAdmin']);
     this.hasSsuperTemUsers = rolePermission(['SuperTEMAdmin', 'SuperTEMManager', 'SuperTEMUser']);
 
-    this.getCustomerForUser();
     this.getLocationTerms();
     this.getTemLists();
     this.getCompanies();
     this.setChangeLogColumns();
 
   }
-
 
   stopSpinnerEmit(e: any) {
     this.stopSpinnerInv = e;
@@ -144,21 +147,20 @@ export class LocationComponent {
 
   removeTab(index: number) {
     this.isOpenWirelineTab = false;
-    const aa = this.selectedWiseTemDD;
+    const aa = this.TemDDArray;
     const find = aa.findIndex((a: any) => a.type === 'Add');
     const a = aa.splice(find);
     aa.splice(index, 1);
-    this.selectedWiseTemDD = [...this.selectedWiseTemDD, ...a];
+    this.TemDDArray = [...this.TemDDArray, ...a];
 
     this.listOfLocations.splice(index, 1);
     this.contactDatas.splice(index, 1);
     this.listOfLocations = _.cloneDeep(this.listOfLocations);
 
-    this.selectedWiseTemDD.splice(index, 1);
-    this.selectedWiseTemDD = _.cloneDeep(this.selectedWiseTemDD);
+    this.TemDDArray.splice(index, 1);
+    this.TemDDArray = _.cloneDeep(this.TemDDArray);
 
     if (this.listOfLocations.length == 0) {
-      this.selected = 0;
       this.currentIndex = 0;
     }
 
@@ -193,9 +195,7 @@ export class LocationComponent {
   }
   redirectTabCCS() {
     this.isOpenCCSTab = true;
-    // setTimeout(() => {
     this.selectedSubTab = this.isOpenWirelineTab ? 7 : 6;
-    // }, 400);
   }
 
   peopleEmit($event: any) {
@@ -203,14 +203,6 @@ export class LocationComponent {
   }
   InventoryEmit($event: any) {
     this.showHeaderButtonInventory = $event;
-  }
-
-  onAddNotesEmit($event: any) {
-    if ($event == true) {
-      this.isLocationNotes = true;
-    } else {
-      this.isLocationNotes = false;
-    }
   }
 
   setLocationNotes(type: any) {
@@ -253,28 +245,6 @@ export class LocationComponent {
       }
     });
   }
-  getCustomerForUser() {
-    this.customers = []
-    if (this.selectedTem == 'all') {
-      this._unsubscribeCustomer.next();
-      this.locationService.getCustomerDropDown().pipe(takeUntil(this._unsubscribeCustomer)).subscribe((data) => {
-        if (data && data.$values) {
-          this.customers = data.$values;
-        } else {
-          this.customers = [];
-        }
-      });
-    } else {
-      this._unsubscribeCustomer.next();
-      this.locationService.getCustomerDropdownByNewTEM(this.selectedTem).pipe(takeUntil(this._unsubscribeCustomer)).subscribe((data) => {
-        if (data && data.Data.$values) {
-          this.customers = data.Data.$values;
-        } else {
-          this.customers = [];
-        }
-      });
-    }
-  }
 
   getTemLists() {
     this.getTEMAPIDestroy.next();
@@ -305,7 +275,7 @@ export class LocationComponent {
 
   onButtonClick(value: string): void {
     this.selectedButton = value;
-    this.selected = 0;
+    this.currentIndex = 0;
     setTimeout(() => this.goToPage(value), 0);
   }
 
@@ -326,29 +296,33 @@ export class LocationComponent {
     }
   }
 
+  changeTabSub(event: any) {
+    this.currentTabName = this.tabNames[event];
+  }
   changeTab(event: any) {
     this.currentIndex = event;
-    this.selected = event;
     this.selectedSubTab = 0;
+    this.currentTabName = this.tabNames[event];
     this.isOpenWirelineTab = false;
     this.isOpenCCSTab = false;
     if (this.currentIndex === 0) {
-      if (this.selectedTem !== 'all') {
+      if (this.TemDDArray[this.currentIndex]?.id !== 'all') {
         this.selectedTem = 'all';
-        this.selectedWiseTemDD[this.currentIndex] = { id: this.selectedTem, type: this.currentOpenEditPagevar };
       }
       this.disableTemSearch = false;
       this.disableTemSearchDD = false;
+    } else {
+      this.selectedTem = this.TemDDArray[this.currentIndex]?.id;
     }
     this.currentOpenEditPagevar = (event === 0) ? 'Table' : this.currentOpenEditPagevar;
   }
 
 
-  filterGridByTEMId(selectedTem: any) {
-    this.selectedWiseTemDD[this.selected] = { id: Number(selectedTem), type: this.currentOpenEditPagevar };
+  filterGridByTEMId(e: any) {
+    this.TemDDArray[this.currentIndex] = { id: Number(e), type: this.currentOpenEditPagevar };
     if (this.currentOpenEditPagevar === 'Table') {
-      if (selectedTem !== 'all') {
-        this.PTreeLocationComponent['payload']['TemAccountId'] = selectedTem;
+      if (e !== 'all') {
+        this.PTreeLocationComponent['payload']['TemAccountId'] = e;
       } else {
         this.PTreeLocationComponent['payload'] = {};
       }
@@ -382,24 +356,24 @@ export class LocationComponent {
   }
 
   removeLocation(index: number) {
-    const aa = this.selectedWiseTemDD;
+    const aa = this.TemDDArray;
     const find = aa.findIndex((a: any) => a.type === 'Add');
     const a = aa.splice(find);
     a.splice(index, 1);
-    this.selectedWiseTemDD = [...this.selectedWiseTemDD, ...a];
+    this.TemDDArray = [...this.TemDDArray, ...a];
 
     this.addLocationArray.splice(index, 1);
     this.addLocationArray = _.cloneDeep(this.addLocationArray);
 
-    this.selectedWiseTemDD.splice(index, 1);
-    this.selectedWiseTemDD = _.cloneDeep(this.selectedWiseTemDD);
+    this.TemDDArray.splice(index, 1);
+    this.TemDDArray = _.cloneDeep(this.TemDDArray);
     if (this.addLocationArray.length == 0) {
-      this.selected = 0;
       this.currentIndex = 0;
     }
   }
 
   add() {
+    
     this.addLocationArray.push({ name: 'New', AddlocationData: '' });
     this.setSelectedTab('addLocation');
   }
@@ -408,33 +382,30 @@ export class LocationComponent {
 
     setTimeout(() => {
       if (from === 'editLocation') {
-        this.selected = this.listOfLocations.length;
+        this.currentIndex = this.listOfLocations.length;
         this.currentOpenEditPagevar = 'Edit';
       } else if (from === 'addLocation') {
         this.currentOpenEditPagevar = 'Add';
-        this.selected = this.listOfLocations.length + this.addLocationArray.length;
-        this.selectedWiseTemDD.unshift({ id: '', type: this.currentOpenEditPagevar });
-        this.selectedWiseTemDD[this.selected] = { id: this.selectedTem, type: this.currentOpenEditPagevar };
+        this.currentIndex = this.listOfLocations.length + this.addLocationArray.length;
       } else if (from === 'editContact') {
-        this.selected =
+        this.currentIndex =
           this.listOfLocations.length +
           this.addLocationArray.length +
           this.editContactArray.length;
       } else if (from === 'addContact') {
-        this.selected =
+        this.currentIndex =
           this.listOfLocations.length +
           this.addLocationArray.length +
           this.editContactArray.length +
           this.addContactArray.length;
       } else if (from === 'addInventory') {
-        this.selected =
+        this.currentIndex =
           this.listOfLocations.length +
           this.addLocationArray.length +
           this.editContactArray.length +
           this.addContactArray.length +
           this.addInventoryArray.length;
       }
-      this.currentIndex = this.selected;
     }, 500);
   }
 
@@ -453,28 +424,24 @@ export class LocationComponent {
     this.setSelectedTab('editLocation');
   }
 
-  setTemDDValueEvent(data: any, i: any) {
-    this.selected = this.currentIndex;
-    if (this.currentIndex > 0 && data != '') {
+  setTemDDValueEvent(data: any) {
+
+    if (!data && this.currentOpenEditPagevar === 'Add') {
+      this.TemDDArray[this.currentIndex] = { id: 'all', type: this.currentOpenEditPagevar };
+    } else if (this.currentIndex > 0 && data != '') {
       this.selectedTem = data;
       if (this.currentOpenEditPagevar !== 'Add') {
-        this.selectedWiseTemDD[this.currentIndex] = { id: data, type: this.currentOpenEditPagevar };
+        this.TemDDArray[this.currentIndex] = { id: data, type: this.currentOpenEditPagevar };
       }
     } else if (data == '' && this.currentIndex <= 0) {
-      this.selectedWiseTemDD[this.currentIndex] = { id: '', type: this.currentOpenEditPagevar };
+      this.TemDDArray[this.currentIndex] = { id: '', type: this.currentOpenEditPagevar };
     }
-
-    if (this.currentOpenEditPagevar === 'Add' && this.selectedWiseTemDD.length > 0) {
-      if (this.currentIndex === this.selected) {
-        this.selectedTem = this.selectedWiseTemDD[this.selected]?.id;
-      }
-    }
+    this.selectedTem = this.TemDDArray[this.currentIndex]?.id;
   }
 
-  onTemChange() {
-    this.selectedWiseTemDD[this.currentIndex] = { id: Number(this.selectedTem) };
+  onTemChange(event: any) {
+    this.TemDDArray[this.currentIndex] = { id: Number(event), type: this.currentOpenEditPagevar };
   }
-  
   
   loaderEmitParentFn(event: any) {
     this.loaderParent = event;

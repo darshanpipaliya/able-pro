@@ -11,12 +11,14 @@ import { ErrorWarningPopupComponent } from 'src/app/common/error-warning-popup/e
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { SpaceTrimStartEndInputirective } from 'src/app/custom-directives/custom-validation.directive';
+import { DatePipe } from '@angular/common';
+import { CustomPipe } from 'src/app/custom-pipe/date.pipe';
 
 @Component({
   selector: 'app-add-location-notes-dialog',
   templateUrl: './add-location-notes-dialog.component.html',
   styleUrls: ['./add-location-notes-dialog.component.scss'],
-  providers: [LocationService],
+  providers: [LocationService,  ManageService,DatePipe,CustomPipe],
   imports: [
     SharedModule,
     PrimgModule,

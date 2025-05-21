@@ -3,17 +3,17 @@
         <mat-card>
             <mat-card-content>
 
-                <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton"
-                    [temRoles]="temRoles" [selectedTem]="selectedTem" [disableTemSearchDD]="disableTemSearchDD"
+                <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton" [TemDDArray]="TemDDArray"
+                    [currentIndex]="currentIndex" [temRoles]="temRoles" [selectedTem]="selectedTem" [disableTemSearchDD]="disableTemSearchDD"
                     [tems]="tems" [disableTemSearch]="disableTemSearch" [loaderParent]="loaderParent"
                     [currentOpenEditPagevar]="currentOpenEditPagevar" [isDisabledExport]="isDisabledExport"
                     [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit" [trackByIndex]="trackByIndex"
-                    (buttonClick)="onButtonClick($event)" (temChange)="onTemChange()" [CompanyRoles]="CompanyRoles"
+                    (buttonClick)="onButtonClick($event)" (temChange)="onTemChange($event)" [CompanyRoles]="CompanyRoles"
                     (filterGridByTEMId)="filterGridByTEMId($event)" (exportDataAsExcel)="onBtnExportDataAsExcel()"
-                    (add)="add()"></app-header-section>
+                    (setLocationNotes)="setLocationNotes($event)" (add)="add()" [currentTabName]="currentTabName"></app-header-section>
 
                 <div class="table-responsive">
-                    <mat-tab-group preserveContent [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)">
+                    <mat-tab-group preserveContent [selectedIndex]="currentIndex" (selectedIndexChange)="changeTab($event)">
 
                         <ng-container>
                             <mat-tab>
@@ -45,7 +45,7 @@
                                 </ng-template>
 
                                 <ng-template matTabContent>
-                                    <mat-tab-group preserveContent [(selectedIndex)]="selectedSubTab">
+                                    <mat-tab-group preserveContent [(selectedIndex)]="selectedSubTab" (selectedIndexChange)="changeTabSub($event)">
                                         <ng-container>
                                             <mat-tab>
                                                 <ng-template mat-tab-label>
@@ -65,7 +65,7 @@
                                                             <app-add-edit-location-new [rowData]="location"
                                                                 [action]="'Edit'"
                                                                 (currentOpenEditPage)="currentOpenEditPage($event)"
-                                                                [selectedTem]="selectedTem" [update]="true"
+                                                                [update]="true"
                                                                 (diabledEmit)="diabledEmit($event)"
                                                                 (contactDataEmit)="contactDataEmit($event, i)"
                                                                 (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
@@ -83,7 +83,7 @@
                                                     </b>
                                                 </ng-template>
                                                 <ng-template matTabContent>
-                                                    <div class="col-sm-12">
+                                                    <div class="col-sm-12 ">
                                                         <app-location-contact-data-table [location]="location"
                                                             [contactDataEmit]="contactDatas[i]"
                                                             (peopleEmit)="peopleEmit($event)">
@@ -123,7 +123,8 @@
                                                 <ng-template matTabContent>
                                                     <div class="col-sm-12 px-0">
                                                         <app-add-notes-location [locationaData]="location"
-                                                            (onAddNotesEmit)="onAddNotesEmit($event)"></app-add-notes-location>
+                                                        (loaderEmitParent)="loaderEmitParentFn($event)"
+                                                            ></app-add-notes-location>
                                                     </div>
                                                 </ng-template>
                                             </mat-tab>
@@ -153,7 +154,7 @@
                                                 <ng-template matTabContent>
                                                     <div class="col-sm-12 px-0">
                                                         <app-change-log [column]="columns" [locationId]="location.Id"
-                                                            [title]="'Location'"></app-change-log>
+                                                            [title]="'Location'" [height]="'400px'"></app-change-log>
                                                     </div>
                                                 </ng-template>
                                             </mat-tab>
@@ -212,12 +213,12 @@
                                             <span class="text-c-red">*Required field</span>
                                         </div>
                                         <div class="col-lg-12 col-xl-12 px-0 ">
-                                            <app-add-edit-location-new [update]="false" [selectedTem]="selectedTem"
+                                            <app-add-edit-location-new [update]="false"
                                                 (setClickFalse)="setClickFalse($event, i)"
                                                 [addData]="location.AddlocationData" [action]="'Add'"
-                                                [clickOnSearchButton]="clickOnSearchButton" [selected]="currentIndex"
+                                                [clickOnSearchButton]="clickOnSearchButton" [currentIndex]="currentIndex"
                                                 (currentOpenEditPage)="currentOpenEditPage($event)"
-                                                [selectedWiseTemDD]="selectedWiseTemDD"
+                                                [TemDDArray]="TemDDArray"
                                                 (onLocationComponetDestroy)="onAddLocationComponetDestroy($event,i)"
                                                 (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
                                                 (onLocationAddEvent)="onLocationAddEvent($event, i)">

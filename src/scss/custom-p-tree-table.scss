@@ -666,3 +666,11 @@ p-treetable {
 ::ng-deep .p-treetable .p-treetable-tbody > tr {
   border-bottom: 1px solid #f2f2f2;
 }
+
+::ng-deep .p-treetable .p-treetable-tbody > tr > td p-treetablecheckbox .p-checkbox {
+  height: 15px !important;
+  width: 15px !important;
+}
+::ng-deep .p-treetable .p-treetable-thead > tr.p-treetable-thead-child > th.child-header input {
+  margin-left: 5px !important;
+}

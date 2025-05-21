@@ -14,7 +14,9 @@ export const api_list = {
     "Location" : {
         "Location" : {
             "Grid" : baseUrl + 'companylocations/LoggedInUserData',
-            "getLocationPeople" : baseUrl + 'companylocations/{id}/Peoples'
+            "getLocationPeople" : baseUrl + 'companylocations/{id}/Peoples',
+            "peoplesLoggedInUserData" : baseUrl + 'peoples/LoggedInUserData',
+            "locationNotesLocation" : baseUrl + 'locationnotes/Location',
         }
     },
     "Inventory": {

@@ -10,6 +10,9 @@ import { WirelineService } from 'src/app/services/wireline.service';
 import { isValueExist, isValuesUndefined, rolePermission } from 'src/app/services/helper';
 import { onChangeEndDate } from 'src/app/services/common-p-table';
 import { LinkInventoryTableComponent } from '../link-inventory-table/link-inventory-table.component';
+import { CommonPTreeTableComponent } from '../common-p-tree-table/common-p-tree-table.component';
+import { api_list } from 'src/app/services/api-list';
+import { LocationService } from 'src/app/services/location.service';
 
 interface arrDate {
   filterKey: any;
@@ -28,7 +31,12 @@ interface arrDate {
   styleUrls: ['./location-inventory-data-table.component.scss'],
   imports: [
     SharedModule,
-    PrimgModule
+    PrimgModule,
+    CommonPTreeTableComponent
+  ],
+  providers: [
+    WirelineService,
+    LocationService
   ]
 })
 export class LocationInventoryDataTableComponent implements OnInit {
@@ -150,19 +158,47 @@ export class LocationInventoryDataTableComponent implements OnInit {
   isApiAlerdayCall: boolean = false;
   isDisableExportBtn: boolean = false;
 
-  @HostListener('document:click', ['$event']) onClick(event: Event) {
-    const clickedInsideMenu = this.contextMenu.el.nativeElement.contains(event.target);
-    if (!clickedInsideMenu) {
-      this.contextMenu.hide();
-    }
-  }
 
   /* p-table end */
+
+  refreshbutton: boolean = false;
+  @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
+
+  @Output() tableDataExist: EventEmitter<any> = new EventEmitter();
+  @Output() exportAccountData: EventEmitter<any> = new EventEmitter();
+  @Output() selectedRowsEmit: EventEmitter<any> = new EventEmitter();
+  @Output() rowCellDoubleClicked: EventEmitter<any> = new EventEmitter();
+  @Output() loaderEmitParent: EventEmitter<any> = new EventEmitter();
+  loader: boolean = false;
+  payload: any = {};
+  GridAPI: any = api_list.Inventory.GridData;
+  exportData: any = {};
+  preAppliedfilterArr = [
+    {
+      "filterKey": "InventoryLocationAtt",
+      "filterOptionType1": "Equal",
+      "filterOptionValue1": "Yes",
+      "filterOperationType": "AND",
+      "filterOptionType2": null,
+      "filterOptionValue2": null
+    },
+    {
+      "filterKey": "InventoryStatusDisplayText",
+      "filterOptionType1": "equals",
+      "filterOptionValue1": "Pending Activation",
+      "filterOperationType": "OR",
+      "filterOptionType2": "equals",
+      "filterOptionValue2": "Active"
+    }
+  ];
   constructor(public wirelineService: WirelineService,
+    public locationService: LocationService,
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
-
+    this.payload = {
+      CompanyLocationId: this.contactDataEmit.Id ? this.contactDataEmit.Id : null,
+    };
     this.setCols();
     this.items = [
       {
@@ -246,12 +282,14 @@ export class LocationInventoryDataTableComponent implements OnInit {
     }
   }
   
-  onBtnExportDataAsExcelInventory() {
+  onBtnExportDataAsExcel() {
     this.isDisableExportBtn = true;
-    this.wirelineService
-      .getInventoryDataExport(this.exportAccounts)
+    this.CommonPTreeTableComponent.setColumnDefs();
+
+    this.locationService
+      .callPTreeTabAPIExport(this.GridAPI,this.exportData,'POST')
       .subscribe({
-        next: data => {
+        next: (data: any) => {
           this.isDisableExportBtn = false;
           let bolbUrl = URL.createObjectURL(data);
           var link = document.createElement("a");
@@ -262,7 +300,7 @@ export class LocationInventoryDataTableComponent implements OnInit {
           link.click();
           document.body.removeChild(link);
         },
-        error: error => {
+        error: (error: any) => {
           this.isDisableExportBtn = false;
         }
       });
@@ -281,18 +319,6 @@ export class LocationInventoryDataTableComponent implements OnInit {
         this.loadNodes(this.pTableContain, true);
       }
     })
-  }
-
-
-  /* p-table start */
-  ngAfterViewInit() {
-    const scrollableBody = this.treeTable.el.nativeElement.querySelector(
-      '.p-treetable-scrollable-body'
-    );
-
-    if (scrollableBody) {
-      scrollableBody.addEventListener('scroll', this.onScroll.bind(this));
-    }
   }
 
   setCols() {
@@ -316,19 +342,22 @@ export class LocationInventoryDataTableComponent implements OnInit {
     });
 
     this.cols = [
-      createColumn(1, '250px', true, 'text', '','ServiceNumber', 'Service Number'),
 
-      createColumn(2, '161px', true, 'text', 'Organization', 'CustomerAccountName', 'Customer'),
-      createColumn(2, '170px', false, 'text', '', 'CompanyName', 'Company', 'open'),
+      createColumn(1, '60px', true, 'checkbox', '','checkbox', ''),
 
-      createColumn(3, '150px', true, 'text', 'Vendor', 'VendorAccountName', 'Vendor'),
+      createColumn(2, '180px', true, 'text', '','ServiceNumber', 'Service Number'),
+
+      createColumn(3, '161px', true, 'text', 'Organization', 'CustomerAccountName', 'Customer'),
+      createColumn(3, '170px', false, 'text', '', 'CompanyName', 'Company', 'open'),
+
+      createColumn(4, '150px', true, 'text', 'Vendor', 'VendorAccountName', 'Vendor'),
       
-      createColumn(4, '200px', true, 'text', 'Product', 'VendorProductTypeName', 'Vendor Product'),
+      createColumn(5, '200px', true, 'text', 'Product', 'VendorProductTypeName', 'Vendor Product'),
 
-      createColumn(5, '161px', true, 'text', 'Status', 'InventoryStatusDisplayText', 'Status'),
-      createColumn(5, '170px', false, 'text', '', 'BillingChargeDisplayText', 'Billing?', 'open'),
+      createColumn(6, '161px', true, 'text', 'Status', 'InventoryStatusDisplayText', 'Status'),
+      createColumn(6, '170px', false, 'text', '', 'BillingChargeDisplayText', 'Billing?', 'open'),
 
-      createColumn(6, '170px', true, 'text', 'Location', 'LocationDisplay', 'Location'),
+      createColumn(7, '170px', true, 'text', 'Location', 'LocationDisplay', 'Location'),
     ];
 
     this.cols.forEach((col) => {
@@ -464,7 +493,6 @@ export class LocationInventoryDataTableComponent implements OnInit {
       ...(this.sorting ? { OrderBy: this.sorting, SortOrder: this.sortingType } : {}),
     };
 
-    // data['CompanyLocationId'] = this.contactDataEmit.Id;
 
     this.finalAllDetailArr = data;
     this._unsubscribeInventory.next(null);
@@ -1037,4 +1065,35 @@ export class LocationInventoryDataTableComponent implements OnInit {
   }
 
   /* p-table end */
+  refreshbuttonEmitFn(event: any) {
+    this.refreshbutton = event;
+  }
+
+  onNodeSelect(event: any) {
+    this.selectedNode = event.node;
+  }
+
+  tableDataExistFn(event: any) {
+    this.tableDataExist.emit(event)
+  }
+
+  exportAccountDataFn(event: any) {
+    this.exportData = event;
+    this.exportAccountData.emit(event)
+  }
+
+  selectedRowsEmitFn(event: any) {
+    this.selectedRowsEmit.emit(event)
+  }
+
+  rowCellDoubleClickedFn(event: any) {
+    this.rowCellDoubleClicked.emit(event)
+  }
+  totalRecordsEmitFn(event: any) {
+    this.totalRecords = event;
+  }
+  loaderEmitFn(event: any) {
+    this.loader = event;
+    this.loaderEmitParent.emit(event);
+  }
 }

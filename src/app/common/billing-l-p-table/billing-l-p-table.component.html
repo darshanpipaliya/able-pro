@@ -1,0 +1,30 @@
+<mat-accordion>
+    <mat-expansion-panel class="custom-panel border" [expanded]="true" [hideToggle]="true" [disabled]="true">
+        <mat-expansion-panel-header class="custom-header">
+            <div class="header-content">
+                <div title="Export"
+                    class="d-flex align-items-center justify-content-center rounded-circle border border-success text-success circle-icon"
+                    [ngClass]="{'disabled': loader || isDisabledExport || totalRecords === 0}"
+                    (click)="onBtnExportDataAsExcel()">
+                    <i
+                        class="text-success {{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-solid fas fa-file-excel'}}"></i>
+                </div>
+                <span class="">
+                    <svg [ngClass]="{'disabled': loader}" class="pc-icon text-primary circle-icon"
+                        (click)="refreshbuttonEmitFn(true)">
+                        <use xlink:href="assets/fonts/custom-icon.svg#refreshCircle"></use>
+                    </svg>
+                </span>
+                <mat-panel-title class="panel-title">
+                    <i class="fas fa-file-invoice-dollar text-primary"></i> &nbsp;
+                    <span class="fs-14 fw-bold text-dark">Invoice Summary</span>
+                </mat-panel-title>
+            </div>
+        </mat-expansion-panel-header>
+        <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI" [childPayload]="childPayload"
+            (tableDataExist)="tableDataExistFn($event)" [cols]="cols" (exportAccountData)="exportAccountDataFn($event)"
+            (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
+            (refreshbuttonEmit)="refreshbuttonEmitFn($event)" (totalRecordsEmit)="totalRecordsEmitFn($event)"
+            (loaderEmit)="loaderEmitFn($event)" />
+    </mat-expansion-panel>
+</mat-accordion>

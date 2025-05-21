@@ -40,11 +40,10 @@ export class AddEditLocationNewComponent implements OnInit {
   @Input() rowData: any;
   @Input() addData: any;
   @Input() update: any;
-  @Input() selectedTem: any;
   @Input() action: any;
   @Input() clickOnSearchButton: any;
-  @Input() selectedWiseTemDD: any;
-  @Input() selected: any;
+  @Input() TemDDArray: any;
+  @Input() currentIndex: any;
 
   states: any = [];
   countries: any = [];
@@ -349,7 +348,7 @@ export class AddEditLocationNewComponent implements OnInit {
   }
 
   getCustomers(id = '') {
-    const idd = id ? Number(id) : this.action === 'Add' ? this.selectedWiseTemDD[this.selected]?.id : id;
+    const idd = id ? Number(id) : this.action === 'Add' ? this.TemDDArray[this.currentIndex]?.id : id;
 
     this.customers = [];
     if (idd && idd !== 'all') {
@@ -377,7 +376,7 @@ export class AddEditLocationNewComponent implements OnInit {
         if (data) {
           this.customersLoader = false;
           this.customers = data.$values;
-          this.setTemDDValueEvent.emit((this.action === 'Add' && this.selectedWiseTemDD[this.selected]?.id === 'all') ? 'all' : idd);
+          this.setTemDDValueEvent.emit((this.action === 'Add' && this.TemDDArray[this.currentIndex]?.id === 'all') ? 'all' : idd);
 
           if (this.rowData) {
             const id = this.rowData.AccountId ? this.rowData.AccountId : this.rowData.Company.AccountId;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { SharedModule } from '../../demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 
@@ -24,6 +24,9 @@ export class HeaderSectionComponent {
   @Input() viewNEdit: boolean = false;
   @Input() CompanyRoles: boolean = false;
   @Input() loaderParent: boolean = false;
+  @Input() currentTabName: string = '';
+  @Input() TemDDArray: any[] = [];
+  @Input() currentIndex: number = 0;
   @Input() trackByIndex: (index: number, item: any) => any = (index: number, item: any) => index;
 
   @Output() buttonClick = new EventEmitter<string>();
@@ -31,8 +34,15 @@ export class HeaderSectionComponent {
   @Output() filterGridByTEMId = new EventEmitter<string>();
   @Output() exportDataAsExcel = new EventEmitter<void>();
   @Output() add = new EventEmitter<void>();
+  @Output() setLocationNotes = new EventEmitter<string>();
 
   ngOnInit(): void {
+    if (this.TemDDArray[this.currentIndex]?.id === 'all') {
+      this.selectedTem = 'all';
+    }
     // Initialization logic if needed
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
   }
 }

@@ -124,7 +124,7 @@ export class PTreeLocationComponent implements OnInit {
     const getParentId = (isChild: boolean) => isChild ? ++currentParent : currentParent;
 
     this.cols = [
-      createColumn(getParentId(true), '60px', true, 'checkbox', 'checkbox', 'checkbox', 'checkbox', 'close'),
+      // createColumn(getParentId(true), '60px', true, 'checkbox', 'checkbox', 'checkbox', 'checkbox', 'close'),
 
       createColumn(getParentId(true), '190px', true, 'text', 'Location', 'LocationName', 'Location Name', 'close'),
       createColumn(currentParent, '190px', false, 'text', '', 'Id', 'Location ID', 'close'),

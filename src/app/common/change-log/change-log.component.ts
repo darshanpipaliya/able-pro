@@ -21,7 +21,6 @@ export class ChangeLogComponent implements OnInit {
   @Input() title: string = '';
   @Input() column: any = [];
   @Input() changelogData: any = [];
-  @Input() height: any[] = [];
   @Input() vpInventoryID: any;
   @Input() customerID: any;
   @Input() companyID: any;
@@ -39,7 +38,7 @@ export class ChangeLogComponent implements OnInit {
   loadingDataFromApi = false;
   @Input() recordChild: boolean;
   @Input() isShowAction: boolean;
-
+  @Input() height: any = '250px';
 
   @Output() setCustomerDDValueEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() setTemDDValueEvent: EventEmitter<any> = new EventEmitter<any>();

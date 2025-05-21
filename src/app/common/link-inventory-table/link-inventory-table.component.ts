@@ -16,7 +16,8 @@ import { PrimgModule } from 'src/app/demo/shared/primeng.module';
   imports: [
     SharedModule,
     PrimgModule
-  ]
+  ],
+  providers: [WirelineService]
 })
 export class LinkInventoryTableComponent implements OnInit {
   selectedIds:any = [];
