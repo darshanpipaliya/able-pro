@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, forwardRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SharedModule } from '../demo/shared/shared.module';
 import { PrimgModule } from '../demo/shared/primeng.module';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { api_list } from '../services/api-list';
 import { AddBillingLComponent } from './add-billing-l/add-billing-l.component';
 import { ChangeLogComponent } from '../common/change-log/change-log.component';
 import { CommonCcsLocationComponent } from './common-ccs-location/common-ccs-location.component';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-location',
 
@@ -35,6 +36,13 @@ import { CommonCcsLocationComponent } from './common-ccs-location/common-ccs-loc
     CommonCcsLocationComponent
   ],
   encapsulation: ViewEncapsulation.None,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => LocationComponent),
+      multi: true
+    }
+  ]
 })
 export class LocationComponent {
 

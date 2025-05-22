@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content>
+
+                <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton" [tems]="tems"
+                    (filterGridByTEMId)="filterGridByTEMId($event)"
+                    (buttonClick)="onButtonClick($event)"></app-header-section>
+
+                <div class="table-responsive">
+                    <div class="row" [ngClass]="showDropdown ? 'disabled' : ''">
+                        <ng-container>
+                            <div class="col-md-3 padding-left-none">
+                                <div class="form-group">
+                                    <label class="form-label">Customer</label>
+                                    <span><p-dropdown [(ngModel)]="accountId" [options]="customers"
+                                            placeholder="Select Customer..." (onChange)="onCustomerSelect()"
+                                            appendTo="body" optionValue="Id" optionLabel="AccountName" [filter]="true"
+                                            filterBy="AccountName" [showClear]="false">
+                                        </p-dropdown></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-right-none">
+                                <div class="form-group">
+                                    <label class="form-label">Company</label>
+                                    <span><p-dropdown [(ngModel)]="companyId" [options]="companies"
+                                            placeholder="Select Company..." (onChange)="onCompanySelect()"
+                                            appendTo="body" optionValue="CompanyID" optionLabel="CompanyName"
+                                            [filter]="true" filterBy="CompanyName" [showClear]="false">
+                                        </p-dropdown></span>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <google-map height="500px" width="100%" [center]="mapCenter" [zoom]="zoom"
+                        (mapReady)="onMapReady($event)">
+                        <map-marker *ngFor="let map of mapsForUser" #markerElem="mapMarker"
+                            [position]="{ lat: map.Latitude, lng: map.Longitude }" [title]="map.CompanyName"
+                            (mapClick)="openInfo(markerElem, map)"></map-marker>
+
+                        <map-info-window #infoWindow>
+                            <div class="info-window-content">
+                                <h3>{{ selectedMap?.CompanyName }}</h3>
+                                <p>
+                                    {{ selectedMap?.LocationName }}<br />
+                                    {{ selectedMap?.Address1 }}<span *ngIf="selectedMap?.Address2">,
+                                        {{ selectedMap?.Address2 }}</span><br />
+                                    {{ selectedMap?.City }},{{ selectedMap?.StateName }},{{ selectedMap?.PostalCode
+                                    }},{{ selectedMap?.CountryName }}
+                                </p>
+                                <p>
+                                    <strong>Active/Pending Inventory: {{
+                                        selectedMap?.ActivePendingActivationAllInventoryCount }}</strong>
+                                </p>
+                                <a href="#" (click)="editLocation($event, selectedMap?.CompanyLocationId)">Edit
+                                    Location</a>
+                            </div>
+                        </map-info-window>
+                    </google-map>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
