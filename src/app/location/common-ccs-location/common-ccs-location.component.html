@@ -1,0 +1,83 @@
+<div class="cost-center-structure-accordian mt-2">
+    <mat-accordion class="example-headers-align accordion-header-tooltip">
+        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+            <mat-expansion-panel-header class="math">
+                <mat-panel-title class="matt">
+                    <svg class="pc-icon">
+                        <use xlink:href="assets/fonts/custome-icon-able.svg#custom-ccs">
+                        </use>
+                    </svg>&nbsp;Cost Center Structures
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="toggle-btn" *ngIf="isSuperTem">
+                <mat-slide-toggle (change)="toggle()" ngDefaultControl [(ngModel)]="isFilterData">
+                    {{isFilterData ? 'All Records' : 'My Records'}}</mat-slide-toggle>
+            </div>
+            <i class="fas fa-info-circle" (click)="openDialog4()" tooltipClass="tooltip-bg"></i>
+            <ng-template #PeopleAssignment>
+                <div class="mat-dialog-header">
+                    <button type="button" class="close" mat-dialog-close>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="text-left dialog-data">
+                    <p class="mb-2">The Cost Center Structure defines how Charges related to the Service and Service
+                        Type of Vendor Products are assigned to Cost Centers. The Structure assigns the amount of the
+                        charge as a percentage, which can be allocated at 100% of amount multiple Cost Centers with the
+                        total adding up to 100%. All charges within a Vendor Product must be allocated at 100% in order
+                        for the cost iconallocation to be complete.</p>
+                    <p class="mb-1">Cost Center Structure uses Assignment Type to determine where the rules are applied
+                        in the sequence listed below. Multiple rules can be run on a single Service or Service Type;
+                        however, the system cannot process rules if the allocation is over 100%.</p>
+
+
+                    <ul class="mb-0">
+                        <li><strong>Company</strong> - Charges from Vendor Products on a Service Number are assigned the
+                            Companies cost allocation rules for the Service and/or Service Type. These rules are applied
+                            uniformly across all service and/or service types for the Company, resulting in a
+                            straightforward cost center structure for the company. This is a simplified cost center
+                            structure. Example: All Vendor Products with a Service that is equal to: Data will be
+                            applied to cost center 45632 and 89956.
+                        </li>
+                        <li><strong>People</strong> - Some charges from Vendor Products on a Service Number are
+                            allocated to People based on predetermined cost allocation rules for the Service and/or
+                            Service Type. These rules may complement other cost allocation directives that allocate
+                            certain costs to Locations or even to specific Vendor Products. Example: All Vendor Products
+                            with a Service that is equal to: Mobility will be applied to the Primary User assigned to
+                            that Vendor Product.</li>
+                        <li><strong>Location</strong> - Some charges from Vendor Products on a Service Number are
+                            allocated to a specific Location based on predetermined cost allocation rules for the
+                            Service and/or Service Type. These rules may complement other cost allocation directives
+                            that allocate certain costs to People or even to specific Vendor Products. Example: All
+                            Vendor Products with a Service that is equal to: Local and a Service Type of: Business Line
+                            will be applied to the Primary Location assigned to that Vendor Product.</li>
+                        <li><strong>Vendor Product</strong> - Charges on specific Service Numbers that have specific
+                            vendor products are allocated based on predetermined cost allocation rules for the Service
+                            or Service Type of the Vendor Product assigned to the Service Number. These rules may
+                            complement other cost allocation directives that allocate certain costs to People or
+                            Locations. Each Vendor Product possesses its own set of rules, which are applicable to all
+                            other Vendor Products sharing the same service and, potentially, service type within the
+                            cost allocation framework. Example: An ISDN PRI Mobility will be applied to the Primary User
+                            assigned to that Vendor Product.</li>
+                    </ul>
+                </div>
+            </ng-template>
+            <ng-container style="height: max-content;">
+                <!-- <app-ag-grid-table [columnDefs]="columnDefs1" [rowSelection]="rowSelection"
+                    (onAgGridReady)="onAgGridReady($event)" [gridOptions]="gridOptions"
+                    (onCellDoubleClickedEvent)="onCellDoubleClicked($event)" [suppressRowClickSelection]="true"
+                    [defaultColDef]="defaultColDef" [isRelodButtonVisible]="false" [sheetName]="'Cost Center Structure'"
+                    [exportFilename]="'Cost Center Structure.xlsx'" [sideBar]="sideBar" [singleClickEdit]="true">
+                </app-ag-grid-table> -->
+
+
+                <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI"
+                     (tableDataExist)="tableDataExistFn($event)" [cols]="cols" [preAppliedfilterArr]="preAppliedfilterArr"
+                    (exportAccountData)="exportAccountDataFn($event)" (selectedRowsEmit)="selectedRowsEmitFn($event)"
+                    (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
+                    (refreshbuttonEmit)="refreshbuttonEmitFn($event)" (totalRecordsEmit)="totalRecordsEmitFn($event)"
+                    (loaderEmit)="loaderEmitFn($event)" />
+            </ng-container>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

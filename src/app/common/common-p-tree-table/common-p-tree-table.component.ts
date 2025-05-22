@@ -41,6 +41,7 @@ export class CommonPTreeTableComponent {
   @Input() headerCheckboxVisible: any = false;
   @Input() selectionField: string | string[] = 'IsSelected';
   @Input() selectionCondition: 'AND' | 'OR' = 'OR';
+  @Input() selectionFieldWithValues: any;
   @Input() preAppliedfilterArr: any;
   @Input() toggler: any = false;
   @Input() checkboxes: any = false;
@@ -150,6 +151,14 @@ export class CommonPTreeTableComponent {
 
 
   ngOnChanges(changes: SimpleChanges) {
+    // Prioritize preAppliedfilterArr changes
+    if (changes['preAppliedfilterArr'] && changes['preAppliedfilterArr'].currentValue !== this.preAppliedfilterArr) {
+      this.preAppliedfilterArr = changes['preAppliedfilterArr'].currentValue || [];
+      this.loadNodes(true);
+      return; // Exit to prevent second loadNodes call
+    }
+    
+    // Only handle refreshbutton if preAppliedfilterArr didn't change
     if (changes['refreshbutton'] && changes['refreshbutton'].currentValue === true) {
       this.selectedRecords = [];
       this.headerCheckboxData = false;
@@ -188,7 +197,7 @@ export class CommonPTreeTableComponent {
     this.cols.forEach((col: any) => {
       // Only process rows marked as children
 
-      if (col.field === 'checkbox') {
+      if (col.field === 'checkbox' || col.type === 'checkbox') {
         return;
       }
       if (col.isChildren && !parentMap.has(col.parent)) {
@@ -280,6 +289,10 @@ export class CommonPTreeTableComponent {
   }
 
   loadNodes(allOptionsClear = false) {
+
+    if(this.loading) {
+      return;
+    }
     this.loading = true;
     this.loaderEmit.emit(this.loading);
 
@@ -305,6 +318,8 @@ export class CommonPTreeTableComponent {
         this.preAppliedfilterArr.forEach((filter: any) => existingFilters.set(JSON.stringify(filter), filter));
         this.finalFilterdArr['advanceFilter'] = Array.from(existingFilters.values());
       }
+    } else {
+      this.finalFilterdArr['advanceFilter'] = [];
     }
 
     this.finalFilterdArr['advanceFilter'] = Array.from(
@@ -348,6 +363,10 @@ export class CommonPTreeTableComponent {
       const resData = data.map(extractDataAndLeaf.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
       this.selectedRecords = this.getCheckedNodes(this.files);
+
+      if(this.selectedRecords.length > 0) {
+        this.selectChildCheckbox();
+      }
     } else {
       this.files = [];
     }
@@ -364,9 +383,38 @@ export class CommonPTreeTableComponent {
     let selected: TreeNode[] = [];
 
     for (const node of nodes) {
-      // Skip nodes without data
       if (!node.data) continue;
 
+      // Check if selectionFieldWithValues exists
+      if (this.selectionFieldWithValues) {
+        // Case: selectionFieldWithValues is a string (e.g., 'yes' or 'no')
+        if (typeof this.selectionFieldWithValues === 'string') {
+          if (typeof this.selectionField === 'string' && 
+              node.data.hasOwnProperty(this.selectionField) && 
+              node.data[this.selectionField] === this.selectionFieldWithValues) {
+            selected.push(node);
+          }
+          continue;
+        }
+        
+        // Case: selectionFieldWithValues is an object
+        if (typeof this.selectionFieldWithValues === 'object' && 
+            Object.keys(this.selectionFieldWithValues).length > 0) {
+          let isSelected = true;
+          for (const [field, expectedValue] of Object.entries(this.selectionFieldWithValues)) {
+            if (!node.data.hasOwnProperty(field) || node.data[field] !== expectedValue) {
+              isSelected = false;
+              break;
+            }
+          }
+          if (isSelected) {
+            selected.push(node);
+          }
+          continue;
+        }
+      }
+
+      // Original logic - only execute if selectionFieldWithValues is not provided
       // Case 1: Single selection key
       if (typeof this.selectionField === 'string') {
         if (node.data.hasOwnProperty(this.selectionField) && !!node.data[this.selectionField]) {
@@ -378,12 +426,10 @@ export class CommonPTreeTableComponent {
         let isSelected = false;
 
         if (this.selectionCondition === 'AND') {
-          // All specified fields must be truthy
           isSelected = this.selectionField.every(field =>
             node.data.hasOwnProperty(field) && !!node.data[field]
           );
         } else {
-          // At least one of the specified fields must be truthy
           isSelected = this.selectionField.some(field =>
             node.data.hasOwnProperty(field) && !!node.data[field]
           );

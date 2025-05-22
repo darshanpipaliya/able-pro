@@ -28,13 +28,11 @@
             </div>
         </mat-expansion-panel-header>
 
-
         <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI"
             (tableDataExist)="tableDataExistFn($event)" [cols]="cols" [preAppliedfilterArr]="preAppliedfilterArr"
             (exportAccountData)="exportAccountDataFn($event)" (selectedRowsEmit)="selectedRowsEmitFn($event)"
             (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
             (refreshbuttonEmit)="refreshbuttonEmitFn($event)" (totalRecordsEmit)="totalRecordsEmitFn($event)"
             (loaderEmit)="loaderEmitFn($event)" />
-
     </mat-expansion-panel>
 </mat-accordion>

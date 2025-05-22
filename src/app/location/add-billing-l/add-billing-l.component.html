@@ -24,9 +24,23 @@
                         <i class="fas fa-file-invoice-dollar text-primary"></i> &nbsp;
                         <span class="fs-14 fw-bold text-dark">Cost Center Structures</span>
                     </mat-panel-title>
-
+                    <i class="fas fa-info-circle info-icon text-primary" (click)="openTooltip()"></i>
                 </div>
             </mat-expansion-panel-header>
+
+            <ng-template #ccStructure>
+                <div class="mat-dialog-header">
+                    <button type="button" class="close" mat-dialog-close>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="text-left dialog-data">
+                    <p class="mb-0">This shows the structure applied to the most recent invoice, as
+                        displayed in the Invoice Summary above.
+                    </p>
+                </div>
+            </ng-template>
+            
             <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI"
                 (tableDataExist)="tableDataExistFn($event)" [cols]="cols" (exportAccountData)="exportAccountDataFn($event)"
                 (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"

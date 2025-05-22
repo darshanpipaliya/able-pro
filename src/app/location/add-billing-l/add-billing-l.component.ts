@@ -578,9 +578,15 @@ export class AddBillingLComponent implements OnInit {
     let c:any = [];
 
     _.forEach(obj, (data: any) => {
-      a.push(data.CostCenterStructureId);
-      b.push(data.CCSXServiceServiceTypeId);
-      c.push(data.CCAllocationId);
+      if (data.CostCenterStructureId != null) {
+        a.push(data.CostCenterStructureId);
+      }
+      if (data.CCSXServiceServiceTypeId != null) {
+        b.push(data.CCSXServiceServiceTypeId);
+      }
+      if (data.CCAllocationId != null) {
+        c.push(data.CCAllocationId);
+      }
     });
 
     const payload = {
@@ -588,7 +594,6 @@ export class AddBillingLComponent implements OnInit {
       CCStructureServiceXServiceTypeIds: b,
       CCAllocationAssignmentIds: c
     }
-
     this.getIdsArray.emit(payload);
   }
   

@@ -15,6 +15,7 @@ import { LocationInventoryDataTableComponent } from '../common/location-inventor
 import { api_list } from '../services/api-list';
 import { AddBillingLComponent } from './add-billing-l/add-billing-l.component';
 import { ChangeLogComponent } from '../common/change-log/change-log.component';
+import { CommonCcsLocationComponent } from './common-ccs-location/common-ccs-location.component';
 @Component({
   selector: 'app-location',
 
@@ -30,7 +31,8 @@ import { ChangeLogComponent } from '../common/change-log/change-log.component';
     LocationInventoryDataTableComponent,
     AddNotesLocationComponent,
     AddBillingLComponent,
-    ChangeLogComponent
+    ChangeLogComponent,
+    CommonCcsLocationComponent
   ],
   encapsulation: ViewEncapsulation.None,
 })
