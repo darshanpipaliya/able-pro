@@ -14,6 +14,7 @@ import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { CustomPipe } from 'src/app/custom-pipe/date.pipe';
 import { DatePipe } from '@angular/common';
+import { MapSectionComponent } from 'src/app/common/map-section/map-section.component';
 
 @Component({
   selector: 'app-add-edit-location-new',
@@ -22,7 +23,8 @@ import { DatePipe } from '@angular/common';
   providers: [MatDialog, ManageService, CustomPipe, DatePipe],
   imports: [
     SharedModule,
-    PrimgModule
+    PrimgModule,
+    MapSectionComponent
   ]
 })
 export class AddEditLocationNewComponent implements OnInit {

@@ -2,12 +2,19 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { rolePermission } from 'src/app/services/helper';
 import { EditMapDialogComponent } from '../edit-map-dialog/edit-map-dialog.component';
- 
+import { PrimgModule } from 'src/app/demo/shared/primeng.module';
+import { SharedModule } from 'src/app/demo/shared/shared.module';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-map-section',
   templateUrl: './map-section.component.html',
-  styleUrls: ['./map-section.component.scss']
+  styleUrls: ['./map-section.component.scss'],
+  imports: [
+    PrimgModule,
+    SharedModule,
+    GoogleMapsModule
+  ]
 })
 export class MapSectionComponent implements OnInit {
 
@@ -15,11 +22,21 @@ export class MapSectionComponent implements OnInit {
   @Input() rowData :any;
   @Input() dataAvailble: any;
   viewNEdit = false;
-  constructor(public dialog: MatDialog) { }
+  center: any = {
+    lat: 0,
+    lng: 0,
+  };
+  zoom = 8;
+  constructor(public dialog: MatDialog) {
+    
+   }
 
   ngOnInit(): void {
     this.viewNEdit = rolePermission(['SuperTEMAdmin', 'SuperTEMManager', 'SuperTEMUser', 'SuperTEM', 'TEMAdmin', 'TEMUser', 'TEMManager']);
-
+    this.center = {
+      lat: this.rowData.Latitude ?? 0,
+      lng: this.rowData.Longitude ?? 0,
+    };
   }
 
   onEditMap(locationData: any) {

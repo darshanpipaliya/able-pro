@@ -5,31 +5,30 @@
   </button>
 </div>
 <div mat-dialog-content>
-
-  <agm-map [latitude]="latitude?latitude:''" [longitude]="longitude?longitude:''" [zoom]="zoom">
-    <agm-marker [latitude]="latitude?latitude:''" [longitude]="longitude?longitude:''" [markerDraggable]="true"
-      (dragEnd)="markerDragEnd($event)"></agm-marker>
-  </agm-map>
+  <google-map height="540px" width="100%" [center]="center" [zoom]="zoom">
+    <map-marker [position]="center" (mapDragend)="markerDragEnd($event)" [options]="{ draggable: true }"></map-marker>
+  </google-map>
   <div class="row pt-3">
     <div class="col-md-6 col-sm-6 col-xl-6">
       <div class="form-group">
         <label class="form-label">Latitude</label>
-        <input class="form-control map-control-c" [ngModel]="latitude" readonly
-        spaceTrimStartEndInput [allowStartWithSpace]="false">
+        <input class="form-control map-control-c" [ngModel]="latitude" readonly spaceTrimStartEndInput
+          [allowStartWithSpace]="false">
 
       </div>
     </div>
     <div class="col-md-6 col-sm-6 col-xl-6">
       <div class="form-group">
         <label class="form-label">Longitude</label>
-        <input class="form-control map-control-c" [ngModel]="longitude" readonly
-        spaceTrimStartEndInput [allowStartWithSpace]="false">
+        <input class="form-control map-control-c" [ngModel]="longitude" readonly spaceTrimStartEndInput
+          [allowStartWithSpace]="false">
       </div>
     </div>
   </div>
 </div>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close class="btn btn-primary"  [disabled]="saveButtonLoader || isDisabled">Cancel</button>
+  <button mat-button mat-dialog-close class="btn btn-primary"
+    [disabled]="saveButtonLoader || isDisabled">Cancel</button>
   <button mat-button class="btn btn-primary" (click)="saveLlocation()" [disabled]="saveButtonLoader || isDisabled">
     <span class="spinner-border spinner-border-sm" role="status" *ngIf="saveButtonLoader"></span> Select</button>
 </mat-dialog-actions>

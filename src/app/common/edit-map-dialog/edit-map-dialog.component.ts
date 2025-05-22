@@ -4,7 +4,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { ErrorWarningPopupComponent } from '../error-warning-popup/error-warning-popup.component';
 import { SpaceTrimStartEndInputirective } from 'src/app/custom-directives/custom-validation.directive';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
-import { AgmCoreModule } from '@agm/core';
+import { GoogleMapsModule } from '@angular/google-maps';
 @Component({
   selector: 'app-edit-map-dialog',
   templateUrl: './edit-map-dialog.component.html',
@@ -13,7 +13,7 @@ import { AgmCoreModule } from '@agm/core';
   imports: [
     SpaceTrimStartEndInputirective, 
     SharedModule,
-    AgmCoreModule.forRoot({apiKey: 'AIzaSyD3BufvPkW6Ta5dr2iLwef-6s0xW5I6izI'})
+    GoogleMapsModule
   ]
 })
 export class EditMapDialogComponent implements OnInit {
@@ -27,7 +27,10 @@ export class EditMapDialogComponent implements OnInit {
   isCompanyUser:boolean = false;
   isTEMUser: boolean = false;
   isDisabled: boolean = false;
-
+  center: any = {
+    lat: 0,
+    lng: 0,
+  };
   constructor(private dialogRef: MatDialogRef<EditMapDialogComponent>,
     public dialog: MatDialog,
     private locationService: LocationService,
@@ -39,9 +42,17 @@ export class EditMapDialogComponent implements OnInit {
     if(this.dialogData?.Location){
       this.latitude = this.dialogData.Location.Latitude;
       this.longitude = this.dialogData.Location.Longitude;
+      this.center = {
+        lat: this.dialogData.Location.Latitude,
+        lng: this.dialogData.Location.Longitude,
+      };
     } else {
       this.latitude = this.dialogData.Latitude;
       this.longitude = this.dialogData.Longitude;
+      this.center = {
+        lat: this.dialogData.Latitude,
+        lng: this.dialogData.Longitude,
+      };
     }
     this.zoom = 8;
 
@@ -52,12 +63,11 @@ export class EditMapDialogComponent implements OnInit {
       this.isDisabled = true
     }
   }
-  markerDragEnd($event: MouseEvent) {
-    let x: any = $event;
-    this.latitude = x.coords.lat;
-    this.longitude = x.coords.lng;
-
-
+  markerDragEnd(event: google.maps.MapMouseEvent) {
+  console.log('markerDragEnd ', event.latLng?.toJSON());
+    let x: any = event.latLng?.toJSON();
+    this.latitude = x.lat;
+    this.longitude = x.lng;
   }
 
   saveLlocation() {
