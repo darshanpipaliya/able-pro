@@ -42,6 +42,7 @@ export class CommonPTreeTableComponent {
   @Input() selectionField: string | string[] = 'IsSelected';
   @Input() selectionCondition: 'AND' | 'OR' = 'OR';
   @Input() selectionFieldWithValues: any;
+  @Input() selectedFromArray: any = [];
   @Input() preAppliedfilterArr: any;
   @Input() toggler: any = false;
   @Input() checkboxes: any = false;
@@ -51,6 +52,8 @@ export class CommonPTreeTableComponent {
   @Input() multipleSelection: any = false;
   @Input() SSRWithHeaderCheckbox: any = false;
   @Input() buttonTemplate!: TemplateRef<any>;
+  @Input() arrayKey: any;
+  @Input() nodeKey: any;
   files: TreeNode[];
   displaycols: any[];
   loading: boolean = false;
@@ -385,9 +388,15 @@ export class CommonPTreeTableComponent {
     for (const node of nodes) {
       if (!node.data) continue;
 
-      // Check if selectionFieldWithValues exists
+      if(this.selectedFromArray.length > 0) {
+        const d = this.selectedFromArray.some((r:any) => {
+          return r[this.arrayKey] === node.data[this.nodeKey]
+        } );
+        if(d) {
+          selected.push(node);
+        }
+      }
       if (this.selectionFieldWithValues) {
-        // Case: selectionFieldWithValues is a string (e.g., 'yes' or 'no')
         if (typeof this.selectionFieldWithValues === 'string') {
           if (typeof this.selectionField === 'string' && 
               node.data.hasOwnProperty(this.selectionField) && 
@@ -397,7 +406,6 @@ export class CommonPTreeTableComponent {
           continue;
         }
         
-        // Case: selectionFieldWithValues is an object
         if (typeof this.selectionFieldWithValues === 'object' && 
             Object.keys(this.selectionFieldWithValues).length > 0) {
           let isSelected = true;
@@ -414,14 +422,12 @@ export class CommonPTreeTableComponent {
         }
       }
 
-      // Original logic - only execute if selectionFieldWithValues is not provided
-      // Case 1: Single selection key
       if (typeof this.selectionField === 'string') {
         if (node.data.hasOwnProperty(this.selectionField) && !!node.data[this.selectionField]) {
           selected.push(node);
         }
       }
-      // Case 2: Multiple selection keys
+      
       else if (Array.isArray(this.selectionField) && this.selectionField.length > 0) {
         let isSelected = false;
 

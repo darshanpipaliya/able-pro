@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { api_list } from 'src/app/services/api-list';
 import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/common-p-tree-table.component';
+import { createColumn } from 'src/app/utils/column-utils';
 
 interface arrDate {
   filterKey: any;
@@ -133,39 +134,6 @@ export class CommonCcsLocationComponent implements OnInit {
   }
 
   setCols() {
-    const createColumn = (
-      parent: number,
-      width: string,
-      isChildren: boolean,
-      type: string,
-      header: string,
-      field: string,
-      childHeader: string,
-      columnGroupShow: string = 'close',
-      colspan: number = 1,
-      parentWidth: number = 150,
-      isParentVisible: boolean = true,
-      displayCheckboxColumns: boolean = true,
-      isToggle: boolean = true
-    ): ColumnDefinition => ({
-      parent,
-      isicon: 1,
-      width,
-      valuesset: null,
-      isenable: false,
-      isChildren,
-      type,
-      header,
-      columnGroupShow,
-      field,
-      childHeader,
-      colspan,
-      parentWidth,
-      isParentVisible,
-      displayCheckboxColumns,
-      isToggle
-    });
-
     let currentParent = 0;
     const getParentId = (isChild: boolean) => isChild ? ++currentParent : currentParent;
 

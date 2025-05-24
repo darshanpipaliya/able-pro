@@ -10,6 +10,7 @@ import { LinkInventoryTableComponent } from '../link-inventory-table/link-invent
 import { CommonPTreeTableComponent } from '../common-p-tree-table/common-p-tree-table.component';
 import { api_list } from 'src/app/services/api-list';
 import { LocationService } from 'src/app/services/location.service';
+import { createColumn } from 'src/app/utils/column-utils';
 
 interface arrDate {
   filterKey: any;
@@ -167,24 +168,6 @@ export class LocationInventoryDataTableComponent implements OnInit {
   }
 
   setCols() {
-    const createColumn = (parent: any, width: any, isChildren: any, type: any, header: any, field: any, childHeader: any, columnGroupShow = 'close', colspan = 1, parentWidth = 150, isParentVisible = true, displayCheckboxColumns = true, isToggle = true) => ({
-      parent,
-      isicon: 1,
-      width,
-      valuesset: null,
-      isenable: false,
-      isChildren,
-      type,
-      header,
-      columnGroupShow,
-      field,
-      childHeader,
-      colspan,
-      parentWidth,
-      isParentVisible,
-      displayCheckboxColumns,
-      isToggle
-    });
 
     this.cols = [
 

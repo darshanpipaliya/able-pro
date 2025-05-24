@@ -14,6 +14,7 @@ import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/common-p-tree-table.component';
 import { api_list } from 'src/app/services/api-list';
+import { createColumn } from 'src/app/utils/column-utils';
 
 interface arrDate {
   filterKey: any;
@@ -97,40 +98,6 @@ export class PTreeCompanyComponent implements OnInit {
   }
 
   setCols() {
-    const createColumn = (
-      parent: number,
-      width: string,
-      isChildren: boolean,
-      type: string,
-      header: string,
-      field: string,
-      childHeader: string,
-      columnGroupShow: string = 'close',
-      colspan: number = 1,
-      parentWidth: number = 150,
-      isParentVisible: boolean = true,
-      displayCheckboxColumns: boolean = true,
-      isToggle: boolean = true
-    ): ColumnDefinition => ({
-      parent,
-      isicon: 1,
-      width,
-      valuesset: null,
-      isenable: false,
-      isChildren,
-      type,
-      header,
-      columnGroupShow,
-      field,
-      childHeader,
-      colspan,
-      parentWidth,
-      isParentVisible,
-      displayCheckboxColumns,
-      isToggle
-    });
-
-
     // Initialize parent counter
     let currentParent = 0;
 
@@ -138,8 +105,6 @@ export class PTreeCompanyComponent implements OnInit {
     const getParentId = (isChild: boolean) => isChild ? ++currentParent : currentParent;
 
     this.cols = [
-      // createColumn(getParentId(true), '40px', true, 'text', '', 'checkbox', ''),
-
         // Organization
         createColumn(getParentId(true), '140px', true, 'text', 'Organization', 'CompanyName', 'Company', 'close'),
         createColumn(currentParent, '140px', false, 'text', '', 'CustomerAccountName', 'Customer', 'close'),

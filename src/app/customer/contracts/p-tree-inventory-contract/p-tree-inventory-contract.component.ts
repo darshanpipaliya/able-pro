@@ -11,6 +11,7 @@ import { VariableManageService } from 'src/app/services/variable-manage.service'
 import { DatePipe } from '@angular/common';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
+import { createColumn } from 'src/app/utils/column-utils';
 
 interface arrDate {
   filterKey: any;
@@ -166,39 +167,6 @@ export class PTreeInventoryContractComponent implements OnInit {
   }
 
   setCols() {
-    const createColumn = (
-      parent: number,
-      width: string,
-      isChildren: boolean,
-      type: string,
-      header: string,
-      field: string,
-      childHeader: string,
-      columnGroupShow: string = 'close',
-      colspan: number = 1,
-      parentWidth: number = 150,
-      isParentVisible: boolean = true,
-      displayCheckboxColumns: boolean = true,
-      isToggle: boolean = true
-    ): ColumnDefinition => ({
-      parent,
-      isicon: 1,
-      width,
-      valuesset: null,
-      isenable: false,
-      isChildren,
-      type,
-      header,
-      columnGroupShow,
-      field,
-      childHeader,
-      colspan,
-      parentWidth,
-      isParentVisible,
-      displayCheckboxColumns,
-      isToggle
-    });
-
 
     // Initialize parent counter
     let currentParent = 0;

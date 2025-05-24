@@ -47,7 +47,6 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export class LocationComponent {
 
   temRoles = false;
-  disableTemSearchDD: any;
   disableTemSearch: any;
   currentOpenEditPagevar = 'Table';
   currentIndex: any = 0;
@@ -298,11 +297,9 @@ export class LocationComponent {
   currentOpenEditPage($event: any) {
     this.currentOpenEditPagevar = ($event) ? 'Edit' : 'Add';
     if (this.currentOpenEditPagevar === 'Edit') {
-      this.disableTemSearchDD = true;
       this.disableTemSearch = true;
     } else {
       this.disableTemSearch = false;
-      this.disableTemSearchDD = false;
     }
   }
 
@@ -320,7 +317,6 @@ export class LocationComponent {
         this.selectedTem = 'all';
       }
       this.disableTemSearch = false;
-      this.disableTemSearchDD = false;
     } else {
       this.selectedTem = this.TemDDArray[this.currentIndex]?.id;
     }

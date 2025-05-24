@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { SharedModule } from '../../demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
+import { ActionButtonsComponent } from 'src/app/shared/components/action-buttons/action-buttons.component';
 
 @Component({
   selector: 'app-header-section',
-  imports: [SharedModule, PrimgModule],
+  imports: [SharedModule, PrimgModule, ActionButtonsComponent],
   templateUrl: './header-section.component.html',
   styleUrl: './header-section.component.scss',
   standalone: true,
@@ -14,7 +15,6 @@ export class HeaderSectionComponent {
   @Input() selectedButton: string = '';
   @Input() temRoles: boolean = false;
   @Input() selectedTem: string = 'all';
-  @Input() disableTemSearchDD: boolean = false;
   @Input() tems: any[] = [];
   @Input() isDisableTemDD: boolean = false;
   @Input() disableTemSearch: boolean = false;
@@ -27,6 +27,12 @@ export class HeaderSectionComponent {
   @Input() currentTabName: string = '';
   @Input() TemDDArray: any[] = [];
   @Input() currentIndex: number = 0;
+  @Input() isResetpwdAccess: boolean = false;
+  @Input() isResetpwdDisable: boolean = false;
+  @Input() isHaveCompanyUser: boolean = false;
+  @Input() isTemUser: boolean = false;
+  @Input() isCompanyUser: boolean = false;
+  @Input() peopleDataTable: any;
   @Input() trackByIndex: (index: number, item: any) => any = (index: number, item: any) => index;
 
   @Output() buttonClick = new EventEmitter<string>();
@@ -35,14 +41,41 @@ export class HeaderSectionComponent {
   @Output() exportDataAsExcel = new EventEmitter<void>();
   @Output() add = new EventEmitter<void>();
   @Output() setLocationNotes = new EventEmitter<string>();
+  @Output() handleResetPassword = new EventEmitter<void>();
+  @Output() handleSetNewPassword = new EventEmitter<void>();
+  @Output() handleUnlockUser = new EventEmitter<void>();
+  @Output() handleLockUser = new EventEmitter<void>();
+  @Output() handleEmailVerification = new EventEmitter<void>();
+  @Output() handleAddLocationNote = new EventEmitter<void>();
 
   ngOnInit(): void {
     if (this.TemDDArray[this.currentIndex]?.id === 'all') {
       this.selectedTem = 'all';
     }
     // Initialization logic if needed
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+  }
+
+  handleResetPasswordFn() {
+    this.handleResetPassword.emit();
+  }
+
+  handleSetNewPasswordFn() {
+    this.handleSetNewPassword.emit();
+  }
+
+  handleUnlockUserFn() {
+    this.handleUnlockUser.emit();
+  }
+
+  handleLockUserFn() {
+    this.handleLockUser.emit();
+  } 
+
+  handleEmailVerificationFn() {
+    this.handleEmailVerification.emit();
   }
 }

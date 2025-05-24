@@ -1,0 +1,312 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Add People Note</h5>
+    </div>
+
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="card-body py-0">
+        <div class="container px-0">
+            <form class="editForm px-0" [formGroup]="peopleNotesForm">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                        <div class="col-sm-12 col-xl-12 text-right pr-0">
+                            <span class="text-c-red">*Required field</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                                <div class="form-group">
+                                    <label class="form-label">Note *</label>
+                                    <textarea class="form-control textarea-full-section" rows="4"
+                                            formControlName="noteText" maxlength="1000" spaceTrimStartEndInput
+                                            [allowStartWithSpace]="false"
+                                            [ngClass]="{'invalid-error': f['noteText'].invalid && (f['noteText'].touched || isSubmit)}"></textarea>
+                                    <span class="textarea-error-span" style="position: relative;">
+                                        <mat-error style="font-size: 12px; position: absolute;"
+                                            class="textarea-error-disc"
+                                            *ngIf="f['noteText'].errors?.['required'] && (f['noteText'].touched || isSubmit)">
+                                            Note is required
+                                        </mat-error>
+                                        <span style="text-align: end;color: gray;">
+                                            {{ f['noteText'].value?.length ? f['noteText'].value.length : 0 }}/1000
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group" style="margin-bottom: 0 !important;">
+                                            <div>
+                                                <label class="form-label">Note Type</label>&nbsp;
+                                                <mat-radio-group class="m-l-8" formControlName="privateNote">
+                                                    <mat-radio-button [value]="false">Public
+                                                    </mat-radio-button>
+                                                    <mat-radio-button *ngIf="hasSsuperTemUsers" [value]="true" class="m-l-10">Private
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                            <mat-error style="font-size: 12px; position: relative; top: -10px;"
+                                                *ngIf="f['privateNote'].errors?.['required'] && (f['privateNote'].touched || isSubmit) ">
+                                                Note Type is required</mat-error>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <div>
+                                                <label class="form-label">Note Status</label>&nbsp;
+                                                <mat-radio-group class="m-l-8" formControlName="active">
+                                                    <mat-radio-button [value]="true">Active
+                                                    </mat-radio-button>
+                                                    <mat-radio-button [value]="false" class="m-l-10">Inactive
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                            <mat-error style="font-size: 12px; position: relative; top: -10px;"
+                                                *ngIf="f['active'].errors?.['required'] && (f['active'].touched || isSubmit) ">
+                                                Note Status is required</mat-error>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-xl-12 px-0  mb-3">
+                                <button class="btn btn-primary atc-btn mr-2" (click)="openFileUpload()">Add
+                                    Attachment</button>
+                                <span>{{selectedFileName}}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="row py-3">
+                            <div class="col-md-12 col-xl-12 px-0 text-center  mb-3">
+                                <button mat-button class="btn btn-primary" (click)="saveNotes()"
+                                    [disabled]="saveButtonDisabled">
+                                    <span class="spinner-border spinner-border-sm" role="status"
+                                        *ngIf="saveButtonDisabled"></span>Save</button>
+                            </div>
+                        </div>
+
+                        <mat-accordion class="example-headers-align">
+                            <div>
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                    <mat-expansion-panel-header class="math">
+                                        <mat-panel-title class="matt">
+                                            <i class="ficon fas fa-id-card"></i>&nbsp;Personal
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <!-- <div class="col-md-12   btn  had hdec">Account</div> -->
+                                    <div class="row m-t-20">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Customer *</label>
+                                                <span><p-dropdown appendTo="body" optionLabel="AccountName"
+                                                        [filter]="true" filterBy="AccountName"
+                                                        formControlName="accountId" optionValue="Id"
+                                                        [showClear]="false" [options]="customers"
+                                                        [disabled]="true">
+                                                    </p-dropdown></span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Company *</label>
+
+                                                <span><p-dropdown appendTo="body" optionLabel="CompanyName"
+                                                        [filter]="true" filterBy="CompanyName" [options]="companies" 
+                                                        formControlName="companyId" placeholder="Select Company..."
+                                                        optionValue="CompanyID" [showClear]="false"
+                                                        [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">First Name *</label>
+                                                <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                                        formControlName="userFirstName"
+                                                        [allowStartWithSpace]="false"
+                                                        disabled ></span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Last Name *</label>
+                                                <span><input type="text" class="form-control" required
+                                                        spaceTrimStartEndInput formControlName="userLastName"
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="email">Email *</label>
+                                                <span><input class="form-control input-md" id="email" required
+                                                        type="text" spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                                        formControlName="emailAddress" disabled></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Block Email</label>
+                                                <span><p-dropdown optionLabel="Name" filterBy="Name" [showClear]="true"
+                                                        formControlName="blockEmail" appendTo="body" optionValue="Id"
+                                                        [showClear]="false" [options]="blockEmailList" [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="phone">Mobile Phone</label>
+                                                <span> <input class="form-control input-md" id="phone" type="text"
+                                                        formControlName="cellPhone" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="phone">Desk Phone</label>
+                                                <span><input class="form-control input-md" id="phone" type="text"
+                                                        formControlName="userDeskPhone" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Employee
+                                                    ID</label>
+                                                <span> <input type="email" class="form-control" id="exampleInputEmail1"
+                                                        formControlName="employeeId" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="phone">Manager</label>
+                                                <span><p-dropdown placeholder="Select a Manager"
+                                                        formControlName="managerId" optionValue="ManagerId"
+                                                        optionLabel="ManagerName" [filter]="true" filterBy="ManagerName"
+                                                        [showClear]="false" appendTo="body"
+                                                        [options]="managerList" [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="phone">Title</label>
+                                                <span><input class="form-control input-md" id="phone" type="text"
+                                                        formControlName="userTitle" spaceTrimStartEndInput
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Department</label>
+                                                <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                                        formControlName="department" disabled
+                                                        [allowStartWithSpace]="false"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Status</label>
+
+                                                <span><p-dropdown optionLabel="Name" filterBy="Name" [showClear]="true"
+                                                        formControlName="active2" appendTo="body" optionValue="Id"
+                                                        [showClear]="false" [options]="statusList" [disabled]="true">
+                                                    </p-dropdown></span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Contact
+                                                    Type</label>
+                                                <span><p-dropdown placeholder="Select Contact Type..." [options]="contacttypes" 
+                                                        formControlName="customerContactTypeId" optionValue="Id"
+                                                        optionLabel="DisplayName" [filter]="true" filterBy="DisplayName"
+                                                        [showClear]="false" appendTo="body" [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">People Custom
+                                                    1</label>
+                                                <span> <input type="text" class="form-control" spaceTrimStartEndInput
+                                                        formControlName="contactCustomField1"
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">People Custom
+                                                    2</label>
+                                                <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                                        formControlName="contactCustomField2"
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">People Custom
+                                                    3</label>
+                                                <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                                        formControlName="contactCustomField3"
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">People Custom
+                                                    4</label>
+                                                <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                                        formControlName="contactCustomField4"
+                                                        [allowStartWithSpace]="false" disabled></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

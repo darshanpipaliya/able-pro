@@ -52,7 +52,6 @@ export class CustomerDatatableComponent implements OnInit {
   currentOpenEditPagevar = 'Table';
   viewNEdit = false;
   disableTemSearch: any;
-  disableTemSearchDD: any;
   hasSsuperTemUsers: boolean = false;
 
   isDisabledExport = false;
@@ -84,10 +83,8 @@ export class CustomerDatatableComponent implements OnInit {
   currentOpenEditPage($event: any) {
     this.currentOpenEditPagevar = ($event) ? 'Edit' : 'Add';
     if (this.currentOpenEditPagevar === 'Edit') {
-      this.disableTemSearchDD = true;
       this.disableTemSearch = true;
     } else {
-      this.disableTemSearchDD = false;
       this.disableTemSearch = false;
     }
   }
@@ -104,7 +101,6 @@ export class CustomerDatatableComponent implements OnInit {
     this.selected = this.currentIndex = event;
     if (this.selected === 0) {
       this.currentOpenEditPagevar = 'Table';
-      this.disableTemSearchDD = false;
       this.disableTemSearch = false;
     } else {
       this.currentOpenEditPagevar = this.currentOpenEditPagevar;

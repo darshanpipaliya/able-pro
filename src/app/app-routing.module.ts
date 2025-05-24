@@ -70,60 +70,10 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'widget',
-        loadChildren: () => import('./demo/pages/widget/widget.module').then((m) => m.WidgetModule),
-        
+        path: 'people',
+        loadChildren: () => import('./people/people.module').then(module => module.PeopleModule),
+        canActivate: [AuthGuard]
       },
-      {
-        path: 'online-course',
-        loadChildren: () => import('./demo/pages/admin-panel/online-courses/online-courses.module').then((m) => m.OnlineCoursesModule),
-        
-      },
-      {
-        path: 'membership',
-        loadChildren: () => import('./demo/pages/admin-panel/membership/membership.module').then((m) => m.MembershipModule),
-        
-      },
-      {
-        path: 'helpdesk',
-        loadChildren: () => import('./demo/pages/admin-panel/helpdesk/helpdesk.module').then((m) => m.HelpdeskModule),
-        
-      },
-      {
-        path: 'invoice',
-        loadChildren: () => import('./demo/pages/admin-panel/invoice/invoice.module').then((m) => m.InvoiceModule),
-        
-      },
-      {
-        path: 'application',
-        loadChildren: () => import('./demo/pages/application/application.module').then((m) => m.ApplicationModule),
-        
-      },
-      {
-        path: 'apex-chart',
-        loadComponent: () => import('./demo/pages/chart/apex-charts/apex-charts.component').then((c) => c.ApexChartsComponent),
-        
-      },
-      {
-        path: 'material-table',
-        loadComponent: () => import('./demo/pages/material-table/material-table.component').then((c) => c.MaterialTableComponent),
-        
-      },
-      {
-        path: 'forms',
-        loadChildren: () => import('./demo/pages/forms/forms.module').then((m) => m.FormsModule),
-        
-      },
-      {
-        path: 'price',
-        loadChildren: () => import('./demo/pages/price/price-routing.module').then((m) => m.PriceRoutingModule),
-        
-      },
-      {
-        path: 'sample-page',
-        loadComponent: () => import('./demo/pages/other/sample-page/sample-page.component').then((c) => c.SamplePageComponent),
-        
-      }
     ]
   },
   {

@@ -12,6 +12,7 @@ import { isValueExist } from 'src/app/services/helper';
 import { BillingLPTableComponent } from 'src/app/common/billing-l-p-table/billing-l-p-table.component';
 import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/common-p-tree-table.component';
 import { api_list } from 'src/app/services/api-list';
+import { createColumn } from 'src/app/utils/column-utils';
 
 @Component({
   selector: 'app-add-billing-l',
@@ -687,39 +688,7 @@ export class AddBillingLComponent implements OnInit {
   }
 
   setCols() {
-    const createColumn = (
-      parent: any,
-      width: any,
-      isChildren: any,
-      type: any,
-      header: any,
-      field: any,
-      childHeader: any,
-      columnGroupShow = 'close',
-      colspan = 1,
-      parentWidth = 150,
-      isParentVisible = true,
-      displayCheckboxColumns = true,
-      isToggle = true
-    ) => ({
-      parent,
-      isicon: 1,
-      width,
-      valuesset: null,
-      isenable: false,
-      isChildren,
-      type,
-      header,
-      columnGroupShow,
-      field,
-      childHeader,
-      colspan,
-      parentWidth,
-      isParentVisible,
-      displayCheckboxColumns,
-      isToggle
-    });
-  
+ 
     this.cols = [
       // Organization group
       createColumn(1, '140px', true, 'text', 'Organization', 'CustomerAccountName', 'Customer'),

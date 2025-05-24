@@ -1,0 +1,174 @@
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content>
+                <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton"
+                    [TemDDArray]="TemDDArray" [currentIndex]="currentIndex" [temRoles]="temRoles"
+                    [selectedTem]="selectedTem" [tems]="tems" [disableTemSearch]="disableTemSearch"
+                    [loaderParent]="loaderParent" [currentOpenEditPagevar]="currentOpenEditPagevar"
+                    [isDisabledExport]="isDisabledExport" [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit"
+                    [trackByIndex]="trackByIndex" (buttonClick)="onButtonClick($event)"
+                    (temChange)="onTemChange($event)" (filterGridByTEMId)="filterGridByTEMId($event)"
+                    (exportDataAsExcel)="onBtnExportDataAsExcel()" (add)="addUser()" [currentTabName]="currentTabName"
+                    [isResetpwdAccess]="isResetpwdAccess" [isResetpwdDisable]="isResetpwdDisable"
+                    [isHaveCompanyUser]="isHaveCompanyUser" [peopleDataTable]="peopleDataTable"
+                    (handleResetPassword)="forgotPassword()" (handleSetNewPassword)="setNewPassword()"
+                    (handleUnlockUser)="unlockUser()" (handleLockUser)="lockUser()"
+                    (handleEmailVerification)="sendEmailVerification()"></app-header-section>
+
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="currentIndex" (selectedIndexChange)="changeTab($event)">
+                        <ng-container>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-users" style="color: #4680ff;"> </i>&nbsp; People
+                                </ng-template>
+
+                                <ng-template matTabContent>
+                                    <div class="mt-2">
+                                        <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload"
+                                            [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)"
+                                            [cols]="cols" (exportAccountData)="exportAccountDataFn($event)"
+                                            (selectedRowsEmit)="selectedRowsEmitFn($event)"
+                                            (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
+                                            (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
+                                            (totalRecordsEmit)="totalRecordsEmitFn($event)"
+                                            (loaderEmit)="loaderEmitFn($event)" />
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                        <ng-container *ngFor="let userData of editUserArray;let i = index; trackBy: trackByIndex">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-edit"
+                                        style="color: #4680ff;"></i>&nbsp;{{userData.PeopleFirstName}}
+                                    {{userData.PeopleLastName}}&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <mat-tab-group [(selectedIndex)]="selectedSubTab"
+                                        (selectedIndexChange)="changeChildTab($event)">
+                                        <ng-container>
+                                            <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <i class="fas fa-users" style="color: #4680ff;">
+                                                        </i>
+                                                        People
+                                                    </b>
+                                                </ng-template>
+
+                                                <ng-template matTabContent>
+                                                    <app-add-people [action]="'Edit'" [lockUserInput]="lockUserInput"
+                                                        (onAddButton)="onAddButton($event)"
+                                                        (onUnlockButtonClick)="onUnlockButtonClick($event)"
+                                                        (onUserAddEvent)="onUserAddEvent($event, i)"
+                                                        (currentOpenEditPage)="currentOpenEditPage($event, i)"
+                                                        [peopleData]="userData"
+                                                        (onUserVerified)="onUserVerified($event)"
+                                                        (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                                        [selectedTem]="selectedTem"
+                                                        (saveBtnDisabled)="saveBtnDisabled($event)"></app-add-people>
+                                                </ng-template>
+                                            </mat-tab>
+                                            <mat-tab [disabled]="disabled">
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <i class="fas fa-sticky-note" style="color: #4680ff;"> </i>
+                                                        Notes
+                                                    </b>
+                                                </ng-template>
+                                                <ng-template matTabContent>
+                                                    <div class="col-sm-12 px-0">
+                                                        <app-add-notes-people
+                                                            [peopleData]="userData"></app-add-notes-people>
+                                                    </div>
+                                                </ng-template>
+                                            </mat-tab>
+
+                                            <mat-tab [disabled]="disabled">
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <i class="icon-size fas fa-file-invoice-dollar"
+                                                            style="color: #4680ff;"></i>&nbsp;Billing
+                                                    </b>
+                                                </ng-template>
+                                                <ng-template matTabContent>
+                                                    <div class="col-sm-12 px-0">
+                                                        <app-add-billing-p [rowData]="userData"
+                                                            (getIdsArray)="getIdsArray($event)"
+                                                            (redirectTab)="redirectTab($event)"></app-add-billing-p>
+                                                    </div>
+                                                </ng-template>
+                                            </mat-tab>
+                                            <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                    <b style="  margin-right: 5%;">
+                                                        <img src="../../../../../../assets/images/fa-sharp-fas-fa-swap.svg"
+                                                            alt="Change Log Image">
+                                                        Change Log
+                                                    </b>
+                                                </ng-template>
+                                                <ng-template matTabContent>
+                                                    <div class="col-sm-12 px-0">
+                                                        <app-change-log [title]="'People'"
+                                                            [peopleId]="userData.PeopleId"
+                                                            [changelogData]="changelogData"
+                                                            [column]="columns"></app-change-log>
+
+                                                    </div>
+                                                </ng-template>
+                                            </mat-tab>
+
+                                            <mat-tab *ngIf="isOpenCCSTab">
+                                                <ng-template mat-tab-label>
+                                                    <svg class="pc-icon">
+                                                        <use xlink:href="assets/fonts/custome-icon-able.svg#custom-ccs">
+                                                        </use>
+                                                    </svg>&nbsp;
+                                                    Cost Center Structure&nbsp;<mat-icon
+                                                        (click)="removeCCSTab(i)">cancel</mat-icon>
+                                                </ng-template>
+
+                                                <ng-template matTabContent>
+                                                    <app-common-ccs-people [payload]="payload"></app-common-ccs-people>
+                                                </ng-template>
+
+                                            </mat-tab>
+
+
+                                        </ng-container>
+                                    </mat-tab-group>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+
+                        <ng-container *ngFor="let user of addUserArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-users" style="color: #4680ff;"></i>&nbsp;Add People&nbsp;<mat-icon
+                                        (click)="removeUser(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-people [action]="'Add'" [clickOnSearchButton]="clickOnSearchButton"
+                                        (onUserAddEvent)="onUserAddEvent($event, i)" [selected]="currentIndex"
+                                        (setClickFalse)="setClickFalse($event, i)"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)"
+                                        (addPeopleForm)="addPeopleForm($event, i)" [addData]="user.rowData"
+                                        (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                        [selectedWiseTemDD]="selectedWiseTemDD" [selectedTem]="selectedTem"
+                                        (currentSelectedAddPage)="currentSelectedAddPage($event)"></app-add-people>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+
+                    </mat-tab-group>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

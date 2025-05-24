@@ -11,6 +11,7 @@ import { extractDataAndLeaf, filterOptionsDate, filterOptionsNumber, filterOptio
 import { WirelineService } from 'src/app/services/wireline.service';
 import { VariableManageService } from 'src/app/services/variable-manage.service';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
+import { createColumn } from 'src/app/utils/column-utils';
 interface arrDate {
   filterKey: any;
   filterOptionType1: any;
@@ -177,40 +178,6 @@ export class PTreeSelectInvtryContractComponent implements OnInit {
   }
 
   setCols() {
-    const createColumn = (
-      parent: number,
-      width: string,
-      isChildren: boolean,
-      type: string,
-      header: string,
-      field: string,
-      childHeader: string,
-      columnGroupShow: string = 'close',
-      colspan: number = 1,
-      parentWidth: number = 150,
-      isParentVisible: boolean = true,
-      displayCheckboxColumns: boolean = true,
-      isToggle: boolean = true
-    ): ColumnDefinition => ({
-      parent,
-      isicon: 1,
-      width,
-      valuesset: null,
-      isenable: false,
-      isChildren,
-      type,
-      header,
-      columnGroupShow,
-      field,
-      childHeader,
-      colspan,
-      parentWidth,
-      isParentVisible,
-      displayCheckboxColumns,
-      isToggle
-    });
-
-
     // Initialize parent counter
     let currentParent = 0;
 

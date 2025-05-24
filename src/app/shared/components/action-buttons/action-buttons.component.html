@@ -1,0 +1,53 @@
+<div class="action-buttons" *ngIf="(!isTemUser && !isCompanyUser) ">
+  <!-- Reset Password Button -->
+  <div [ngClass]="buttons['resetPassword']['classes']"
+    *ngIf="isResetpwdAccess"
+    [class.disabled]="isResetPasswordDisabled()"
+    [ngbPopover]="resetPasswordContent"
+    [placement]="'left'"
+    [popoverClass]="'user-table-tooltip custom-tooltip right-btn-position'"
+    [popoverTitle]="'Select an Action'"
+    [title]="buttons['resetPassword'].title"
+    container="body">
+    <i [class]="buttons['resetPassword'].icon"></i>
+  </div>
+
+  <ng-template #resetPasswordContent>
+    <div class="text-left">
+      <div>
+        <ul style="padding-left: 15px;" [class.disabled]="isResetPasswordDisabled() || peopleDataTable?.UserEmailVerified == 'Not Verified'">
+          <span class="inner-option" (click)="onResetPasswordFn()">
+            <a><i class="fas fa-angle-right"></i> Reset Password</a>
+          </span><br>
+          <span class="inner-option" (click)="onSetNewPasswordFn()">
+            <a><i class="fas fa-angle-right"></i> Set New Password</a>
+          </span>
+        </ul>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Unlock User Button -->
+  <div [ngClass]="buttons['unlockUser']['classes']"
+    [class.disabled]="isUnlockUserDisabled()"
+    (click)="!isUnlockUserDisabled() && onUnlockUserFn()"
+    [title]="buttons['unlockUser']['title']">
+    <i [class]="buttons['unlockUser']['icon']"></i>
+  </div>
+
+  <!-- Lock Account Button -->
+    <div [ngClass]="buttons['lockAccount']['classes']"
+    [class.disabled]="isLockUserDisabled()"
+    (click)="!isLockUserDisabled() && onLockUserFn()"
+    [title]="buttons['lockAccount']['title']">
+    <i [class]="buttons['lockAccount']['icon']"></i>
+  </div>
+
+  <!-- Resend Verification Email Button -->
+  <div [ngClass]="buttons['resendVerification']['classes']"
+    [class.disabled]="isVerificationDisabled()"
+    (click)="!isVerificationDisabled() && onSendEmailVerificationFn()"
+    [title]="buttons['resendVerification']['title']">
+    <i [class]="buttons['resendVerification']['icon']"></i>
+  </div>
+</div> 

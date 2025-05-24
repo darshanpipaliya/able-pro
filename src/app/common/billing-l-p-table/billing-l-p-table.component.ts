@@ -9,6 +9,7 @@ import { WirelineService } from 'src/app/services/wireline.service';
 import { LocationService } from 'src/app/services/location.service';
 import { CommonPTreeTableComponent } from '../common-p-tree-table/common-p-tree-table.component';
 import { api_list } from 'src/app/services/api-list';
+import { createColumn } from 'src/app/utils/column-utils';
 
 interface arrDate {
   filterKey: any;
@@ -61,38 +62,6 @@ export class BillingLPTableComponent implements OnInit {
   ) {}
 
   setCols() {
-    const createColumn = (
-      parent: any,
-      width: any,
-      isChildren: any,
-      type: any,
-      header: any,
-      field: any,
-      childHeader: any,
-      columnGroupShow = 'close',
-      colspan = 1,
-      parentWidth = 150,
-      isParentVisible = true,
-      displayCheckboxColumns = true,
-      isToggle = true
-    ) => ({
-      parent,
-      isicon: 1,
-      width,
-      valuesset: null,
-      isenable: false,
-      isChildren,
-      type,
-      header,
-      columnGroupShow,
-      field,
-      childHeader,
-      colspan,
-      parentWidth,
-      isParentVisible,
-      displayCheckboxColumns,
-      isToggle
-    });
   
     this.cols = [
       createColumn(1, '200px', true, 'text', 'Inventory', 'BillingId', 'Service Number'),

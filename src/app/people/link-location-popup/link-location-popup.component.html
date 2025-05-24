@@ -1,0 +1,35 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Link Locations</h5>
+    </div>
+
+    <button type="button" class="close" [mat-dialog-close]="'undefined'">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content class="px-0 m-0">
+
+    <div class="card-body p-0">
+        <div class="container px-0">
+            
+            <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)" [cols]="cols" [multipleSelection]="true"
+            [selectedFromArray]="selectedLocation" [arrayKey]="'LocationId'" [nodeKey]="'Id'"
+            [selectionFieldWithValues]="[{'IsSelected': true, 'isChecked': true}]"
+            (exportAccountData)="exportAccountDataFn($event)" (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
+            (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
+            (totalRecordsEmit)="totalRecordsEmitFn($event)"
+            (loaderEmit)="loaderEmitFn($event)"
+            />
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="pt-0" align="center">
+    <!--<button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>-->
+    <button mat-button class="btn btn-primary" (click)="saveLocation()" cdkFocusInitial
+        [disabled]="saveButtonLoader || saveButtonDisabled || isUserAccess">
+        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>
+        Save</button>
+
+        <button mat-button class="btn btn-primary" (click)="saveLocationPrimary()" cdkFocusInitial [disabled]="saveButtonDisabled || saveButtonLoader || isUserAccess"
+        ><span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonDisabled"></span>Save & Set as Primary</button>
+</mat-dialog-actions>

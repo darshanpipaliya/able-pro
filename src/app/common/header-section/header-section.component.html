@@ -15,7 +15,7 @@
 
     <div *ngIf="!temRoles" [ngClass]="{'disabled': loaderParent}">
       <p-dropdown class="custom-p-dropdown-outer" [options]="tems" [(ngModel)]="selectedTem"
-        [ngModelOptions]="{standalone: true}" [disabled]="disableTemSearchDD" (onChange)="temChange.emit(selectedTem)"
+        [ngModelOptions]="{standalone: true}" [disabled]="disableTemSearch" (onChange)="temChange.emit(selectedTem)"
         [filter]="true" [filterFields]="['AccountName']" optionValue="Id" optionLabel="AccountName">
       </p-dropdown>
     </div>
@@ -44,14 +44,35 @@
   </div>
 
   <div [ngClass]="{'disabled': loaderParent}" class="col-auto ms-auto d-flex align-items-center gap-2"
+    *ngIf="currentOpenEditPagevar === 'Edit' && currentTabName === 'People'">
+    <app-action-buttons
+      [isResetpwdAccess]="isResetpwdAccess"
+      [viewNEdit]="viewNEdit"
+      [isHaveCompanyUser]="isHaveCompanyUser"
+      [peopleDataTable]="peopleDataTable"
+      [isTemUser]="isTemUser"
+      [isCompanyUser]="isCompanyUser"
+      (onResetPassword)="handleResetPasswordFn()"
+      (onSetNewPassword)="handleSetNewPasswordFn()"
+      (onUnlockUser)="handleUnlockUserFn()"
+      (onLockUser)="handleLockUserFn()"
+      (onSendEmailVerification)="handleEmailVerificationFn()"
+      (onAddLocationNote)="handleAddLocationNoteFn()">
+    </app-action-buttons>
+  </div>
+
+
+  <div [ngClass]="{'disabled': loaderParent}" class="col-auto ms-auto d-flex align-items-center gap-2"
     *ngIf="currentOpenEditPagevar === 'Edit' && currentTabName === 'Notes'">
     <div class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20" (click)="setLocationNotes.emit('add')"
       title="Add Location Note"><i class="fas fa-plus"></i></div>
 
-    <button type="button" class="btn btn-shadow btn-outline-primary btn-size b-rad-20 btn-primary text-white"  (click)="setLocationNotes.emit('inactive')">Make
+    <button type="button" class="btn btn-shadow btn-outline-primary btn-size b-rad-20 btn-primary text-white"
+      (click)="setLocationNotes.emit('inactive')">Make
       Inactive</button>
 
-    <button type="button" class="btn btn-shadow btn-outline-primary btn-size b-rad-20 btn-primary text-white"  (click)="setLocationNotes.emit('active')">Make
+    <button type="button" class="btn btn-shadow btn-outline-primary btn-size b-rad-20 btn-primary text-white"
+      (click)="setLocationNotes.emit('active')">Make
       Active</button>
   </div>
 

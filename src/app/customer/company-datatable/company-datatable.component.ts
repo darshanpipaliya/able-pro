@@ -61,7 +61,6 @@ export class CompanyDatatableComponent implements OnInit {
   gridColumnApi: any;
   currentOpenEditPagevar = 'Table';
   disableTemSearch: any;
-  disableTemSearchDD: any;
   currentIndex: any = 0;
   selectedWiseTemDD: any = [];
 
@@ -90,10 +89,8 @@ export class CompanyDatatableComponent implements OnInit {
     this.currentOpenEditPagevar = ($event) ? 'Edit' : 'Add';
     if (this.currentOpenEditPagevar === 'Edit') {
       this.disableTemSearch = true;
-      this.disableTemSearchDD = true;
     } else {
       this.disableTemSearch = false;
-      this.disableTemSearchDD = false;
     }
   }
 
@@ -111,7 +108,6 @@ export class CompanyDatatableComponent implements OnInit {
       }
       this.currentOpenEditPagevar = 'Table';
       this.disableTemSearch = false;
-      this.disableTemSearchDD = false;
     } else {
       this.currentOpenEditPagevar = this.currentOpenEditPagevar;
     }

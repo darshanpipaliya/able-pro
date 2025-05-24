@@ -13,6 +13,7 @@ import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/common-p-tree-table.component';
 import { api_list } from 'src/app/services/api-list';
+import { createColumn } from 'src/app/utils/column-utils';
 
 interface arrDate {
   filterKey: any;
@@ -76,74 +77,26 @@ export class AddNotesLocationComponent implements OnInit {
   setCols() {
     this.hasSsuperTemUsers = this.locationService.isUserHasSuperTEMUsersRole();
 
-    const createColumn = ({
-      parent,
-      width,
-      isChildren,
-      type,
-      header,
-      field,
-      childHeader,
-      columnGroupShow = 'close',
-      colspan = 1,
-      parentWidth = 150,
-      isParentVisible = false,
-      displayCheckboxColumns = true,
-      isToggle = true
-    }: {
-      parent: any;
-      width: any;
-      isChildren: any;
-      type?: any;
-      header?: any;
-      field?: any;
-      childHeader?: any;
-      columnGroupShow?: string;
-      colspan?: number;
-      parentWidth?: number;
-      isParentVisible?: boolean;
-      displayCheckboxColumns?: boolean;
-      isToggle?: boolean;
-    }) => ({
-      parent,
-      isicon: 1,
-      width,
-      valuesset: null,
-      isenable: false,
-      isChildren,
-      type,
-      header,
-      columnGroupShow,
-      field,
-      childHeader,
-      colspan,
-      parentWidth,
-      isParentVisible,
-      displayCheckboxColumns,
-      isToggle
-    });
-
-
     if (this.hasSsuperTemUsers) {
       this.cols = [
-        createColumn({ parent: 1, width: '60px', isChildren: true, type: 'checkbox' }),
-        createColumn({ parent: 2, width: '170px', isChildren: true, field: 'LocationName', childHeader: 'Location Name' }),
-        createColumn({ parent: 3, width: '104px', isChildren: true, type: 'dateFilter', field: 'LocationNoteCreatedDate', childHeader: 'Date' }),
-        createColumn({ parent: 4, width: '300px', isChildren: true, field: 'Notes', childHeader: 'Notes' }),
-        createColumn({ parent: 5, width: '140px', isChildren: true, type: 'icon', field: 'IsLocationNoteAttachment', childHeader: 'Attachments' }),
-        createColumn({ parent: 6, width: '130px', isChildren: true, field: 'LocationNoteStatus', childHeader: 'Note Status' }),
-        createColumn({ parent: 7, width: '110px', isChildren: true, field: 'NoteType', childHeader: 'Note Type' }),
-        createColumn({ parent: 8, width: '300px', isChildren: true, field: 'LocationNoteCreatedByWithEmail', childHeader: 'Who' })
+        createColumn( 1, '60px', true, 'checkbox', '', 'checkbox', ''),
+        createColumn( 2, '170px', true, '', '', 'LocationName',  'Location Name' ),
+        createColumn( 3, '104px', true, '', '', 'LocationNoteCreatedDate',  'Date' ),
+        createColumn( 4, '300px', true, '', '', 'Notes',  'Notes' ),
+        createColumn( 5, '140px', true, 'icon', '', 'IsLocationNoteAttachment',  'Attachments' ),
+        createColumn( 6, '130px', true, '', '', 'LocationNoteStatus',  'Note Status' ),
+        createColumn( 7, '110px', true, '', '', 'NoteType',  'Note Type' ),
+        createColumn( 8, '300px', true, '', '', 'LocationNoteCreatedByWithEmail',  'Who' )
       ];
     } else {
       this.cols = [
-        createColumn({ parent: 1, width: '60px', isChildren: true, type: 'checkbox' }),
-        createColumn({ parent: 2, width: '170px', isChildren: true, field: 'LocationName', childHeader: 'Location Name' }),
-        createColumn({ parent: 3, width: '104px', isChildren: true, type: 'dateFilter', field: 'LocationNoteCreatedDate', childHeader: 'Date' }),
-        createColumn({ parent: 4, width: '300px', isChildren: true, field: 'Notes', childHeader: 'Notes' }),
-        createColumn({ parent: 5, width: '140px', isChildren: true, type: 'icon', field: 'IsLocationNoteAttachment', childHeader: 'Attachments' }),
-        createColumn({ parent: 6, width: '130px', isChildren: true, field: 'LocationNoteStatus', childHeader: 'Note Status' }),
-        createColumn({ parent: 7, width: '300px', isChildren: true, field: 'LocationNoteCreatedByWithEmail', childHeader: 'Who' })
+        createColumn( 1, '60px', true, 'checkbox', '', 'checkbox', ''),
+        createColumn( 2, '170px', true, '', '', 'LocationName',  'Location Name' ),
+        createColumn( 3, '104px', true, '', '', 'LocationNoteCreatedDate',  'Date' ),
+        createColumn( 4, '300px', true, '', '', 'Notes',  'Notes' ),
+        createColumn( 5, '140px', true, 'icon', '', 'IsLocationNoteAttachment',  'Attachments' ),
+        createColumn( 6, '130px', true, '', '', 'LocationNoteStatus',  'Note Status' ),
+        createColumn( 7, '300px', true, '', '', 'LocationNoteCreatedByWithEmail',  'Who' )
       ];
     }
   }

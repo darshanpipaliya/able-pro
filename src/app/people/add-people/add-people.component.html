@@ -1,0 +1,576 @@
+<app-card cardTitle="" class="card-bottom-none">
+    <form class="editForm" [formGroup]="peopleForm" (ngSubmit)="save()">
+        <div class="row">
+            <div class="col-sm-12 col-xl-12 text-right">
+                <span class="text-c-red">*Required field</span>
+            </div>
+            <div class="col-sm-12 col-xl-6 padding-left-none">
+
+
+                <mat-accordion class="example-headers-align">
+                    <div>
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="ficon fas fa-id-card"></i>&nbsp;Personal
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <!-- <div class="col-md-12   btn  had hdec">Account</div> -->
+                            <div class="row m-t-20">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Customer *</label>
+                                        <span><p-dropdown (onChange)="onCustomerSelect()" [options]="customers"
+                                                appendTo="body" optionLabel="AccountName" [filter]="true"
+                                                filterBy="AccountName" formControlName="accountId"
+                                                placeholder="{{customersLoader ? 'Loading...': 'Select Customer...'}}"
+                                                optionValue="Id" [showClear]="false"
+                                                [disabled]="editTabDisabled || action == 'Edit' || customersLoader"
+                                                [ngClass]="{'invalid-error': !f.accountId.valid && (f.accountId.dirty || f.accountId.touched || submitted)}">
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.accountId.errors?.required && (f.accountId.touched || submitted) ">
+                                            Customer is required</mat-error>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Company *</label>
+
+                                        <span><p-dropdown [options]="companies" appendTo="body"
+                                                optionLabel="CompanyName" [filter]="true" filterBy="CompanyName"
+                                                formControlName="companyId" placeholder="Select Company..."
+                                                optionValue="CompanyID" [showClear]="false" [disabled]="editTabDisabled"
+                                                [ngClass]="{'invalid-error': !f.companyId.valid && (f.companyId.dirty || f.companyId.touched || submitted)}">
+                                            </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.companyId.errors?.required && (f.companyId.touched || submitted) ">
+                                            Company is required</mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">First Name *</label>
+                                        <span><input type="text" class="form-control" spaceTrimStartEndInput [maxlength]="50"
+                                                formControlName="userFirstName" [allowStartWithSpace]="false"
+                                                [ngClass]="{'disabled':editTabDisabled,'invalid-error': !f.userFirstName.valid && (f.userFirstName.dirty || f.userFirstName.touched || submitted)}"></span>
+                                        <ng-container
+                                            *ngIf="f.userFirstName.invalid && (f.userFirstName.touched || submitted)">
+                                            <mat-error
+                                                *ngIf="f.userFirstName.errors?.required && (f.userFirstName.touched || submitted)">
+                                                First name is required
+                                            </mat-error>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Last Name *</label>
+                                        <span><input type="text" class="form-control" required spaceTrimStartEndInput
+                                                formControlName="userLastName" [allowStartWithSpace]="false"  [maxlength]="50"
+                                                [ngClass]="{'disabled':editTabDisabled,'invalid-error': !f.userLastName.valid && (f.userLastName.dirty || f.userLastName.touched || submitted)}"></span>
+                                        <ng-container
+                                            *ngIf="f.userLastName.errors?.required && (f.userLastName.touched || submitted)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.userLastName.errors.required">Last
+                                                name is required
+                                            </mat-error>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="email">Email *</label>
+                                        <span><input class="form-control input-md" id="email" required type="text"
+                                                spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                                formControlName="emailAddress"  [maxlength]="250"
+                                                [ngClass]="{'disabled':editTabDisabled,'invalid-error': !f.emailAddress.valid && (f.emailAddress.dirty || f.emailAddress.touched || submitted)}"></span>
+                                        <ng-container
+                                            *ngIf="f.emailAddress.errors && (f.emailAddress.touched || submitted)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.emailAddress.errors?.required">Email
+                                                is
+                                                required</mat-error>
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.emailAddress.errors?.pattern && !f.emailAddress.errors.required">
+                                                Email
+                                                is invalid</mat-error>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Block Email <i class="fas fa-info-circle"
+                                                (click)="BlockEmailTooltip()" tooltipClass="tooltip-bg"></i></label>
+
+                                        <ng-template #BlockEmailTool>
+                                            <div class="mat-dialog-header">
+                                                <button type="button" class="close" mat-dialog-close
+                                                    (click)="closeModal()">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="text-left dialog-data">
+                                                <p class="mb-0">When ‘Yes’ this will block all emails except for new user, password reset and MFA emails.</p>
+                                            </div>
+                                        </ng-template>
+                                        <span><p-dropdown [options]="blockEmailList" optionLabel="Name" filterBy="Name"
+                                                [showClear]="true" formControlName="blockEmail" appendTo="body"
+                                                optionValue="Id" [showClear]="false" [disabled]="editTabDisabled">
+                                            </p-dropdown></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="phone">Mobile Phone</label>
+                                        <span> <input class="form-control input-md" id="phone" type="text"
+                                                formControlName="cellPhone" spaceTrimStartEndInput  [maxlength]="100"
+                                                [allowStartWithSpace]="false" [ngClass]="{'disabled':editTabDisabled}">
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="phone">Desk Phone</label>
+                                        <span><input class="form-control input-md" id="phone" type="text"
+                                                formControlName="userDeskPhone" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"  [maxlength]="100"
+                                                [ngClass]="{'disabled':editTabDisabled}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Employee
+                                            ID</label>
+                                        <span> <input type="email" class="form-control" id="exampleInputEmail1"
+                                                formControlName="employeeId" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"  [maxlength]="50"
+                                                [ngClass]="{'disabled':editTabDisabled}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="phone">Manager</label>
+                                        <span><p-dropdown [options]="managerList" placeholder="Select a Manager"
+                                                formControlName="managerId" optionValue="ManagerId"
+                                                optionLabel="ManagerName" [filter]="true" filterBy="ManagerName"
+                                                [showClear]="false" appendTo="body" [disabled]="editTabDisabled">
+                                            </p-dropdown></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="phone">Title</label>
+                                        <span><input class="form-control input-md" id="phone" type="text"
+                                                formControlName="userTitle" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"  [maxlength]="50"
+                                                [ngClass]="{'disabled':editTabDisabled}"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Department</label>
+                                        <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                                formControlName="department" [allowStartWithSpace]="false"
+                                                [maxlength]="50" [ngClass]="{'disabled':editTabDisabled}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Status</label>
+
+                                        <span><p-dropdown [options]="statusList" optionLabel="Name" filterBy="Name"
+                                                [showClear]="true"
+                                                [disabled]="editTabDisabled || action == 'Add' ? true : false"
+                                                formControlName="active" appendTo="body" optionValue="Id"
+                                                [showClear]="false">
+                                            </p-dropdown></span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Contact
+                                            Type</label>
+                                        <span><p-dropdown [options]="contacttypes" placeholder="Select Contact Type..."
+                                                formControlName="customerContactTypeId" optionValue="Id"
+                                                optionLabel="DisplayName" [filter]="true" filterBy="DisplayName"
+                                                [showClear]="false" appendTo="body" [disabled]="editTabDisabled">
+                                            </p-dropdown></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">People Custom
+                                            1</label>
+                                        <span> <input type="text" class="form-control" spaceTrimStartEndInput
+                                                formControlName="contactCustomField1" [allowStartWithSpace]="false"
+                                                [maxlength]="120"
+                                                [ngClass]="{'disabled':editTabDisabled}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">People Custom
+                                            2</label>
+                                        <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                                formControlName="contactCustomField2" [allowStartWithSpace]="false"
+                                                [maxlength]="120"
+                                                [ngClass]="{'disabled':editTabDisabled}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">People Custom
+                                            3</label>
+                                        <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                                formControlName="contactCustomField3" [allowStartWithSpace]="false"
+                                                [maxlength]="120"
+                                                [ngClass]="{'disabled':editTabDisabled}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">People Custom
+                                            4</label>
+                                        <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                                formControlName="contactCustomField4" [allowStartWithSpace]="false"
+                                                [maxlength]="120"
+                                                [ngClass]="{'disabled':editTabDisabled}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+
+                <mat-accordion class="example-headers-align user-activity-log notes-section" *ngIf="action == 'Edit'">
+                    <div>
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true" class="padding-none">
+                            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getPeopleNotes()"></button>
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="ficon fas fa-id-card"></i>&nbsp;Recent Notes
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <p-table [columns]="cols" [value]="notesRowData" [tableStyle]="{'width': '100%'}"
+                                class="p-table-recent-note">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                    <tr>
+                                        <td>{{rowData?.PeopleNoteCreatedDate}}</td>
+                                        <td>{{rowData?.Notes}}</td>
+                                        <td>
+                                            <i *ngIf="rowData?.IsPeopleNoteAttachment" class="fas fa-file cursor-pointer"
+                                                (click)="downloadPeopleAttachment(rowData)"></i>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+
+            </div>
+
+            <div class="col-sm-12 col-xl-6 padding-right-none">
+                <mat-accordion class="example-headers-align location-tab-main">
+                    <div>
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                            <button title="Link/Unlink Location" type="button" (click)="linkLocationPopup()"
+                                [disabled]="isOnlyCompanyUser || f?.accountId?.value== '' || f?.accountId?.value == null || f?.accountId?.value == undefined || editTabDisabled"
+                                class="btn btn-icon btn-outline-warning service-tab-btn"><i
+                                    class="fas fa-edit fs-14"></i></button>
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="fas fa-map-marked-alt"></i>&nbsp;Location
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row m-t-20">
+                                <div class="col-md-12 px-0 p-listbox-main">
+                                    <p-listbox [options]="source" (onChange)="onPListboxChange($event.value)"
+                                        [showToggleAll]="false" [checkbox]="true" [filter]="false"
+                                        [(ngModel)]="confirmed" [ngModelOptions]="{standalone: true}"
+                                        optionLabel="LocationDisplay" ariaFilterLabel="LocationDisplay"
+                                        class="people-listbox" [multiple]="true" [listStyle]="{'height': '64px'}"
+                                        [disabled]="editTabDisabled || isOnlyCompanyUser">
+
+                                        <ng-template let-location pTemplate="item">
+                                            <div class="country-item d-flex align-items-center" [ngClass]="{'disabled':editTabDisabled,'primary-location-bold': location.Id == f.primaryCompanyLocationId.value || location.PrimaryLocation}
+                                        ">
+                                                <span class="location-label">{{location.LocationDisplay}}</span>
+                                                <span class="badge m-r-5 badge-success h-100 ml-2"
+                                                    *ngIf="location.PrimaryLocation || location.Id == f.primaryCompanyLocationId.value">Primary</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-listbox>
+                                    <span style="float: right;">
+                                        <span class="" *ngIf="source?.length > 0 || this.confirmed.length > 0"
+                                            [ngClass]="{'disabled':editTabDisabled || !confirmed.length}"
+                                            (click)="openPrimaryLOCPopup()">
+                                            <span *ngIf="loadingSetPromary"
+                                                class="spinner-border spinner-border-sm mr-2"
+                                                [ngClass]="{'disabled' :editTabDisabled || loadingSetPromary }"
+                                                style="color: #4580FE;"> </span> <a
+                                                [ngClass]="{'disabled' :editTabDisabled || loadingSetPromary }"
+                                                class="set-primary-span bb1" style="cursor: pointer; color: #4580FE;">
+                                                Set Location As Primary </a>
+                                        </span>
+                                        <i *ngIf="source?.length > 0 || this.confirmed.length > 0"
+                                            class="fas fa-info-circle ml-2 icon-color set-primary-span" container="body"
+                                            tooltipClass="tooltip-bg tooltip-opacity" ngbTooltip="Primary Location designates the users assigned location. Additional locations assigned to the user are locations the user is associated with."></i>
+                                    </span>
+                                    <ng-container
+                                        *ngIf="f.primaryCompanyLocationId.invalid && (f.primaryCompanyLocationId.touched || submitted)">
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.primaryCompanyLocationId.errors.required">
+                                            Select at least one location and set as primary location
+                                        </mat-error>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+                <ng-container *ngIf="isRoleAccess">
+                    <mat-accordion class="example-headers-align system-access-accordian">
+                        <div>
+                            <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title class="matt">
+                                        <i class="ficon fas fa-users-cog"></i>&nbsp;System Access
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row m-t-20 mlr-0 system-access-wrapper">
+
+                                    <div class=""
+                                        [ngClass]="{'col-sm-12 col-xl-4 col-md-4' : action == 'Add', 'box-1 res-col-c col-sm-6 col-xl-3 col-md-6': action == 'Edit'}">
+                                        <div class="sacc2">
+                                            <div class="col-md-12 had hdec t-a-c role-padding"> <b>System Roles *</b>
+                                            </div>
+                                            <mat-radio-group class="d-block" formControlName="role">
+                                                <mat-radio-button *ngFor="let option of roleOptions; let i=index;"
+                                                    [checked]="option.selected" (change)="roleChange($event)"
+                                                    style="display: block;" [value]="option.value"
+                                                    [disabled]="editTabDisabled || option.disabled"
+                                                    class="m-l-10 custom-radio">{{option.label}}
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+                                    </div>
+
+                                    <div class=""
+                                        [ngClass]="{'col-sm-12 col-xl-4 col-md-4' : action == 'Add', 'box-2 res-col-c col-sm-6 col-xl-3 col-md-6': action == 'Edit'}">
+                                        <div class="sacc2">
+                                            <div class="col-md-12 had hdec t-a-c"> Other Roles</div>
+                                            <div formArrayName="otherRoles"
+                                                [ngClass]="{'disabled': this.f.role.value == 'None' }">
+                                                <ng-container
+                                                    *ngFor="let role of otherRoleList.controls; let i = index">
+                                                    <div class="form-group form-check" style="margin-left:10px;"
+                                                        [formGroupName]="i">
+                                                        <input formControlName="checked" type="checkbox"
+                                                            class="form-check-input" [id]="'otherRole_' + i"
+                                                            [ngClass]="{'disabled': editTabDisabled }"
+                                                            (change)="onUpdateRolesArray(otherAccessOptions, $event.target.checked, 'otherRoles', i)" />
+                                                        <label class="form-check-label float-right"
+                                                            [for]="'otherRole_' + i">{{otherAccessOptions[i].label}}</label>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=""
+                                        [ngClass]="{'col-sm-6 col-xl-4 col-md-4' : action == 'Add', 'box-3 res-col-c col-sm-6 col-xl-3 col-md-6': action == 'Edit'}">
+                                        <div class="sacc2">
+                                            <div class="col-md-12 had hdec t-a-c"> Portal Access</div>
+                                            <div formArrayName="portalRoles"
+                                                [ngClass]="{'disabled': this.f.role.value == 'None' }">
+                                                <ng-container
+                                                    *ngFor="let role of portalRoleList.controls; let i = index">
+                                                    <div class="form-group form-check" style="margin-left:10px;"
+                                                        [formGroupName]="i">
+                                                        <input formControlName="checked" type="checkbox"
+                                                            class="form-check-input" [id]="'portalRole_' + i"
+                                                            [ngClass]="{'disabled': editTabDisabled }"
+                                                            (change)="onUpdateRolesArray(portalAccessOptions, $event.target.checked, 'portalRoles', i)" />
+                                                        <label class="form-check-label float-right"
+                                                            [for]="'portalRole_' + i">{{portalAccessOptions[i].label}}</label>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-4 res-col-c col-sm-6 col-xl-3 col-md-6 px-2 d-flex"
+                                        *ngIf="isRoleAccess && action == 'Edit'">
+                                        <div style="display:inline-grid;">
+                                            <div class="form-group mt-3">
+                                                <label class="form-label" for="ua">User Account</label>
+                                                <p-dropdown [options]="userAcccount" optionLabel="Name" [filter]="true"
+                                                    filterBy="Name" [showClear]="true"
+                                                    placeholder="Select User Account..."
+                                                    formControlName="userAccountStateLock" appendTo="body"
+                                                    optionValue="Id" [showClear]="false" [disabled]="editTabDisabled">
+                                                </p-dropdown>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="ev" style="padding-right: 26px;">
+                                                    Email Verification
+                                                    <span class="verified-button d-inline px-0"
+                                                        [class.disabled1]="editTabDisabled || isDisabled">
+
+                                                        <div [ngClass]="{'redB error':!userVerified,'greenB':userVerified}"
+                                                            class="inbtn" (click)="menu.toggle($event)">
+                                                            <i class="fas fa-check"
+                                                                [ngClass]="{'red':!userVerified,'green':userVerified}">
+                                                            </i>
+                                                        </div>
+                                                    </span></label>
+                                                <p-dropdown [options]="emailVerificationList" optionLabel="Name"
+                                                    [filter]="true" filterBy="Name" [showClear]="true"
+                                                    placeholder="Select Email Verification..."
+                                                    formControlName="emailVerified" appendTo="body" optionValue="Id"
+                                                    [showClear]="false" [disabled]="editTabDisabled">
+                                                </p-dropdown>
+
+                                                <p-menu #menu [popup]="true" appendTo="body" [model]="items"></p-menu>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row mt-2 m-t-20 mlr-0"> -->
+                                <!-- <div class="col-sm-12 col-xl-6 col-md-6 role-padding">
+                                        <div class="form-group">
+                                            <label class="form-label" for="ua">User Account</label>
+                                            <span><p-dropdown [options]="userAcccount" optionLabel="Name"
+                                                    [filter]="true" filterBy="Name" [showClear]="true"
+                                                    placeholder="Select User Account..."
+                                                    formControlName="userAccountStateLock" appendTo="body" optionValue="Id"
+                                                    [showClear]="false">
+                                                </p-dropdown></span>
+                                        </div>
+                                    </div> -->
+                                <!-- <div class="col-sm-12 col-xl-6 col-md-6 role-padding">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="ev" style="padding-right: 26px;">
+                                                Email Verification 
+                                                <span class="verified-button d-inline px-0" [class.disabled]="isDisabled">
+                                                    
+                                                    <div [ngClass]="{'redB error':!userVerified,'greenB':userVerified}" class="inbtn" (click)="menu.toggle($event)">
+                                                        <i class="fas fa-check" [ngClass]="{'red':!userVerified,'green':userVerified}"> </i>
+                                                    </div>
+                                                </span></label>
+                                            <span><p-dropdown [options]="emailVerificationList" optionLabel="Name"
+                                                    [filter]="true" filterBy="Name" [showClear]="true"
+                                                    placeholder="Select Email Verification..."
+                                                    formControlName="emailVerified" appendTo="body" optionValue="Id"
+                                                    [showClear]="false">
+                                                </p-dropdown></span>
+
+                                            <p-menu #menu [popup]="true" appendTo="body" [model]="items"></p-menu>
+                                        </div>
+                                    </div> -->
+                                <!-- </div> -->
+
+
+                            </mat-expansion-panel>
+                        </div>
+                    </mat-accordion>
+                </ng-container>
+            </div>
+            <div class="col-sm-12 col-xl-12">
+                <div class="text-center mb-0 margin-b-none">
+                    <button type="submit" uiSref="work" class="btn btn-primary btn-raised"
+                        [disabled]="editTabDisabled || !viewNEdit || saveButtonLoader">
+                        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>
+                        Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div *ngIf="action == 'Edit'">
+
+        <mat-accordion class="example-headers-align user-activity-log large-note-section">
+            <div>
+                <mat-expansion-panel style="width: 100%;" [expanded]="true" class="margin-top-10 padding-none">
+                    <button  *ngIf="action == 'Edit'" type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getUserByEmail()"></button>
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title>
+                            <i class="fas fa-user-clock"></i>&nbsp;People Activity Log
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div>
+
+                        <div class="" [ngClass]="activityDataSource.length > 0 ? 'tbData': ''">
+                            <ng-container *ngIf="activityDataSource.length > 0">
+
+                                <p-table [value]="activityDataSource" class="p-table-people-activity">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Action</th>
+                                            <th>Date/Time</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-element>
+                                        <tr>
+                                            <td>{{ element.UserInfo }}</td>
+                                            <td>{{ element.ActionDesc }}</td>
+                                            <td>{{convertToDateTime(element.ActionDate)}}</td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="3" class="text-center">Loading...</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+
+                            </ng-container>
+                            <ng-container *ngIf="!activityDataSource.length">
+                                <div class="mrleft40">No Record found</div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </mat-accordion>
+    </div>
+</app-card>

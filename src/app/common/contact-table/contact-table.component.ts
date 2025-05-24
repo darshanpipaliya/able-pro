@@ -12,6 +12,7 @@ import { TreeNode } from 'primeng/api';
 import { filterOptionsText } from 'src/app/services/common-p-table';
 import { CommonPTreeTableComponent } from '../common-p-tree-table/common-p-tree-table.component';
 import { api_list } from 'src/app/services/api-list';
+import { createColumn } from 'src/app/utils/column-utils';
 
 interface arrDate {
   filterKey: any;
@@ -67,17 +68,10 @@ export class ContactTableComponent implements OnInit {
   files: TreeNode[];
   cols: any[];
   totalRecords: number = 0;
-  selectedFiles!: any[];
-  countries = filterOptionsText();
-  selectedOption1: any = this.countries[0].name;
-  selectedOption2: any = this.countries[0].name;
 
   private _unsubscribeGRid: Subject<any> = new Subject<any>();
   private _unsubscribeService: Subject<any> = new Subject<any>();
 
-  innerLoading = false;
-  @ViewChild('treeTable') treeTable!: any;
-  @ViewChild('contextMenu') contextMenu: any;
   selectedRecords: any = [];
   selectedRows: number = 0;
   refreshbutton: boolean = false;
@@ -86,16 +80,15 @@ export class ContactTableComponent implements OnInit {
   @Output() selectedRowsEmit: EventEmitter<any> = new EventEmitter();
   @Output() rowCellDoubleClicked: EventEmitter<any> = new EventEmitter();
   
-  
   @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
-  selectedNode: any;
   @Output() loaderEmitParent: EventEmitter<any> = new EventEmitter();
-
+  
+  selectedNode: any;
   payload: any = {};
-  GridAPI: any = api_list.Location.Location.peoplesLoggedInUserData;
   loader: boolean = false;
+  GridAPI: any = api_list.Location.Location.peoplesLoggedInUserData;
+  
   close = "undefined";
-
   constructor(
     private variableManageService: VariableManageService,
     private sanitized: DomSanitizer,
@@ -131,38 +124,6 @@ export class ContactTableComponent implements OnInit {
   }
 
   setCols() {
-    const createColumn = (
-      parent: number,
-      width: string,
-      isChildren: boolean,
-      type: string,
-      header: string,
-      field: string,
-      childHeader: string,
-      columnGroupShow: string = 'close',
-      colspan: number = 1,
-      parentWidth: number = 150,
-      isParentVisible: boolean = true,
-      displayCheckboxColumns: boolean = true,
-      isToggle: boolean = true
-    ): ColumnDefinition => ({
-      parent,
-      isicon: 1,
-      width,
-      valuesset: null,
-      isenable: false,
-      isChildren,
-      type,
-      header,
-      columnGroupShow,
-      field,
-      childHeader,
-      colspan,
-      parentWidth,
-      isParentVisible,
-      displayCheckboxColumns,
-      isToggle
-    });
 
     // Initialize parent counter
     let currentParent = 0;

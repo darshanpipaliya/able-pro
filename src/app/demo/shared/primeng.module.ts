@@ -10,6 +10,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { TreeModule } from 'primeng/tree';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TableModule } from 'primeng/table';
+import { ListboxModule } from 'primeng/listbox';
 @NgModule({
   declarations: [],
   imports: [
@@ -23,6 +24,7 @@ import { TableModule } from 'primeng/table';
     TreeModule,
     CheckboxModule,
     TableModule,
+    ListboxModule
   ],
   exports: [
     DropdownModule,
@@ -34,6 +36,7 @@ import { TableModule } from 'primeng/table';
     TreeModule,
     CheckboxModule,
     TableModule,
+    ListboxModule
   ]
 })
 export class PrimgModule {}
