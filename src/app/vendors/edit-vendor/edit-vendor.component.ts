@@ -2,19 +2,24 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DualListComponent } from 'angular-dual-listbox';
+import { AngularDualListBoxModule, DualListComponent } from 'angular-dual-listbox';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ErrorWarningPopupComponent } from 'src/app/common/error-warning-popup/error-warning-popup.component';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { rolePermission } from 'src/app/services/helper';
 import { LocationService } from 'src/app/services/location.service';
+import { InvoiceDataRetrivalComponent } from '../invoice-data-retrival/invoice-data-retrival.component';
+import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 @Component({
   selector: 'app-edit-vendor',
   templateUrl: './edit-vendor.component.html',
   styleUrls: ['./edit-vendor.component.scss'],
   imports: [
     SharedModule,
+    PrimgModule,
+    InvoiceDataRetrivalComponent,
+    AngularDualListBoxModule
   ]
 })
 export class EditVendorComponent implements OnInit, OnDestroy {

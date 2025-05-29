@@ -5,8 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UrlToolsService } from './url-tools.service';
 
-
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 export class RetrievalService {
     baseUrl = environment.base_url;
     constructor(private http: HttpClient, private urlTools: UrlToolsService) { }

@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActionPopupComponent } from 'src/app/common/action-popup/action-popup.component';
 import { ErrorWarningPopupComponent } from 'src/app/common/error-warning-popup/error-warning-popup.component';
+import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { LocationService } from 'src/app/services/location.service';
 
@@ -11,7 +12,8 @@ import { LocationService } from 'src/app/services/location.service';
   templateUrl: './add-retrieval-file.component.html',
   styleUrls: ['./add-retrieval-file.component.scss'],
   imports: [
-    SharedModule
+    SharedModule,
+    PrimgModule
   ]
 })
 export class AddRetrievalFileComponent implements OnInit {

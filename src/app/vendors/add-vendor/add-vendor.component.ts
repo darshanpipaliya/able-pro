@@ -9,13 +9,18 @@ import { rolePermission } from 'src/app/services/helper';
 import { ErrorWarningPopupComponent } from 'src/app/common/error-warning-popup/error-warning-popup.component';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { InvoiceDataRetrivalComponent } from '../invoice-data-retrival/invoice-data-retrival.component';
+import { AngularDualListBoxModule } from 'angular-dual-listbox';
+import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 @Component({
   selector: 'app-add-vendor',
   templateUrl: './add-vendor.component.html',
   styleUrls: ['./add-vendor.component.scss'],
+  standalone: true,
   imports: [
     SharedModule,
-    InvoiceDataRetrivalComponent
+    PrimgModule,
+    InvoiceDataRetrivalComponent,
+    AngularDualListBoxModule
   ]
 })
 export class AddVendorComponent implements OnInit, OnDestroy {

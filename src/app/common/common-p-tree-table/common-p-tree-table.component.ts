@@ -54,6 +54,7 @@ export class CommonPTreeTableComponent {
   @Input() buttonTemplate!: TemplateRef<any>;
   @Input() arrayKey: any;
   @Input() nodeKey: any;
+  @Input() APIMethod: any = 'POST';
   files: TreeNode[];
   displaycols: any[];
   loading: boolean = false;
@@ -338,7 +339,7 @@ export class CommonPTreeTableComponent {
     this._unsubscribeGRid.next(null);
     if (allOptionsClear) this.files = [];
     this.locationService
-      .callPTreeTabAPI(this.GridAPI, payloadData, 'POST', this.ids)
+      .callPTreeTabAPI(this.GridAPI, payloadData, this.APIMethod, this.ids)
       .pipe(takeUntil(this._unsubscribeGRid))
       .subscribe(
         {
@@ -481,7 +482,7 @@ export class CommonPTreeTableComponent {
       this._unsubscribeGRid.next(null);
 
       this.locationService
-        .callPTreeTabAPI(this.GridAPI, data, 'POST', this.ids)
+        .callPTreeTabAPI(this.GridAPI, data, this.APIMethod, this.ids)
         .pipe(takeUntil(this._unsubscribeGRid))
         .subscribe(
           {

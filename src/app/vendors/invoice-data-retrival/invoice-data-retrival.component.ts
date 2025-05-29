@@ -19,6 +19,8 @@ import { createColumn } from 'src/app/utils/column-utils';
     selector: 'app-invoice-data-retrival',
     templateUrl: './invoice-data-retrival.component.html',
     styleUrls: ['./invoice-data-retrival.component.scss'],
+    standalone:true,
+    providers: [RetrievalService],
     imports: [CommonPTreeTableComponent, SharedModule, PrimgModule]
 })
 export class InvoiceDataRetrivalComponent implements OnInit {
@@ -94,7 +96,6 @@ export class InvoiceDataRetrivalComponent implements OnInit {
     ids: any = {};
     constructor(public dialog: MatDialog, private fb: FormBuilder,
         public retrievalService: RetrievalService, public locationService: LocationService) {
-        this.ids = { id: this.vendorData.VendorAccountId };
         
         this.retrievalForm = fb.group({
             invoiceSource: new FormControl('', [Validators.required]),
@@ -119,6 +120,7 @@ export class InvoiceDataRetrivalComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.ids = { id: this.vendorData.VendorAccountId };
         this.viewNEdit = rolePermission(['SuperTEMAdmin', 'SuperTEMManager', 'SuperTEMUser']);
 
         this.getDataRetrievalSource();
@@ -162,7 +164,9 @@ export class InvoiceDataRetrivalComponent implements OnInit {
       }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.pageType = changes['type'].currentValue;
+        if (changes && changes['type'] && changes['type'].currentValue) {
+            this.pageType = changes['type'].currentValue;
+        }
     }
 
     getDetail() {

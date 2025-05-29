@@ -394,7 +394,7 @@
                                         <div class="card mb-0">
                                             <app-common-p-tree-table [refreshbutton]="refreshbutton"
                                             [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)"
-                                            [cols]="cols" [ids]="ids"
+                                            [cols]="cols" [ids]="ids" [APIMethod]="'GET'"
                                             (exportAccountData)="exportAccountDataFn($event)"
                                             (selectedRowsEmit)="selectedRowsEmitFn($event)"
                                             (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
