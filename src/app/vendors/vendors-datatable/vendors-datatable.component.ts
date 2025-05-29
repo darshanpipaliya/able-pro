@@ -286,6 +286,13 @@ export class VendorsDatatableComponent implements OnInit {
   onButtonClick(value: string): void {
     this.selectedButton = value;
     this.currentIndex = 0;
+    setTimeout(() => this.goToPage(value), 0);  // Avoid layout thrash
+  }
+
+  goToPage(to: any) {
+    if (to === 'billing-alias') {
+      this.router.navigate(['/vendors/billing-alias']);
+    }
   }
 
   setCols() {

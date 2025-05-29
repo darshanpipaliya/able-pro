@@ -7,7 +7,8 @@
                     [currentIndex]="currentIndex" [loaderParent]="loaderParent"
                     [currentOpenEditPagevar]="currentOpenEditPagevar" [isDisabledExport]="isDisabledExport"
                     [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit" [trackByIndex]="trackByIndex"
-                    (exportDataAsExcel)="onBtnExportDataAsExcel()" (add)="addVendor()"></app-header-section>
+                    (exportDataAsExcel)="onBtnExportDataAsExcel()" (add)="addVendor()"
+                    (buttonClick)="onButtonClick($event)"></app-header-section>
 
                 <div class="table-responsive">
                     <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)"
