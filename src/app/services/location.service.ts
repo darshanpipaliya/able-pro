@@ -1857,14 +1857,7 @@ export class LocationService {
     )
   }
 
-  getDataretrievalData(id: any): Observable<any> {
-    return this.http.get(this.urlTools.addDynamicURL(this.getDataretrieval, { id: id })).pipe(
-      catchError((err) => {
-        this.tokenExpired(err)
-        return throwError(() => err);
-      })
-    );
-  }
+
 
   getRequiredDR(): Observable<any> {
     return this.http.get(this.getRequiredUrl).pipe(
@@ -4356,6 +4349,15 @@ export class LocationService {
   getLocationPeople(id: any, data: any): Observable<any> {
     return this.http.post(this.urlTools.addDynamicURL(this.getLocationPeopleUrl, { id: id }), data).pipe(
 
+      catchError((err) => {
+        this.tokenExpired(err)
+        return throwError(() => err);
+      })
+    );
+  }
+
+  getDataretrievalData(id: any): Observable<any> {
+    return this.http.get(this.urlTools.addDynamicURL(this.getDataretrieval, { id: id })).pipe(
       catchError((err) => {
         this.tokenExpired(err)
         return throwError(() => err);

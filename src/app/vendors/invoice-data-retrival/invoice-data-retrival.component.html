@@ -1,0 +1,415 @@
+<div class="row">
+    <div class="col-12 px-0">
+        <app-card cardTitle="Invoice Retrieval">
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 text-right">
+                        <span class="text-c-red">*Required field</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-xl-6 padding-left-none content-height-100 ir-res-b-space">
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title class="matt font-weight-bold">
+                                        <i class="ficon fas fa-hotel"></i>&nbsp;Invoice Retrieval
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <form [formGroup]="retrievalForm">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Invoice Source * </label>
+                                                <span><p-dropdown appendTo="body" optionLabel="text" optionValue="id"
+                                                        [options]="invoiceSource" placeholder="Select Source..."
+                                                        [ngClass]="{'invalid-error': f['invoiceSource'].invalid && (f['invoiceSource'].dirty || f['invoiceSource'].touched || submitted)}"
+                                                        formControlName="invoiceSource">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f['invoiceSource'].invalid && (f['invoiceSource'].touched || submitted)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f['invoiceSource'].errors.required">
+                                                        Invoice Source is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Retrieval Method *
+                                                </label>
+                                                <span> <p-dropdown appendTo="body" optionLabel="DisplayName"
+                                                        [options]="invoiceretrievalMethod" optionValue="Id"
+                                                        [ngClass]="{'invalid-error': f['invoiceRetrievalMethodId'].invalid && (f['invoiceRetrievalMethodId'].dirty || f['invoiceRetrievalMethodId'].touched || submitted)}"
+                                                        placeholder="Select Retrieval Method..."
+                                                        formControlName="invoiceRetrievalMethodId">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f['invoiceRetrievalMethodId'].invalid && (f['invoiceRetrievalMethodId'].touched || submitted)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f['invoiceRetrievalMethodId'].errors.required">
+                                                        Retrieval Method is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Retrieval # Days * <i
+                                                        class="fas fa-info-circle" container="body"
+                                                        tooltipClass="tooltip-bg"
+                                                        ngbTooltip="Quantity of days after the Bill Day until the data files are expected."></i></label>
+                                                <span><p-dropdown appendTo="body" [options]="days"
+                                                        [ngClass]="{'invalid-error': f['invoiceRecieveDays'].invalid && (f['invoiceRecieveDays'].dirty || f['invoiceRecieveDays'].touched || submitted)}"
+                                                        formControlName="invoiceRecieveDays"
+                                                        placeholder="Select Day...">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f['invoiceRecieveDays'].invalid && (f['invoiceRecieveDays'].touched || submitted)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f['invoiceRecieveDays'].errors.required">
+                                                        Retrieval Days is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Missing # Days *
+                                                    <i class="fas fa-info-circle" container="body"
+                                                        tooltipClass="tooltip-bg"
+                                                        ngbTooltip="Quantity of days after the Bill Day until the data files are considered missing."></i></label>
+                                                <span> <p-dropdown appendTo="body" [options]="days"
+                                                        [ngClass]="{'invalid-error': f['invoiceMissingDays'].invalid && (f['invoiceMissingDays'].dirty || f['invoiceMissingDays'].touched || submitted)}"
+                                                        formControlName="invoiceMissingDays"
+                                                        placeholder="Select Day...">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f['invoiceMissingDays'].invalid && (f['invoiceMissingDays'].touched || submitted)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f['invoiceMissingDays'].errors.required">
+                                                        Missing Days is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Pay by # Days * <i
+                                                        class="fas fa-info-circle" container="body"
+                                                        tooltipClass="tooltip-bg"
+                                                        ngbTooltip="Quantity of days after the Bill Day until the invoice payment is due."></i></label>
+                                                <span><p-dropdown appendTo="body" [options]="days"
+                                                        [ngClass]="{'invalid-error': f['invoicePayByDays'].invalid && (f['invoicePayByDays'].dirty || f['invoicePayByDays'].touched || submitted)}"
+                                                        formControlName="invoicePayByDays" placeholder="Select Day...">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f['invoicePayByDays'].invalid && (f['invoicePayByDays'].touched || submitted)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f['invoicePayByDays'].errors.required">
+                                                        Pay by Days is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 padding-1-1">
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1" class="form-label font-weight-500">
+                                                    URL * <i
+                                                    class="fas fa-info-circle"  container="body"
+                                                    tooltipClass="tooltip-bg"
+                                                    ngbTooltip="Link to the site containing the invoice or data files for this vendor."></i></label>
+                                                <span> <input type="text" class="form-control"
+                                                        [ngClass]="{'invalid-error': !f['invoiceRetrievalWebURL'].valid && (f['invoiceRetrievalWebURL'].dirty || f['invoiceRetrievalWebURL'].touched || submitted)}"
+                                                        formControlName="invoiceRetrievalWebURL"></span>
+                                                <ng-container *ngIf="f['invoiceRetrievalWebURL'].invalid && (f['invoiceRetrievalWebURL'].touched || submitted)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f['invoiceRetrievalWebURL'].errors.required">
+                                                        URL is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 padding-1-1">
+                                            <div class="form-group">
+                                                <label class="form-label">Notes</label>
+                                                <span><textarea class="form-control textarea-row-fix"
+                                                        formControlName="invoiceRetrievalNote" maxlength="500"
+                                                        rows="3"></textarea></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 padding-1-1">
+                                            <div class="custom-control custom-checkbox text-left">
+                                                <input type="checkbox" (change)="copyForm($event)"
+                                                    class="custom-control-input" id="isCheckCopy">
+                                                <label for="isCheckCopy" class="custom-control-label">Copy to Data
+                                                    Retrieval</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-6 padding-right-none content-height-100">
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title class="matt">
+                                        <i class="ficon fas fa-id-card-alt"></i>&nbsp;Data Retrieval
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <form class="px-0" [formGroup]="dataRetrievalForm">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Data Source * </label>
+                                                <span><p-dropdown appendTo="body" optionLabel="Source" optionValue="Id"
+                                                        [options]="dataSources" placeholder="Select Source..."
+                                                        [ngClass]="{'invalid-error': f1['dataRetrievalSourceId'].invalid && 
+                                                        (f1['dataRetrievalSourceId'].dirty || f1['dataRetrievalSourceId'].touched || submitted1)}"
+                                                        formControlName="dataRetrievalSourceId">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f1['dataRetrievalSourceId'].invalid && (f1['dataRetrievalSourceId'].touched || submitted1)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f1['dataRetrievalSourceId'].errors.required">
+                                                        Data Source is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Retrieval Method *
+                                                </label>
+                                                <span> <p-dropdown appendTo="body" optionLabel="DisplayName"
+                                                        [options]="retrievalMethod" optionValue="Id"
+                                                        (onChange)="retrievalMethod1()"
+                                                        [ngClass]="{'invalid-error': f1['dataRetrievalMethodId'].invalid && 
+                                                        (f1['dataRetrievalMethodId'].dirty || f1['dataRetrievalMethodId'].touched || submitted1)}"
+                                                        placeholder="Select Retrieval Method..."
+                                                        formControlName="dataRetrievalMethodId">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f1['dataRetrievalMethodId'].invalid && (f1['dataRetrievalMethodId'].touched || submitted1)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f1['dataRetrievalMethodId'].errors.required">
+                                                        Retrieval Method is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Retrieval # Days * <i
+                                                        class="fas fa-info-circle" container="body"
+                                                        tooltipClass="tooltip-bg"
+                                                        ngbTooltip="Quantity of days after the Bill Day until the invoice is expected. "></i></label>
+                                                <span><p-dropdown appendTo="body" [options]="days"
+                                                        [ngClass]="{'invalid-error': f1['dataRecieveDays'].invalid && (f1['dataRecieveDays'].dirty || f1['dataRecieveDays'].touched || submitted1)}"
+                                                        formControlName="dataRecieveDays" placeholder="Select Day...">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f1['dataRecieveDays'].invalid && (f1['dataRecieveDays'].touched || submitted1)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f1['dataRecieveDays'].errors.required">
+                                                        Retrieval Days is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Missing # Days *
+                                                    <i class="fas fa-info-circle" container="body"
+                                                        tooltipClass="tooltip-bg"
+                                                        ngbTooltip="Quantity of days after the Bill Day until the invoice is considered missing."></i></label>
+                                                <span> <p-dropdown appendTo="body" [options]="days"
+                                                        [ngClass]="{'invalid-error': f1['dataMissingDays'].invalid && (f1['dataMissingDays'].dirty || f1['dataMissingDays'].touched || submitted1)}"
+                                                        formControlName="dataMissingDays" placeholder="Select Day...">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f1['dataMissingDays'].invalid && (f1['dataMissingDays'].touched || submitted1)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f1['dataMissingDays'].errors.required">
+                                                        Missing Days is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Processing Method *</label>
+                                                <span> <p-dropdown appendTo="body" optionValue="Id"
+                                                        optionLabel="DisplayName" [options]="processingMethod"
+                                                        formControlName="dataRetrievalProcessingMethodId"
+                                                        (onChange)="changeProcessingMethod($event)"
+                                                        [ngClass]="{'invalid-error': f1['dataRetrievalProcessingMethodId'].invalid && (f1['dataRetrievalProcessingMethodId'].dirty || f1['dataRetrievalProcessingMethodId'].touched || submitted1)}"
+                                                        placeholder="Select Method...">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f1['dataRetrievalProcessingMethodId'].invalid && (f1['dataRetrievalProcessingMethodId'].touched || submitted1)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f1['dataRetrievalProcessingMethodId'].errors.required">
+                                                        Processing Method is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1" *ngIf="isShowRequired" >
+                                            <div class="form-group">
+                                                <label class="form-label font-weight-500">Template Type {{isShowRequired ? '*' :''}}</label>
+                                                <span> <p-dropdown appendTo="body" optionValue="Id" optionLabel="Type" 
+                                                        [options]="templateType" placeholder="Select Type..."
+                                                        formControlName="dataRetrievalTemplateTypeId"
+                                                        [ngClass]="{'invalid-error': f1['dataRetrievalTemplateTypeId'].invalid && (f1['dataRetrievalTemplateTypeId'].dirty || f1['dataRetrievalTemplateTypeId'].touched || submitted1)}">
+                                                    </p-dropdown></span>
+                                                <ng-container
+                                                    *ngIf="f1['dataRetrievalTemplateTypeId'].invalid && (f1['dataRetrievalTemplateTypeId'].touched || submitted1)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f1['dataRetrievalTemplateTypeId'].errors.required">
+                                                        Template Type is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 padding-1-1">
+                                            <div class="form-group" *ngIf="showDataRetrivalUrl">
+                                                <label for="exampleInputPassword1" class="form-label font-weight-500">
+                                                    URL *</label>
+                                                <span> <input type="text" class="form-control"
+                                                        formControlName="dataRetrievalWebURL"
+                                                        [ngClass]="{'invalid-error': !f1.dataRetrievalWebURL.valid && (f1.dataRetrievalWebURL.dirty || f1.dataRetrievalWebURL.touched || submitted1)}"></span>
+                                                <ng-container *ngIf="f1.dataRetrievalWebURL.invalid && (f1.dataRetrievalWebURL.touched || submitted1)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f1.dataRetrievalWebURL.errors.required">
+                                                        URL is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 padding-1-1">
+                                            <div class="form-group">
+                                                <label class="form-label">Notes</label>
+                                                <span><textarea class="form-control textarea-row-fix"
+                                                        formControlName="dataRetrievalNote" maxlength="500" rows="3"></textarea></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="text-center margin-b-none">
+                            <button type="submit" (click)="saveRetrieval()" [disabled]="!viewNEdit || saveDisabled"
+                                uiSref="work" class="btn  btn-primary btn-raised my-3">
+                                <span class="spinner-border spinner-border-sm mr-2" role="status"
+                                    *ngIf="saveDisabled"></span>
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12 px-0">
+                        <mat-accordion class="example-headers-align data-ret-file-accordian-body">
+                            <div class="row">
+                                <div class="col-12 p-0">
+                                    <mat-expansion-panel [expanded]="true"
+                                        class="panel-border-none select-charge-table-bottom-space">
+                                        <!-- title="Link Associated Inventory" -->
+                                        <button title="Add Data Retrieval File" type="button"
+                                            (click)="AddRetrievalFile()" [disabled]="!viewNEdit"
+                                            class="btn btn-icon btn-outline-primary data-ret-file-lf-btn">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+
+                                        <!-- <button type="button" (click)="EditRetrievalFile()"
+                                            class="btn btn-icon btn-outline-primary">
+                                            <i class="fas fa-plus"></i>
+                                        </button> -->
+                                        <i class="fas fa-info-circle data-ret-file-tooltip" (click)="openTooltipDialog()"></i>
+                                        <button type="button" class="fas fa-check c-refresh-speed" style="left: 50px; top: 4px;" title="Refresh" (click)="getDataretrievalData(true)"></button>
+                                        <mat-expansion-panel-header class="math">
+                                            <mat-panel-title class="matt">
+                                                <i class="fas ficon fas fa-user-clock "></i>&nbsp;Data Retrieval Files
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        
+                                            <ng-template #tooltipText>
+                                                <div class="mat-dialog-header">
+                                                    <button type="button" class="close" mat-dialog-close>
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                <div class="text-left dialog-data">
+                                                    <p class="mb-2">The data files are uploaded and verified according to the details provided. The initial validation is performed using the Vendor File Name and its extension. In cases where a Vendor has multiple file exports with identical names, each duplicate is renamed by combining the Vendor File Name and Short Name. For instance, if the Vendor File Name is "Account_Summary" and the short name is "ASI", the updated file name would be "Account_Summary_ASI".</p>
+
+                                                    <p class="mb-2"><strong>Vendor Report Name:</strong> This is the name of the report requested or retrieved from the Vendor. It is often a “friendly” name that describes the nature of the data it contains. As an example, if we retrieve the files via a website, the Vendor Report Name would be the name of the report as it is reflected within the Vendor’s online portal.</p>
+
+                                                    <p class="mb-2"><strong>Vendor File Name:</strong> This is the actual name of the resulting file produced by the vendor when the report is requested or retrieved. Sometimes this is the same as the Vendor Report Name, but often it is different and contains additional identifying information like an internal vendor identifier, account number, bill period date, etc.</p>
+
+                                                    <p class="mb-0"><strong>Short Name:</strong> This is the shortened and standardized name we assign to the file to help with internal communication and filing naming conventions.</p>
+
+                                                    
+                                                </div>
+                                            </ng-template>
+                                        <div class="card mb-0">
+                                            <app-common-p-tree-table [refreshbutton]="refreshbutton"
+                                            [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)"
+                                            [cols]="cols" [ids]="ids"
+                                            (exportAccountData)="exportAccountDataFn($event)"
+                                            (selectedRowsEmit)="selectedRowsEmitFn($event)"
+                                            (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
+                                            (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
+                                            (totalRecordsEmit)="totalRecordsEmitFn($event)"
+                                            (loaderEmit)="loaderEmitFn($event)" />
+
+                                        </div>
+                                    </mat-expansion-panel>
+                                </div>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+        </app-card>
+    </div>
+</div>

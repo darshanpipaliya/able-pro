@@ -113,6 +113,12 @@ export function extractDataAndLeaf(item: any) {
     };
 }
 
+export function extractDataPtable(item: any) {
+    return {
+        data: extractData(item),
+    };
+}
+
 export function nodeUnselect(e: any, cols: any, selectedFiles: any) {
     return cols.forEach((item: any) => {
         if (e.node.isparent && item.parent === e.node.parentid) {

@@ -63,13 +63,6 @@
                 </div>
             </ng-template>
             <ng-container style="height: max-content;">
-                <!-- <app-ag-grid-table [columnDefs]="columnDefs1" [rowSelection]="rowSelection"
-                    (onAgGridReady)="onAgGridReady($event)" [gridOptions]="gridOptions"
-                    (onCellDoubleClickedEvent)="onCellDoubleClicked($event)" [suppressRowClickSelection]="true"
-                    [defaultColDef]="defaultColDef" [isRelodButtonVisible]="false" [sheetName]="'Cost Center Structure'"
-                    [exportFilename]="'Cost Center Structure.xlsx'" [sideBar]="sideBar" [singleClickEdit]="true">
-                </app-ag-grid-table> -->
-
 
                 <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI"
                      (tableDataExist)="tableDataExistFn($event)" [cols]="cols" [preAppliedfilterArr]="preAppliedfilterArr"

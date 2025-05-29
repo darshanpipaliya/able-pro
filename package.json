@@ -42,6 +42,7 @@
     "@popperjs/core": "^2.11.8",
     "ag-grid-enterprise": "^33.2.4",
     "angular-calendar": "0.31.1",
+    "angular-dual-listbox": "^7.0.0",
     "angular-feather": "^6.5.1",
     "angular-uploader": "8.41.1",
     "angularx-flatpickr": "8.1.0",

@@ -1,0 +1,156 @@
+.row {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mat-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    // border-bottom: 1px solid #e2e5e8;
+    line-height: 1.2em;
+    top: -10px;
+    color: #37474f;
+    font-weight: 600;
+}
+
+.mat-dialog-content {
+    max-height: calc(90vh - 160px) !important;
+}
+
+
+p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+:host ::ng-deep .mat-dialog-container {
+    padding: 15px !important;
+}
+
+// .form-control {
+//     border: 1px solid #ced4da;
+// }
+
+.browse-btn-group {
+    width: 50%;
+}
+
+.btn.browse-btn {
+    border-radius: 0 !important;
+}
+
+button.cancel-btn {
+    padding: 0;
+    background: transparent;
+    color: #4680ff;
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+button.cancel-btn:hover {
+    background-color: transparent !important;
+}
+
+:host ::ng-deep button.cancel-btn:hover .mat-button-focus-overlay {
+    opacity: 0;
+}
+
+.form-control.search-text {
+    height: 34px;
+    padding: 5px 8px;
+}
+
+.add-data-file-disc {
+    margin: 10px 0 0 10px;
+}
+
+.download-link {
+    margin: 25px 0 0 25px;
+}
+
+.browse-btn {
+    padding: 5px 8px;
+}
+
+button.download-template-btn {
+    padding: 0;
+    background: transparent;
+    color: #4680ff;
+    text-decoration: underline;
+    border: none;
+}
+
+.download-template-btn.btn-primary:not(:disabled):not(.disabled):active {
+    background: transparent;
+    color: #4680ff;
+}
+
+:host ::ng-deep .editForm .row .col-md-6 {
+    padding-left: 0px !important;
+    padding-right: 3px !important;
+}
+
+:host ::ng-deep .editForm .row .col-md-6:nth-child(2n + 2) {
+    padding-left: 3px !important;
+    padding-right: 0px !important;
+}
+
+:host ::ng-deep .editForm .row .col-md-12 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.form-label {
+    font-weight: 500 !important;
+}
+
+:host ::ng-deep .form-control {
+    height: unset !important;
+    padding: 0px 0;
+}
+
+:host ::ng-deep .form-group {
+    margin-bottom: 10px !important;
+}
+
+:host ::ng-deep .form-group label {
+    float: left !important;
+}
+
+:host ::ng-deep .form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+input.form-control.search-text{
+    border :1px solid #ced4da !important;
+}
+
+
+
+@media only screen and (max-width: 767px) {
+
+    .browse-btn-group {
+        width: 100%;
+    }
+
+    .add-data-file-disc {
+        margin: 0;
+    }
+
+    .download-link {
+        margin: 0;
+    }
+
+    :host ::ng-deep .editForm .row .col-md-6,
+    :host ::ng-deep .editForm .row .col-md-6:nth-child(2n + 2) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+}

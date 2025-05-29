@@ -96,9 +96,8 @@
                                                 </ng-template>
                                                 <ng-template matTabContent>
                                                     <div class="col-sm-12 px-0">
-                                                        <app-add-billing-p [rowData]="userData"
-                                                            (getIdsArray)="getIdsArray($event)"
-                                                            (redirectTab)="redirectTab($event)"></app-add-billing-p>
+                                                        <app-add-billing-l [rowData]="userData" [pageName]="'people-tab'" (getIdsArray)="getIdsArray($event)"
+                                                        (redirectTab)="redirectTab($event)"></app-add-billing-l>
                                                     </div>
                                                 </ng-template>
                                             </mat-tab>
@@ -132,7 +131,8 @@
                                                 </ng-template>
 
                                                 <ng-template matTabContent>
-                                                    <app-common-ccs-people [payload]="payload"></app-common-ccs-people>
+                                                    <app-common-ccs-location
+                                                        [payload]="payload"></app-common-ccs-location>
                                                 </ng-template>
 
                                             </mat-tab>

@@ -1,12 +1,11 @@
 import { Component, EventEmitter, HostListener, Input, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import _ from 'lodash';
-import { TreeNode } from 'primeng/api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
-import { extractDataAndLeaf, filterOptionsDate, filterOptionsNumber, filterOptionsText, onChangeEndDate } from 'src/app/services/common-p-table';
+import { extractData, extractDataAndLeaf, extractDataPtable, filterOptionsDate, filterOptionsNumber, filterOptionsText, onChangeEndDate } from 'src/app/services/common-p-table';
 import { LocationService } from 'src/app/services/location.service';
 import { VariableManageService } from 'src/app/services/variable-manage.service';
 
@@ -22,13 +21,13 @@ interface arrDate {
 }
 
 @Component({
-  selector: 'app-common-p-tree-table',
+  selector: 'app-p-table',
+  templateUrl: './p-table.component.html',
+  styleUrl: './p-table.component.scss',
   imports: [SharedModule, PrimgModule],
-  templateUrl: './common-p-tree-table.component.html',
-  styleUrl: './common-p-tree-table.component.scss',
-  standalone: true
+  standalone: true,
 })
-export class CommonPTreeTableComponent {
+export class PTableComponent {
 
 
   @Input() APIParams: any;
@@ -54,7 +53,7 @@ export class CommonPTreeTableComponent {
   @Input() buttonTemplate!: TemplateRef<any>;
   @Input() arrayKey: any;
   @Input() nodeKey: any;
-  files: TreeNode[];
+  files: any[];
   displaycols: any[];
   loading: boolean = false;
   pTableContain = { first: 1 };
@@ -64,7 +63,7 @@ export class CommonPTreeTableComponent {
   totalRecords: number = 0;
   isApiAlerdayCall: boolean = false;
   innerLoading: boolean = false;
-  expandedNode: TreeNode | null = null;
+  expandedNode: any | null = null;
   colsshow: any[];
   selectedFiles: any[] = [];
   filesColumns: any = []
@@ -89,12 +88,12 @@ export class CommonPTreeTableComponent {
   displayModal: boolean = false;
   headerCheckboxData = false;
 
-  @ViewChild('treeTable') treeTable!: any;
+  @ViewChild('table') table!: any;
   @ViewChild('contextMenu') contextMenu: any;
   @ViewChild('ccText') ccText!: TemplateRef<any>;
 
   private _unsubscribeGRid: Subject<any> = new Subject<any>();
-  lastNode: TreeNode | null = null;
+  lastNode: any | null = null;
   sidebarVisible: boolean = false;
   radioItems: Array<any>;
   contextMenuPosition: { x: number; y: number } = { x: 0, y: 0 };
@@ -123,13 +122,11 @@ export class CommonPTreeTableComponent {
 
   constructor(public locationService: LocationService, public variableManageService: VariableManageService,
     public dialog: MatDialog
-  ) {
-
-  }
+  ) {}
 
   ngAfterViewInit() {
-    const scrollableBody = this.treeTable.el.nativeElement.querySelector(
-      '.p-treetable-scrollable-body'
+    const scrollableBody = this.table.el.nativeElement.querySelector(
+      '.p-datatable-scrollable-body'
     );
 
     if (scrollableBody) {
@@ -156,6 +153,7 @@ export class CommonPTreeTableComponent {
 
   ngOnChanges(changes: SimpleChanges) {
 
+    console.log(' changes ', changes['preAppliedfilterArr']);
     if (changes['preAppliedfilterArr'] && changes['preAppliedfilterArr'].currentValue !== changes['preAppliedfilterArr'].previousValue) {
       this.preAppliedfilterArr = changes['preAppliedfilterArr'].currentValue;
       this.loadNodes(true);
@@ -319,6 +317,8 @@ export class CommonPTreeTableComponent {
         this.preAppliedfilterArr.forEach((filter: any) => existingFilters.set(JSON.stringify(filter), filter));
         this.finalFilterdArr['advanceFilter'] = Array.from(existingFilters.values());
       }
+    } else {
+      this.finalFilterdArr['advanceFilter'] = [];
     }
 
     this.finalFilterdArr['advanceFilter'] = Array.from(
@@ -359,8 +359,9 @@ export class CommonPTreeTableComponent {
         : response?._companyLocationDto?.$values ?? [];
 
     if (data.length) {
-      const resData = data.map(extractDataAndLeaf.bind(this));
+      const resData = data.map(extractData.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
+      console.log(' resData ', this.files);
       this.dataValues.emit(this.files);
       this.selectedRecords = this.getCheckedNodes(this.files);
 
@@ -381,8 +382,8 @@ export class CommonPTreeTableComponent {
   }
 
 
-  getCheckedNodes(nodes: TreeNode[]): TreeNode[] {
-    let selected: TreeNode[] = [];
+  getCheckedNodes(nodes: any[]): any[] {
+    let selected: any[] = [];
 
     for (const node of nodes) {
       if (!node.data) continue;
@@ -452,60 +453,6 @@ export class CommonPTreeTableComponent {
   handleError() {
     this.loading = false;
     this.files = [];
-    this.loaderEmit.emit(this.loading);
-  }
-
-  onNodeExpand(event: any) {
-    const node = event.node;
-
-    if (this.childPayload) {
-      const dynamicKey = Object.keys(this.childPayload)[0];
-      if (dynamicKey) {
-        this.childPayload[dynamicKey] = node.data['InvoiceChargeDetailsId'];
-      }
-    }
-    if (!node.children || node.children.length === 0) {
-      this.innerLoading = true;
-      this.loaderEmit.emit(this.loading);
-      this.expandedNode = node;
-      const data = {
-        ...this.finalFilterdArr,
-        startRowIndex: 1,
-        level: node.data.Level,
-        maximumRows: 10000,
-        ...(this.sorting ? { OrderBy: this.sorting, SortOrder: this.sortingType } : {}),
-        ...(this.payload ? this.payload : {}),
-        ...(this.childPayload ? this.childPayload : {})
-      };
-
-      this._unsubscribeGRid.next(null);
-
-      this.locationService
-        .callPTreeTabAPI(this.GridAPI, data, 'POST', this.ids)
-        .pipe(takeUntil(this._unsubscribeGRid))
-        .subscribe(
-          {
-            next: (response: any) => this.handleNodeResponse(response, node),
-            error: () => this.handleNodeError()
-          }
-        );
-    }
-  }
-
-  handleNodeResponse(response: any, node: any) {
-    this.innerLoading = false;
-    this.loaderEmit.emit(this.loading);
-    const data = response?.Data?.$values ?? response?._companyLocationDto?.$values;
-    if (data.length) {
-      node.children = data.map(extractDataAndLeaf.bind(this));
-      this.files = [...this.files];
-    } else {
-      node.children = [];
-    }
-  }
-
-  handleNodeError() {
-    this.innerLoading = false;
     this.loaderEmit.emit(this.loading);
   }
 
@@ -621,6 +568,8 @@ export class CommonPTreeTableComponent {
 
   filerOutSide(e: any, col: any, i: any) {
 
+    console.log(' filerOutSide ', e, col, i);
+
     if (col.type === "dateFilter") {
       if (e) {
         const date = new Date(e);
@@ -667,10 +616,12 @@ export class CommonPTreeTableComponent {
     } else {
       targetArray.push(newFilter);
     }
+    console.log(' updateFilterArray ', targetArray);
   }
 
   onFilterChangedValue() {
 
+    console.log(' onFilterChangedValue 2', this.textboxValue1, this.textboxValue2);
     let txtVal1 = this.textboxValue1;
     let txtVal2 = this.textboxValue2;
     if (this.fieldsName.type === 'dateFilter') {
@@ -705,6 +656,7 @@ export class CommonPTreeTableComponent {
       }
     }
     if (this.fieldsName.type === 'text') {
+      console.log(' arrDate ', arrDate);
       this.updateFilterArray(this.filterArray, arrDate);
     } else if (this.fieldsName.type === 'numberFilter') {
       this.updateFilterArray(this.filterArrayNumber, arrDate);
@@ -714,24 +666,29 @@ export class CommonPTreeTableComponent {
 
 
     this.displayModal = false;
+
+
     this.filterArray = this.filterArray.filter((f: any) => f.filterOptionValue1 !== '')
     this.filterArrayDate = this.filterArrayDate.filter((f: any) => f.filterOptionValue1 !== '')
     this.filterArrayNumber = this.filterArrayNumber.filter((f: any) => f.filterOptionValue1 !== '')
 
     let data: any = {};
 
-    if (this.filterArray && this.filterArray.length > 0) {
-      data.advanceFilter = _.cloneDeep(this.filterArray);
+    if (Array.isArray(this.filterArray) && this.filterArray.length > 0) {
+      const copy = [...this.filterArray];
+      console.log('Copied filterArray:', copy);
+      data['advanceFilter'] = copy;
+    }
+    
+    if (Array.isArray(this.filterArrayDate) && this.filterArrayDate.length > 0) {
+      data['advanceDateFilter'] = [...this.filterArrayDate];
+    }
+    
+    if (Array.isArray(this.filterArrayNumber) && this.filterArrayNumber.length > 0) {
+      data['advanceNumberFilter'] = [...this.filterArrayNumber];
     }
 
-    if (this.filterArrayDate && this.filterArrayDate.length > 0) {
-      data.advanceDateFilter = _.cloneDeep(this.filterArrayDate);
-    }
-
-    if (this.filterArrayNumber && this.filterArrayNumber.length > 0) {
-      data.advanceNumberFilter = _.cloneDeep(this.filterArrayNumber);
-    }
-
+    console.log(' data ', data);
     this.finalFilterdArr = data;
 
     if (this.textboxValue1 !== null && this.textboxValue1 !== '') {
@@ -772,8 +729,7 @@ export class CommonPTreeTableComponent {
         }
       });
     }
-
-    console.log('finalFilterdArr', _.cloneDeep(this.finalFilterdArr));
+    console.log(' onFilterChangedValue ', this.finalFilterdArr);
     this.loadNodes(true);
   }
 
@@ -783,7 +739,7 @@ export class CommonPTreeTableComponent {
   }
 
 
-  private selectAllNodes(nodes: TreeNode[]) {
+  private selectAllNodes(nodes: any[]) {
     nodes.forEach((node: any) => {
       if (node.isparent && this.cols.some((e: any) => e.header === node.label && e.displayCheckboxColumns === false) || !node.isparent && this.cols.some((e: any) => e.childHeader === node.label && e.displayCheckboxColumns === false)) {
       } else {

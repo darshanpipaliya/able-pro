@@ -105,7 +105,6 @@ export class MapComponent {
   }
 
   filterGridByTEMId(e: any) {
-    console.log('filterGridByTEMId ', e);
   }
 
   onCustomerSelect() {
@@ -155,7 +154,6 @@ export class MapComponent {
         if (data && data.$values && data.$values.length > 0) {
           this.mapsForUser = data.$values;
           this.mapsForUser.map((c: any) => {
-            console.log(' c ', c);
             let a: any = {};
             a = c;
             a['addressText'] = this.setAddress(c);
@@ -164,7 +162,6 @@ export class MapComponent {
             a['center']['lng'] = c.Longitude;
             return a;
           });
-          console.log('mapsForUser', this.mapsForUser);
         }
       });
     }
@@ -184,7 +181,7 @@ export class MapComponent {
           return a;
         });
       }
-     console.log('mapsForUser', this.mapsForUser);
+     
 
     });
   }
@@ -252,11 +249,11 @@ export class MapComponent {
   }
 
   onCellDoubleClicked(event: any) {
-    console.log('onCellDoubleClicked', event);
+    
   }
 
   openInfoWindow(e: any) {
-    console.log('openInfoWindow', e);
+    
   }
   openInfo(marker: MapMarker, map: any) {
     this.selectedMap = map;
@@ -265,7 +262,7 @@ export class MapComponent {
 
   editLocation(event: MouseEvent, locationId: number) {
     event.preventDefault(); // prevent anchor navigation
-    console.log('Editing location ID:', locationId);
+    
     // You can navigate or open modal, etc.
   }
 
@@ -304,7 +301,7 @@ export class MapComponent {
     // Listen for the custom "edit-location" event
     window.addEventListener('edit-location', (e: any) => {
       const id = e.detail;
-      console.log('Edit location ID:', id);
+      
       // Optionally: this.router.navigate(['/edit-location', id]);
     });
   }

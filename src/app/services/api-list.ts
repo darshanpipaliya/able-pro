@@ -24,6 +24,12 @@ export const api_list = {
             "Grid" : baseUrl + 'peoples/LoggedInUserData',
         }
     },
+    "Vendor" : {
+        "Vendor" : {
+            "Grid" : baseUrl + 'vendoraccounts/LoggedInUser',
+            "dataretrievalTemplate" : baseUrl + 'dataretrieval/templates/{id}'
+        }
+    },
     "Inventory": {
         "Grid": baseUrl + 'inventories/LoggedInUser',
         "GridData": baseUrl + 'inventories/LoggedInUserData',

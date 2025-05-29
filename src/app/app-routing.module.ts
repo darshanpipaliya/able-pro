@@ -74,6 +74,11 @@ const routes: Routes = [
         loadChildren: () => import('./people/people.module').then(module => module.PeopleModule),
         canActivate: [AuthGuard]
       },
+      {
+        path: 'vendors',
+        loadChildren: () => import('./vendors/vendors.module').then(module => module.VendorsModule),
+        canActivate: [AuthGuard]
+      },
     ]
   },
   {

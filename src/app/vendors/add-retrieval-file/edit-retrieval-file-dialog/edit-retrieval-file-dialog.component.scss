@@ -1,0 +1,62 @@
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+.dialog-header-c {
+    line-height: 1.2em;
+    position: relative;
+    top: -20px;
+    left: -15px;
+    color: #37474f;
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 500 !important;
+}
+
+:host ::ng-deep .form-control {
+    height: unset !important;
+    padding: 0px 0;
+}
+
+:host ::ng-deep .form-group {
+    margin-bottom: 10px !important;
+}
+
+:host ::ng-deep .form-group label {
+    float: left !important;
+}
+
+:host ::ng-deep .form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+:host ::ng-deep .editForm .row .col-md-6 {
+    padding-left: 0px !important;
+    padding-right: 3px !important;
+}
+
+:host ::ng-deep .editForm .row .col-md-6:nth-child(2n + 2) {
+    padding-left: 3px !important;
+    padding-right: 0px !important;
+}
+
+
+@media only screen and (max-width: 767px) {
+
+    :host ::ng-deep .editForm .row .col-md-6,
+    :host ::ng-deep .editForm .row .col-md-6:nth-child(2n + 2) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+}

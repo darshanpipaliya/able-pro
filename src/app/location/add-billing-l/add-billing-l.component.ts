@@ -24,7 +24,7 @@ import { createColumn } from 'src/app/utils/column-utils';
 export class AddBillingLComponent implements OnInit {
 
   @Input() rowData: any;
-
+  @Input() pageName: any;
   public sideBar;
   public columnDefs1;
   public columnDefs2;
@@ -32,8 +32,6 @@ export class AddBillingLComponent implements OnInit {
   public getDataPath: any = (data: any) => data.dataPath;
   @ViewChild('ccStructure') ccStructure!: TemplateRef<any>;
 
-  stopSpinner: boolean = false;
-  stopSpinner1: boolean = false;
   isDisabledExport: boolean = false;
   submitted = false;
 
@@ -45,7 +43,6 @@ export class AddBillingLComponent implements OnInit {
   displayRule = undefined;
 
   rowDataForInvoiceSummary: any = [];
-  rowDataCCS: any = [];
   rowSelection = 'multiple';
   defaultColDef = {
     editable: false,
@@ -488,54 +485,19 @@ export class AddBillingLComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.payload = {
-      CompanyLocationId: this.rowData.Id
-    }
-    this.setCols();
-    this.getCostCenterStructure();
 
-    let headerData:any = [];
-    let ChildHeaderData:any = [];
-    let i = 0;
-    let childIndex = 0;
-    _.map(this.columnDefs1, (x: any) => {
-      if (isValueExist(x.headerName)) {
-        if (i == 0) {
-          headerData.push({
-            "Position": 1,
-            "Title": "Service Number"
-          });
-          i = i + 1;
-        }
-        i = i + 1;
-
-        headerData.push({ position: i, title: x.headerName });
-        if (x.children) {
-          _.map(x.children, (y: any) => {
-            if (childIndex == 0) {
-              ChildHeaderData.push({
-                "Position": 1,
-                "Title": "Service Number",
-                "FieldName": "BillingId",
-                "HeaderPosition": 1
-              })
-              childIndex = childIndex + 1;
-            }
-            childIndex = childIndex + 1;
-            ChildHeaderData.push({ Position: childIndex, Title: y.headerName, FieldName: y.field, HeaderPosition: i })
-          })
-        }
+    if(this.pageName == 'location-tab') {
+      this.payload = {
+        CompanyLocationId: this.rowData.Id
       }
-    });
+    } else {
+      this.payload = {
+        PeopleId: this.rowData.PeopleId
+      }
+    }
 
-    this.exportInvoiceSummaryData = {
-      ExportToExcelData: {
-        HeaderData: headerData,
-        ChildHeaderData: ChildHeaderData,
-        fileName: "Invoice Summary"
-      },
-      ExportToExcel: true
-    };
+    
+    this.setCols();
   }
   openTooltip() {
     this.dialog.open(this.ccStructure, {
@@ -543,50 +505,28 @@ export class AddBillingLComponent implements OnInit {
     });
   }
 
-
-  getCostCenterStructure() {
-    let data = {
-      CompanyLocationId: this.rowData.Id
-    }
-    this.rowDataCCS = [];
-    this.stopSpinner1 = false;
-
-    this._unsubscribeGRidCCS.next(null);
-    this.wirelineService.getCostCenterStructure(data)
-      .pipe(takeUntil(this._unsubscribeGRidCCS)).subscribe((res: any) => {
-        if (res.Success) {
-          this.rowDataCCS = res.Data.$values;
-          this.sendPaylod(res.Data.$values);
-          this.stopSpinner1 = true;
-        } else {
-          this.rowDataCCS = [];
-          this.stopSpinner1 = true;
-        }
-      }, error => {
-        this.rowDataCCS = [];
-        this.stopSpinner1 = true;
-      })
-  }
-
   onAgGridReadyEmit($event:any) {
     this.gridApi = $event.api;
     this.gridColumnApi = $event.columnApi;
   }
 
+  dataValuesFn(event: any) {
+    this.sendPaylod(event);
+  }
   sendPaylod(obj: any) {
     let a:any = [];
     let b:any = [];
     let c:any = [];
 
     _.forEach(obj, (data: any) => {
-      if (data.CostCenterStructureId != null) {
-        a.push(data.CostCenterStructureId);
+      if (data['data'].CostCenterStructureId != null) {
+        a.push(data['data'].CostCenterStructureId);
       }
-      if (data.CCSXServiceServiceTypeId != null) {
-        b.push(data.CCSXServiceServiceTypeId);
+      if (data['data'].CCSXServiceServiceTypeId != null) {
+        b.push(data['data'].CCSXServiceServiceTypeId);
       }
-      if (data.CCAllocationId != null) {
-        c.push(data.CCAllocationId);
+      if (data['data'].CCAllocationId != null) {
+        c.push(data['data'].CCAllocationId);
       }
     });
 
@@ -633,24 +573,12 @@ export class AddBillingLComponent implements OnInit {
     this._unsubscribeGRidCCS.complete();
   }
 
-  processData(data: any[]) {
-    const flattenedData: any[] = [];
-    const flattenRowRecursive = (row: any, parentPath: string[]) => {
-      const dataPath = [...parentPath, row.$id];
-      flattenedData.push({ ...row, dataPath });
-      if (row.SubInformationData && row.SubInformationData.$values.length > 0) {
-        row.SubInformationData.$values.forEach((underling: any) => {
-          flattenRowRecursive(underling, dataPath)
-        }
-        );
-      }
-    };
-    data.forEach((row) => flattenRowRecursive(row, []));
-    return flattenedData;
-  }
-
   redirectToCCS() {
-    this.redirectTab.emit({redirectIndex: 6}); // no value
+    if(this.pageName == 'location-tab') {
+      this.redirectTab.emit({redirectIndex: 6}); // no value
+    } else {
+      this.redirectTab.emit({redirectIndex: 4}); // no value
+    }
   }
 
   

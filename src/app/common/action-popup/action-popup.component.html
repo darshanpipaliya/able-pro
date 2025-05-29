@@ -1,0 +1,45 @@
+<div class="app-error-warning-popup-c">
+    <span class="error-header" *ngIf="!data?.errorData?.iconNot" style="color: #4680FF; font-size: 16px; font-weight: 600;">Please wait</span>
+    <div mat-dialog-content>
+      <div class="container px-0">
+        <div class="row mx-0">
+          <div class="col-md-12 popup-main-section px-0 d-flex align-items-center "
+          
+          [ngClass]="{'justify-content-center': data?.errorData?.textColor !== 'black'}">
+            <div class="popup-right-icon">
+                <i *ngIf="!data?.errorData?.iconNot" class="fas fa-hourglass-half" style="color: #4680FF;"></i>
+            </div>
+            <div class="popup-right-desc">
+              <ul class="mb-0 p-0 list-unstyled" >
+                <li *ngIf="data?.errorData?.textColor === 'black'">
+                  <span >{{text}}</span>
+                </li>
+
+                <li *ngIf="data?.errorData?.textColor !== 'black'" class="text-c-blue">
+                  <span >{{text}}</span>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+
+    <mat-dialog-actions class="py-3" align="end" *ngIf="data?.errorData?.closeBtnName">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 attention-popup-btn">
+            <button mat-button class="btn px-2 btn-primary" [mat-dialog-close]="false" 
+              *ngIf="data?.errorData?.closeBtnName">{{data?.errorData?.closeBtnName}}</button>
+          </div>
+          <!-- <div class="col-md-5">
+  
+        </div> -->
+        </div>
+      </div>
+  
+    </mat-dialog-actions>
+    
+  </div>

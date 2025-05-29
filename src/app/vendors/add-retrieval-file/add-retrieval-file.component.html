@@ -1,0 +1,267 @@
+<div class="mat-dialog-header pb-0">
+    <div class="row">
+        <div class="col-12 px-0">
+            <h5 class="modal-title text-c-blue" id="exampleModalLabel">{{popupType}} Data Retrieval File for Vendor</h5>
+        </div>
+    </div>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+
+    <div class="card-body p-0">
+        <div class="container px-0">
+            <form class="editForm px-0" [formGroup]="retrievalForm" *ngIf="retrievalForm">
+                <div>
+                    <p>Use this page to add a file to the Data Retrieval specifications for a Vendor.</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-xl-12 col-md-12 px-0 pt-2">
+                            <div class="row m-t-15">
+                                <div class="col-md-6 col-xl-6 ">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor Report Name *</label>
+                                        <span><input class="form-control" maxlength="50"
+                                                formControlName="vendorReportName"></span>
+                                        <ng-container
+                                            *ngIf="f.vendorReportName.invalid && (f.vendorReportName.touched || isFormSubmit)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.vendorReportName.errors.required">
+                                                Vendor Report Name is required
+                                            </mat-error>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xl-6 ">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor File Name *</label>
+                                        <span class="pr-0"><input class="form-control" maxlength="50"
+                                                formControlName="vendorFileName"></span>
+                                        <ng-container
+                                            *ngIf="f.vendorFileName.invalid && (f.vendorFileName.touched || isFormSubmit)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.vendorFileName.errors.required">
+                                                Vendor File Name is required
+                                            </mat-error>
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.vendorFileName.errors?.maxlength">
+                                                <div> Maximum length for the Vendor File Name is 75 characters </div>
+                                            </mat-error>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6">
+                            <div class="form-group">
+                                <label class="form-label">Short Name *</label>
+                                <span> <input class="form-control" formControlName="shortName" maxlength="50" /></span>
+                                <ng-container *ngIf="f.shortName.invalid && (f.shortName.touched || isFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.shortName.errors.required">
+                                        Short Name is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">Required *</label>
+                                <span class="pr-0">
+                                    <p-dropdown appendTo="body" [options]="requiredList" optionLabel="RequiredValue"
+                                        optionValue="Id" [filter]="true" filterBy="RequiredValue"
+                                        placeholder="Select Required.." formControlName="requiredValue">
+                                    </p-dropdown>
+                                </span>
+                                <ng-container
+                                    *ngIf="f.requiredValue.invalid && (f.requiredValue.touched || isFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.requiredValue.errors.required">
+                                        Required is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6">
+                            <div class="form-group">
+                                <label class="form-label">Description *</label>
+                                <span> <input maxlength="200" class="form-control"
+                                        formControlName="description" /></span>
+                                <ng-container *ngIf="f.description.invalid && (f.description.touched || isFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.description.errors.required">
+                                        Description is required
+                                    </mat-error>
+                                    <mat-error style="font-size: 12px;" *ngIf="f.description.errors?.maxlength">
+                                        <div> Maximum length for the Description is 200 characters </div>
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">In Zip? *</label>
+                                <span class="pr-0">
+                                    <p-dropdown appendTo="body" [options]="inZipFlag" optionLabel="Name" [filter]="true"
+                                        filterBy="Name" placeholder="Select In Zip.." formControlName="inZip"
+                                        optionValue="Id">
+                                    </p-dropdown>
+                                </span>
+                                <ng-container *ngIf="f.inZip.invalid && (f.inZip.touched || isFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.inZip.errors.required">
+                                        In zip? is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">Status *</label>
+                                <span class="pr-0">
+                                    <p-dropdown appendTo="body" [options]="statusList" optionLabel="Name"
+                                        optionValue="Id" [filter]="true" filterBy="DisplayText"
+                                        placeholder="Select Status..." formControlName="status">
+                                    </p-dropdown>
+                                </span>
+                                <ng-container *ngIf="f.status.invalid && (f.status.touched || isFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.status.errors.required">
+                                        Status is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">Retrieval Method *</label>
+                                <span class="pr-0">
+                                    <p-dropdown appendTo="body" [filter]="true" placeholder="Select Retrieval Method.."
+                                        optionValue="Id" formControlName="retrievalMethod" [options]="retrievalMethod"
+                                        optionLabel="Type"
+                                        [ngClass]="{'invalid-error': f.retrievalMethod.invalid && (f.retrievalMethod.dirty || f.retrievalMethod.touched || isFormSubmit)}">
+                                    </p-dropdown>
+                                </span>
+                                <ng-container
+                                    *ngIf="f.retrievalMethod.invalid && (f.retrievalMethod.touched || isFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.retrievalMethod.errors.required">
+                                        Retrieval Method is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">File Type *</label>
+                                <span class="pr-0">
+                                    <p-dropdown appendTo="body" [options]="fileTypeList" optionLabel="FileType"
+                                        [filter]="true" filterBy="FileType" placeholder="Select File Type..."
+                                        formControlName="fileType" (onChange)="onCahngeFileType($event.value)">
+                                    </p-dropdown>
+                                </span>
+                                <ng-container *ngIf="f.fileType.invalid && (f.fileType.touched || isFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.fileType.errors.required">
+                                        File Type is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">Column Headers Expected <em style="font-style: normal;"
+                                        *ngIf="showAstric">*</em> </label>
+                                <span class="pr-0">
+                                    <p-dropdown appendTo="body" [options]="columnHeadersFlag" optionLabel="Name"
+                                        optionValue="Id" [filter]="true" filterBy="DisplayText" placeholder="..."
+                                        formControlName="columnHeadersExpected"
+                                        (onChange)="onCahngeColumnHeader($event)" [disabled]="disabledColumnExpected">
+                                    </p-dropdown>
+                                </span>
+                                <ng-container
+                                    *ngIf="f.columnHeadersExpected.invalid && (f.columnHeadersExpected.touched || isFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.columnHeadersExpected.errors.required">
+                                        Column Headers is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-xl-12 ">
+                            <div class="form-group">
+                                <label class="form-label">Notes</label>
+                                <span class="pr-0">
+                                    <textarea class="form-control textarea-row-fix" rows="3" formControlName="notes"
+                                        maxlength="500"></textarea>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="f.columnHeadersExpected.value === true">
+                    <div class="row m-0">
+                        <div class="col-12 px-0 mt-3">
+                            <h5 class="modal-title" id="exampleModalLabel">{{columnHeaderAdd}} Expected Column Headers
+                            </h5>
+                        </div>
+                        <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                            <div class="add-data-file-disc" *ngIf="columnHeaderAdd == 'Add'">
+                                <p>Use the Data Retrieval Import Template to indicate all Column Headers expected on the
+                                    file. Population of this template is required to add a
+                                    file when "Column Headers Expected" equals "Yes."</p>
+
+                                <p>Click the "Download blank template'" link below to download a blank template. Once
+                                    you have populated the template with the expected
+                                    headers, use the field below to locate and select the populated template file. Click
+                                    the "Upload" button to initiate the upload</p>
+                            </div>
+                            <div class="add-data-file-disc" *ngIf="columnHeaderAdd == 'Edit'">
+                                <p>Use the Data Retrieval Import Template to edit the Column Headers expected on the
+                                    file. Population of this template is required to add a
+                                </p>
+                                <p>Click the "Export to template'" link below to export the existing file Column Headers
+                                    to the import template. Once you have edited the file, use the field below to locate
+                                    and select the populated template file. Click the "Upload" button to initiate the
+                                    upload.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xl-12 col-md-12">
+                            <div class="download-link">
+                                <button title="Search" class="btn btn-primary download-template-btn"
+                                    *ngIf="columnHeaderAdd == 'Add'" (click)="downloadBlankTemplate()">Download blank
+                                    template</button>
+                                <button title="Search" class="btn btn-primary download-template-btn"
+                                    *ngIf="columnHeaderAdd == 'Edit'" (click)="exportTemplate()">Export to
+                                    template</button>
+                                <div class="input-group browse-btn-group">
+                                    <input class="form-control search-text" name="filterSource" [value]="showDocValue">
+                                    <button title="Search" class="btn btn-primary browse-btn ml-3"
+                                        (click)="fileUpload.click()">Browse</button>
+                                    <input type="file" class="file-input" hidden (change)="browseFile($event)"
+                                        #fileUpload>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<mat-dialog-actions class="pb-3 mt-4 d-flex" align="center" style="gap: 15px;">
+    <button type="submit" mat-button class="btn btn-primary" (click)="uploadData('true')">
+        {{saveBtnText}}</button>
+
+    <button class="btn btn-primary download-template-btn" *ngIf="columnHeaderAdd == 'Edit'"
+        (click)="uploadData('false')">
+        Save without updating Column Headers</button>
+</mat-dialog-actions>

@@ -1,0 +1,212 @@
+<mat-tab-group [(selectedIndex)]="selected">
+  <mat-tab label="vendor">
+    <div class="col-sm-12">
+      <ng-template mat-tab-label>
+        <b><i class="fas fa-user-plus" style="color: #4680ff;"> </i> Vendor</b>
+      </ng-template>
+    </div>
+
+    <div class="col-sm-12 mb-15 px-0" *ngIf="selected == 0">
+      <ng-container>
+        <div class="row">
+          <div class="col-12 px-0">
+            <app-card cardTitle="" [options]="false" [hidHeader]="true" class="card-bottom-none">
+              <form class="editForm" [formGroup]="editVendorForm" (ngSubmit)="updateVendor()">
+                <div class="row">
+                  <ng-container *ngIf="isSuperTEMUsers">
+                    <div class="col-sm-12 col-xl-12 text-right" style="margin-top: -15px;">
+                      <span class="text-c-red">*Required field</span>
+                    </div>
+                  </ng-container>
+                  <div class="col-sm-12 col-xl-6 padding-left-none">
+                    <mat-accordion class="example-headers-align">
+                      <div>
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                          <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                              <i class="fas fa-user-plus"></i>&nbsp;Vendor
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <div class="row m-t-20">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="form-label">Vendor *</label>
+                                <span><input type="text" class="form-control" required formControlName="AccountName"
+                                    spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                    [ngClass]="{'invalid-error': !f.AccountName.valid && (f.AccountName.dirty || f.AccountName.touched || isVendorFormSubmit)}"></span>
+                                <ng-container
+                                  *ngIf="f.AccountName.invalid && (f.AccountName.touched || isVendorFormSubmit)">
+                                  <mat-error style="font-size: 12px;" *ngIf="f.AccountName.errors.required">Vendor is
+                                    required
+                                  </mat-error>
+                                </ng-container>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="form-label">Parent Vendor</label>
+                                <span><p-dropdown
+                                    [ngClass]="{'invalid-error': !f.ParentId.valid && (f.ParentId.dirty || f.ParentId.touched || isVendorFormSubmit)}"
+                                    appendTo="body" [options]="parentVendorsList" optionLabel="AccountName"
+                                    [filter]="true" filterBy="AccountName"
+                                    [placeholder]="loadingParentVendorsList ? 'Loading...' : 'Select Parent Vendor...'"
+                                    formControlName="ParentId" optionValue="Id">
+                                  </p-dropdown></span>
+                                <ng-container *ngIf="f.ParentId.invalid && (f.ParentId.touched || isVendorFormSubmit)">
+                                  <mat-error style="font-size: 12px;" *ngIf="f.ParentId.errors.required">Parent Vendor
+                                    is required
+                                  </mat-error>
+                                </ng-container>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="exampleInputPassword1"> Website</label>
+                                <span><input type="text" class="form-control" spaceTrimStartEndInput
+                                    [allowStartWithSpace]="false" id="exampleInputPassword1"
+                                    formControlName="WebAddress"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row m-t-20" #FixedDiv style="padding-bottom: 10px !important;">
+                            <div>
+                              <div class="mb-2"><span style="font-weight: 500;">Upload Logo</span>
+                                <i class="fas fa-info-circle ml-2" [placement]="'auto'" container="body"
+                                  ngbTooltip="Image should be a PNG file and should not be blurry for best results "
+                                  tooltipClass="tooltip-bg"></i>
+                              </div>
+                              <button [disabled]="disabled || !viewNEdit" type="button"
+                                class="btn sbubtn btn-primary btn-raised" (click)="fileUpload.click()">Upload
+                                Logo</button>
+                              <input type="file" class="file-input" hidden (change)="onFileUploaded($event)"
+                                #fileUpload>
+                            </div>
+                            <ng-container *ngIf="logoImage">
+                              <div class="col-md-12 text-center m-t-10">
+                                <div class="wrapper">
+                                  <div class="content">
+                                    <img class="logoimg" alt="test" width="200" height="100" [src]="logoImage">
+                                    <a *ngIf="viewNEdit && !temRoles" (click)="onFileUploadedRemove()"><i class="fas fa-times"></i></a>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+
+
+                        </mat-expansion-panel>
+                      </div>
+                    </mat-accordion>
+
+                  </div>
+                  <div class="col-sm-12 col-xl-6 padding-right-none">
+                    <mat-accordion class="example-headers-align">
+                      <div>
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                          <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                              <i class="fas fa-user-plus"></i>&nbsp;Industry
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <div class=" m-t-20">
+                            <dual-list [source]="source" [key]="key" [display]="display" [filter]="filter"
+                              [(destination)]="confirmed" height="158px" [format]="format"
+                              [disabled]="disabled"></dual-list>
+                          </div>
+                        </mat-expansion-panel>
+                      </div>
+                    </mat-accordion>
+                  </div>
+                  <div class="col-sm-12 col-xl-12">
+                    <div class="text-center margin-b-none">
+                      <button type="submit" uiSref="work" [disabled]="temRoles || disabled || saveButtonLoadder || !viewNEdit"
+                        class="btn  btn-primary btn-raised">
+                        <span *ngIf="saveButtonLoadder" class="spinner-border spinner-border-sm mr-2"
+                          role="status"></span>
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </app-card>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </mat-tab>
+
+
+  <mat-tab label="InvoicenDataRetrival" *ngIf="viewNEdit">
+    <div class="col-sm-12">
+      <ng-template mat-tab-label>
+        <b><svg version="1.0" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 206.000000 178.000000"
+            preserveAspectRatio="xMidYMid meet">
+
+            <g transform="translate(0.000000,178.000000) scale(0.100000,-0.100000)" fill="#4680ff" stroke="none">
+              <path d="M572 1758 c-9 -9 -12 -94 -12 -320 l0 -308 -172 -2 -173 -3 -3 -318
+         -2 -317 -94 0 c-76 0 -95 -3 -100 -16 -11 -29 -7 -199 6 -212 9 -9 157 -12
+         604 -12 l591 0 31 -50 c27 -44 35 -50 65 -50 18 0 38 5 43 10 7 7 21 2 43 -14
+         18 -13 46 -30 62 -36 20 -9 29 -19 29 -36 0 -49 31 -64 129 -64 98 0 121 11
+         121 56 0 18 11 29 49 49 27 13 53 30 56 36 4 6 22 8 46 4 60 -10 75 0 120 81
+         44 80 46 114 9 134 -17 9 -20 21 -20 85 0 66 3 77 25 99 32 32 32 47 -7 115
+         -54 97 -81 116 -128 91 -15 -8 -27 -5 -53 12 -19 13 -49 31 -66 40 -21 12 -31
+         25 -31 41 0 24 -27 57 -48 57 -8 0 -12 36 -14 108 l-3 107 -172 3 -173 2 0
+         301 c0 188 -4 308 -10 320 -10 18 -25 19 -373 19 -269 0 -366 -3 -375 -12z
+         m698 -338 l0 -290 -325 0 -325 0 0 290 0 290 325 0 325 0 0 -290z m-352 -637
+         l-3 -288 -322 -3 -323 -2 0 290 0 290 325 0 325 0 -2 -287z m702 207 l0 -80
+         -44 0 c-36 0 -48 -5 -65 -26 -12 -15 -21 -35 -21 -46 0 -10 -10 -22 -22 -27
+         -13 -5 -40 -21 -61 -35 -31 -21 -41 -24 -61 -14 -45 20 -69 4 -114 -75 -49
+         -85 -52 -108 -16 -136 15 -12 24 -28 22 -38 -3 -16 -16 -18 -133 -18 l-130 0
+         -3 288 -2 287 325 0 325 0 0 -80z m70 -165 c0 -25 31 -65 51 -65 6 0 37 -16
+         68 -35 50 -31 61 -34 85 -25 15 5 29 10 31 10 2 0 18 -25 35 -55 l32 -56 -25
+         -23 c-24 -22 -25 -30 -26 -120 0 -91 1 -96 26 -116 l26 -21 -23 -42 c-36 -65
+         -39 -67 -79 -61 -29 5 -47 -1 -96 -30 -92 -54 -103 -64 -107 -93 -3 -27 -5
+         -28 -67 -28 l-63 0 -12 35 c-7 24 -22 40 -44 51 -18 9 -51 29 -74 44 -38 25
+         -60 28 -106 14 -8 -2 -26 20 -45 53 l-32 56 25 20 c22 18 24 26 25 118 1 93 0
+         99 -23 121 l-25 23 23 43 c35 64 42 70 74 57 23 -8 34 -7 60 9 17 11 49 30 71
+         42 57 30 75 49 75 76 0 22 3 23 70 23 68 0 70 -1 70 -25z m-452 -413 c2 -15
+         -5 -30 -22 -43 -14 -11 -26 -29 -26 -40 0 -19 -14 -19 -560 -19 l-560 0 0 65
+         0 65 583 -2 582 -3 3 -23z" />
+              <path d="M884 1295 c-10 -26 6 -35 61 -35 56 0 69 7 59 34 -8 22 -112 23 -120
+         1z" />
+              <path d="M536 667 c-11 -8 -15 -19 -10 -30 8 -23 112 -25 120 -2 15 38 -68 63
+         -110 32z" />
+              <path d="M1559 686 c-123 -33 -198 -157 -169 -284 10 -46 21 -65 64 -107 79
+         -78 167 -96 261 -51 91 43 138 117 137 217 0 87 -44 161 -119 201 -60 32 -115
+         40 -174 24z m139 -67 c103 -50 134 -191 60 -275 -42 -47 -77 -64 -138 -64 -57
+         0 -93 15 -132 57 -51 54 -63 135 -29 201 47 92 146 126 239 81z" />
+            </g>
+          </svg>&nbsp;Invoice & Data Retrieval</b>
+      </ng-template>
+    </div>
+
+    <div class="col-sm-12 mb-15 px-0" *ngIf="selected == 1">
+      <ng-container>
+        <app-invoice-data-retrival 
+        (recordEdited)="recordEdited($event)" 
+        (vendorDataEmit)="vendorDataEmit($event)" 
+        (tableDataEmit)="tableDataEmit($event)" 
+        (invoiceretrievalMethodEmit)="invoiceretrievalMethodEmit($event)" 
+        (dataSourcesEmit)="dataSourcesEmit($event)" 
+        (templateTypeEmit)="templateTypeEmit($event)" 
+        (retrievalMethodEmit)="retrievalMethodEmit($event)" 
+        (processingMethodEmit)="processingMethodEmit($event)" 
+        [vendorData]="vendorData"
+        [vendorNewData]="vendorNewData" 
+        [invoiceretrievalMethodData]="invoiceretrievalMethodData" 
+        [dataSourcesEmitData]="dataSourcesEmitData" 
+        [tableDataEmitData]="tableDataEmitData" 
+        [templateTypeEmitData]="templateTypeEmitData" 
+        [retrievalMethodEmitData]="retrievalMethodEmitData" 
+        [processingMethodEmitData]="processingMethodEmitData" 
+        [type]="'edit'">
+
+        </app-invoice-data-retrival>
+      </ng-container>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>

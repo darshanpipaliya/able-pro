@@ -1,5 +1,5 @@
 <div class="mt-2">
-    <app-billing-l-p-table [rowData]="rowData" [pageName]="'location-tab'">
+    <app-billing-l-p-table [rowData]="rowData" [pageName]="pageName">
     </app-billing-l-p-table>
 </div>
 
@@ -10,7 +10,7 @@
             <mat-expansion-panel-header class="custom-header">
                 <div class="header-content">
                     <div class="d-flex  circle-icon align-items-center justify-content-center rounded-circle border border-warning text-warning"
-                    [ngClass]="{'disabled': loader || rowDataCCS?.length < 1}" (click)="redirectToCCS()"
+                    [ngClass]="{'disabled': loader || totalRecords < 1}" (click)="redirectToCCS()"
                     title="Add Billing">
                     <i class="fas fa-edit text-warning"></i>
                     </div>
@@ -41,7 +41,8 @@
                 </div>
             </ng-template>
             
-            <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI"
+            <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI" 
+            (dataValues)="dataValuesFn($event)"
                 (tableDataExist)="tableDataExistFn($event)" [cols]="cols" (exportAccountData)="exportAccountDataFn($event)"
                 (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
                 (refreshbuttonEmit)="refreshbuttonEmitFn($event)" (totalRecordsEmit)="totalRecordsEmitFn($event)"

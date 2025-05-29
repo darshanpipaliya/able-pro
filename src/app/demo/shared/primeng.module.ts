@@ -24,7 +24,7 @@ import { ListboxModule } from 'primeng/listbox';
     TreeModule,
     CheckboxModule,
     TableModule,
-    ListboxModule
+    ListboxModule,
   ],
   exports: [
     DropdownModule,

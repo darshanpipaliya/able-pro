@@ -16,6 +16,9 @@ import { AddNotesPeopleComponent } from './add-notes-people/add-notes-people.com
 import { NewPasswordDialogComponent } from './new-password-dialog/new-password-dialog.component';
 import { AddPeopleComponent } from './add-people/add-people.component';
 import { createColumn } from '../utils/column-utils';
+import { AddBillingLComponent } from '../location/add-billing-l/add-billing-l.component';
+import { ChangeLogComponent } from '../common/change-log/change-log.component';
+import { CommonCcsLocationComponent } from '../location/common-ccs-location/common-ccs-location.component';
 
 interface ColumnDefinition {
   parent: number;
@@ -44,8 +47,10 @@ interface ColumnDefinition {
     HeaderSectionComponent,
     CommonPTreeTableComponent,
     AddPeopleComponent,
-    // AddNotesPeopleComponent,
-    // NewPasswordDialogComponent
+    AddNotesPeopleComponent,
+    AddBillingLComponent,
+    ChangeLogComponent,
+    CommonCcsLocationComponent
   ],
   templateUrl: './people.component.html',
   styleUrl: './people.component.scss'
@@ -398,7 +403,6 @@ export class PeopleComponent {
 
   changeTab(event: any) {
     this.currentIndex = event;
-    console.log(' currentTabName', this.currentTabName);
 
     this.selectedSubTab = 0;
     this.isOpenCCSTab = false;
@@ -422,7 +426,7 @@ export class PeopleComponent {
     this.selectedSubTab == 0 ? this.isPeopleEditPage = true : this.isPeopleEditPage = false;
     this.selectedSubTab == 1 ? this.isPeopleNotes = true : this.isPeopleNotes = false;
     this.currentTabName = this.tabNames[this.selectedSubTab];
-    console.log(' currentTabName', this.selectedSubTab);
+
   }
 
   setInventoryNotes(type: any) {
@@ -479,6 +483,7 @@ export class PeopleComponent {
   getIdsArray($event: any) {
     if ($event) {
       this.payload = $event;
+    
     }
   }
 

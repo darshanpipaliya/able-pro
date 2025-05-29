@@ -1,5 +1,4 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
@@ -10,6 +9,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/common-p-tree-table.component';
 import { createColumn } from 'src/app/utils/column-utils';
+import { PTableComponent } from 'src/app/common/p-table/p-table.component';
 interface arrDate {
   filterKey: any;
   filterOptionType1: any;
@@ -44,7 +44,7 @@ interface ColumnDefinition {
     CommonModule,
     SharedModule,
     PrimgModule,
-    CommonPTreeTableComponent
+    PTableComponent
   ],
   providers: [WirelineService, VariableManageService, LocationService],
   selector: 'app-p-tree-customer',

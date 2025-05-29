@@ -1,0 +1,85 @@
+<div class="mat-dialog-header">
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="row">
+    <span class="dialog-header-c">Edit Data Retrieval File for Account</span>
+    <div class="col-sm-12 px-0">
+        <div>
+            <p>
+                Use this page to make a data file Required, Optional, or Not Used for an Account.
+            </p>
+        </div>
+        <div>
+            <form class="editForm px-0" [formGroup]="updateRetrievalForm">
+                <div class="row">
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Vendor Report Name</label>
+                            <span>
+                                <input type="text" formControlName="VendorReportName" disabled class="form-control" >
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Vendor File Name</label>
+                            <span>
+                                <input type="text" formControlName="vendorFileName" disabled  class="form-control" >
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Short Name</label>
+                            <span>
+                                <input type="text" formControlName="shortName" disabled class="form-control" >
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Description*</label>
+                            <span>
+                                <input type="text" formControlName="description" disabled class="form-control" >
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="mb-1 mt-2">
+                        Make a selection below.
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Required*</label>
+                            <span>
+                                <p-dropdown optionLabel="RequiredValue" [filter]="true" formControlName="required" [options]="getRequiredData"
+                                    filterBy="RequiredValue" [showClear]="true" placeholder="Select Required..." optionValue="Id"
+                                    [showClear]="false" appendTo="body">
+                                </p-dropdown>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mt-2">
+            <ng-container>
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary" (click)="update()" [disabled]="saveBtnLoader || superTemUser">
+                        <span *ngIf="saveBtnLoader" class="spinner-border spinner-border-sm mr-2" role="status"></span> Save</button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

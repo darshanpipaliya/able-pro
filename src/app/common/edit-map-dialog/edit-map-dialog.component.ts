@@ -64,7 +64,6 @@ export class EditMapDialogComponent implements OnInit {
     }
   }
   markerDragEnd(event: google.maps.MapMouseEvent) {
-  console.log('markerDragEnd ', event.latLng?.toJSON());
     let x: any = event.latLng?.toJSON();
     this.latitude = x.lat;
     this.longitude = x.lng;
