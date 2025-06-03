@@ -4299,7 +4299,6 @@ export class LocationService {
 
 
   callPTreeTabAPI(API: any, payload: any, method: string, ids?: any): Observable<any> {
-
     if (method === 'POST') {
       return this.http.post(this.urlTools.addDynamicURL(API, ids), payload).pipe(
 

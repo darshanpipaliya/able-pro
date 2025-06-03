@@ -28,7 +28,17 @@ export const api_list = {
         "Vendor" : {
             "Grid" : baseUrl + 'vendoraccounts/LoggedInUser',
             "dataretrievalTemplate" : baseUrl + 'dataretrieval/templates/{id}'
+        },
+        "BillingAlias" : {
+            "Grid" : baseUrl + 'vendorbillingalias/LoggedInUser',
         }
+    },
+    "Contract" : {
+        "Contract" : {
+            "Grid" : baseUrl + 'contracts/LoggedInUser',
+            "ContractDetail" : baseUrl + 'contracts/{ContractId}/{Type}',
+        },
+        "ReplaceContractGrid" : baseUrl + 'contracts/ReplaceContractGrid/{id}'
     },
     "Inventory": {
         "Grid": baseUrl + 'inventories/LoggedInUser',

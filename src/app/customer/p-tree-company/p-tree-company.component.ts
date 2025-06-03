@@ -15,6 +15,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/common-p-tree-table.component';
 import { api_list } from 'src/app/services/api-list';
 import { createColumn } from 'src/app/utils/column-utils';
+import { PTableComponent } from 'src/app/common/p-table/p-table.component';
 
 interface arrDate {
   filterKey: any;
@@ -54,6 +55,7 @@ interface ColumnDefinition {
     SharedModule,
     PrimgModule,
     CommonPTreeTableComponent
+    // PTableComponent
   ],
   providers: [WirelineService, VariableManageService, LocationService,
     {
@@ -77,7 +79,7 @@ export class PTreeCompanyComponent implements OnInit {
   totalRecords: number = 0;
 
   @ViewChild('ccText') ccText!: TemplateRef<any>;
-  @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
+  @ViewChild(PTableComponent) PTableComponent!: PTableComponent;
 
   selectedNode: any;
   @Output() loaderEmitParent: EventEmitter<any> = new EventEmitter();
@@ -124,7 +126,7 @@ export class PTreeCompanyComponent implements OnInit {
   }
  
   setColumnDefs() {
-    this.CommonPTreeTableComponent.setColumnDefs();
+    this.PTableComponent.setColumnDefs();
   }
  
   openPopup() {

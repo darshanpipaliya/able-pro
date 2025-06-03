@@ -19,11 +19,13 @@ import { PTreeSelectInvtryContractComponent } from './p-tree-select-invtry-contr
     CommonModule,
     SharedModule,
     PTreeSelectInvtryContractComponent
+  ],
+  providers: [
+    WirelineService,
+    ContractService
   ]
 })
 export class LinkInventoryCDialogComponent implements OnInit {
-
-
 
   customers: any = [];
   rowData: any = [];
@@ -49,8 +51,6 @@ export class LinkInventoryCDialogComponent implements OnInit {
     this.whichPage = data.whichPage;
     this.isSendVendorProductInventoryId = data?.isSendVendorProductInventoryId;
     dialogRef.disableClose = true;
-  
-
   }
 
   ngOnInit(): void {

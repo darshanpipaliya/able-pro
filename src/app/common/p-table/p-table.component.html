@@ -2,9 +2,9 @@
     <p-table #table [value]="files" columnResizeMode="expand" [columns]="displaycols" [lazy]="true"
         (onLazyLoad)="loadNodes(true)" [totalRecords]="totalRecords"
         [scrollable]="true" [resizableColumns]="true" selectionMode="checkbox"
-        [metaKeySelection]="false"  scrollHeight="400px"
+        [metaKeySelection]="false"
         [reorderableColumns]="true" (onColResize)="handleColumnResize($event)" [(selection)]="selectedRecords"
-        [ngClass]="{ 'disabled': innerLoading || isApiAlerdayCall }">
+        [ngClass]="{ 'disabled': isApiAlerdayCall }" >
 
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
@@ -15,7 +15,7 @@
         </ng-template>
 
         <ng-template pTemplate="header" let-columns>
-            <tr class="header-row p-treetable-thead-parent" *ngIf="doubleHeader">
+            <tr class="header-row p-datatable-thead-parent" *ngIf="doubleHeader">
                 
                 <ng-container *ngFor="let col of cols">
                     <th *ngIf="col.type === 'checkbox'" class="parent-header"
@@ -25,16 +25,16 @@
                         [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
                         <span>{{ col.header }}</span>
                         <i class='pi pi-fw pi-chevron-right icon-contracted'
-                            *ngIf="!innerLoading && col.isChildren && col.isicon == 1 && col.isToggle"
+                            *ngIf="col.isChildren && col.isicon == 1 && col.isToggle"
                             (click)="toggleColumn(col.parent , 'close')"></i>
                         <i class='pi pi-fw pi-chevron-left icon-expanded'
-                            *ngIf="!innerLoading && col.isChildren && col.isicon == 0 && col.isToggle"
+                            *ngIf="col.isChildren && col.isicon == 0 && col.isToggle"
                             (click)="toggleColumn(col.parent , 'open')"></i>
                     </th>
                 </ng-container>
             </tr>
 
-            <tr class="header-row p-treetable-thead-child">
+            <tr class="header-row p-datatable-thead-child">
                 
                 <ng-container *ngFor="let col of columns">
                     <th *ngIf="col.type === 'checkbox'" class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }"> 
@@ -51,7 +51,7 @@
                 </ng-container>
             </tr>
 
-            <tr class="header-row p-treetable-thead-filter" *ngIf="filters">
+            <tr class="header-row p-datatable-thead-filter" *ngIf="filters">
                 <ng-container *ngFor="let col of columns">
                     <ng-container>
                         <th class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
@@ -62,7 +62,7 @@
                                 [disabled]="col.isenable" pInputText size="8" *ngIf="col.type === 'numberFilter'"
                                 (input)="filerOutSide($event, col)" style="width: auto" />
 
-                            <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender-grid"
+                            <p-calendar dateFormat="mm-dd-yy" class="p-datatable-calender-grid"
                                 [disabled]="col.isenable" (ngModelChange)="filerOutSide($event, col)"
                                 *ngIf="col.type === 'dateFilter' && !col.isenable" [(ngModel)]="col.valuesset"
                                 placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
@@ -134,7 +134,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="footer">
-            <td class="cell" *ngIf="innerLoading || isApiAlerdayCall">
+            <td class="cell" *ngIf="isApiAlerdayCall">
                 <span class="spinner-border spinner-border-sm" role="status"></span>
             </td>
         </ng-template>
@@ -164,7 +164,7 @@
 
 
 <p-dialog [(visible)]="displayModal" modal="true" [closable]="true" [draggable]="false" [resizable]="false"
-    [dismissableMask]="true" [header]="''" #treeTable
+    [dismissableMask]="true" [header]="''" #datatable
     [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}">
     <div class="modal-body">
         <div class="row">
@@ -193,7 +193,7 @@
         </div>
         <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
             <div class="col-md-12">
-                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                <p-calendar dateFormat="mm-dd-yy" class="p-datatable-calender"
                     (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1" placeholder="mm-dd-yyyy"
                     appendTo="body" [showIcon]="true"></p-calendar>
             </div>
@@ -214,7 +214,7 @@
             </div>
             <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
                 <div class="col-md-12">
-                    <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                    <p-calendar dateFormat="mm-dd-yy" class="p-datatable-calender"
                         (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1_1"
                         placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
                 </div>
@@ -255,7 +255,7 @@
 
         <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'dateFilter' ">
             <div class="col-md-12">
-                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2"
+                <p-calendar dateFormat="mm-dd-yy" class="p-datatable-calender" [(ngModel)]="textboxValue2"
                     placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
             </div>
         </div>
@@ -277,7 +277,7 @@
 
             <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
                 <div class="col-md-12">
-                    <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2_1"
+                    <p-calendar dateFormat="mm-dd-yy" class="p-datatable-calender" [(ngModel)]="textboxValue2_1"
                         placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
                     </p-calendar>
                 </div>

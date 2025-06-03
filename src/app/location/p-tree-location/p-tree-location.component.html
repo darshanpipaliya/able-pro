@@ -3,7 +3,8 @@
 
         <mat-expansion-panel-header class="custom-header">
             <div class="header-content">
-                <svg [ngClass]="{'disabled': loader}" class="pc-icon text-primary circle-icon" (click)="refreshbuttonEmitFn(true)">
+                <svg [ngClass]="{'disabled': loader}" class="pc-icon text-primary circle-icon"
+                    (click)="refreshbuttonEmitFn(true)">
                     <use xlink:href="assets/fonts/custom-icon.svg#refreshCircle"></use>
                 </svg>
                 <mat-panel-title class="panel-title">
@@ -37,19 +38,13 @@
                 </div>
             </div>
         </ng-template>
-            <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)" [cols]="cols"  
-            (exportAccountData)="exportAccountDataFn($event)" (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
-            (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
-            (totalRecordsEmit)="totalRecordsEmitFn($event)"
-            (loaderEmit)="loaderEmitFn($event)"
-            />
-        
-        
-
-
+        <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI"
+            (tableDataExist)="tableDataExistFn($event)" [cols]="cols" (exportAccountData)="exportAccountDataFn($event)"
+            (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
+            (refreshbuttonEmit)="refreshbuttonEmitFn($event)" (totalRecordsEmit)="totalRecordsEmitFn($event)"
+            (loaderEmit)="loaderEmitFn($event)" />
     </mat-expansion-panel>
 </mat-accordion>
 <div class="text-end mt-2 mr-3">
-    {{totalRecords > 0 ? totalRecords : 0}} {{totalRecords > 1 ? 'records' : 'record'}} 
+    {{totalRecords > 0 ? totalRecords : 0}} {{totalRecords > 1 ? 'records' : 'record'}}
 </div>
-

@@ -297,3 +297,35 @@ button.mdc-button {
 .text-danger-500 {
     color: #ff5959 !important;
 }
+
+i.fas-fa-file-lock {
+    position: relative;
+    padding-left: 18px;
+}
+
+i.fas-fa-file-lock::before {
+    content: '1';
+    position: absolute;
+    background-image: url('../../../assets/images/Contract/fa-solid-fa-file-lock.svg') !important;
+    color: transparent;
+    transition: all 0.3s;
+    background-repeat: no-repeat;
+    color: transparent;
+    transition: all 0.3s;
+    width: 18px;
+    left: 0;
+    top: 0;
+}
+
+.btn.btn.btn-outline-primary.active .fas-fa-file-lock::before,
+.btn.btn.btn-outline-primary:hover .fas-fa-file-lock::before {
+    content: '1';
+    position: absolute;
+    background-image: url('../../../assets/images/Contract/fa-solid-fa-file-lock-white.svg') !important;
+    background-repeat: no-repeat;
+    color: transparent;
+    transition: all 0.3s;
+    width: 18px;
+    left: 0;
+    top: 0;
+}

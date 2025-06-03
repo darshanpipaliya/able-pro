@@ -43,10 +43,13 @@
                         </div>
                     </ng-template>
 
-                    <!-- <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs" [rowData]="replaceRowData"
-                        [rowSelection]="rowSelection" [suppressRowClickSelection]="true" [defaultColDef]="defaultColDef"
-                        [sideBar]="sideBar" [singleClickEdit]="true" (onSelectionChangedEvent)="onSelectionChanged($event)" >
-                    </app-ag-grid-table> -->
+                    <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI"
+                        (tableDataExist)="tableDataExistFn($event)" [APIMethod]="'GET'"
+                        [cols]="cols" (exportAccountData)="exportAccountDataFn($event)"
+                        (selectedRowsEmit)="selectedRowsEmitFn($event)" [ids]="ids"
+                        (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
+                        (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
+                        (totalRecordsEmit)="totalRecordsEmitFn($event)" (loaderEmit)="loaderEmitFn($event)" />
                 </mat-expansion-panel>
             </mat-accordion>
         </div>

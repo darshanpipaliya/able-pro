@@ -62,7 +62,6 @@ export class PTableComponent {
   sortingType: any;
   totalRecords: number = 0;
   isApiAlerdayCall: boolean = false;
-  innerLoading: boolean = false;
   expandedNode: any | null = null;
   colsshow: any[];
   selectedFiles: any[] = [];
@@ -122,12 +121,13 @@ export class PTableComponent {
 
   constructor(public locationService: LocationService, public variableManageService: VariableManageService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     const scrollableBody = this.table.el.nativeElement.querySelector(
-      '.p-datatable-scrollable-body'
+      '.p-datatable-scrollable'
     );
+
 
     if (scrollableBody) {
       scrollableBody.addEventListener('scroll', this.onScroll.bind(this));
@@ -135,6 +135,7 @@ export class PTableComponent {
   }
 
   onScroll(event: Event) {
+
     const target = event.target as HTMLElement;
 
     const scrollTop = target.scrollTop;
@@ -153,7 +154,7 @@ export class PTableComponent {
 
   ngOnChanges(changes: SimpleChanges) {
 
-    console.log(' changes ', changes['preAppliedfilterArr']);
+
     if (changes['preAppliedfilterArr'] && changes['preAppliedfilterArr'].currentValue !== changes['preAppliedfilterArr'].previousValue) {
       this.preAppliedfilterArr = changes['preAppliedfilterArr'].currentValue;
       this.loadNodes(true);
@@ -361,7 +362,7 @@ export class PTableComponent {
     if (data.length) {
       const resData = data.map(extractData.bind(this));
       this.files = allOptionsClear ? resData : [...this.files, ...resData];
-      console.log(' resData ', this.files);
+
       this.dataValues.emit(this.files);
       this.selectedRecords = this.getCheckedNodes(this.files);
 
@@ -568,7 +569,7 @@ export class PTableComponent {
 
   filerOutSide(e: any, col: any, i: any) {
 
-    console.log(' filerOutSide ', e, col, i);
+
 
     if (col.type === "dateFilter") {
       if (e) {
@@ -616,12 +617,12 @@ export class PTableComponent {
     } else {
       targetArray.push(newFilter);
     }
-    console.log(' updateFilterArray ', targetArray);
+
   }
 
   onFilterChangedValue() {
 
-    console.log(' onFilterChangedValue 2', this.textboxValue1, this.textboxValue2);
+
     let txtVal1 = this.textboxValue1;
     let txtVal2 = this.textboxValue2;
     if (this.fieldsName.type === 'dateFilter') {
@@ -656,7 +657,7 @@ export class PTableComponent {
       }
     }
     if (this.fieldsName.type === 'text') {
-      console.log(' arrDate ', arrDate);
+
       this.updateFilterArray(this.filterArray, arrDate);
     } else if (this.fieldsName.type === 'numberFilter') {
       this.updateFilterArray(this.filterArrayNumber, arrDate);
@@ -676,19 +677,19 @@ export class PTableComponent {
 
     if (Array.isArray(this.filterArray) && this.filterArray.length > 0) {
       const copy = [...this.filterArray];
-      console.log('Copied filterArray:', copy);
+
       data['advanceFilter'] = copy;
     }
-    
+
     if (Array.isArray(this.filterArrayDate) && this.filterArrayDate.length > 0) {
       data['advanceDateFilter'] = [...this.filterArrayDate];
     }
-    
+
     if (Array.isArray(this.filterArrayNumber) && this.filterArrayNumber.length > 0) {
       data['advanceNumberFilter'] = [...this.filterArrayNumber];
     }
 
-    console.log(' data ', data);
+
     this.finalFilterdArr = data;
 
     if (this.textboxValue1 !== null && this.textboxValue1 !== '') {
@@ -729,7 +730,7 @@ export class PTableComponent {
         }
       });
     }
-    console.log(' onFilterChangedValue ', this.finalFilterdArr);
+
     this.loadNodes(true);
   }
 

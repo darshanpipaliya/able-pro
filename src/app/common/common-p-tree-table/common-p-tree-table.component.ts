@@ -55,6 +55,7 @@ export class CommonPTreeTableComponent {
   @Input() arrayKey: any;
   @Input() nodeKey: any;
   @Input() APIMethod: any = 'POST';
+  @Input() firstIndexSelected: any = false;
   files: TreeNode[];
   displaycols: any[];
   loading: boolean = false;
@@ -113,6 +114,7 @@ export class CommonPTreeTableComponent {
   @Output() totalRecordsEmit: EventEmitter<any> = new EventEmitter();
   @Output() loaderEmit: EventEmitter<any> = new EventEmitter();
   @Output() dataValues: EventEmitter<any> = new EventEmitter();
+  @Output() onNodeClickEmit: EventEmitter<any> = new EventEmitter();
 
   @HostListener('document:click', ['$event']) onClick(event: Event) {
     const clickedInsideMenu = this.contextMenu?.el?.nativeElement.contains(event.target);
@@ -128,6 +130,9 @@ export class CommonPTreeTableComponent {
 
   }
 
+  onNodeClick(event: any) {
+    this.onNodeClickEmit.emit(event);
+  }
   ngAfterViewInit() {
     const scrollableBody = this.treeTable.el.nativeElement.querySelector(
       '.p-treetable-scrollable-body'
@@ -385,6 +390,11 @@ export class CommonPTreeTableComponent {
   getCheckedNodes(nodes: TreeNode[]): TreeNode[] {
     let selected: TreeNode[] = [];
 
+    if (this.firstIndexSelected) {
+      selected.push(nodes[0]);
+      return selected;
+    }
+    
     for (const node of nodes) {
       if (!node.data) continue;
 
@@ -773,8 +783,6 @@ export class CommonPTreeTableComponent {
         }
       });
     }
-
-    console.log('finalFilterdArr', _.cloneDeep(this.finalFilterdArr));
     this.loadNodes(true);
   }
 
@@ -1029,5 +1037,24 @@ export class CommonPTreeTableComponent {
       data: data
     }
     this.rowCellDoubleClicked.emit(datas);
+  }
+
+  getNestedValue(obj: any, path: string) {
+    if (!obj || !path) return '';
+    
+    // Split the path by dots
+    const parts = path.split('.');
+    let value = obj;
+    
+    // Traverse the object using the path parts
+    for (const part of parts) {
+      if (value && typeof value === 'object' && part in value) {
+        value = value[part];
+      } else {
+        return '';
+      }
+    }
+    
+    return value;
   }
 }

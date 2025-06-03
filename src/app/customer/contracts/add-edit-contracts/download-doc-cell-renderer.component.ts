@@ -55,12 +55,6 @@ export class DownloadDocCellRendererComponent implements OnInit {
       });
   }
 
-  // agInit(params: ICellRendererParams): void {
-
-  //   this.options = params.colDef.filterParams.values;
-  //   this.params = params;
-  // }
-
   refresh(params: ICellRendererParams): boolean {
     return false;
   }

@@ -20,6 +20,14 @@
       </p-dropdown>
     </div>
 
+    <div [ngClass]="{'disabled': loaderParent}" *ngIf="customersDD">
+      <p-dropdown class="custom-p-dropdown-outer" [options]="customers" [(ngModel)]="selectedCustomer"
+        [ngModelOptions]="{standalone: true}" [disabled]="disableTemSearch"
+        (onChange)="customerChange.emit(selectedCustomer)" [filter]="true" [filterFields]="['AccountName']"
+        optionValue="Id" optionLabel="AccountName">
+      </p-dropdown>
+    </div>
+
     <div *ngIf="tems.length > 0" [ngClass]="{'disabled': loaderParent || disableTemSearch}">
       <div class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20"
         (click)="filterGridByTEMId.emit(selectedTem)">
@@ -31,32 +39,25 @@
   </div>
 
   <div [ngClass]="{'disabled': loaderParent}" class="col-auto ms-auto d-flex align-items-center gap-2"
-    *ngIf="currentOpenEditPagevar === 'Table' && (viewNEdit || CompanyRoles)">
+    *ngIf="(currentOpenEditPagevar === 'Table' && (viewNEdit || CompanyRoles)) || addbuttonCondition">
     <div title="Export" class="avatar avatar-s bg-success-50 text-success-500 cp b-rad-20"
       [ngClass]="{'disabled': isDisabledExport || !tableDataExist}"
       (click)="!isDisabledExport ? exportDataAsExcel.emit() : ''">
       <i class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}}"></i>
     </div>
 
-    <div title="Add Customer" class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20" (click)="add.emit()">
+    <div title="Add" class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20" (click)="add.emit()">
       <i class="fas fa-plus"></i>
     </div>
   </div>
 
   <div [ngClass]="{'disabled': loaderParent}" class="col-auto ms-auto d-flex align-items-center gap-2"
     *ngIf="currentOpenEditPagevar === 'Edit' && currentTabName === 'People'">
-    <app-action-buttons
-      [isResetpwdAccess]="isResetpwdAccess"
-      [viewNEdit]="viewNEdit"
-      [isHaveCompanyUser]="isHaveCompanyUser"
-      [peopleDataTable]="peopleDataTable"
-      [isTemUser]="isTemUser"
-      [isCompanyUser]="isCompanyUser"
-      (onResetPassword)="handleResetPasswordFn()"
-      (onSetNewPassword)="handleSetNewPasswordFn()"
-      (onUnlockUser)="handleUnlockUserFn()"
-      (onLockUser)="handleLockUserFn()"
-      (onSendEmailVerification)="handleEmailVerificationFn()"
+    <app-action-buttons [isResetpwdAccess]="isResetpwdAccess" [viewNEdit]="viewNEdit"
+      [isHaveCompanyUser]="isHaveCompanyUser" [peopleDataTable]="peopleDataTable" [isTemUser]="isTemUser"
+      [isCompanyUser]="isCompanyUser" (onResetPassword)="handleResetPasswordFn()"
+      (onSetNewPassword)="handleSetNewPasswordFn()" (onUnlockUser)="handleUnlockUserFn()"
+      (onLockUser)="handleLockUserFn()" (onSendEmailVerification)="handleEmailVerificationFn()"
       (onAddLocationNote)="handleAddLocationNoteFn()">
     </app-action-buttons>
   </div>
@@ -76,4 +77,37 @@
       Active</button>
   </div>
 
+  <div [ngClass]="{'disabled': loaderParent || disablePlusOptions}"
+    class="col-auto ms-auto d-flex align-items-center gap-2" *ngIf="showAddButton">
+    <div class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20" [placement]="'left'"
+      [ngbPopover]="htmlContent1" popoverClass="cost-center-tooltip">
+      <i class="fas fa-plus"></i>
+    </div>
+
+
+    <ng-template #htmlContent1>
+      <div class="text-left">
+        <div>
+          <ul class="d-block mb-0 pl-0">
+            <span class="inner-option" (click)="replaceContract.emit(true)">
+              <a> <i class="fas fa-angle-right"></i>
+                Replace Contract </a> </span><br>
+
+            <span class="inner-option" (click)="addAddendum.emit(true)">
+              <a> <i class="fas fa-angle-right"></i> Add Addendum </a>
+            </span>
+          </ul>
+        </div>
+        <div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div [ngClass]="{'disabled': loaderParent || disabledLinkInventory}"
+    class="col-auto ms-auto d-flex align-items-center gap-2" *ngIf="showLinkInventory">
+    <div title="Link Inventory" class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20" (click)="LinkInventoryCDialog.emit()">
+      <i class="fas fa-edit"></i>
+    </div>
+  </div>
 </div>

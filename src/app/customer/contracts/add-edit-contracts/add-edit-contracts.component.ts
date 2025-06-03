@@ -15,6 +15,11 @@ import { checkIsValueExists, isValueExist, isValuesUndefined } from 'src/app/ser
 import { FileUploadPopupComponent } from 'src/app/common/file-upload-popup/file-upload-popup.component';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
+import { DatePipe } from '@angular/common';
+import { CustomPipe } from 'src/app/custom-pipe/date.pipe';
+import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/common-p-tree-table.component';
+import { api_list } from 'src/app/services/api-list';
+import { createColumn } from 'src/app/utils/column-utils';
 
 @Component({
   selector: 'app-add-edit-contracts',
@@ -24,7 +29,9 @@ import { PrimgModule } from 'src/app/demo/shared/primeng.module';
   imports: [
     SharedModule,
     PrimgModule,
-  ]
+    CommonPTreeTableComponent
+  ],
+  providers: [DatePipe, CustomPipe]
 })
 export class AddEditContractsComponent implements OnInit {
 
@@ -123,6 +130,14 @@ export class AddEditContractsComponent implements OnInit {
   private _unsubscribeContractEdit: Subject<any> = new Subject<any>();
   private _unsubscribeContainer: Subject<any> = new Subject<any>();
 
+  @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
+
+  refreshbutton: boolean = false;
+  payload: any;
+  childPayload: any;
+  GridAPI: any = api_list.Contract.Contract.ContractDetail;
+  cols: any = [];
+  ids: any = [];
   constructor(private locationService: LocationService,
     private fb: FormBuilder,
     public dialog: MatDialog,
@@ -140,9 +155,6 @@ export class AddEditContractsComponent implements OnInit {
             editable: false,
             minWidth: 123,
             cellRenderer: 'DownloadDocCellRendererComponent',
-            // cellRenderer: function (params) {
-            //   return '<i class="fas fa-cloud-download-alt" style="color: #05a646; cursor: pointer;"></i>'
-            // }
           },
         ],
       },
@@ -227,25 +239,6 @@ export class AddEditContractsComponent implements OnInit {
             filter: 'agDateColumnFilter',
             editable: false,
             minWidth: 135,
-            valueGetter(params: any) {
-              if (params.data.StartDate) {
-                return moment(params.data && params.data.StartDate).format('MM/DD/YYYY');
-              }
-              return '';
-            },
-            filterParams: {
-              comparator: (filterLocalDateAtMidnight: Date, cellValue: string) => {
-                const cellDate = new Date(cellValue);
-                if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
-                  return 0;
-                } else if (cellDate < filterLocalDateAtMidnight) {
-                  return -1;
-                } else {
-                  return 1;
-                }
-              },
-              browserDatePicker: true,
-            },
           },
           {
             field: 'EndDate',
@@ -254,25 +247,8 @@ export class AddEditContractsComponent implements OnInit {
             filter: 'agDateColumnFilter',
             editable: false,
             minWidth: 135,
-            valueGetter(params: any) {
-              if (params.data.EndDate) {
-                return moment(params.data && params.data.EndDate).format('MM/DD/YYYY');
-              }
-              return '';
-            },
-            filterParams: {
-              comparator: (filterLocalDateAtMidnight: Date, cellValue: string) => {
-                const cellDate = new Date(cellValue);
-                if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
-                  return 0;
-                } else if (cellDate < filterLocalDateAtMidnight) {
-                  return -1;
-                } else {
-                  return 1;
-                }
-              },
-              browserDatePicker: true,
-            },
+
+
           },
           {
             field: 'ContractTerm',
@@ -321,7 +297,96 @@ export class AddEditContractsComponent implements OnInit {
     this.frameworkComponents = { DownloadDocCellRendererComponent: DownloadDocCellRendererComponent }
   }
 
+  setCols() {
+    let currentParent = 0;
+    const getParentId = (isChild: boolean) => isChild ? ++currentParent : currentParent;
+
+    this.cols = [];
+
+    // Checkbox
+    const checkboxParent = getParentId(true);
+    this.cols.push(createColumn(checkboxParent, '60px', true, 'checkbox', '', 'checkbox', ''));
+
+    // Attachment
+    const attachmentParent = getParentId(true);
+    this.cols.push(createColumn(attachmentParent, '123px', true, 'icon', 'Attachment', 'Document', 'Document'));
+
+    // Vendor
+    const vendorParent = getParentId(true);
+    this.cols.push(createColumn(vendorParent, '101px', true, 'text', 'Vendor', 'Vendor', 'Vendor'));
+
+    // Organization
+    const orgParent = getParentId(true);
+    this.cols.push(createColumn(orgParent, '180px', true, 'text', 'Organization', 'Customer', 'Customer'));
+    this.cols.push(createColumn(orgParent, '180px', false, 'text', '', 'Company', 'Company'));
+
+    // Overview
+    const overviewParent = getParentId(true);
+    this.cols.push(createColumn(overviewParent, '178px', true, 'text', 'Overview', 'Type', 'Type of Document', 'close'));
+    this.cols.push(createColumn(overviewParent, '200px', false, 'text', '', 'Name', 'Document Name', 'close'));
+    this.cols.push(createColumn(overviewParent, '115px', false, 'text', '', 'StatusDisplay', 'Status', 'close'));
+    this.cols.push(createColumn(overviewParent, '240px', false, 'text', '', 'DocumentNumber', 'Internal Contract Number', 'open'));
+
+    // Terms
+    const termsParent = getParentId(true);
+    this.cols.push(createColumn(termsParent, '135px', true, 'dateFilter', 'Terms', 'StartDate', 'Start Date', 'close'));
+    this.cols.push(createColumn(termsParent, '135px', false, 'dateFilter', '', 'EndDate', 'End Date', 'close'));
+    this.cols.push(createColumn(termsParent, '149px', false, 'text', '', 'ContractTerm', 'Contract Term', 'close'));
+    this.cols.push(createColumn(termsParent, '181px', false, 'numberFilter', '', 'MonthsRemaining', 'Months Remaining', 'close'));
+    this.cols.push(createColumn(termsParent, '145px', false, 'numberFilter', '', 'NoticePeriod', 'Notice Period', 'open'));
+    this.cols.push(createColumn(termsParent, '175px', false, 'numberFilter', '', 'ReminderDays', 'Reminder Period', 'open'));
+    this.cols.push(createColumn(termsParent, '139px', false, 'text', '', 'AutoRenewalDisplay', 'Auto-Renewal', 'open'));
+  }
+
+  refreshbuttonEmitFn(event: any) {
+    this.refreshbutton = event;
+  }
+  selectedNode: any;
+  onNodeSelect(event: any) {
+    this.selectedNode = event.node;
+  }
+  tableDataExist: any;
+  tableDataExistFn(event: any) {
+    this.tableDataExist = event;
+  }
+  exportData: any;
+  exportAccountDataFn(event: any) {
+    this.exportData = event;
+  }
+
+  selectedRows: any;
+  selectedRowsEmitFn(event: any) {
+    this.selectedRows = event;
+    this.onSelectionChanged(this.selectedRows);
+
+  }
+
+  rowCellDoubleClickedFn(event: any) {
+
+  }
+  totalRecords: any;
+  totalRecordsEmitFn(event: any) {
+
+    this.onDisablePlusButton.emit(false);
+    this.totalRecords = event;
+  }
+  loader: boolean = false;
+  loaderEmitFn(event: any) {
+    this.loader = event;
+  }
+
+
+  setColumnDefs() {
+    this.CommonPTreeTableComponent.setColumnDefs();
+  }
+
+  onNodeClickEmitFn(event: any) {
+  }
   ngOnInit(): void {
+
+
+
+    this.setCols();
     if (this.action !== 'New') {
 
       let id: any;
@@ -342,15 +407,28 @@ export class AddEditContractsComponent implements OnInit {
         }, 2500);
       }
 
+      let type = this.fromTab == 'inventory' ? 'ASC' : 'DESC';
+
       this.locationService.replacedValue$.subscribe((res: any) => {
         if (res) {
           id = res;
-          this.getContractContainerbyId(id, true);
+          this.ids = {
+            ContractId: id,
+            Type: type
+          }
+
         } else {
-          this.getContractContainerbyId(id);
+          this.ids = {
+            ContractId: id,
+            Type: type
+          }
         }
       });
 
+      this.ids = {
+        ContractId: id,
+        Type: type
+      }
     }
     this.getGetContractMonths();
     this.setContractsForm();
@@ -430,6 +508,7 @@ export class AddEditContractsComponent implements OnInit {
   }
 
   onSelectionChanged(event: any) {
+
     this.currentSelected = event[0];
     if (!this.currentSelected.IsEditable) {
       this.isDisableSave = true;
@@ -481,9 +560,6 @@ export class AddEditContractsComponent implements OnInit {
           this.setValueInFormControl('StartDate', this.contractDetail.Terms.StartDate ? isValueExist(this.manageService.convertDate(this.contractDetail.Terms.StartDate, '', '/')) : '');
           this.setValueInFormControl('EndDate', this.contractDetail.Terms.EndDate ? isValueExist(this.manageService.convertDate(this.contractDetail.Terms.EndDate, '', '/')) : '');
 
-          // this.setValueInFormControl('StartDate', isValueExist(this.contractDetail.Terms.StartDate));
-          // this.setValueInFormControl('EndDate', isValueExist(this.contractDetail.Terms.EndDate));
-
           this.setValueInFormControl('ContractTerm', isValueExist(this.contractDetail.Terms.ContractTerm) ? this.contractDetail.Terms.ContractTerm + ' Months' : '');
           this.setValueInFormControl('MonthsRemaining', isValueExist(this.contractDetail.Terms.MonthsRemaining) ? this.contractDetail.Terms.MonthsRemaining + ' Months' : '');
           this.setValueInFormControl('ReminderDaysAlarmId', isValueExist(this.contractDetail.Terms.ReminderPeriodId));
@@ -509,7 +585,7 @@ export class AddEditContractsComponent implements OnInit {
           this.setValueInFormControl('CreditNotes', isValueExist(this.contractDetail.Credits.Notes));
           this.setCustomerDDValueEvent.emit(this.contractDetail.Overview.CustomerId);
           this.setTemDDValueEvent.emit(this.contractDetail.Overview.TEMAccountId);
-          
+
           setTimeout(() => {
             this.formateLabelForDocumentNameEdit(this.contractDetail.Overview.DocumentType, this.contractDetail.Overview.VendorId, this.contractDetail.Overview.CompanyId, this.contractDetail.Overview.CustomerId);
 
@@ -593,15 +669,13 @@ export class AddEditContractsComponent implements OnInit {
       this.isReloadGrid = false;
     }
     this.containerData = [];
-    this.stopSpinner = false;
 
     let type = this.fromTab == 'inventory' ? 'ASC' : 'DESC';
     this._unsubscribeContainer.next(null);
     this.contractService.getContractContainerbyId(contractId, type).pipe(takeUntil(this._unsubscribeContainer)).subscribe(async (data: any) => {
       if (data.Success) {
         this.containerData = data.Data.$values;
-        this.stopSpinner = true;
-        this.onDisablePlusButton.emit(false);
+
 
         if (this.addendumId) {
           this.isReloadGrid = true;
@@ -622,7 +696,6 @@ export class AddEditContractsComponent implements OnInit {
       }
     }, error => {
       this.containerData = [];
-      this.stopSpinner = true;
     });
   }
 
@@ -666,9 +739,6 @@ export class AddEditContractsComponent implements OnInit {
           CompanyName: "All"
         }
         this.companyList.unshift(obj);
-        // if(this.action == 'NewAddm') {
-        //   this.setValueInFormControl('DocumentName', isValueExist(this.gridData?.rowData?.data?.DocumentName));
-        // }
 
         this.loadingCompanyList = false;
       } else {
@@ -706,19 +776,19 @@ export class AddEditContractsComponent implements OnInit {
     let date;
     let endDate;
 
-    if(type == 'start') {
-      if(this.f['EndDate'].value) {
+    if (type == 'start') {
+      if (this.f['EndDate'].value) {
         date = new Date($event);
         endDate = new Date(this.f['EndDate'].value);
         this.setMindate = date;
-        if(date > endDate) {
+        if (date > endDate) {
           this.f['EndDate'].patchValue('');
         }
       } else {
         date = new Date($event);
         this.setMindate = date;
       }
-   }
+    }
 
     if ($event && (this.f['StartDate'].value && this.f['EndDate'].value)) {
       // this.disableWithoutDate = false;
@@ -767,14 +837,6 @@ export class AddEditContractsComponent implements OnInit {
   }
 
   calculateMonthsDifference(startDate: any, endDate: any) {
-    // let startDt = new Date(startDate);
-    // let endDt = new Date(endDate);
-
-    // let months = ((endDt.getFullYear() - startDt.getFullYear()) * 12) 
-    //            + (endDt.getMonth() - startDt.getMonth()) 
-    //            + 1;
-
-    // return months;
     const startDt = new Date(startDate);
     const endDt = new Date(endDate);
 
@@ -865,7 +927,7 @@ export class AddEditContractsComponent implements OnInit {
       }
     }
 
-    if(selectedCompany) {
+    if (selectedCompany) {
       if (a && selectedVendor && selectedCustomer) {
         this.documentNameLabled = selectedVendor + '-' + selectedCustomer + '-' + selectedCompany + '-' + a + '-';
         if (this.action == 'NewAddm') {
@@ -874,11 +936,11 @@ export class AddEditContractsComponent implements OnInit {
       }
     } else {
       this.documentNameLabled = selectedVendor + '-' + selectedCustomer + '-' + a + '-';
-        if (this.action == 'NewAddm') {
-          this.f['DocumentName'].patchValue(this.documentNameLabled);
-        }
+      if (this.action == 'NewAddm') {
+        this.f['DocumentName'].patchValue(this.documentNameLabled);
+      }
     }
-    
+
   }
 
   formateLabelForDocumentName($event: any, type: any) {
@@ -899,8 +961,8 @@ export class AddEditContractsComponent implements OnInit {
         }
       });
     }
-    
-    if(this.selectedCompany && this.selectedCompany !== 'All') {
+
+    if (this.selectedCompany && this.selectedCompany !== 'All') {
       if (a && this.selectedVendor && this.selectedCustomer) {
         this.documentNameLabled = this.selectedVendor + '-' + this.selectedCustomer + '-' + this.selectedCompany + '-' + a + '-';
         this.f['DocumentName'].patchValue(this.documentNameLabled);
@@ -946,7 +1008,7 @@ export class AddEditContractsComponent implements OnInit {
 
   saveContract() {
     this.isContractFormSubmit = true;
-    if(this.contractForm.invalid) {
+    if (this.contractForm.invalid) {
       this.scrollToFirstInvalidField();
       return
     }
@@ -992,8 +1054,6 @@ export class AddEditContractsComponent implements OnInit {
       formData.append('ConstructionFees', isValueExist(data.ConstructionFees));
       formData.append('OtherFees', isValueExist(data.OtherFees));
       formData.append('FeeNotes', isValueExist(data.FeeNotes));
-      // formData.append('StartDate', isValueExist(data.StartDate));
-      // formData.append('EndDate', isValueExist(data.EndDate));
       formData.append('StartDate', isValueExist(this.onselectSetDate(data.StartDate, '-')));
       formData.append('EndDate', isValueExist(this.onselectSetDate(data.EndDate, '-')));
       formData.append('AutoRenewal', isValueExist(data.AutoRenewal));
@@ -1021,10 +1081,6 @@ export class AddEditContractsComponent implements OnInit {
       }
       else
         formData.append('UpdateFileAttachment', 'false');
-      // if (!this.isUpload && this.editCompanyForm.get('CompanyLogoImage').value && this.editCompanyData.CompanyLogo && this.editCompanyData.CompanyLogo.ImageType.ContentType) {
-      //   let setOldLogo: any = this.dataURItoBlob(this.logoImage.changingThisBreaksApplicationSecurity);
-      //   formData.append('CompanyLogoImage', setOldLogo, 'chris.' + (this.editCompanyData.CompanyLogo.ImageType.ContentType).split('/')[1]);
-      // }
       this.saveButtonLoadder = true;
       this._unsubscribeContract.next(null);
       if (this.action === 'New') {
@@ -1052,7 +1108,11 @@ export class AddEditContractsComponent implements OnInit {
             this.saveButtonLoadder = false;
             if (data.Success) {
               this.errorPopup(data, true);
-              this.getContractContainerbyId(this.currentContractId, true);
+              this.payload = {
+                ContractId: this.currentContractId,
+                Type: this.fromTab == 'inventory' ? 'ASC' : 'DESC'
+              }
+              this.refreshbutton = true;
 
             } else {
               this.errorPopup(data);
@@ -1062,14 +1122,17 @@ export class AddEditContractsComponent implements OnInit {
             this.errorPopup(error);
           });
       } else {
-        // formData.append('documentType', this.rowData.ContractDocumentType)
         this._unsubscribeContractEdit.next(null);
         this.contractService.UpdateContractOrAddendum(this.currentSelected.Id, formData).pipe(takeUntil(this._unsubscribeContractEdit)).
           subscribe((data: any) => {
             this.saveButtonLoadder = false;
             if (data.Success) {
               this.errorPopup(data);
-              this.getContractContainerbyId(this.currentContractId, true, true);
+              this.payload = {
+                ContractId: this.currentContractId,
+                Type: this.fromTab == 'inventory' ? 'ASC' : 'DESC'
+              }
+              this.refreshbutton = true;
 
               this.contractName.emit(data.Data.Overview.DocumentName)
 
@@ -1209,7 +1272,6 @@ export class AddEditContractsComponent implements OnInit {
         this.closeAddAddmTab.emit(true);
       }
       if (this.action === 'New' && isNewAddm) {
-        // this.closeAddContractTab.emit(true);
         this.onContractAddEvent.emit(data)
       }
     });
@@ -1217,5 +1279,26 @@ export class AddEditContractsComponent implements OnInit {
 
   setValueInFormControl(key: any, value: any) {
     this.f[key].setValue(value);
+  }
+
+  downloadDocument(rowData: { Id: any; Type: any; }) {
+    this.contractService.DownloadAttachment(rowData.Id, rowData.Type).subscribe((res) => {
+      if (res.type == 'application/json') {
+
+      } else {
+        let bolbUrl = URL.createObjectURL(res);
+        var link = document.createElement("a");
+        link.setAttribute("href", bolbUrl);
+        link.setAttribute("download", 'Attachment');
+        link.style.display = "none";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+      }
+    });
+  }
+
+  dataValuesFn(event: any) {
   }
 }

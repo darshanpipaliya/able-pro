@@ -13,7 +13,7 @@
 
         </mat-expansion-panel-header>
 
-        <app-p-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)" [cols]="cols"  
+        <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload" [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)" [cols]="cols"  
             (exportAccountData)="exportAccountDataFn($event)" (selectedRowsEmit)="selectedRowsEmitFn($event)" (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
             (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
             (totalRecordsEmit)="totalRecordsEmitFn($event)"

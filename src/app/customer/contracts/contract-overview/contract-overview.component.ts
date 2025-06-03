@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import moment from 'moment';
-import { ContractService } from '../../../contract.service';
+import { ContractService } from 'src/app/services/contract.service';
 
 @Component({
   selector: 'app-contract-overview',
@@ -9,8 +9,8 @@ import { ContractService } from '../../../contract.service';
 })
 export class ContractOverviewComponent implements OnInit {
 
-  @Input() tabData;
-  @Input() tab;
+  @Input() tabData: any;
+  @Input() tab: any;
   overviewData: any;
 
   @Output() onOverviewLoaded: EventEmitter<any> = new EventEmitter<any>();

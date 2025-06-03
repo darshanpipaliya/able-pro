@@ -3,11 +3,12 @@
     <div class="col-sm-12 px-0">
         <mat-card class="">
             <mat-card-content>
+
                 <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton"
                     [currentIndex]="currentIndex" [loaderParent]="loaderParent"
                     [currentOpenEditPagevar]="currentOpenEditPagevar" [isDisabledExport]="isDisabledExport"
                     [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit" [trackByIndex]="trackByIndex"
-                    (exportDataAsExcel)="onBtnExportDataAsExcel()" (add)="addVendor()"
+                    (exportDataAsExcel)="onBtnExportDataAsExcel()" (add)="addNewBillingAlias()"
                     (buttonClick)="onButtonClick($event)"></app-header-section>
 
                 <div class="table-responsive">
@@ -15,22 +16,23 @@
                         <mat-tab>
                             <div class="col-sm-12">
                                 <ng-template mat-tab-label>
-                                    <b><i class="fas fa-snowplow" style="color: #4680ff;"> </i> Vendors</b>
+                                    <b> <i class="fas fa-user-ninja" style="color: #4680ff;"> </i> Billing Alias</b>
                                 </ng-template>
                             </div>
+
                             <div class="mt-2">
                                 <mat-accordion class="example-headers-align accordion-grid ">
                                     <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
                                         <mat-expansion-panel-header class="math">
                                             <mat-panel-title class="matt font-weight-bold">
-                                                <i class="fas fa-snowplow" style="color: #4680ff;"></i>&nbsp;Vendors
+                                                <i class="fas fa-user-ninja" style="color: #4680ff;"></i>&nbsp;
+                                                Billing Alias
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
 
                                         <app-common-p-tree-table [refreshbutton]="refreshbutton" [payload]="payload"
                                             [GridAPI]="GridAPI" (tableDataExist)="tableDataExistFn($event)"
-                                            [cols]="cols"
-                                            (exportAccountData)="exportAccountDataFn($event)"
+                                            [cols]="cols" (exportAccountData)="exportAccountDataFn($event)"
                                             (selectedRowsEmit)="selectedRowsEmitFn($event)"
                                             (rowCellDoubleClicked)="rowCellDoubleClickedFn($event)"
                                             (refreshbuttonEmit)="refreshbuttonEmitFn($event)"
@@ -38,50 +40,43 @@
                                             (loaderEmit)="loaderEmitFn($event)" />
                                     </mat-expansion-panel>
                                 </mat-accordion>
-                                <div class="text-end mt-2 mr-3">
-                                    {{totalRecords > 0 ? totalRecords : 0}} {{totalRecords > 1 ? 'records' : 'record'}} 
-                                </div>
                             </div>
                         </mat-tab>
-
-                        <ng-container *ngFor="let vendorData of editVendorArray;let i = index">
-                            <mat-tab>
+                        <ng-container *ngFor="let billingAliasTab of addeditBillingAliasTabs;let i = index">
+                            <mat-tab *ngIf="billingAliasTab.tab=='edit'">
                                 <ng-template mat-tab-label>
-                                    <i class="fas fa-edit"
-                                        style="color: #4680ff;"></i>&nbsp;{{vendorData.VendorAccountName}}&nbsp;<mat-icon
-                                        (click)="removeTab(i)">cancel</mat-icon>
+                                    <b>
+                                        <i class="fas fa-edit" style="color: #4680ff;"> </i>
+                                        Billing Alias
+                                        ({{billingAliasTab['rowData']['VendorBillingAliasName']}})</b>&nbsp;<mat-icon
+                                        (click)="removeAddEditBillingAliasTab(i)">
+                                        cancel
+                                    </mat-icon>
                                 </ng-template>
                                 <ng-template matTabContent>
-
-                                    <app-edit-vendor [vendorData]="vendorData" (recordUpdated)="recordEdited($event)"
-                                        (currentOpenEditPage)="currentOpenEditPage($event)"
-                                        (onVendorEditEvent)="onVendorEditEvent($event, i)"
-                                        (parentVendorsListEmit)="parentVendorsListEmit($event, i)"
-                                        (vendorApiDataEmit)="vendorApiDataEmit($event, i)"
-                                        (sourceEmit)="sourceEmit($event, i)"
-                                        [parentVendorsListEmitData]="parentVendorsListEmitData[i]"
-                                        [sourceEmitData]="sourceEmitData[i]"
-                                        [vendorApiDataEmitData]="vendorApiDataEmitData[i]"
-                                        [selectedInEditTab]="selectedInEditTab"></app-edit-vendor>
+                                    <app-edit-billing-alias (afterBillingAliasEdit)="removeAddEditBillingAliasTab(i)"
+                                        [billingAliasData]="billingAliasTab.rowData">
+                                    </app-edit-billing-alias>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngIf="billingAliasTab.tab=='add'">
+                                <ng-template mat-tab-label>
+                                    <b>
+                                        <i class="fas fa-user-ninja" style="color: #4680ff;"> </i>
+                                        Add Billing Alias</b>&nbsp;<mat-icon (click)="removeAddEditBillingAliasTab(i)">
+                                        cancel
+                                    </mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-billing-alias
+                                        (onAddBillingAliasComponentDestroy)="onAddBillingAliasComponentDestroy($event,i)"
+                                        (afterBillingAliasAdd)="removeAddEditBillingAliasTab(i)"
+                                        [billingAliasData]="billingAliasTab.rowData">
+                                    </app-add-billing-alias>
                                 </ng-template>
                             </mat-tab>
                         </ng-container>
-                        <ng-container *ngFor="let vendor of addVendorArray;let i = index">
-                            <mat-tab>
-                                <ng-template mat-tab-label>
-                                    <i class="fas fa-user-plus" style="color: #4680ff;"></i>&nbsp;Add Vendor&nbsp;
-                                    <mat-icon (click)="removeContact(i)">cancel</mat-icon>
-                                </ng-template>
-                                <ng-template matTabContent>
-                                    <app-add-vendor (onVendorAddEvent)="onVendorAddEvent($event, i)"
-                                        (currentOpenEditPage)="currentOpenEditPage($event)"
-                                        (openEditTab)="openEditTab($event, i)"
-                                        (onVendorComponentDestroy)="onVendorComponentDestroy($event,i)"
-                                        [vendorData]="vendor.vendorData"></app-add-vendor>
-                                </ng-template>
 
-                            </mat-tab>
-                        </ng-container>
                     </mat-tab-group>
                 </div>
             </mat-card-content>

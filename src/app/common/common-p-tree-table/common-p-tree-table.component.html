@@ -2,7 +2,7 @@
     <p-treeTable #treeTable [value]="files" columnResizeMode="expand" [columns]="displaycols" [lazy]="true"
         (onLazyLoad)="loadNodes(true)" [totalRecords]="totalRecords" (onNodeExpand)="onNodeExpand($event)"
         [scrollable]="true" [resizableColumns]="true" selectionMode="checkbox"
-        [metaKeySelection]="false" 
+        [metaKeySelection]="false" (onNodeSelect)="onNodeClick($event)"
         [reorderableColumns]="true" (onColResize)="handleColumnResize($event)" [(selection)]="selectedRecords"
         class="{{ innerLoading || isApiAlerdayCall ? 'disabled':''}}">
 
@@ -72,7 +72,7 @@
                                 [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText size="8"
                                 style="width: auto" />
 
-                            <i class="pi pi-filter icon-filter" (click)="openContextMenu($event,col )" *ngIf="col.type && col.type !== 'checkbox'"></i>
+                            <i class="pi pi-filter icon-filter" (click)="openContextMenu($event,col )" *ngIf="col.type && col.type !== 'checkbox' && col.type !== 'icon'"></i>
 
                         </th>
                     </ng-container>
@@ -115,14 +115,14 @@
                                     <ng-container *ngTemplateOutlet="buttonTemplate; context: { rowData: rowNode['node']['data'] }"></ng-container>
                                 </span>
                                 <span *ngSwitchCase="'dateFilter'">
-                                    {{ rowData[col.field] | date: 'MM/dd/yyyy' }}
+                                    {{ getNestedValue(rowData, col.field) | date: 'MM/dd/yyyy' }}
                                 </span>
                                 <span *ngSwitchDefault>
                                     <span *ngIf="col.field == 'LastInvoiceDate'">
-                                        {{ rowData[col.field] | date:'MMM-yyyy' }}</span>
+                                        {{ getNestedValue(rowData, col.field) | date:'MMM-yyyy' }}</span>
 
                                     <span *ngIf="col.field !== 'LastInvoiceDate'">
-                                        {{ rowData[col.field] }}</span>
+                                        {{ getNestedValue(rowData, col.field) }}</span>
                                 </span>
                             </ng-container>
                         </td>

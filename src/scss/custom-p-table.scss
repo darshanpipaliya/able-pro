@@ -22,7 +22,7 @@
   flex-direction: row;
   
   ::ng-deep {
-    .p-treetable-scrollable-header-box {
+    .p-datatable-scrollable {
       padding-right: 0 !important;  
     }
     .p-tree {
@@ -44,24 +44,24 @@
   }
 }
 
-p-treetable {
-  .p-treetable-thead-child th.child-header {
+p-table {
+  .p-datatable-thead-child th.child-header {
     cursor: pointer !important;
   }
 
-  .p-treetable-thead-child th.child-header::placeholder,
-  .p-treetable-thead-child th.child-header::placeholder:active,
-  .p-treetable-thead-child th.child-header::placeholder:hover,
-  .p-treetable-thead-child th.child-header::placeholder:focus {
+  .p-datatable-thead-child th.child-header::placeholder,
+  .p-datatable-thead-child th.child-header::placeholder:active,
+  .p-datatable-thead-child th.child-header::placeholder:hover,
+  .p-datatable-thead-child th.child-header::placeholder:focus {
     cursor: pointer !important;
   }
 
-  .header-row.p-treetable-thead-filter .child-header {
+  .header-row.p-datatable-thead-filter .child-header {
     cursor: context-menu !important;
   }
 }
 
-:host ::ng-deep .p-treetable-scrollable-body {
+:host ::ng-deep .p-datatable-scrollable {
   height: 350px;
   overflow-y: auto;
 }
@@ -138,11 +138,11 @@ p-treetable {
 
 
 :host ::ng-deep {
-  p-treetable {
+  p-table {
     overflow-x: auto !important;
   }
 
-  .p-treetable {
+  .p-datatable {
     border-right: 1px solid #babfc7;
 
     .p-column-resizer {
@@ -162,8 +162,8 @@ p-treetable {
     }
   }
 
-  .p-treetable th,
-  .p-treetable td {
+  .p-datatable th,
+  .p-datatable td {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
     line-height: normal;
 
@@ -216,7 +216,7 @@ p-treetable {
     }
   }
 
-  .p-treetable .p-treetable-thead>tr {
+  .p-datatable .p-datatable-thead>tr {
     th {
       color: #181d1f;
       font-size: 15px;
@@ -225,7 +225,7 @@ p-treetable {
     }
   }
 
-  .p-treetable .p-treetable-thead>tr.p-treetable-thead-parent>th {
+  .p-datatable .p-datatable-thead>tr.p-datatable-thead-parent>th {
     background: #DDDBDB;
 
     &.parent-header {
@@ -237,7 +237,7 @@ p-treetable {
     }
   }
 
-  .p-treetable .p-treetable-thead>tr.p-treetable-thead-child>th {
+  .p-datatable .p-datatable-thead>tr.p-datatable-thead-child>th {
     background: #EEEEEE !important;
 
     &.child-header {
@@ -249,7 +249,7 @@ p-treetable {
     }
   }
 
-  .p-treetable .p-treetable-thead>tr.p-treetable-thead-filter>th {
+  .p-datatable .p-datatable-thead>tr.p-datatable-thead-filter>th {
     background: #EEEEEE !important;
 
     &.child-header {
@@ -453,7 +453,7 @@ p-treetable {
     }
   }
 
-  .p-treetable-tbody {
+  .p-datatable .p-datatable-tbody {
     .body-row {
       &:nth-child(even) {
         background-color: #fcfcfc;
@@ -471,7 +471,7 @@ p-treetable {
     }
   }
 
-  .p-treetable td i.pi {
+  .p-datatable td i.pi {
     margin: 0 !important;
     padding: 0 !important;
     // background: red;
@@ -486,26 +486,26 @@ p-treetable {
   }
 
 
-  button.p-treetable-toggler.p-link.p-ripple {
+  button.p-datatable-toggler.p-link.p-ripple {
     // visibility: visible !important;
     background: transparent;
   }
 
-  .p-treetable .p-treetable-tbody>tr>td .p-treetable-toggler {
+  .p-datatable .p-datatable-tbody>tr>td .p-datatable-toggler {
     width: 1rem !important;
     height: 1rem !important;
   }
 
-  .p-treetable .p-treetable-tbody>tr>td .p-treetable-toggler:focus {
+  .p-datatable .p-datatable-tbody>tr>td .p-datatable-toggler:focus {
     border: none;
     box-shadow: none;
   }
 
-  .p-treetable .p-treetable-tbody>tr>td .p-treetable-toggler:enabled:hover {
+  .p-datatable .p-datatable-tbody>tr>td .p-datatable-toggler:enabled:hover {
     background: transparent;
   }
 
-  .p-treetable.p-treetable-hoverable-rows .p-treetable-tbody>tr:not(.p-highlight):hover {
+  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody>tr:not(.p-highlight):hover {
     background: rgba(33, 150, 243, 0.1);
   }
 
@@ -534,7 +534,7 @@ p-treetable {
     }
   }
 
-  input.p-treeTable-calender {
+  input.p-datatable-calender {
     min-height: 24px;
     padding-left: 6px;
     font-size: 13px;
@@ -544,7 +544,7 @@ p-treetable {
     color: #181d1f;
   }
 
-  input.p-treeTable-calender-grid {
+  input.p-datatable-calender-grid {
     height: 24px;
     padding-left: 6px;
     font-size: 13px;
@@ -662,14 +662,14 @@ p-treetable {
   }
 }
 
-::ng-deep .p-treetable .p-treetable-tbody > tr {
+::ng-deep .p-datatable .p-datatable-tbody > tr {
   border-bottom: 1px solid #f2f2f2;
 }
 
-::ng-deep .p-treetable .p-treetable-tbody > tr > td p-treetablecheckbox .p-checkbox {
+::ng-deep .p-datatable .p-datatable-tbody > tr > td p-datatablecheckbox .p-checkbox {
   height: 15px !important;
   width: 15px !important;
 }
-::ng-deep .p-treetable .p-treetable-thead > tr.p-treetable-thead-child > th.child-header input {
+::ng-deep .p-datatable .p-datatable-thead > tr.p-datatable-thead-child > th.child-header input {
   margin-left: 5px !important;
 }

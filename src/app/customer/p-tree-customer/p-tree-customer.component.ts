@@ -44,7 +44,7 @@ interface ColumnDefinition {
     CommonModule,
     SharedModule,
     PrimgModule,
-    PTableComponent
+    CommonPTreeTableComponent
   ],
   providers: [WirelineService, VariableManageService, LocationService],
   selector: 'app-p-tree-customer',

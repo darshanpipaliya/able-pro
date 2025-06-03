@@ -14,6 +14,11 @@ import { LocationService } from 'src/app/services/location.service';
 import { checkIsValueExists, isValueExist, rolePermission } from 'src/app/services/helper';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
+import { HeaderSectionComponent } from 'src/app/common/header-section/header-section.component';
+import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/common-p-tree-table.component';
+import { api_list } from 'src/app/services/api-list';
+import { createColumn } from 'src/app/utils/column-utils';
+import { InventoryCComponent } from './inventory-c/inventory-c.component';
 
 @Component({
   selector: 'app-contracts',
@@ -23,6 +28,10 @@ import { SharedModule } from 'src/app/demo/shared/shared.module';
   imports: [
     SharedModule,
     PrimgModule,
+    HeaderSectionComponent,
+    CommonPTreeTableComponent,
+    AddEditContractsComponent,
+    InventoryCComponent
   ]
 })
 export class ContractComponent implements OnInit {
@@ -33,55 +42,23 @@ export class ContractComponent implements OnInit {
 
   @ViewChild(AddEditContractsComponent) private editContractComponent: AddEditContractsComponent;
 
-  public sideBar: any;
-  public columnDefs: any;
-  public rowSelection: any;
   public exportInvoiceSummaryData: any;
   public exportDetail: any;
-
-  selectedTemForZero: any;
-  selectedCustomerForZero: any;
-
   customers: any = [];
-  defaultColDef = {
-    editable: false,
-    sortable: true,
-    minWidth: 100,
-    filter: true,
-    resizable: true,
-    floatingFilter: true,
-    flex: 1,
-  };
-
-  gridOptions = {
-    rowModelType: 'serverSide',
-    serverSideInfiniteScroll: true,
-    enableFiltering: true,
-    headerHeight: 35,
-    groupHeaderHeight: 37,
-    floatingFiltersHeight: 35
-  };
-
-  gridApi: any;
-  gridColumnApi: any;
   selectedMainTab: any = 0;
 
-  rowData: any = [];
-  isDisabled = false;
   selectedTab: any = 0;
-  tabsArray: any = [];
   childRecord = '';
   selectedChild: any = 0;
   selectedTem: any = 'all';
   stopSpinner: boolean = false;
   selectedCustomer: any = 'all';
-  loadingCustomerAPI = false;
   selectedTemDD: any;
   tems: any = [];
   filterdTems: any = [];
   hasSuperTemUsers: boolean = false;
   tabsMainArray: any = [];
-  tabAddemArray: any = [];
+  tabAddemArray: any[] = [];
   selectedAddedm: any = 0;
   sendDataToLinkPopup: any;
   isOpenWirelineTab: boolean = false;
@@ -104,689 +81,162 @@ export class ContractComponent implements OnInit {
   private _getTemListsDestroy: Subject<any> = new Subject<any>();
 
   buttonOptions: any = [
-    { label: 'Contracts', value: 'contracts', url: '/organization/contracts', class: 'fas-fa-file-lock' },
-    // { label: "LOA's", value: 'loas', url: '/organization/abc' },
+    { label: 'Contracts', value: 'contracts', url: '/organization/contracts', icon: 'fas-fa-file-lock' },
   ];
 
   selectedTabOption = this.buttonOptions[0].value;
   selectedButton = this.buttonOptions[0].value;
 
   editDetailsData: any;
+  TemDDArray: any = [];
+  disableTemSearch: boolean = false;
+  loaderParent: any = false;
+  currentOpenEditPagevar = 'Table';
+  tableDataExist: any;
+  tabNames = ['Contracts', 'Inventory'];
+  currentTabName = this.tabNames[this.selectedTab];
+  @ViewChild(CommonPTreeTableComponent) CommonPTreeTableComponent!: CommonPTreeTableComponent;
+  GridAPI: any = api_list.Contract.Contract.Grid;
+  payload: any = {};
+  cols: any = [];
   constructor(private contractService: ContractService,
     public variableManageService: VariableManageService,
     public dialog: MatDialog,
     public locationService: LocationService,
-    private router: Router,
-    private cd: ChangeDetectorRef) {
+    private router: Router) {
+    this.setCols();
+  }
 
-    this.sideBar = {
-      toolPanels: ['columns', 'filters']
-    };
+  setCols() {
+    let currentParent = 0;
+    const getParentId = (isChild: boolean) => isChild ? ++currentParent : currentParent;
 
-    this.columnDefs = [
-      {
-        headerName: 'Vendor',
-        children: [
-          {
-            field: 'VendorAccountName',
-            headerName: 'Vendor',
-            columnGroupShow: 'open',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 125,
-            sortingField: 'VendorAccountName'
-          },
-        ],
-      },
-      {
-        headerName: 'Organization',
-        children: [
-          {
-            field: 'CustomerAccountName',
-            headerName: 'Customer',
-            columnGroupShow: 'close',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 200,
-            sortingField: 'CustomerAccountName'
-          },
-          {
-            field: 'CompanyName',
-            headerName: 'Company',
-            columnGroupShow: 'close',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 200,
-            sortingField: 'CompanyName'
-          }
-        ],
-      },
-      {
-        headerName: 'Overview',
-        children: [
-          {
-            field: 'ContractDocumentType',
-            headerName: 'Type of Document',
-            columnGroupShow: 'close',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 178,
-            sortingField: 'ContractDocumentType'
-          },
-          {
-            field: 'DocumentName',
-            headerName: 'Document Name',
-            columnGroupShow: 'close',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 200,
-            sortingField: 'DocumentName'
-          },
-          {
-            field: 'ContractStatusDisplay',
-            headerName: 'Status',
-            columnGroupShow: 'close',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 94,
-            sortingField: 'ContractStatusDisplay'
-          },
-          {
-            field: 'InternalDocumentNumber',
-            headerName: 'Internal Contract Number',
-            columnGroupShow: 'open',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 240,
-            sortingField: 'InternalDocumentNumber'
-          },
-          {
-            field: 'VendorDocumentNumber',
-            headerName: 'Vendor Contract Number',
-            columnGroupShow: 'open',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 240,
-            sortingField: 'VendorDocumentNumber'
-          }
-        ],
-      },
-      {
-        headerName: 'Terms',
-        children: [
-          {
-            field: 'ContractTermStartDate',
-            headerName: 'Start Date',
-            columnGroupShow: 'close',
-            filter: 'agDateColumnFilter',
-            editable: false,
-            minWidth: 121,
-            valueGetter(params: any) {
-              if (params?.data?.ContractTermStartDate) {
-                return moment(params?.data && params?.data?.ContractTermStartDate).format('MM/DD/YYYY');
-              }
-              return '';
-            }
-          },
-          {
-            field: 'ContractTermEndDate',
-            headerName: 'End Date',
-            columnGroupShow: 'close',
-            filter: 'agDateColumnFilter',
-            editable: false,
-            minWidth: 114,
-            valueGetter(params: any) {
-              if (params?.data?.ContractTermEndDate) {
-                return moment(params?.data && params?.data?.ContractTermEndDate).format('MM/DD/YYYY');
-              }
-              return '';
-            }
-          },
-          {
-            field: 'ContractTermDisplay',
-            headerName: 'Contract Term',
-            columnGroupShow: 'close',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 149,
-            sortingField: 'ContractTermDisplay'
-          },
-          {
-            field: 'ContractMonthsRemainingDisplay',
-            headerName: 'Months Remaining',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 181,
-            sortingField: 'ContractMonthsRemaining'
-          },
-          {
-            field: 'NoticePeriodMonthsDisplay',
-            headerName: 'Notice Period',
-            columnGroupShow: 'open',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 145,
-            sortingField: 'NoticePeriodMonths'
-          },
-          {
-            field: 'ReminderDaysAlarmMonthsDisplay',
-            headerName: 'Reminder Period',
-            columnGroupShow: 'open',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 175,
-            sortingField: 'ReminderDaysAlarmMonths'
-          },
-          {
-            field: 'ContractTermAutoRenualDisplay',
-            headerName: 'Auto-Renewal',
-            columnGroupShow: 'open',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 148,
-            sortingField: 'ContractTermAutoRenualDisplay'
-          },
-          {
-            field: 'ContractCustomPaymentTerms',
-            headerName: 'Custom Payment Terms',
-            columnGroupShow: 'open',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 212,
-            sortingField: 'ContractCustomPaymentTerms'
-          }
-        ],
-      },
-      {
-        headerName: 'Commitments',
-        children: [
-          {
-            field: 'AnnualRevenueCommitmentAmountDisplay',
-            headerName: 'Annual Revenue Amount $',
-            columnGroupShow: 'close',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 234,
-            sortingField: 'AnnualRevenueCommitmentAmount'
-          },
-          {
-            field: 'InventoryCommitmentAmountDisplay',
-            headerName: 'Inventory Commitment Amount $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 283,
-            sortingField: 'InventoryCommitmentAmount'
-          },
-          {
-            field: 'MonthlyRevenueCommitmentAmountDisplay',
-            headerName: 'Monthly Revenue Amount $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 244,
-            sortingField: 'MonthlyRevenueCommitmentAmount'
-          },
-          {
-            field: 'OtherCreditAmountDisplay',
-            headerName: 'Other Credits Amount $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 215,
-            sortingField: 'OtherCreditAmount'
-          }
-        ],
-      },
-      {
-        headerName: 'Termination',
-        children: [
-          {
-            field: 'EarlyTerminationFeeDisplay',
-            headerName: 'Early Termination Penalty',
-            columnGroupShow: 'close',
-            filter: 'agTextColumnFilter',
-            editable: false,
-            minWidth: 244,
-            sortingField: 'EarlyTerminationFeeDisplay'
-          },
-          {
-            field: 'TerminationFeesDisplay',
-            headerName: 'Termination Fees $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 180,
-            sortingField: 'TerminationFees'
-          }
-        ],
-      },
-      {
-        headerName: 'Discounts',
-        children: [
-          {
-            field: 'ServiceDiscount',
-            headerName: 'Service Discount',
-            columnGroupShow: 'close',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 166,
-            sortingField: 'ServiceDiscount'
-          },
-          {
-            field: 'FeatureDiscount',
-            headerName: 'Feature Discount',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 168,
-            sortingField: 'FeatureDiscount'
-          },
-          {
-            field: 'EquipmentDiscount',
-            headerName: 'Equipment Discount',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 191,
-            sortingField: 'EquipmentDiscount'
-          },
-          {
-            field: 'OtherDiscount',
-            headerName: 'Other Discount',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 156,
-            sortingField: 'OtherDiscount'
-          }
-        ],
-      },
-      {
-        headerName: 'Credits',
-        children: [
-          {
-            field: 'ActivationCreditAmountDisplay',
-            headerName: 'Activation Credits Amount $',
-            columnGroupShow: 'close',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 245,
-            sortingField: 'ActivationCreditAmount'
-          },
-          {
-            field: 'SpendCreditAmountDisplay',
-            headerName: 'Spend Credits Amount $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 219,
-            sortingField: 'SpendCreditAmount'
-          },
-          {
-            field: 'OtherCreditAmountDisplay',
-            headerName: 'Other Credits Amount $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 215,
-            sortingField: 'OtherCreditAmount'
-          },
-          {
-            field: 'GuaranteedCreditAmountDisplay',
-            headerName: 'Guaranteed Credits Amount $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 255,
-            sortingField: 'GuaranteedCreditAmount'
-          },
-          {
-            field: 'NumberOfActivationFees',
-            headerName: 'Number of Activation Waivers',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 257,
-            sortingField: 'NumberOfActivationFees',
-            valueGetter(params: any) {
-              if (params?.data?.NumberOfActivationFees) {
-                return params?.data?.NumberOfActivationFees.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              }
-              return '';
-            }
-          },
-          {
-            field: 'NumberOfTerminationWaivers',
-            headerName: 'Number of Termination Waivers',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 269,
-            sortingField: 'NumberOfTerminationWaivers',
-            valueGetter(params: any) {
-              if (params?.data?.NumberOfTerminationWaivers) {
-                return params?.data?.NumberOfTerminationWaivers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              }
-              return '';
-            }
-          },
-          {
-            field: 'NumberOfJointActtermFees',
-            headerName: 'Number of Joint Activation/Termination Waivers',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 381,
-            sortingField: 'NumberOfJointActtermFees',
-            valueGetter(params: any) {
-              if (params?.data?.NumberOfJointActtermFees) {
-                return params?.data?.NumberOfJointActtermFees.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              }
-              return '';
-            }
-          }
-        ],
-      },
-      {
-        headerName: 'Fees',
-        children: [
-          {
-            field: 'InstallationFeesDisplay',
-            headerName: 'Installation Fee $',
-            columnGroupShow: 'close',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 168,
-            sortingField: 'InstallationFees'
-          },
-          {
-            field: 'ActivationFeesDisplay',
-            headerName: 'Activation Fee $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 161,
-            sortingField: 'ActivationFees'
-          },
-          {
-            field: 'ConstructionFeesDisplay',
-            headerName: 'Construction Fee $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 180,
-            sortingField: 'ConstructionFees'
-          },
-          {
-            field: 'OtherFeesDisplay',
-            headerName: 'Other Fee $',
-            columnGroupShow: 'open',
-            filter: 'agNumberColumnFilter',
-            editable: false,
-            minWidth: 133,
-            sortingField: 'OtherFees'
-          }
-        ],
-      }
-    ];
+    this.cols = [];
 
+    // Vendor
+    const vendorParent = getParentId(true);
+    this.cols.push(createColumn(vendorParent, '125px', true, 'text', 'Vendor', 'VendorAccountName', 'Vendor', 'open'));
+
+    // Organization
+    const orgParent = getParentId(true);
+    this.cols.push(createColumn(orgParent, '200px', true, 'text', 'Organization', 'CustomerAccountName', 'Customer'));
+    this.cols.push(createColumn(orgParent, '200px', false, 'text', '', 'CompanyName', 'Company', 'close'));
+
+    // Overview
+    const overviewParent = getParentId(true);
+    this.cols.push(createColumn(overviewParent, '178px', true, 'text', 'Overview', 'ContractDocumentType', 'Type of Document'));
+    this.cols.push(createColumn(overviewParent, '200px', false, 'text', '', 'DocumentName', 'Document Name', 'close'));
+    this.cols.push(createColumn(overviewParent, '94px', false, 'text', '', 'ContractStatusDisplay', 'Status', 'close'));
+    this.cols.push(createColumn(overviewParent, '94px', false, 'text', '', 'CountInventoryId', 'Count of Inventory', 'close'));
+    this.cols.push(createColumn(overviewParent, '240px', false, 'text', '', 'InternalDocumentNumber', 'Internal Contract Number', 'open'));
+    this.cols.push(createColumn(overviewParent, '240px', false, 'text', '', 'VendorDocumentNumber', 'Vendor Contract Number', 'open'));
+
+    // Terms
+    const termsParent = getParentId(true);
+    this.cols.push(createColumn(termsParent, '121px', true, 'dateFilter', 'Terms', 'ContractTermStartDate', 'Start Date'));
+    this.cols.push(createColumn(termsParent, '114px', false, 'dateFilter', '', 'ContractTermEndDate', 'End Date', 'close'));
+    this.cols.push(createColumn(termsParent, '149px', false, 'text', '', 'ContractTermDisplay', 'Contract Term', 'close'));
+    this.cols.push(createColumn(termsParent, '181px', false, 'numberFilter', '', 'ContractMonthsRemainingDisplay', 'Months Remaining', 'open'));
+    this.cols.push(createColumn(termsParent, '145px', false, 'text', '', 'NoticePeriodMonthsDisplay', 'Notice Period', 'open'));
+    this.cols.push(createColumn(termsParent, '175px', false, 'text', '', 'ReminderDaysAlarmMonthsDisplay', 'Reminder Period', 'open'));
+    this.cols.push(createColumn(termsParent, '148px', false, 'text', '', 'ContractTermAutoRenualDisplay', 'Auto-Renewal', 'open'));
+    this.cols.push(createColumn(termsParent, '212px', false, 'text', '', 'ContractCustomPaymentTerms', 'Custom Payment Terms', 'open'));
+
+    // Commitments
+    const commitmentsParent = getParentId(true);
+    this.cols.push(createColumn(commitmentsParent, '234px', true, 'numberFilter', 'Commitments', 'AnnualRevenueCommitmentAmountDisplay', 'Annual Revenue Amount $'));
+    this.cols.push(createColumn(commitmentsParent, '283px', false, 'numberFilter', '', 'InventoryCommitmentAmountDisplay', 'Inventory Commitment Amount $', 'open'));
+    this.cols.push(createColumn(commitmentsParent, '244px', false, 'numberFilter', '', 'MonthlyRevenueCommitmentAmountDisplay', 'Monthly Revenue Amount $', 'open'));
+    this.cols.push(createColumn(commitmentsParent, '215px', false, 'numberFilter', '', 'OtherCreditAmountDisplay', 'Other Credits Amount $', 'open'));
+
+    // Termination
+    const terminationParent = getParentId(true);
+    this.cols.push(createColumn(terminationParent, '244px', true, 'text', 'Termination', 'EarlyTerminationFeeDisplay', 'Early Termination Penalty'));
+    this.cols.push(createColumn(terminationParent, '180px', false, 'numberFilter', '', 'TerminationFeesDisplay', 'Termination Fees $', 'open'));
+
+    // Discounts
+    const discountParent = getParentId(true);
+    this.cols.push(createColumn(discountParent, '166px', true, 'numberFilter', 'Discounts', 'ServiceDiscount', 'Service Discount'));
+    this.cols.push(createColumn(discountParent, '168px', false, 'numberFilter', '', 'FeatureDiscount', 'Feature Discount', 'open'));
+    this.cols.push(createColumn(discountParent, '191px', false, 'numberFilter', '', 'EquipmentDiscount', 'Equipment Discount', 'open'));
+    this.cols.push(createColumn(discountParent, '156px', false, 'numberFilter', '', 'OtherDiscount', 'Other Discount', 'open'));
+
+    // Credits
+    const creditParent = getParentId(true);
+    this.cols.push(createColumn(creditParent, '245px', true, 'numberFilter', 'Credits', 'ActivationCreditAmountDisplay', 'Activation Credits Amount $'));
+    this.cols.push(createColumn(creditParent, '219px', false, 'numberFilter', '', 'SpendCreditAmountDisplay', 'Spend Credits Amount $', 'open'));
+    this.cols.push(createColumn(creditParent, '215px', false, 'numberFilter', '', 'OtherCreditAmountDisplay', 'Other Credits Amount $', 'open'));
+    this.cols.push(createColumn(creditParent, '255px', false, 'numberFilter', '', 'GuaranteedCreditAmountDisplay', 'Guaranteed Credits Amount $', 'open'));
+    this.cols.push(createColumn(creditParent, '257px', false, 'numberFilter', '', 'NumberOfActivationFees', 'Number of Activation Waivers', 'open'));
+    this.cols.push(createColumn(creditParent, '269px', false, 'numberFilter', '', 'NumberOfTerminationWaivers', 'Number of Termination Waivers', 'open'));
+    this.cols.push(createColumn(creditParent, '381px', false, 'numberFilter', '', 'NumberOfJointActtermFees', 'Number of Joint Activation/Termination Waivers', 'open'));
+
+    // Fees
+    const feesParent = getParentId(true);
+    this.cols.push(createColumn(feesParent, '168px', true, 'numberFilter', 'Fees', 'InstallationFeesDisplay', 'Installation Fee $'));
+    this.cols.push(createColumn(feesParent, '161px', false, 'numberFilter', '', 'ActivationFeesDisplay', 'Activation Fee $', 'open'));
+    this.cols.push(createColumn(feesParent, '180px', false, 'numberFilter', '', 'ConstructionFeesDisplay', 'Construction Fee $', 'open'));
+    this.cols.push(createColumn(feesParent, '133px', false, 'numberFilter', '', 'OtherFeesDisplay', 'Other Fee $', 'open'));
   }
 
 
+  onCustomerChange(event: any) {
+    this.selectedCustomer = event;
+  }
+  loaderEmitParentFn(event: any) {
+    this.loaderParent = event;
+  }
+  tableDataExistFn(e?: any) {
+    this.tableDataExist = e;
+  }
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
+
+  onButtonClick(value: string): void {
+    this.selectedButton = value;
+    setTimeout(() => this.goToPage(value), 0);
+  }
+  onTemChange(event: any) {
+    this.TemDDArray[this.selectedTab] = { id: Number(event), type: this.currentOpenEditPagevar };
+  }
+
   ngOnInit(): void {
-    // this.getAllContracts();
     this.getTemLists();
     this.getCustomerForUser();
     this.temRoles = rolePermission(['TEMAdmin', 'TEMUser', 'TEMManager']);
     this.hasSuperTemUsers = rolePermission(['SuperTEMAdmin', 'SuperTEMManager', 'SuperTEMUser']);
 
-    let headerData:any = [];
-    let ChildHeaderData:any = [];
-    let i = 0;
-    let childIndex = 0;
-    _.map(this.columnDefs, (x: any) => {
-      if (isValueExist(x.headerName)) {
-        i = i + 1;
-        headerData.push({ position: i, title: x.headerName });
-        if (x.children) {
-          _.map(x.children, (y: any) => {
-            childIndex = childIndex + 1;
-            let obj:any = {Position: childIndex, Title: y.headerName, FieldName: y.field, HeaderPosition: i};
-            if(y.field == 'AnnualRevenueCommitmentAmountDisplay' || y.field == 'InventoryCommitmentAmountDisplay' || y.field == 'MonthlyRevenueCommitmentAmountDisplay' || y.field == 'OtherCreditAmountDisplay' || y.field == 'InventoryCommitmentAmountDisplay' || y.field == 'TerminationFeesDisplay' || y.field == 'ActivationCreditAmountDisplay' || y.field == 'SpendCreditAmountDisplay' || y.field == 'GuaranteedCreditAmountDisplay' || y.field == 'InstallationFeesDisplay' || y.field == 'ActivationFeesDisplay' || y.field == 'OtherFeesDisplay' || y.field == 'ConstructionFeesDisplay') {
-              obj['isCurrency'] = true;
-            }
-            ChildHeaderData.push(obj)
-          })
-        }
-      }
-    });
+    if (this.selectedTem != 'all') {
+      this.payload['TemAccountId'] = parseInt(this.selectedTem);
+    }
 
-    this.exportDetail = {
-      ExportToExcelData: {
-        HeaderData: headerData,
-        ChildHeaderData: ChildHeaderData,
-        fileName: "Contracts"
-      },
-      ExportToExcel: true
-    };
-    
-    this.exportData = this.exportDetail;
+    if (this.selectedCustomer != 'all') {
+      this.payload['customerAccountId'] = parseInt(this.selectedCustomer);
+    }
   }
 
   getAllContracts() {
-    this.onAgGridReady(this.gridApi);
-  }
-
-  onAgGridReadyEmit($event: any) {
-    this.gridApi = $event.api;
-    this.gridColumnApi = $event.columnApi;
-  }
-
-  onAgGridReady($event: any) {
-    this.gridApi = $event;
-    let dataSource: any = {
-      rowCount: null,
-      getRows: (params: any) => {
-        let paramsRequest = params['request'];
-        const filterArray:any = [];
-        const filterArrayDate:any = [];
-        const filterArrayNumber:any = [];
-
-        for (var key in paramsRequest.filterModel) {
-          let data = paramsRequest.filterModel[key];
-          let arr;
-          let arrDate;
-          let arrNumber;
-
-
-          switch (key) {
-            case 'AnnualRevenueCommitmentAmountDisplay':
-              key = 'AnnualRevenueCommitmentAmount';
-              break;
-
-            // case 'NoticePeriodMonthsDisplay':
-            //   key = 'NoticePeriodMonths';
-            //   break;
-
-            // case 'ReminderDaysAlarmMonthsDisplay':
-            //   key = 'ReminderDaysAlarmMonths';
-            //   break;
-
-            case 'InventoryCommitmentAmountDisplay':
-              key = 'InventoryCommitmentAmount';
-              break;
-
-            case 'MonthlyRevenueCommitmentAmountDisplay':
-              key = 'MonthlyRevenueCommitmentAmount';
-              break;
-
-            case 'OtherCreditAmountDisplay':
-              key = 'OtherCreditAmount';
-              break;
-
-            case 'TerminationFeesDisplay':
-              key = 'TerminationFees';
-              break;
-
-            case 'ActivationCreditAmountDisplay':
-              key = 'ActivationCreditAmount';
-              break;
-
-            case 'SpendCreditAmountDisplay':
-              key = 'SpendCreditAmount';
-              break;
-
-            case 'GuaranteedCreditAmountDisplay':
-              key = 'GuaranteedCreditAmount';
-              break;
-
-            case 'InstallationFeesDisplay':
-              key = 'InstallationFees';
-              break;
-
-            case 'ActivationFeesDisplay':
-              key = 'ActivationFees';
-              break;
-
-            case 'OtherFeesDisplay':
-              key = 'OtherFees';
-              break;
-
-            case 'ConstructionFeesDisplay':
-              key = 'ConstructionFees';
-              break;
-
-            case 'ContractMonthsRemainingDisplay':
-              key = 'ContractMonthsRemaining';
-              break;
-
-            default:
-              break;
-          }
-
-          if (key === 'ContractTermStartDate' || key === 'ContractTermEndDate') {
-            arrDate = {
-              filterKey: key,
-              filterOptionType1: data['type'] ? data['type'] : data['condition1'].type ? data['condition1'].type : null,
-              filterOptionValue1: (data && data.dateFrom) ? data.dateFrom.split(' ')[0].toString() : (data['condition1'] && data['condition1']['dateFrom']) ? data['condition1'].dateFrom.split(' ')[0].toString() : null,
-              filterOptionValue1_2: (data && data.dateTo) ? data.dateTo.split(' ')[0].toString() : (data['condition1'] && data['condition1']['dateTo']) ? data['condition1']?.dateTo.split(' ')[0].toString() : null,
-              filterOperationType: data['operator'] ? data['operator'] : 'AND',
-              filterOptionType2: data['condition2']?.type ? data['condition2']?.type : null,
-              filterOptionValue2: (data['condition2'] && data['condition2'].dateFrom) ? data['condition2']?.dateFrom.split(' ')[0].toString() : null,
-              filterOptionValue2_2: (data['condition2'] && data['condition2'].dateTo) ? data['condition2']?.dateTo.split(' ')[0].toString() : null
-            }
-            filterArrayDate.push(arrDate);
-          } else if (key == 'AnnualRevenueCommitmentAmount' || key == 'ContractMonthsRemaining' || key == 'InventoryCommitmentAmount' || key == 'MonthlyRevenueCommitmentAmount' || key == 'OtherCreditAmount' || key == 'TerminationFees' || key == 'ServiceDiscount' || key == 'FeatureDiscount' || key == 'OtherDiscount' || key == 'EquipmentDiscount' || key == 'ActivationCreditAmount' || key == 'SpendCreditAmount' || key == 'GuaranteedCreditAmount' || key == 'NumberOfActivationFees' || key == 'NumberOfTerminationWaivers' || key == "NumberOfJointActtermFees" || key == 'InstallationFees' || key == 'ActivationFees' || key == 'ConstructionFees' || key == 'OtherFees') {
-            arrNumber = {
-              filterKey: key,
-              filterOptionType1: data['type'] ? data['type'] : data['condition1'].type ? data['condition1'].type : null,
-              filterOptionValue1: (data && data.filter) ? data.filter : (data['condition1'] && data['condition1']['filter']) ? data['condition1'].filter : null,
-              filterOptionValue1_2: (data && data.filter) ? data.filter : (data['condition1'] && data['condition1']['filterTo']) ? data['condition1']?.filterTo : null,
-              filterOperationType: data['operator'] ? data['operator'] : 'AND',
-              filterOptionType2: data['condition2']?.type ? data['condition2']?.type : null,
-              filterOptionValue2: (data['condition2'] && data['condition2'].filter) ? data['condition2']?.filter : null,
-              filterOptionValue2_2: (data['condition2'] && data['condition2'].filterTo) ? data['condition2']?.filterTo : null
-            }
-            filterArrayNumber.push(arrNumber);
-          } else {
-            arr = {
-              filterKey: key,
-              filterOptionType1: data['type'] ? data['type'] : data['condition1'].type ? data['condition1'].type : null,
-              filterOptionValue1: data['filter'] ? data['filter'] : data['condition1'].filter ? data['condition1'].filter : null,
-              filterOperationType: data['operator'] ? data['operator'] : 'AND',
-              filterOptionType2: data['condition2']?.type ? data['condition2']?.type : null,
-              filterOptionValue2: data['condition2']?.filter ? data['condition2']?.filter : null
-            }
-            filterArray.push(arr);
-          }
-        }
-        let data: any = {
-          StartRowIndex:
-            paramsRequest.startRow === 0 ? 1 : paramsRequest.startRow + 1,
-          MaximumRows: 100
-        };
-
-        if (filterArrayDate && filterArrayDate.length > 0) {
-          data['advanceDateFilter'] = filterArrayDate;
-        }
-
-        if (filterArray && filterArray.length > 0) {
-          data['advanceFilter'] = filterArray;
-        }
-
-        if (filterArrayNumber && filterArrayNumber.length > 0) {
-          data['advanceNumberFilter'] = filterArrayNumber;
-        }
-
-        if (this.selectedTem != 'all') {
-          data['TemAccountId'] = parseInt(this.selectedTem);
-        }
-
-        if (this.selectedCustomer != 'all') {
-          data['customerAccountId'] = parseInt(this.selectedCustomer);
-        }
-        
-        if (paramsRequest.sortModel.length > 0) {
-          Object.values(params['columnApi']['columnController']['columnDefs']).forEach((key:any) => {
-            if (key['children']) {
-              Object.values(key['children']).forEach((k:any) => {
-                if (k['field'] === paramsRequest.sortModel[0].colId) {
-                  data['OrderBy'] = k['sortingField'];
-                  data['SortOrder'] = paramsRequest.sortModel[0].sort;
-                }
-              });
-            }
-          });
-        }
-        this.exportData = {...data, ...this.exportDetail }
-        this._unsubscribeContractGrid.next(null);
-        this.contractService.getAllContracts(data)
-          .pipe(takeUntil(this._unsubscribeContractGrid))
-          .subscribe((res: any) => {
-            this.rowData = res.Data.$values;
-            if (res && res.Data && res.Data.$values.length > 0) {
-              let lastRow = -1;
-              if (res.TotalCount <= paramsRequest.startRow + 100) {
-                lastRow = res.TotalCount;
-              }
-              params.successCallback(
-                res.Data.$values,
-                lastRow
-              );
-            } else {
-              params.successCallback([], 0 );
-              this.gridApi.showNoRowsOverlay();
-            }
-          },
-            (error) => {
-              params.successCallback([], 0 );
-              this.gridApi.showNoRowsOverlay();
-            }
-          );
-      },
-    };
-    this.gridApi.setServerSideDatasource(dataSource);
+    this.refreshbutton = true;
   }
 
   onChangeTem(event: any, notSetAll = true) {
     if (event.target.value !== 'all') {
-      this.loadingCustomerAPI = true;
+      this.loaderParent = true;
       this.selectedTemDD = event.target.value;
       this._getCustomerUserDestroy.next(null);
       this.locationService.getCustomerDropdownByNewTEM(event.target.value).pipe(takeUntil(this._getCustomerUserDestroy)).subscribe((data) => {
         if (data && data.Data.$values) {
-          this.loadingCustomerAPI = false;
+          this.loaderParent = false;
           this.customers = data.Data.$values;
           if (notSetAll) {
             this.selectedCustomer = 'all';
           }
         } else {
-          this.loadingCustomerAPI = false;
+          this.loaderParent = false;
         }
       }, error => {
-        this.loadingCustomerAPI = false;
+        this.loaderParent = false;
       });
     } else {
       this.getCustomerForUser();
@@ -801,6 +251,7 @@ export class ContractComponent implements OnInit {
   }
 
   getTemLists() {
+    this.loaderParent = true;
     this._getTemListsDestroy.next(null);
     this.locationService
       .getTemLists()
@@ -808,6 +259,7 @@ export class ContractComponent implements OnInit {
       .subscribe(
         (response: any) => {
           if (response) {
+            this.loaderParent = false;
             this.tems = this.filterdTems = response.$values;
 
             if (this.hasSuperTemUsers) {
@@ -819,9 +271,13 @@ export class ContractComponent implements OnInit {
                 return object && this.tems.indexOf(object) === index;
               });
             }
+            const newObj = { AccountName: 'All', Id: 'all' };
+            this.tems.unshift(newObj);
           }
         },
-        (error) => { }
+        (error) => { 
+          this.loaderParent = false;
+        }
       );
   }
 
@@ -832,6 +288,8 @@ export class ContractComponent implements OnInit {
     this.locationService.getCustomerDropDown().pipe(takeUntil(this._getCustomerUserDestroy)).subscribe((data) => {
       if (data && data.$values) {
         this.customers = data.$values;
+        const newObj = { AccountName: 'All', Id: 'all' };
+        this.customers.unshift(newObj);
       }
     });
   }
@@ -849,12 +307,7 @@ export class ContractComponent implements OnInit {
       this.opentabsFromInventory_Contract = false;
       this.opentabsFromInventory_Inventory = false;
       this.variableManageService.mobilityWhichPageEnabled = 'Table';
-      // this.getAllContracts();
-      setTimeout(() => {
-        this.selectedTem = this.selectedTemForZero ? Number(this.selectedTemForZero) : 'all';
-        this.selectedCustomer = this.selectedCustomerForZero ? Number(this.selectedCustomerForZero) : 'all';
-        this.onAgGridReady(this.gridApi);
-      }, 100);
+      
     }
     else {
       this.variableManageService.mobilityWhichPageEnabled = this.tabsMainArray[event - 1].tabType;
@@ -879,11 +332,11 @@ export class ContractComponent implements OnInit {
     this.selectedChild = 2;
   }
 
-  disableLinkDialog($event: any) {
+  disableLinkDialog($event: any, i: any) {
     this.isDisablLinkInventory = $event;
   }
 
-  fromInventoryLinkDialog($event: any){
+  fromInventoryLinkDialog($event: any) {
     this.isSendVendorProductInventoryId = $event;
   }
 
@@ -919,9 +372,9 @@ export class ContractComponent implements OnInit {
         child: 0,
         parentServiceID: rowData?.node?.parent?.data?.ServiceNumber ? rowData?.node.parent.data.ServiceNumber : ''
       });
-      this.variableManageService.mobilityWhichPageEnabled = 'Edit';
-      setTimeout(() => {
-        this.selectedTab = this.tabsMainArray.length;
+    this.variableManageService.mobilityWhichPageEnabled = 'Edit';
+    setTimeout(() => {
+      this.selectedTab = this.tabsMainArray.length;
     }, 6);
 
   }
@@ -963,10 +416,10 @@ export class ContractComponent implements OnInit {
         VendorAccountId: data?.Data?.Overview?.VendorId,
         CustomerAccountId: data?.Data?.Overview?.CustomerId,
         CompanyId: data?.Data?.Overview?.CompanyId,
-        
+
       }
     };
-    this.tabsMainArray[i] =  {
+    this.tabsMainArray[i] = {
       tabAddemArray: [],
       parent: this.selectedTab,
       tabType: 'Edit',
@@ -979,6 +432,7 @@ export class ContractComponent implements OnInit {
 
   childrenChange(event: any) {
     this.selectedChild = event;
+    this.currentTabName = this.tabNames[this.selectedChild];
   }
 
   onMobilityAddEvent(event: any, index: any) {
@@ -989,18 +443,36 @@ export class ContractComponent implements OnInit {
 
 
   AddAdemdum() {
-    this.tabsMainArray[this.selectedTab-1]['tabAddemArray'].push({tabType: 'NewAddm', rowData: '', pageName : 'new' })
+    // Calculate index safely - if selectedTab <= 0, use 0, otherwise use selectedTab - 1
+    const idx = Math.max(0, this.selectedTab <= 0 ? 0 : this.selectedTab - 1);
+
+    // Initialize array element if needed
+    this.tabsMainArray[idx] = this.tabsMainArray[idx] || { tabAddemArray: [] };
+    this.tabsMainArray[idx].tabAddemArray = this.tabsMainArray[idx].tabAddemArray || [];
+
+    // Add new addendum and update state
+    this.tabsMainArray[idx].tabAddemArray.push({ tabType: 'NewAddm', rowData: '', pageName: 'new' });
     this.selectedChild = null;
-    this.selectedAddedm = this.tabsMainArray[this.selectedTab-1]['tabAddemArray'].length;
+    this.selectedAddedm = this.tabsMainArray[idx].tabAddemArray.length;
   }
 
-  removeAddemTab(tabIndex: any) {
-    this.tabsMainArray[this.selectedTab-1]['tabAddemArray'].splice(tabIndex, 1);
-    this.tabsMainArray[this.selectedTab-1]['tabAddemArray'] = _.cloneDeep(this.tabsMainArray[this.selectedTab-1]['tabAddemArray']);
-    this.selectedAddedm = this.tabsMainArray[this.selectedTab-1]['tabAddemArray'].length;
+  removeAddemTab(tabIndex: number) {
+    // Calculate index safely - if selectedTab <= 0, use 0, otherwise use selectedTab - 1
+    const idx = Math.max(0, this.selectedTab <= 0 ? 0 : this.selectedTab - 1);
 
-    if (this.tabsMainArray[this.selectedTab-1]['tabAddemArray'].length === 0) {
-      this.selectedChild = 0;
+    // Ensure array and its properties exist
+    if (this.tabsMainArray[idx]?.tabAddemArray) {
+      // Remove item and create new array reference
+      this.tabsMainArray[idx].tabAddemArray.splice(tabIndex, 1);
+      this.tabsMainArray[idx].tabAddemArray = _.cloneDeep(this.tabsMainArray[idx].tabAddemArray);
+
+      // Update state
+      this.selectedAddedm = this.tabsMainArray[idx].tabAddemArray.length;
+
+      // Reset child selection if array is empty
+      if (this.tabsMainArray[idx].tabAddemArray.length === 0) {
+        this.selectedChild = 0;
+      }
     }
   }
 
@@ -1014,12 +486,7 @@ export class ContractComponent implements OnInit {
 
     if (this.tabsMainArray.length === 0) {
       this.variableManageService.mobilityWhichPageEnabled = 'Table';
-      setTimeout(() => {
-        this.selectedTem = this.selectedTemForZero ? Number(this.selectedTemForZero) : 'all';
-        this.selectedCustomer = this.selectedCustomerForZero ? Number(this.selectedCustomerForZero) : 'all';
-      }, 100);
-      // this.getAllContracts();
-      this.onAgGridReady(this.gridApi);
+      this.refreshbutton = true;
     }
     this.selectedTab = this.tabsMainArray.length;
     this.changeParentTab(tabIndex);
@@ -1039,7 +506,7 @@ export class ContractComponent implements OnInit {
     if (setUpdatedDetail) {
       this.tabsMainArray[i].rowData.data.VendorAccountId = $event?.Overview?.VendorId;
       this.tabsMainArray[i].rowData.data.CustomerAccountId = $event?.Overview?.CustomerId;
-      this.tabsMainArray[i].rowData.data.CompanyId = $event?.Overview?.CompanyId;    
+      this.tabsMainArray[i].rowData.data.CompanyId = $event?.Overview?.CompanyId;
     }
   }
 
@@ -1080,14 +547,14 @@ export class ContractComponent implements OnInit {
       data: {
         colseButton: true,
         data: this.editContractData,
-        rowDetailData : this.editDetailsData
+        rowDetailData: this.editDetailsData
       },
       disableClose: true
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (checkIsValueExists(result)) {
         this.editContractComponent.ngOnInit();
-         this.locationService.setReplacedData(result);
+        this.locationService.setReplacedData(result);
       }
     });
   }
@@ -1137,5 +604,44 @@ export class ContractComponent implements OnInit {
       }
     })
   }
+
+  refreshbutton: boolean = false;
+
+
+  refreshbuttonEmitFn(event: any) {
+    this.refreshbutton = event;
+  }
+  selectedNode: any;
+  onNodeSelect(event: any) {
+    this.selectedNode = event.node;
+  }
+
+  exportAccountDataFn(event: any) {
+    this.exportData = event;
+  }
+
+  selectedRowsEmit: any;
+  selectedRowsEmitFn(event: any) {
+    this.selectedRowsEmit = event;
+  }
+
+  rowCellDoubleClickedFn(event: any) {
+    this.onCellDoubleClicked('Edit', event)
+
+  }
+  totalRecords: any;
+  totalRecordsEmitFn(event: any) {
+    this.totalRecords = event;
+  }
+
+  setColumnDefs() {
+    this.CommonPTreeTableComponent.setColumnDefs();
+  }
+
+  loader: any;
+  loaderEmitFn(event: any) {
+    this.loader = event;
+  }
+
 
 }

@@ -1,0 +1,197 @@
+<div class="">
+    <div class="" id="FixedDiv">
+        <div class="col-sm-12 col-xl-12 col-md-12 text-right">
+            <span class="text-c-red">*Required field</span>
+        </div>
+        <div class="col-sm-12 col-xl-6 col-md-6 px-0">
+         <app-card cardTitle=""  class="card-bottom-none">
+            <form class="editForm" [formGroup]="editVendorBillingAliasForm">
+
+                <mat-accordion class="example-headers-align">
+
+                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                        <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                                <i class="ficon fas fa-user-ninja"></i>&nbsp;Billing Alias
+                            </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+
+                        <div class="row m-t-20">
+                            <div class="col-md-12 custome-fields">
+                                <div class="form-group">
+                                    <label class="form-label">Vendor *</label>
+                                    <span><p-dropdown appendTo="body" [options]="vendorsList" optionLabel="AccountName"
+                                            [filter]="true" filterBy="AccountName" [showClear]="true"
+                                            [ngClass]="{'invalid-error': f['vendorAccountId'].invalid && (f['vendorAccountId'].touched || isFormSubmit)}"
+                                            placeholder="Select Vendor..." formControlName="vendorAccountId"
+                                            optionValue="Id" [showClear]="false"></p-dropdown></span>
+
+                                    <ng-container
+                                        *ngIf="f['vendorAccountId'].invalid && (f['vendorAccountId'].touched || isFormSubmit)">
+                                        <mat-error *ngIf="f['vendorAccountId'].errors.required">Vendor is required
+                                        </mat-error>
+                                    </ng-container>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 custome-fields">
+                                <div class="form-group">
+                                    <label class="form-label">Vendor Billing Alias*</label>
+                                    <span><input
+                                            [ngClass]="{'invalid-error': !f['name'].valid && (f['name'].dirty || f['name'].touched || isFormSubmit)}"
+                                            class="form-control" formControlName="name"></span>
+
+                                    <ng-container *ngIf="f['name'].invalid && (f['name'].touched || isFormSubmit)">
+                                        <mat-error *ngIf="f['name'].errors.required">Vendor Billing Alias is required
+                                        </mat-error>
+                                    </ng-container>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 px-0">
+                                <div class="form-group">
+                                    <label class="form-label">Description </label>
+                                    <span>
+                                        <input type="text" class="form-control"
+                                        formControlName="description"
+                                        [disabled]="!isSuperTEMAdmin && !isSuperTEMManager">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 custome-fields">
+                                <div class="form-group">
+                                    <label class="form-label">Status *</label>
+                                    <span> <p-dropdown
+                                        [ngClass]="{'invalid-error': f['status'].invalid && (f['status'].touched || isFormSubmit)}"
+                                         [options]="statusList" optionLabel="Name" [filter]="false" filterBy="Name" [showClear]="true" placeholder="Select Status..." formControlName="status" appendTo="body" optionValue="Id" [showClear]="false">
+                                    </p-dropdown></span>
+                                        
+                                    <ng-container *ngIf="f['status'].invalid && (f['status'].touched || isFormSubmit)">
+                                        <mat-error *ngIf="f['status'].errors.required">Status is required
+                                        </mat-error>
+                                    </ng-container>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row d-flex">
+                            <div class="" style="padding-right: 30px;">
+                                <div class="form-group">
+                                    <div class="form-check pl-0" style="display: flex; align-items: center;">
+                                        <label class="form-check-label pr-1" for="customCheck2" style="font-weight: 500;">Charge Code
+                                            Alias</label>
+                                        <input type="checkbox" formControlName="chargeCodeAlias"
+                                            class="form-check-inner" id="customCheck2"
+                                            [disabled]="!isSuperTEMAdmin && !isSuperTEMManager">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="form-group">
+                                    <div class="form-check pl-0" style="display: flex; align-items: center;">
+                                        <label for="defaultCheck1" class="form-check-label pr-1"
+                                            style="font-weight: 500;">
+                                            Payable Alias </label>
+                                        <input type="checkbox" formControlName="invoiceAlias"
+                                            [disabled]="!isSuperTEMAdmin && !isSuperTEMManager" id="defaultCheck1"
+                                            class="form-check-inner">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </mat-expansion-panel>
+
+                </mat-accordion>
+
+                <div class="text-center mb-3">
+                    <button type="submit" uiSref="work" class="btn sbubtn btn-primary btn-raised"
+                        [disabled]="disabled || saveButtonLoadder || !viewNEdit" (click)="updateBillingAlias()">
+                        <span *ngIf="saveButtonLoadder" class="spinner-border spinner-border-sm mr-2" role="status"></span>
+                        Save</button>
+                </div>
+                <mat-accordion class="example-headers-align billing-alias-log user-activity-log">
+
+                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                        <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="billingAliasFn()"></button>
+                        <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                                <i class="ficon fas fa-box-open"></i>&nbsp;Billing Alias Activity Log
+                            </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+
+                        <div class="row m-t-20">
+                            <div class="col-md-12 px-0" [ngClass]="billingAliasLogs.length > 0 ? 'tbData': ''">
+                                <ng-container>
+                                    <table mat-table [dataSource]="billingAliasLogs">
+                                        <ng-container matColumnDef="Vendor Billing Alias">
+                                            <th mat-header-cell class="fw-700" *matHeaderCellDef> Vendor Billing Alias
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                {{element.Name}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="Vendor">
+                                            <th mat-header-cell class="fw-700" *matHeaderCellDef> Vendor </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                {{element.VendorAccount.AccountName}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="Created By">
+                                            <th mat-header-cell class="fw-700" *matHeaderCellDef> Created By </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                {{element.CreatedByUser.FirstName + ' ' +
+                                                element.CreatedByUser.LastName}}
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="Created Date">
+                                            <th mat-header-cell class="fw-700" *matHeaderCellDef> Created Date </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                {{convertToDateTime(element.CreationDate)}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="Modified By">
+                                            <th mat-header-cell class="fw-700" *matHeaderCellDef> Modified By </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                {{getModifiedByUser(element.ModifiedByUser?.FirstName,element.ModifiedByUser?.LastName)}}
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="Modified Date">
+                                            <th mat-header-cell class="fw-700" *matHeaderCellDef>Modified Date </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                {{(element.ModificationDate)?convertToDateTime(element.ModificationDate):''}}
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="columnDefs; sticky: true">
+                                        </tr>
+                                        <tr mat-row *matRowDef="let row; columns: columnDefs;"></tr>
+                                    </table>
+                                </ng-container>
+                                <ng-container *ngIf="!billingAliasLogs.length">
+                                    <div class="text-center" style="margin-top: 10px;">No Record found</div>
+                                </ng-container>
+                            </div>
+
+                        </div>
+                    </mat-expansion-panel>
+
+                </mat-accordion>
+
+            </form>
+        </app-card>
+      </div>
+    </div>
+</div>
