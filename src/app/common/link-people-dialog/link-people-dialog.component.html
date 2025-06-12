@@ -1,0 +1,61 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Link People <button type="button" class="fas fa-check c-refresh ml-2" title="Refresh" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button></h5>
+    </div>
+
+    <ng-template #IIconTooltip>
+        <div class="tooltip-IIC">
+            <div class="mat-dialog-header justify-content-end tooptip-header">
+                <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="text-left">
+
+                <p class="mb-0" style="font-size: 14px;">
+                    The system requires one primary Location or Person to be assigned to the inventory. When setting the
+                    primary inventory assignment, you can only select one item at a time as the primary. Additional
+                    assignments can be added in multiples. To change the primary Location or Person, simply select the
+                    new
+                    Location or Person and assign it as primary—there’s no need to unselect the current assignment
+                    first.
+                </p>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="d-flex">
+        <i class="fas fa-info-circle mr-2 position-header" (click)="openDialog()" tooltipClass="tooltip-bg"></i>
+        <button type="button" class="close" [mat-dialog-close]="'undefined'">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+</div>
+<div mat-dialog-content class="px-0 m-0">
+    <div class="card-body p-0">
+        <div class="container px-0">
+            <app-ag-grid-table [rowSelection]="'multiple'" [gridOptions]="gridOptions" [rowHeight]="24"
+                [tableHeight]="'400px'" (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                (onAgGridReady)="onAgGridReady($event)" [defaultColDef]="defaultColDef" [columnDefs]="columnDefs"
+                [suppressRowClickSelection]="true" [rowMultiSelectWithClick]="true" [rowModelType]="'serverSide'"
+                (onSelectionChangedEvent)="onSelectionChanged($event)" [sideBar]="sideBar"></app-ag-grid-table>
+                <ng-template #primaryCell let-row>
+                    {{row.CustomerAccountName}}<span class="badge m-r-5 badge-success h-100 ml-2"
+                        *ngIf="row.IsPrimary == true">Primary</span>
+                </ng-template>
+        </div>
+    </div>
+</div>
+
+<mat-dialog-actions class="pt-0" align="center">
+    <button mat-button class="btn btn-primary" (click)="savePeople()" cdkFocusInitial
+        [disabled]="savePrimarayButtonLoader || saveButtonLoader || isUserAccess || peopleRowData.length == 0">
+        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>
+        Save</button>
+
+    <button mat-button class="btn btn-primary" (click)="saveLocationPrimary()" cdkFocusInitial
+        [disabled]="savePrimarayButtonLoader || saveButtonLoader || isUserAccess || peopleRowData.length == 0"><span
+            class="spinner-border spinner-border-sm mr-2" *ngIf="savePrimarayButtonLoader"></span>Save & Set as
+        Primary</button>
+</mat-dialog-actions>

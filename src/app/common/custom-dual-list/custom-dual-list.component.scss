@@ -1,0 +1,237 @@
+div.record-picker {
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* http://www.ourtuts.com/how-to-customize-browser-scrollbars-using-css3/ */
+div.record-picker::-webkit-scrollbar {
+  width: 12px;
+}
+
+div.record-picker::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+div.record-picker {
+  scrollbar-base-color: #337ab7;
+  scrollbar-3dlight-color: #337ab7;
+  scrollbar-highlight-color: #337ab7;
+  scrollbar-track-color: #eee;
+  scrollbar-arrow-color: gray;
+  scrollbar-shadow-color: gray;
+  scrollbar-dark-shadow-color: gray;
+}
+
+div.record-picker::-webkit-scrollbar-track {
+  background: #eee;
+  box-shadow: 0px 0px 3px #dfdfdf inset;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+div.record-picker::-webkit-scrollbar-thumb {
+  background: #337ab7;
+  border: thin solid gray;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+div.record-picker::-webkit-scrollbar-thumb:hover {
+  background: #286090;
+}
+
+.record-picker ul {
+  margin: 0;
+  padding: 0 0 1px 0;
+}
+
+.record-picker li {
+  border-top: thin solid #ddd;
+  border-bottom: 1px solid #ddd;
+  display: block;
+  padding: 2px 2px 2px 10px;
+  margin-bottom: -1px;
+  font-size: 0.85em;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 16px;
+}
+
+.record-picker li:hover {
+  background-color: #f5f5f5;
+}
+
+.record-picker li.selected {
+  background-color: #d9edf7;
+}
+
+.record-picker li.selected:hover {
+  background-color: #c4e3f3;
+}
+
+.record-picker li.disabled {
+  opacity: 0.5;
+  cursor: default;
+  background-color: inherit;
+}
+
+.record-picker li:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-top: none;
+}
+
+.record-picker li:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom: none;
+}
+
+.record-picker label {
+  cursor: pointer;
+  font-weight: inherit;
+  font-size: 14px;
+  padding: 4px;
+  margin-bottom: -1px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.record-picker ul.over {
+  background-color: lightgray;
+}
+
+.dual-list {
+  display: -webkit-box;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+
+.dual-list .listbox {
+  width: 50%;
+  margin: 0px;
+}
+
+.dual-list .button-bar {
+  justify-content: space-between !important;
+  margin-top: 8px;
+}
+.dual-list .add-remove-button {
+  margin-top: 8px;
+}
+
+.point-right::after {
+  content: '\00A0\00A0\00A0\25B6';
+}
+
+.point-left::before {
+  content: '\25C0\00A0\00A0\00A0';
+}
+
+.dual-list .button-bar{
+  display: flex;
+}
+
+.dual-list .button-bar button {
+  width: 48%;
+  min-width: 116px;
+}
+.dual-list .add-remove-button button {
+  width: 100%;
+}
+
+button.btn-block {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.filter {
+  margin-bottom: -2.2em;
+}
+
+.filter::after {
+  content: 'o';
+  width: 40px;
+  color: transparent;
+  font-size: 2em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.2;
+  top: -36px;
+  left: calc(100% - 21px);
+  position: relative;
+}
+
+div.listbox button.btn-primary {
+  border-radius: 38px !important;
+  background-color: #5b82ff !important;
+  color: white !important;
+}
+
+.button-bar button{
+  border-radius: 38px !important;
+  background-color: #5b82ff !important;
+  color: white !important;
+
+}
+
+.pull-right {
+  margin-left: 10px;
+}
+
+.search-text{
+  margin-bottom: 12px;
+}
+
+.search-icon {
+  margin-top: 11px;
+  font-size: 15px;
+  color: #c3c3c3;
+}
+
+
+@media only screen and (max-width: 1440px) {
+
+  .dual-list .button-bar button.btn.pull-left,
+  .dual-list .button-bar button.btn.pull-right{
+    padding: 10px 4px !important;
+  }
+
+  .dual-list .button-bar button {
+    min-width: 93px;
+  }
+
+  .dual-list .button-bar button.btn.pull-left,
+  .dual-list .button-bar button.btn.pull-right{
+    padding: 10px 5px !important;
+  }
+
+  .dual-list .button-bar button.btn.pull-right{
+    margin-left: 5px !important;
+  }
+}
+
+
+@media only screen and (max-width: 991px) {
+  .dual-list .button-bar button.btn.pull-left,
+  .dual-list .button-bar button.btn.pull-right{
+    padding: 8px 5px !important;
+  }
+
+  .add-remove-button button{
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+}

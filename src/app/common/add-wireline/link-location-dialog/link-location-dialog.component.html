@@ -1,0 +1,50 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Link Locations <button type="button" class="fas fa-check c-refresh ml-2" title="Refresh" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button></h5>
+    </div>
+
+    <div>
+        <i class="fas fa-info-circle ml-1 position-header" (click)="openDialog()" tooltipClass="tooltip-bg"></i>
+        <ng-template #IIconTooltip>
+            <div class="mat-dialog-header sub-dialog">
+                <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="text-left">
+
+                <p class="mb-0" style="font-size: 14px;">
+                    The system requires one primary Location or Person to be assigned to the inventory. When setting the primary inventory assignment, you can only select one item at a time as the primary. Additional assignments can be added in multiples. To change the primary Location or Person, simply select the new Location or Person and assign it as primary—there’s no need to unselect the current assignment first.</p>
+            </div>
+        </ng-template>
+        <button type="button" class="close" [mat-dialog-close]="'undefined'">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+<div mat-dialog-content class="px-0 m-0">
+
+    <div class="card-body p-0">
+        <div class="container px-0">
+            <app-ag-grid-table [sideBar]="sideBar" [tableHeight]="'400px'" [columnDefs]="columnDefs"
+                [gridOptions]="gridOptions" (onSelectionChangedEvent)="onSelectionChanged($event)"
+                [sheetName]="'Locations'" [exportFilename]="'Locations.xlsx'" [rowSelection]="rowSelection"
+                [defaultColDef]="defaultColDef" [suppressRowClickSelection]="true" [rowModelType]="'serverSide'"
+                (onAgGridReady)="onAgGridReady($event)" (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                [rowHeight]="24" [sideBar]="sideBar" >
+            </app-ag-grid-table>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="pt-0" align="center">
+    <!--<button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>-->
+    <button mat-button class="btn btn-primary" (click)="saveLocation()" cdkFocusInitial
+        [disabled]="saveButtonLoader || saveButtonDisabled || isUserAccess">
+        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>
+        Save</button>
+
+    <button mat-button class="btn btn-primary" (click)="saveLocationPrimary()" cdkFocusInitial
+        [disabled]="saveButtonDisabled || saveButtonLoader || isUserAccess"><span
+            class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonDisabled"></span>Save & Set as
+        Primary</button>
+</mat-dialog-actions>

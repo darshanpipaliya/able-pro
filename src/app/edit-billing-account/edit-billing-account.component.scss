@@ -1,0 +1,31 @@
+// .form-group{
+//     margin-bottom: 15px;
+// }
+
+// label{
+//     margin-bottom: 0;
+// }
+
+// :host ::ng-deep .mat-expansion-panel-body,
+// .mat-expansion-panel-body{
+//     padding: 20px 20px 5px !important;
+// }
+
+// .mat-expansion-panel-content .form-control:disabled, 
+// .mat-expansion-panel-content .form-control[readonly]{
+//     opacity: 0.6;
+//     pointer-events: none !important;
+//     cursor: default !important;
+//     background-color: transparent;
+//     padding: 8px 0 !important;
+//     height: auto !important;
+// }
+
+// .mat-expansion-panel-content .form-control{
+//     padding: 8px 0 !important;
+//     height: auto !important;
+// }
+
+:host ::ng-deep#invoice-retrieval-table-tab .mat-tab-body.mat-tab-body-active{
+    top: 0 !important;
+}

@@ -1,0 +1,209 @@
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+mat-panel-title {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-right: 0px;
+}
+
+mat-expansion-panel {
+    border: solid;
+    border-radius: 8px;
+    margin-bottom: 12px !important;
+    border-color: #80808061;
+}
+
+::ng-deep {
+
+    dual-list .btn-primary:disabled,
+    dual-list .btn-primary,
+    dual-list .btn-primary:hover {
+        background: #80808061 !important;
+        color: #000;
+        border: none;
+    }
+}
+
+.form-group {
+    margin-bottom: 10px !important;
+}
+
+.mt-n12 {
+    padding-top: 10px;
+}
+
+.borderc {
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.disabled-radio {
+    opacity: 0.4 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+    padding: 15px 5px 5px !important;
+}
+
+:host ::ng-deep .mat-accordion .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+
+.datepicker-c {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.datepicker-c .mat-datepicker-input {
+    height: 23px !important;
+    padding-top: 5px !important;
+    margin-top: 0 !important;
+    padding-bottom: 5px !important;
+}
+
+.datepicker-c-main mat-label {
+    padding-top: 5px !important;
+    font-weight: 500;
+    width: 100% !important;
+}
+
+.datepicker-c span {
+    display: flex !important;
+    width: 100% !important;
+}
+
+.datepicker-c-main .mat-form-field {
+    margin-right: 3px !important;
+}
+
+.date-picker-inner {
+    width:  100% !important;
+    margin-left: 6px !important;
+}
+
+:host ::ng-deep .datepicker-c .form-control input::placeholder {
+    // color: #ADB5BD !important;
+    color: red !important;
+    opacity: 1 !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    display: none !important;
+}
+
+// .datepicker-c-main .mat-form-field
+:host ::ng-deep .p-calendar.p-calendar-w-btn {
+    width: 100% !important;
+    margin-left: 6px !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: #ced4da;
+}
+
+:host ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #4680ff;
+}
+
+:host ::ng-deep .datepicker-c-main .mat-form-field-suffix .mat-icon-button {
+    height: 30px;
+    width: 30px;
+}
+
+:host ::ng-deep .datepicker-c-main .mat-form-field-suffix .mat-icon-button svg.mat-datepicker-toggle-default-icon {
+    width: 30px;
+}
+
+:host ::ng-deep .p-calendar .p-inputtext {
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-top: 0 !important;
+    border-radius: 0 !important;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    font-family: sans-serif !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5em !important;
+}
+
+:host ::ng-deep .p-calendar .p-inputtext::placeholder {
+    font-family: sans-serif !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5em !important;
+}
+
+:host ::ng-deep .p-calendar .p-inputtext:focus,
+:host ::ng-deep .p-calendar .p-button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+:host ::ng-deep .p-calendar .p-button {
+    color: #000;
+    background: transparent;
+}
+
+:host ::ng-deep button.p-datepicker-trigger.p-button.p-button-icon-only {
+    padding: 0;
+    width: auto;
+    border: none;
+}
+
+:host ::ng-deep .p-calendar .p-button span.pi.pi-calendar {
+    font-size: 20px !important;
+}
+
+#basic-addon2.input-group-text{
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.approval-inc-width
+{
+    max-width: 60px;
+}
+
+@media only screen and (max-width: 991px) {
+    button.btn.sbubtn {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    :host ::ng-deep .p-calendar.p-calendar-w-btn {
+        width: 100% !important;
+    }
+
+}
+
+@media only screen and (max-width: 767px) {
+    .date-picer-res-d{
+        margin-bottom: 10px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+
+
+@media only screen and (max-width: 576px) {
+    .datepicker-c-main {
+        margin-bottom: 10px !important;
+    }
+    .label-approval{
+        padding-left: 0 !important;
+    }
+}

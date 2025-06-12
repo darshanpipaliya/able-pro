@@ -1,0 +1,71 @@
+.mat-button.mat-button-disabled.mat-button-disabled {
+  color: #fff !important;
+}
+
+.mat-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e5e8;
+}
+
+i.fas.fa-info-circle {
+  color: #4680ff !important;
+  cursor: pointer;
+  position: relative;
+  right: 10px;
+  top: 3px;
+}
+
+.mat-dialog-header.sub-dialog {
+  display: block;
+  border-bottom: none;
+
+  button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+
+  }
+
+}
+
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+  border: 1px solid rgba(0, 0, 0, 0.25) !important;
+  opacity: 1 !important;
+  border-radius: 0.25em !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper::after {
+  opacity: 0 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+  opacity: 1 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper {
+  font-size: 14px !important;
+  line-height: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+
+button.fas.fa-check.c-refresh {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.fas.fa-check.c-refresh::before {
+  content: '\f021' !important;
+  font-size: 18px;
+  border: 1px solid #4680ff;
+  color: #4680ff;
+  border-radius: 50%;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+}

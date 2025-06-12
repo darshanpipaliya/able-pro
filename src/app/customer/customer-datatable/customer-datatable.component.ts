@@ -12,6 +12,7 @@ import { EditCustomerComponent } from '../edit-customer/edit-customer.component'
 import { AddCustomerComponent } from '../add-customer/add-customer.component';
 import { HeaderSectionComponent } from "../../common/header-section/header-section.component";
 import { api_list } from 'src/app/services/api-list';
+import { CustomerAgGridComponent } from "../contracts/customer-ag-grid/customer-ag-grid.component";
 @Component({
   selector: 'app-customer-datatable',
   templateUrl: './customer-datatable.component.html',
@@ -21,6 +22,7 @@ import { api_list } from 'src/app/services/api-list';
     CommonModule,
     SharedModule,
     PTreeCustomerComponent,
+    // CustomerAgGridComponent,
     AddCustomerComponent,
     EditCustomerComponent,
     HeaderSectionComponent,

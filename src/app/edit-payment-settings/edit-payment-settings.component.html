@@ -1,0 +1,164 @@
+<form class="editForm" [formGroup]="paymentSettingForm">
+    <div class="col-sm-12 col-xl-12 text-right">
+        <span class="text-c-red">*Required field</span>
+    </div>
+    <div class="col-lg-12 px-0">
+        <div class="row payment-height-main">
+            <div class="col-sm-12 col-xl-6 col-md-6 padding-left-none">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header class="math borderc">
+                            <mat-panel-title>
+                                <i class="ficon fas fa-id-card-alt"></i>&nbsp;Payment Login Information
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                                <div class="form-group">
+                                    <label class="form-label">Customer *</label>
+                                    <span><p-dropdown appendTo="body" [options]="customerList" optionLabel="AccountName"
+                                        [filter]="true" filterBy="AccountName" [showClear]="true"
+                                        placeholder="Select Customer..." formControlName="customerAccountId"
+                                        optionValue="Id" [showClear]="false" [disabled]="true"
+                                        [ngClass]="{'invalid-error': !f['customerAccountId'].valid && (f['customerAccountId'].dirty || f['customerAccountId'].touched || submitted)}">
+                                    </p-dropdown></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f['customerAccountId'].errors?.['required'] && (f['customerAccountId'].touched || submitted) ">
+                                        Customer selection is required</mat-error>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">URL</label>
+                                    <span><input class="form-control"
+                                        formControlName="PaymentMethodWebUrl" [readonly]="setIsReadOnly"
+                                        spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Login</label>
+                                    <span><input class="form-control"
+                                        [ngClass]="{'invalid-error': f?.['PaymentMethodWebPassword'].value && f?.['PaymentMethodWebLogin']?.errors?.['required']}"
+                                        (input)="setValidationLoginPasword('login')" spaceTrimStartEndInput
+                                        [allowStartWithSpace]="false" formControlName="PaymentMethodWebLogin"
+                                        [readonly]="setIsReadOnly"></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f?.['PaymentMethodWebLogin']?.errors?.['required'] && f?.['PaymentMethodWebPassword'].value">
+                                        Login is required</mat-error>
+                                </div>
+                                <div class="form-group pass-bottom">
+                                    <label class="form-label">Password</label>
+                                    <span><input class="form-control"
+                                        (input)="setValidationLoginPasword('password')"
+                                        [ngClass]="{'invalid-error': f?.['PaymentMethodWebLogin'].value && f?.['PaymentMethodWebPassword']?.errors?.['required']}"
+                                        formControlName="PaymentMethodWebPassword" [readonly]="setIsReadOnly"
+                                        spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f?.['PaymentMethodWebLogin'].value && f?.['PaymentMethodWebPassword']?.errors?.['required']">
+                                        Password is required</mat-error>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Notes</label>
+                                    <span><textarea class="form-control"
+                                        formControlName="PaymentMethodNoteText" [readonly]="setIsReadOnly"
+                                        spaceTrimStartEndInput [allowStartWithSpace]="false" rows="1"></textarea></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <div class="col-sm-12 col-xl-6 col-md-6 padding-right-none">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header class="math borderc">
+                            <mat-panel-title>
+                                <i class="ficon fas fa-id-card-alt"></i>&nbsp;Payment Settings
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                                <div class="form-group">
+                                    <label class="form-label font-weight-500">Bill Pay *</label>
+                                    <span><p-dropdown (onChange)="billpaychange($event.value)" appendTo="body" [options]="billPayList" optionLabel="value"
+                                        [filter]="true" filterBy="value" [showClear]="true"
+                                        placeholder="Select Bill Pay..." formControlName="paymentResponsible"
+                                        optionValue="Id" [showClear]="false" 
+                                        [ngClass]="{'invalid-error': !f['paymentResponsible'].valid && (f['paymentResponsible'].dirty || f['paymentResponsible'].touched || submitted)}">
+                                    </p-dropdown></span>
+
+                                    <ng-container>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f['paymentResponsible'].errors?.['required'] && (f['paymentResponsible'].touched || submitted) ">
+                                            Bill Pay is required</mat-error>
+                                    </ng-container>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Payment Type {{setRequired ? '*' : ''}}</label>
+                                    <span><p-dropdown appendTo="body" [options]="paymentMethods" optionLabel="DisplayName"
+                                        [filter]="true" filterBy="DisplayName" [showClear]="true"
+                                        placeholder="Select Payment Transaction Type..." formControlName="paymentTransactionId"
+                                        [disabled]="disabledInput || setIsReadOnly"
+                                        optionValue="Id" [showClear]="false"
+                                        [ngClass]="{'invalid-error': !f['paymentTransactionId'].valid && (f['paymentTransactionId'].dirty || f['paymentTransactionId'].touched || submitted)}" >
+                                    </p-dropdown></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="setRequired && f['paymentTransactionId'].errors?.['required'] && (f['paymentTransactionId'].touched || submitted)">
+                                        Payment Type is required</mat-error>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Payment Type Notes </label>
+                                    <span><textarea
+                                        class="form-control textarea-row-fix" rows="1"
+                                        formControlName='paymentTransactionDetails'
+                                        [readonly]="(disabledInput && f['paymentTransactionDetails'].errors?.['required']) || setIsReadOnly"
+                                        [ngClass]="{'invalid-error': setRequired && !paymentSettingForm.controls['paymentTransactionDetails'].valid && (paymentSettingForm.controls['paymentTransactionDetails'].dirty || paymentSettingForm.controls['paymentTransactionDetails'].touched || submitted)}"></textarea></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="setRequired && f['paymentTransactionDetails'].errors?.['required'] && (f['paymentTransactionDetails'].touched || submitted)">
+                                        Payment Note is required</mat-error>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Payment Method {{setRequired ? '*' : ''}}</label>
+                                    <span><p-dropdown appendTo="body" [options]="paymentType" optionLabel="DisplayName"
+                                        [filter]="true" filterBy="DisplayName" [showClear]="true"
+                                        placeholder="Select Payment Method..." formControlName="paymentMethodId"
+                                        [disabled]="disabledInput || setIsReadOnly"
+                                        optionValue="Id" [showClear]="false" 
+                                        [ngClass]="{'invalid-error': !f['paymentMethodId'].valid && (f['paymentMethodId'].dirty || f['paymentMethodId'].touched || submitted)}">
+                                    </p-dropdown></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="setRequired && f['paymentMethodId'].errors?.['required'] && (f['paymentMethodId'].touched || submitted) ">
+                                        Payment Method is required</mat-error>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Payment Method Notes </label>
+                                    <span><textarea
+                                        class="form-control textarea-row-fix" rows="1"
+                                        formControlName='paymentMethodNotes'
+                                        [readonly]="(disabledInput && f['paymentMethodNotes'].errors?.['required']) || setIsReadOnly"
+                                        [ngClass]="{'invalid-error': setRequired && !paymentSettingForm.controls['paymentMethodNotes'].valid && (paymentSettingForm.controls['paymentMethodNotes'].dirty || paymentSettingForm.controls['paymentMethodNotes'].touched || submitted)}"></textarea></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="setRequired && f['paymentMethodNotes'].errors?.['required'] && (f['paymentMethodNotes'].touched || submitted)">
+                                        Payment Transaction Details is required</mat-error>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+            </div>
+            <div class="col-sm-12 col-xl-12 col-md-12 text-center">
+                <button uiSref="work" (click)="savePaymentSetting()" class="btn sbubtn btn-primary btn-raised"
+                    [disabled]='BillPayOptionEnable=="No" || setIsReadOnly || saveButtonLoadder || !viewNEditAccount'>
+                    <span *ngIf="saveButtonLoadder" class="spinner-border spinner-border-sm mr-2" role="status"></span>
+                    Save</button>
+            </div>
+        </div>
+    </div>
+</form>

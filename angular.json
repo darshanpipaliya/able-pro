@@ -43,8 +43,9 @@
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/primeicons/primeicons.css",
+              "node_modules/ag-grid-community/styles/ag-grid.css",
+              "node_modules/ag-grid-community/styles/ag-theme-alpine.css",
               "src/styles.scss"
-              
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -119,10 +120,14 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "node_modules/primeicons/primeicons.css",
+              "node_modules/ag-grid-community/styles/ag-grid.css",
+              "node_modules/ag-grid-community/styles/ag-theme-alpine.css",
               "src/styles.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           }
         },
         "lint": {

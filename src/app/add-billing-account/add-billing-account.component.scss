@@ -1,0 +1,482 @@
+// .form-group{
+//   margin-bottom: 15px;
+// }
+
+// label{
+//   margin-bottom: 0;
+// }
+
+// :host ::ng-deep .mat-expansion-panel-body{
+//   padding: 20px 20px 5px !important;
+// }
+
+.row {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+img.media-object {
+  max-width: 80px;
+  min-width: 40px;
+  height: 100%;
+  object-fit: contain;
+  padding-bottom: 10px;
+  max-height: 50px;
+}
+.row.AddShowDiv{
+  display: flex !important;
+  flex-direction: row-reverse !important;
+}
+.math {
+  background: #80808061 !important;
+  height: 40px;
+}
+
+mat-panel-title {
+  width: 100%;
+  display: block;
+  text-align: center;
+  margin-right: 0px;
+}
+
+mat-expansion-panel {
+  border: solid;
+  border-radius: 8px;
+  margin-bottom: 12px !important;
+  border-color: #80808061;
+}
+
+.text-c-red {
+  color: #4680ff;
+  font-size: 12px;
+}
+
+.borderc {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.disabled-radio {
+  opacity: 0.5 !important;
+  pointer-events: none;
+}
+
+.titlelabel {
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.tooltip-custom-position {
+  .tooltip-icon {
+    display: block;
+  }
+
+  ::ng-deep .cost-center-tooltip {
+    transform: translateX(-100%) !important;
+    right: unset !important;
+    left: unset !important;
+    width: 350px;
+    margin-top: -15px;
+
+    &.bs-tooltip-left .arrow,
+    &.bs-tooltip-right .arrow {
+      top: 15px !important;
+    }
+
+    .tooltip-inner {
+      max-width: 100% !important;
+      background-color: #BBB;
+      color: #000;
+      background: rgba($color: #cfcfcf, $alpha: 1.0);
+      // box-shadow: 0px 0px 4px rgb(0, 0, 0);
+      opacity: 1 !important;
+
+    }
+
+    .tooltip.in {
+      opacity: 1 !important;
+    }
+  }
+}
+
+.cost-center-info-data {
+  color: #000000 !important;
+
+  div {
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+}
+
+.account-info-circle {
+  color: #4680ff !important;
+}
+
+mat-accordion .add-billing-account-tooltip {
+  display: flex !important;
+  position: relative !important;
+  top: 20px !important;
+  margin-bottom: 10px;
+}
+
+mat-accordion .add-billing-account-tooltip .tooltip-custom-position.tooltip-arrow-set {
+  position: absolute !important;
+  right: 0 !important;
+}
+
+:host ::ng-deep .p-inputtext {
+  padding: 8px 0 !important;
+}
+
+.editForm .example-headers-align mat-expansion-panel.mat-expansion-panel {
+  overflow: visible;
+}
+
+:host ::ng-deep .height-42 span.p-dropdown-label.p-inputtext {
+  height: 42px !important;
+}
+
+
+:host ::ng-deep.card .card-body {
+  padding: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body .row .col-md-6 {
+  padding-left: 1px !important;
+  padding-right: 3px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body .row .col-md-6:nth-child(2n + 2) {
+  padding-left: 3px !important;
+  padding-right: 1px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+  padding: 15px 5px 5px !important;
+}
+
+:host ::ng-deep .mat-accordion .mat-expansion-panel {
+  box-shadow: none !important;
+  border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .form-group {
+  margin-bottom: 10px !important;
+}
+
+:host ::ng-deep .form-group label {
+  float: left !important;
+}
+
+:host ::ng-deep .form-group label.float-right {
+  float: unset !important;
+}
+
+:host ::ng-deep .form-group span {
+  display: block;
+  overflow: hidden;
+  padding: 0 4px 0 6px !important;
+}
+
+:host ::ng-deep .row .role-padding {
+  padding: 0 3px 0 1px !important;
+}
+
+:host ::ng-deep .row .role-padding:last-child {
+  padding: 0 1px 0 3px !important;
+}
+
+:host ::ng-deep .card-bottom-none .card,
+:host ::ng-deep .margin-b-none {
+  margin-bottom: 0 !important;
+}
+
+:host ::ng-deep .margin-top-10 {
+  margin-top: 10px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-spacing{
+  margin-top: 0 !important;
+}
+
+:host ::ng-deep .mat-accordion>*:last-child:not(.mat-expansion-panel) .mat-expansion-panel-spacing {
+  margin-bottom: 10px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+  margin-bottom: 10px !important;
+}
+
+:host ::ng-deep #user-table-tab .mat-tab-body.mat-tab-body-active {
+  top: 0 !important;
+}
+
+:host ::ng-deep .fa-info-circle:before {
+  color: #4680ff !important;
+  cursor: pointer;
+}
+
+.mat-expansion-panel-header {
+  border-radius: 3px 3px 0 0!important;
+}
+
+:host ::ng-deep.was-validated .form-control:invalid,
+:host ::ng-deep.form-control.is-invalid {
+  background-image: none !important;
+}
+
+:host ::ng-deep #invoice-retrieval-table-tab .mat-tab-body.mat-tab-body-active {
+  top: 0 !important;
+}
+
+:host ::ng-deep .p-dropdown.p-dropdown-span-none span,
+:host ::ng-deep .tem-span-p-none .p-dropdown span {
+  padding: 0 !important;
+}
+
+.btn.btn-icon.service-tab-btn {
+  position: absolute;
+  content: '';
+  width: 32px;
+  height: 32px;
+  top: 5px;
+  left: 10px;
+  z-index: 1;
+}
+
+.invoice-account-padding {
+  padding-left: 1px !important;
+  padding-right: 1px !important;
+}
+
+
+.datepicker-c {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.datepicker-c .mat-datepicker-input {
+  height: 23px !important;
+  padding-top: 5px !important;
+  margin-top: 0 !important;
+  padding-bottom: 5px !important;
+}
+
+.datepicker-c-main mat-label {
+  padding-top: 5px !important;
+  font-weight: 500;
+  width: 100% !important;
+}
+
+.datepicker-c span {
+  display: flex !important;
+  width: calc(100% - 73px) !important;
+}
+
+.datepicker-c-main .mat-form-field {
+  margin-right: 3px !important;
+}
+
+.date-picker-inner {
+  width: calc(100% - 82px) !important;
+  margin-left: 6px !important;
+}
+
+:host ::ng-deep .datepicker-c .form-control input::placeholder {
+  // color: #ADB5BD !important;
+  color: red !important;
+  opacity: 1 !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  display: none !important;
+}
+
+// .datepicker-c-main .mat-form-field
+:host ::ng-deep .p-calendar.p-calendar-w-btn {
+  width: calc(100% - 128px) !important;
+  margin-left: 6px !important;
+}
+
+:host ::ng-deep .disconnect-date .p-calendar.p-calendar-w-btn {
+  width: calc(100% - 129px) !important;
+  margin-left: 6px !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: #ced4da;
+}
+
+:host ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: #4680ff;
+}
+
+:host ::ng-deep .datepicker-c-main .mat-form-field-suffix .mat-icon-button {
+  height: 30px;
+  width: 30px;
+}
+
+:host ::ng-deep .datepicker-c-main .mat-form-field-suffix .mat-icon-button svg.mat-datepicker-toggle-default-icon {
+  width: 30px;
+}
+
+:host ::ng-deep .p-calendar .p-inputtext {
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-top: 0 !important;
+  border-radius: 0 !important;
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+  font-family: sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5em !important;
+}
+
+:host ::ng-deep .p-calendar .p-inputtext::placeholder {
+  font-family: sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5em !important;
+}
+
+:host ::ng-deep .p-calendar .p-inputtext:focus,
+:host ::ng-deep .p-calendar .p-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .p-calendar .p-button {
+  color: #000;
+  background: transparent;
+}
+
+:host ::ng-deep button.p-datepicker-trigger.p-button.p-button-icon-only {
+  padding: 0;
+  width: auto;
+  border: none;
+}
+
+:host ::ng-deep .p-calendar .p-button span.pi.pi-calendar {
+  font-size: 20px !important;
+}
+
+:host ::ng-deep {
+
+  .p-datatable-thead{
+    text-wrap: nowrap;
+  }
+
+  .padding-none .mat-expansion-panel-body {
+    padding: 0px !important;
+  }
+
+  .p-datatable .p-datatable-thead > tr {
+    height: 32px !important;
+  }
+
+  .p-datatable .p-datatable-thead > tr > th {
+    font-size: 14px;
+    font-weight: 700;
+    color: #181d1f;
+    background: #EEE;
+    border-top: 1px solid #BABFC7;
+    border-bottom: 1px solid #BABFC7;
+
+    &:nth-of-type(1){
+      width: 70px;
+    }
+    &:nth-of-type(3){
+      width: 118px;
+    }
+    &:nth-of-type(4){
+      width: 112px;
+    }
+    &:nth-of-type(5){
+      width: 70px;
+    }
+  }
+
+  .p-datatable .p-datatable-thead > tr > th,
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  }
+
+  .p-datatable .p-datatable-tbody > tr {
+    height: 24px !important;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td {
+    font-size: 13px;
+    color: #181d1f;
+    word-wrap: break-word;
+  }
+
+  .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+    background: #fcfcfc;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td {
+    font-size: 13px;
+    color: #181d1f;
+    word-wrap: break-word;
+  }
+
+}
+
+.hyper-link {
+  color: blue !important;
+  text-decoration: underline;
+  cursor: pointer !important;
+}
+
+:host ::ng-deep .p-table-recent-note{
+  .p-datatable-wrapper {
+    overflow-x: auto;
+  }
+
+  .p-datatable table {
+    table-layout: auto !important;
+  }
+
+  .p-datatable .p-datatable-thead>tr>th,
+  .p-datatable  tbody.p-datatable-tbody {
+    text-wrap: nowrap;
+  }
+
+}
+@media only screen and (max-width: 1199px) {
+  .btn.btn-icon.service-tab-btn {
+    left: 5px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  button.btn.sbubtn {
+    padding: 8px 12px;
+  }
+
+  :host ::ng-deep .p-calendar.p-calendar-w-btn {
+    width: calc(100% - 130px) !important;
+  }
+}
+
+
+@media only screen and (max-width: 767px) {
+
+  :host ::ng-deep .mat-expansion-panel-body .row .col-md-6,
+  :host ::ng-deep .mat-expansion-panel-body .row .col-md-6:nth-child(2n + 2),
+  invoice-account-padding {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .datepicker-c-main {
+    margin-bottom: 10px !important;
+  }
+}

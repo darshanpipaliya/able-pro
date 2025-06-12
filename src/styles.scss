@@ -27,7 +27,8 @@ $btn-primary-color: #fff;
 
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
-
+// @import 'ag-grid-community/styles/ag-grid.css';
+// @import 'ag-grid-community/styles/ag-theme-alpine.css';
 @include mat.all-component-typographies(theme-typography("'Inter var', sans-serif")); // theme typography
 
 // default theme
@@ -176,4 +177,46 @@ $btn-primary-color: #fff;
 
 body {
   font-family: 'Poppins', sans-serif !important;
+}
+
+// AG Grid custom styles
+.ag-theme-alpine {
+  --ag-header-height: 48px;
+  --ag-header-column-separator-display: block;
+  --ag-header-column-separator-height: 100%;
+  --ag-header-column-separator-width: 1px;
+  --ag-header-column-separator-color: #dde2eb;
+  --ag-row-height: 35px;
+  --ag-grid-size: 6px;
+  --ag-list-item-height: 30px;
+  
+  .ag-header-row-column-filter {
+    height: 48px;
+  }
+
+  .ag-floating-filter-body {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .ag-floating-filter-full-body {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .ag-floating-filter-input {
+    height: 32px;
+  }
+
+  .ag-header-cell {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .ag-cell {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 }

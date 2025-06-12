@@ -1,0 +1,6 @@
+<app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData" [rowSelection]="rowSelection"
+    [suppressRowClickSelection]="true" [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+    [singleClickEdit]="true" [gridOptions]="gridOptions" (onAgGridReady)="onAgGridReady($event)"
+     [exportFilename]="'Customers.xlsx'" [rowModelType]="'serverSide'"
+    (onAgGridReadyEmit)="onAgGridReadyEmit($event)" [sheetName]="'Customers'">
+</app-ag-grid-table>

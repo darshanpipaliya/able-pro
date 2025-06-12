@@ -19,6 +19,7 @@ import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/co
 import { api_list } from 'src/app/services/api-list';
 import { createColumn } from 'src/app/utils/column-utils';
 import { InventoryCComponent } from './inventory-c/inventory-c.component';
+import { AddWirelineComponent } from 'src/app/common/add-wireline/add-wireline.component';
 
 @Component({
   selector: 'app-contracts',
@@ -31,7 +32,8 @@ import { InventoryCComponent } from './inventory-c/inventory-c.component';
     HeaderSectionComponent,
     CommonPTreeTableComponent,
     AddEditContractsComponent,
-    InventoryCComponent
+    InventoryCComponent,
+    AddWirelineComponent
   ]
 })
 export class ContractComponent implements OnInit {

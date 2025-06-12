@@ -1,0 +1,345 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Add Account Note</h5>
+    </div>
+
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="card-body py-0">
+        <div class="container px-0">
+            <form class="editForm px-0" [formGroup]="accountNotesForm">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                        <div class="col-sm-12 col-xl-12 text-right pr-0">
+                            <span class="text-c-red">*Required field</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+
+                                <div class="form-group">
+                                    <label class="form-label">Note *</label>
+                                    <textarea class="form-control textarea-full-section" rows="4"
+                                        formControlName="NoteText" maxlength="1000" spaceTrimStartEndInput
+                                        [allowStartWithSpace]="false"
+                                        [ngClass]="{'invalid-error': f['NoteText'].invalid && (f['NoteText'].touched || isSubmit)}"></textarea>
+                                    <span class="textarea-error-span" style="position: relative;">
+                                        <mat-error style="font-size: 12px; position: absolute;"
+                                            class="textarea-error-disc"
+                                            *ngIf="f['NoteText'].errors?.['required'] && (f['NoteText'].touched || isSubmit) ">
+                                            Note is required</mat-error>
+                                        <span style="text-align: end;color: gray;">{{f['NoteText'].value.length ?
+                                            f['NoteText'].value.length : 0 }}/1000</span>
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group" style="margin-bottom: 0 !important;">
+                                            <div>
+                                                <label class="form-label">Note Type</label>&nbsp;
+                                                <mat-radio-group class="m-l-8" formControlName="PrivateNote">
+                                                    <mat-radio-button [value]="false">Public
+                                                    </mat-radio-button>
+                                                    <mat-radio-button *ngIf="hasSsuperTemUsers" [value]="true"
+                                                        class="m-l-10">Private
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                            <mat-error style="font-size: 12px; position: relative; top: -10px;"
+                                                *ngIf="f['PrivateNote'].errors?.['required'] && (f['PrivateNote'].touched || isSubmit) ">
+                                                Note Type is required</mat-error>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <div>
+                                                <label class="form-label">Note Status</label>&nbsp;
+                                                <mat-radio-group class="m-l-8" formControlName="Active">
+                                                    <mat-radio-button [value]="true">Active
+                                                    </mat-radio-button>
+                                                    <mat-radio-button [value]="false" class="m-l-10">Inactive
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                            <mat-error style="font-size: 12px; position: relative; top: -10px;"
+                                                    *ngIf="f['Active'].errors?.['required'] && (f['Active'].touched || isSubmit) ">
+                                                Note Status is required</mat-error>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-xl-12 px-0  mb-1">
+                                <button class="btn btn-primary atc-btn mr-2" (click)="openFileUpload()">Add
+                                    Attachment</button>
+                                <span>{{selectedFileName}}</span>
+
+                                <div class="form-group d-flex mt-3">
+                                    <label class="form-label mr-3">Ticket</label>
+                                    <span class="d-flex px-0"><i class="fas fa-ticket-alt mr-2"
+                                            style="font-size: 25px; color: #4680ff;"></i><input type="text"
+                                            formControlName="TicketNumber" maxlength="100" class="form-control"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row py-3">
+                            <div class="col-md-12 col-xl-12 px-0 text-center  mb-3">
+                                <button mat-button class="btn btn-primary" (click)="saveNotes()"
+                                    [disabled]="saveButtonDisabled">
+                                    <span class="spinner-border spinner-border-sm mr-1" role="status"
+                                        *ngIf="saveButtonDisabled"></span>Save</button>
+                            </div>
+                        </div>
+
+                        <mat-accordion class="example-headers-align">
+                            <div>
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                    <mat-expansion-panel-header class="math">
+                                        <mat-panel-title class="matt">
+                                            <i class="ficon fas fa-id-card-alt"></i>&nbsp;Account Record
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Customer *</label>
+                                                <span class="tem-span-p-none"> <p-dropdown appendTo="body"
+                                                        [options]="customerList" optionLabel="AccountName"
+                                                        [filter]="true" filterBy="AccountName" [showClear]="true"
+                                                        placeholder="Select Customer..." [disabled]="true"
+                                                        formControlName="customerAccountId" optionValue="Id"
+                                                        [showClear]="false">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Vendor *</label>
+                                                <span class="tem-span-p-none"><p-dropdown appendTo="body"
+                                                        [options]="vendorsList" optionLabel="AccountName"
+                                                        [filter]="true" filterBy="AccountName" [showClear]="true"
+                                                        placeholder="Select Vendor..." formControlName="vendorAccountId"
+                                                        optionValue="Id" [showClear]="false" [disabled]="true"
+                                                        [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-6 col-xl-6 invoice-account-padding">
+                                            <div class="form-group">
+                                                <div>
+                                                    <!-- <label class="form-control-label mr-2" for="status">Is this a Main Account Number{{action === 'add'
+                                                ? '
+                                                you want to Add' : '' }}?
+                                                *</label> -->
+
+                                                    <!-- <label class="form-control-label mr-2" for="status">Is this a Payable Account? *</label> -->
+                                                </div>
+                                                <!-- <div>
+
+                                                    <mat-radio-group formControlName="isMainAccountBeingAdd"
+                                                        class="m-l-8 d-inline-block">
+                                                        <mat-radio-button [value]="true">Yes
+                                                        </mat-radio-button>
+                                                        <mat-radio-button [value]="false" class="m-l-10">No
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6 px-0 invoice-account-padding">
+                                            <div class="form-group">
+                                                <!-- <label class="form-label">{{f.isMainAccountBeingAdd.value === false ? 'Sub ': 'Main '}} Account
+                                              Number *</label> -->
+
+                                                <label class="form-label">Main Account
+                                                    Number *</label>
+                                                <span><input type="text" class="form-control" maxlength="30"
+                                                        spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                                        formControlName="accountNumber" [readOnly]="true"></span>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Main Account Number </label>
+                                                <span><p-dropdown appendTo="body" optionLabel="AccountNumber"
+                                                        [filter]="true" filterBy="AccountNumber" [showClear]="true"
+                                                        placeholder="Select Main Account Number..."
+                                                        formControlName="parentBillingAccountHierarchyId"
+                                                        optionValue="Id" [showClear]="false">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div> -->
+
+
+                                        <div class="col-md-6 col-sm-6 col-xl-6 box-left">
+                                            <div class="form-group" style="margin-bottom: 0 !important;">
+                                                <label class="form-control-label mr-1" for="status">Is this a Payable
+                                                    Account? *</label>
+                                                <div>
+
+                                                    <mat-radio-group formControlName="isPayableAccount"
+                                                        class="m-l-8 d-inline-block" [disabled]="true">
+                                                        <mat-radio-button [value]="true">Yes
+                                                        </mat-radio-button>
+                                                        <mat-radio-button [value]="false" class="m-l-10">No
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-6 col-xl-6 box-right">
+                                            <div class="datepicker-c-main" style="margin-bottom: 10px;">
+                                                <label class="form-label"
+                                                    style="width: 122px; font-weight: 500;">Invoice Start Date *</label>
+
+                                                <p-calendar dateFormat="mm/dd/yy" formControlName="invoiceStartDate"
+                                                    placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true"
+                                                    [disabled]="true"></p-calendar>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Bill Day * <i class="fas fa-info-circle" container="body"
+                                                        ngbTooltip="The day of the month of the invoice date found on the actual invoice of record. For example, if the invoice date is 10/15/2023, the Bill Day is “15”"
+                                                        tooltipClass="tooltip-bg"></i></label>
+                                                <span class="tem-span-p-none"> <p-dropdown appendTo="body"
+                                                        [options]="days" optionLabel="value" [filter]="true"
+                                                        placeholder="Select Bill Day..." [disabled]="true"
+                                                        formControlName="invoiceBillDay" optionValue="Id">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Pay by # Days * <i class="fas fa-info-circle" container="body"
+                                                        ngbTooltip="Quantity of days after the Bill Day until the invoice payment is due."
+                                                        tooltipClass="tooltip-bg"></i></label>
+                                                <span class="tem-span-p-none"><p-dropdown appendTo="body"
+                                                        optionLabel="stringValue" [filter]="true"
+                                                        placeholder="Select Pay by Day..." formControlName="payByDay"
+                                                        optionValue="stringValue" [disabled]="true" [options]="days">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Invoice Occurrence *</label>
+                                                <span class="tem-span-p-none"> <p-dropdown appendTo="body"
+                                                        [options]="invoicefrequenciesList" optionLabel="DisplayName"
+                                                        [filter]="true" filterBy="DisplayName" [showClear]="true"
+                                                        placeholder="Select Invoice Occurrence..."
+                                                        formControlName="invoiceFrequencyId" optionValue="Id"
+                                                        [showClear]="false" [disabled]="true" [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Invoice Currency </label>
+                                                <span class="tem-span-p-none"><p-dropdown appendTo="body"
+                                                        [options]="currenciesList" optionLabel="label" [filter]="true"
+                                                        filterBy="label" [showClear]="true" [disabled]="true"
+                                                        placeholder="Select Currency..." formControlName="currencyId"
+                                                        optionValue="Id" [showClear]="false" [disabled]="true">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Account Status *</label>
+                                                <span class="tem-span-p-none"> <p-dropdown appendTo="body"
+                                                        [filter]="true" [showClear]="true" placeholder="Select Status"
+                                                        [showClear]="false" formControlName="accountStatus"
+                                                        [disabled]="true" [options]="statusList" optionValue="Id"
+                                                        optionLabel="DisplayText">
+                                                    </p-dropdown></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label mr-1">Process Billing? *</label>
+                                                <div>
+                                                    <mat-radio-group class="m-l-8 d-block"
+                                                        formControlName="processBilling" [disabled]="true">
+                                                        <mat-radio-button [value]="true">Yes
+                                                        </mat-radio-button>
+                                                        <mat-radio-button [value]="false" class="m-l-10">No
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-md-6 col-sm-6 col-xl-6">
+                                          <div class="form-group">
+                                            <label class="form-control-label mr-1" for="status">Status *</label>
+                                            <div [ngClass]="{'disabled-radio' : action == 'add' || isSuperTEMUser }">
+                          
+                                              <mat-radio-group formControlName="active" class="m-l-8 d-block">
+                                                <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null" [value]="true">Active
+                                                </mat-radio-button>
+                                                <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null" [value]="false"
+                                                  class="m-l-10">Inactive
+                                                </mat-radio-button>
+                                              </mat-radio-group>
+                          
+                                            </div>
+                                          </div>
+                                        </div> -->
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xl-6">
+                                            <div class="datepicker-c-main disconnect-date" style="margin-bottom: 10px;">
+                                                <label class="form-label"
+                                                    style="width: 123px; font-weight: 500;">Disconnected Date</label>
+
+                                                <p-calendar dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy"
+                                                    appendTo="body" [showIcon]="true" formControlName="disconnectDate"
+                                                    [disabled]="true"></p-calendar>
+                                                <!-- <mat-error style="font-size: 12px;"
+                                              *ngIf="f.invoiceStartDate.errors?.required && (f.invoiceStartDate.touched || submitted) ">
+                                              Invoice Start Date is required</mat-error> -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

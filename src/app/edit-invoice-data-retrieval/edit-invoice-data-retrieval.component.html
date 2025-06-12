@@ -1,0 +1,384 @@
+<div class="row">
+  <div class="col-12 px-0">
+    <app-card cardTitle="" >
+      <div>
+        <div class="row">
+          <div class="col-sm-12 col-xl-12 text-right">
+            <span class="text-c-red">*Required field</span>
+          </div>
+        </div>
+
+        <form [formGroup]="updateRetrievalForm">
+          <div class="row">
+            <div class="col-sm-12 col-xl-6 padding-left-none content-height-100 invoice-r-res">
+              <mat-accordion class="example-headers-align">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt font-weight-bold">
+                      <!-- <i class="ficon fas fa-hotel"></i> -->
+                      <img src="assets/images/supplier-management.svg"
+                        alt="Invoice & Data Retrieval Image">&nbsp;Invoice Retrieval
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Invoice Source * </label>
+                        <span><p-dropdown appendTo="body" [options]="InvoiceSourceList" optionLabel="value"
+                            [filter]="true" formControlName="invoiceSource" filterBy="value" [showClear]="true"
+                            placeholder="Select Invoice Source..." optionValue="value" [showClear]="false"
+                            [disabled]="setIsReadOnly"
+                            [ngClass]="{'invalid-error': !f['invoiceSource'].valid && (f['invoiceSource'].dirty || f['invoiceSource'].touched || submitted)}">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f['invoiceSource'].errors?.['required'] && (f['invoiceSource'].touched || submitted || setTouchedInput) ">
+                          Invoice Source is required</mat-error>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Retrieval Method *
+                          <!-- <i class="fas fa-info-circle" [placement]="'auto'" container="body" tooltipClass="tooltip-bg"
+                            ngbTooltip="Retrieval Method"></i> -->
+                        </label>
+                        <span> <p-dropdown appendTo="body" [options]="invoiceRetrievalList" optionLabel="DisplayName"
+                            [filter]="true" filterBy="DisplayName" [showClear]="true" (onChange)="onRetrievalMethod();"
+                            formControlName="invoiceRetrievalMethodId" placeholder="Select Retrieval Method..."
+                            optionValue="Id" [showClear]="false" [disabled]="setIsReadOnly"
+                            [ngClass]="{'invalid-error': !f['invoiceRetrievalMethodId'].valid && (f['invoiceRetrievalMethodId'].dirty || f['invoiceRetrievalMethodId'].touched || submitted)}">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f['invoiceRetrievalMethodId'].errors?.['required'] && (f['invoiceRetrievalMethodId'].touched || submitted || setTouchedInput) ">
+                          Retrieval Method is required</mat-error>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Retrieval # Days * <i class="fas fa-info-circle"
+                             container="body" tooltipClass="tooltip-bg"
+                            ngbTooltip="Quantity of days after the Bill Day until the invoice is expected."></i></label>
+                        <span><p-dropdown appendTo="body" formControlName="recieveDays" [options]="days"
+                            optionLabel="stringValue" optionValue="stringValue" placeholder="Select Retrieval Day..."
+                            [filter]="true"
+                            [ngClass]="{'invalid-error': !f['recieveDays'].valid && (f['recieveDays'].dirty || f['recieveDays'].touched || submitted)}">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f['recieveDays'].errors?.['required'] && (f['recieveDays'].touched || submitted || setTouchedInput) ">
+                          Retrieval # Days is required</mat-error>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Missing # Days *
+                          <i class="fas fa-info-circle"  container="body" tooltipClass="tooltip-bg"
+                            ngbTooltip="Quantity of days after the Bill Day until the invoice is considered missing."></i></label>
+                        <span> <p-dropdown appendTo="body" [options]="days" formControlName="daysTillMissing"
+                            optionLabel="stringValue" optionValue="stringValue" placeholder="Select Missing Day..."
+                            [filter]="true"
+                            [ngClass]="{'invalid-error': !f['daysTillMissing'].valid && (f['daysTillMissing'].dirty || f['daysTillMissing'].touched || submitted)}">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f['daysTillMissing'].errors?.['required'] && (f['daysTillMissing'].touched || submitted || setTouchedInput) ">
+                          Missing # Days is required</mat-error>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                      <div class="form-group" *ngIf="showInvoiceUsername">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">
+                          URL {{showInvoiceUsername ? '*' : ''}}</label>
+                        <span> <input type="text" formControlName="webUrl" class="form-control"
+                            [ngClass]="{'invalid-error': !f.webUrl.valid && (f.webUrl.dirty || f.webUrl.touched || submitted)}"
+                            [readonly]="setIsReadOnly" spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.webUrl.errors?.required && (f.webUrl.touched || submitted || setTouchedInput) ">
+                          URL is required</mat-error>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                      <div class="form-group" *ngIf="showInvoiceUsername">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">
+                          Username </label>
+                        <span> <input formControlName="webLogin" type="text" class="form-control"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 padding-1-1">
+                      <div class="form-group" *ngIf="showInvoiceUsername">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">
+                          Password Manager </label>
+                        <span *ngIf="!passwordManagerAvailble && !saveSuccessFully"> <input
+                            formControlName="webPasswordManager" type="text" class="form-control"></span>
+                        <span *ngIf="passwordManagerAvailble || saveSuccessFully"><input
+                            formControlName="webPasswordManager" type="text" class="form-control"></span>
+
+                        <!-- <span *ngIf="passwordManagerAvailble || saveSuccessFully">{{f.webPasswordManager.value}}</span> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                      <div class="form-group" *ngIf="showEmail">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">
+                          Email </label>
+                        <span> <input formControlName="email" type="text" class="form-control"
+                            [ngClass]="{ 'invalid-error': submitted && f.email.errors }"></span>
+                        <mat-error style="font-size: 12px;" *ngIf="submitted && f.email.errors">
+                          Email must be a valid email address
+                        </mat-error>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 padding-1-1">
+                      <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <span><textarea formControlName="invoiceRetrievalNotes" class="form-control textarea-row-fix"
+                            rows="3"></textarea></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 padding-1-1">
+                      <div class="custom-control custom-checkbox text-left">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1"
+                          formControlName="copyToDataRetrieval" (change)="copyForm($event)">
+                        <label for="customCheck1" class="custom-control-label">Copy to Data
+                          Retrieval</label>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+
+            <div class="col-sm-12 col-xl-6 padding-right-none content-height-100">
+              <mat-accordion class="example-headers-align">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                  <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt">
+                      <!-- <i class="ficon fas fa-id-card-alt"></i> -->
+                      <img src="assets/images/supplier-management.svg" alt="Invoice & Data Retrieval Image">&nbsp;Data
+                      Retrieval
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Data Source * </label>
+                        <span><p-dropdown appendTo="body" formControlName="dataRetrievalSourceId"
+                            [options]="getdataRetrievalSource" filterBy="Source" optionLabel="Source" optionValue="Id"
+                            placeholder="Select Data Source..."
+                            [ngClass]="{'invalid-error': !f['dataRetrievalSourceId'].valid && (f['dataRetrievalSourceId'].dirty || f['dataRetrievalSourceId'].touched || submitted)}">
+                          </p-dropdown></span>
+
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f['dataRetrievalSourceId'].errors?.['required'] && (f['dataRetrievalSourceId'].touched || submitted || setTouchedInput)">
+                          Data Source is required
+                        </mat-error>
+                        <ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Retrieval Method *
+                        </label>
+                        <span> <p-dropdown appendTo="body" formControlName="dataRetrievalMethodId"
+                            [options]="dataRetrievalList" optionLabel="DisplayName" [filter]="true"
+                            filterBy="DisplayName" [showClear]="true" placeholder="Select Retrieval Method..."
+                            optionValue="Id" [showClear]="false" [disabled]="setIsReadOnly"
+                            (onChange)="onDataRetrievalMethod();"
+                            [ngClass]="{'invalid-error': !f['dataRetrievalMethodId'].valid && (f['dataRetrievalMethodId'].dirty || f['dataRetrievalMethodId'].touched || submitted)}">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f['dataRetrievalMethodId'].errors?.['required'] && (f['dataRetrievalMethodId'].touched || submitted || setTouchedInput) ">
+                          Retrieval Method is required</mat-error>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Retrieval # Days * <i class="fas fa-info-circle"
+                             container="body" tooltipClass="tooltip-bg"
+                            ngbTooltip="Quantity of days after the Bill Day until the data files are expected."></i></label>
+                        <span><p-dropdown formControlName="dataRetrievalDays" appendTo="body" [options]="days"
+                            optionLabel="stringValue" optionValue="stringValue" placeholder="Select Retrieval Day..."
+                            [filter]="true"
+                            [ngClass]="{'invalid-error': !f['dataRetrievalDays'].valid && (f['dataRetrievalDays'].dirty || f['dataRetrievalDays'].touched || submitted)}">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f['dataRetrievalDays'].errors?.['required'] && (f['dataRetrievalDays'].touched || submitted || setTouchedInput) ">
+                          Retrieval # Days is required</mat-error>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Missing # Days *
+                          <i class="fas fa-info-circle"  container="body" tooltipClass="tooltip-bg"
+                            ngbTooltip="Quantity of days after the Bill Day until the data files are considered missing."></i></label>
+                        <span> <p-dropdown appendTo="body" formControlName="dataRetrievalMissingDays" [options]="days"
+                            [ngClass]="{'invalid-error': !f['dataRetrievalMissingDays'].valid && (f['dataRetrievalMissingDays'].dirty || f['dataRetrievalMissingDays'].touched || submitted)}"
+                            optionLabel="stringValue" optionValue="stringValue" placeholder="Select Missing Day..."
+                            [filter]="true">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f['dataRetrievalMissingDays'].errors?.['required'] && (f['dataRetrievalMissingDays'].touched || submitted || setTouchedInput) ">
+                          Missing # Days is required</mat-error>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Processing Method *</label>
+                        <span> <p-dropdown appendTo="body" optionValue="Id"
+                            formControlName="dataRetrievalProcessingMethodId" optionLabel="DisplayName"
+                            [options]="getDataRetrievalProcessiongMethods" (onChange)="onProcessingMethod();"
+                            [ngClass]="{'invalid-error': !f['dataRetrievalProcessingMethodId'].valid && (f['dataRetrievalProcessingMethodId'].dirty || f['dataRetrievalProcessingMethodId'].touched || submitted)}"
+                            placeholder="Select Processing Method...">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f['dataRetrievalProcessingMethodId'].errors?.['required'] && (f['dataRetrievalProcessingMethodId'].touched || submitted || setTouchedInput) ">
+                          Processing Method is required</mat-error>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1" *ngIf="templateTypeShow">
+                      <div class="form-group">
+                        <label class="form-label font-weight-500">Template Type *</label>
+                        <span> <p-dropdown appendTo="body" optionValue="Id" formControlName="templateTypeId"
+                            optionLabel="Type" [options]="dataRetrievalTemplateType"
+                            [ngClass]="{'invalid-error': !f.templateTypeId.valid && (f.templateTypeId.dirty || f.templateTypeId.touched || submitted)}"
+                            placeholder="Select Template Type...">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.templateTypeId.errors?.required && (f.templateTypeId.touched || submitted || setTouchedInput) ">
+                          Template Type is required</mat-error>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                      <div class="form-group" *ngIf="showDataRetrivalUsername">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">
+                          URL {{showDataRetrivalUsername ? '*' : ''}}</label>
+                        <span> <input type="text" class="form-control" formControlName="dataRetrievalWebUrl"
+                            [ngClass]="{'invalid-error': !f.dataRetrievalWebUrl.valid && (f.dataRetrievalWebUrl.dirty || f.dataRetrievalWebUrl.touched || submitted)}"
+                            [readonly]="setIsReadOnly" spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.dataRetrievalWebUrl.errors?.required && (f.dataRetrievalWebUrl.touched || submitted || setTouchedInput) ">
+                          URL is required</mat-error>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                      <div class="form-group" *ngIf="showDataRetrivalUsername">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">
+                          Username </label>
+                        <span> <input type="text" formControlName="dataRetrievalWebLogin" class="form-control"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 padding-1-1">
+                      <div class="form-group" *ngIf="showDataRetrivalUsername">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">
+                          Password Manager </label>
+                        <span> <input type="text" formControlName="dataRetrievalWebPasswordManager"
+                            class="form-control"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3">
+                      <div class="form-group" *ngIf="showDataEmail">
+                        <label for="exampleInputPassword1" class="form-label font-weight-500">
+                          Email </label>
+                        <span> <input formControlName="dataRetrievalEmail"
+                            [ngClass]="{ 'invalid-error': submitted && f.dataRetrievalEmail.errors }" type="text"
+                            class="form-control"></span>
+                        <mat-error style="font-size: 12px;" *ngIf="submitted && f.dataRetrievalEmail.errors">
+                          Email must be a valid email address
+                        </mat-error>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 padding-1-1">
+                      <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <span><textarea class="form-control textarea-row-fix" formControlName="dataRetrievalNote"
+                            rows="3"></textarea></span>
+                      </div>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+
+            <div class="col-md-12">
+              <div class="text-center margin-b-none">
+                <!--   -->
+                <button (click)="saveDataInvoiceRetrieval()" [disabled]="saveButtonLoadder  || !viewNEditAccount"
+                  type="submit" uiSref="work" class="btn  btn-primary btn-raised my-3">
+                  <span *ngIf="saveButtonLoadder" class="spinner-border spinner-border-sm mr-2" role="status"></span>
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="row" style="margin-bottom: 10px !important;">
+          <div class="col-sm-12 col-md-12 col-xl-12 px-0">
+            <mat-accordion class="example-headers-align data-ret-file-accordian-body">
+              <div class="row">
+                <div class="col-12 p-0">
+                  <mat-expansion-panel [expanded]="true" class="panel-border-none select-charge-table-bottom-space">
+
+                    <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getDataretrievalBatemplates(detailData.VendorAccountId)"></button>
+
+                    <mat-expansion-panel-header class="math">
+                      <mat-panel-title class="matt">
+                        <i class="fas ficon fas fa-user-clock "></i>&nbsp;Data Retrieval Files
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="card mb-0">
+                      <div class="grid-wrapper-space">
+                        
+                        <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefsDataRe"
+                          [frameworkComponents]="frameworkComponents" [rowData]="gridData" [rowSelection]="rowSelection"
+                          [suppressRowClickSelection]="true" [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                          [singleClickEdit]="true" (onCellDoubleClickedEvent)="EditRetrievalFile($event.data)">
+                        </app-ag-grid-table>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </div>
+              </div>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

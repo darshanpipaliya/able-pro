@@ -39,7 +39,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
 // third party import
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -48,7 +47,10 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { CustomTranslateLoader } from './custom-translate-loader';
 import { CardComponent } from 'src/app/@theme/components/card/card.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 
+import { AgGridModule } from 'ag-grid-angular';
+import { AllEnterpriseModule } from 'ag-grid-enterprise';
 const MaterialModules = [
   MatToolbarModule,
   MatSidenavModule,
@@ -86,14 +88,16 @@ const MaterialModules = [
   MatChipsModule,
   MatSnackBarModule,
   MatExpansionModule,
-];
 
+];
+ModuleRegistry.registerModules([AllEnterpriseModule]);
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     MaterialModules,
     FormsModule,
+    AgGridModule,
     ReactiveFormsModule,
     NgScrollbarModule,
     TranslateModule.forRoot({
@@ -103,7 +107,17 @@ const MaterialModules = [
       }
     }),
     CardComponent,
+    
   ],
-  exports: [CommonModule, MaterialModules, FormsModule, ReactiveFormsModule, NgScrollbarModule, TranslateModule, CardComponent]
+  exports: [
+    CommonModule, 
+    MaterialModules, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    NgScrollbarModule, 
+    TranslateModule, 
+    CardComponent,
+    AgGridModule
+  ]
 })
 export class SharedModule {}

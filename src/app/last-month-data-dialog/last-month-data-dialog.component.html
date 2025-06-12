@@ -1,0 +1,33 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title text-c-blue">Attention</h5>
+    <i class="fas fa-times" type="button" mat-dialog-close (click)="closeDialog()"></i>
+    <!-- <button type="button" class="close" mat-dialog-close (click)="closeDialog()">
+        <span aria-hidden="true">&times;</span>
+    </button> -->
+</div>
+<div class="row pt-3">
+    <!-- <span class="dialog-header-c">Attention</span> -->
+    <div class="col-sm-12 px-0">
+        <div>
+            <div class="d-flex align-items-center mb-2">
+                <!-- fas fa-exclamation-circle -->
+                <i class="fas fa-question-circle text-c-blue mr-3" style="font-size: 45px;"></i>
+                <p class="mb-2 text-c-blue">"Copy Last Month's Data" should only be used if the account's expected data
+                    files are not available or are unusable, and the vendor cannot resolve the
+                    issue in a timely manner.</p>
+            </div>
+            <p style="margin-left: 62px;" class="text-c-blue">
+                Are you sure you wish to proceed?
+            </p>
+        </div>
+        <div>
+            <ng-container>
+                <div class="text-right mt-2">
+                    <a class="linkTag" (click)="LastMonthYes()">Yes, I'm sure</a>
+                    <button class="btn btn-primary ml-4" (click)="close()">
+                        No, cancel</button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

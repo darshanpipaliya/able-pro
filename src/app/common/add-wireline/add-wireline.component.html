@@ -1,0 +1,808 @@
+<div class="col-sm-12 col-xl-12 d-flex justify-content-between align-items-end px-0">
+  <div class="col-sm-12 col-xl-12 text-right">
+    <span class="text-c-red">*Required field</span>
+  </div>
+
+</div>
+<div class="extra-m-c" [ngClass]="{'row' : action !== 'New'}">
+  <div class="extra-c" [ngClass]="{'col-xl-6 px-0' : action !== 'New'}">
+    <form [formGroup]="inventoryForm">
+      <div class="row" [ngClass]="{'row-edit-c' : action !== 'New'}">
+        <div class="col-sm-12 col-xl-6 padding-left-none" [ngClass]="{'col-xl-12' : action !== 'New'}">
+          <mat-accordion class="example-headers-align">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header class="math borderc">
+                <mat-panel-title>
+                  <i class="fas fa-money-check-alt"></i>&nbsp;Account Detail
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="row ">
+                <ng-container *ngIf="loadingDataFromEditApi">
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-3 padding-3-1-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-3 padding-3-1-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-3 padding-3-1-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="!loadingDataFromEditApi">
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                    <div class="form-group">
+                      <label class="form-label">Customer *</label>
+                      <span><p-dropdown [options]="customerList" optionLabel="AccountName" [filter]="true"
+                          filterBy="AccountName" [showClear]="true"
+                          placeholder="{{loadingCustomerList ? 'Loading' : 'Select Customer'}}..."
+                          formControlName="customerId" optionValue="Id" [showClear]="false" (onChange)="clearServiceAndOther();onCustomerSelect($event, true);getMainBillingAccountDD(true);getCompany();getVendorList(false,f.customerId.value,true);
+                          action !== 'New' ? onLazyLoadInventoryTable('', true, true) : ''"
+                          [disabled]="isChildRecord || loadingCustomerList"
+                          [ngClass]="{'invalid-error': !f.customerId.valid && (f.customerId.dirty || f.customerId.touched || submitted)}"
+                          appendTo="body">
+                        </p-dropdown></span>
+                      <mat-error style="font-size: 12px;"
+                        *ngIf="f.customerId.errors?.required && (f.customerId.touched || submitted) ">
+                        Customer is required</mat-error>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline" *ngIf="action == 'Edit'">
+                    <div class="form-group">
+                      <label class="form-label">Company</label>
+                      <span>
+                        <p-dropdown formControlName="companyId" [options]="companyList" [disabled]="true"
+                          placeholder="{{loadingCompanyList ? 'Loading' : 'Select Company'}}..." appendTo="body"
+                          optionValue="CompanyID" optionLabel="CompanyName" [filter]="true" filterBy="CompanyName"
+                          [showClear]="false">
+                        </p-dropdown>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                    <div class="form-group">
+                      <label class="form-label">Vendor *</label>
+                      <span><p-dropdown [options]="vendorsList" optionLabel="AccountName" [filter]="true"
+                          filterBy="AccountName" [showClear]="true" [disabled]="isChildRecord"
+                          placeholder="{{loadingVendorsList ? 'Loading' : 'Select Vendor'}}..."
+                          formControlName="VendorId" optionValue="Id" [showClear]="false"
+                          [ngClass]="{'invalid-error': !f.VendorId.valid && (f.VendorId.dirty || f.VendorId.touched || submitted)}"
+                          appendTo="body" (onChange)="clearServiceAndOther(); getMainBillingAccountDD(true);
+                          getVendorProductType(true)">
+                        </p-dropdown></span>
+
+                      <mat-error style="font-size: 12px;"
+                        *ngIf="f.VendorId.errors?.required && (f.VendorId.touched || submitted) ">
+                        Vendor is required</mat-error>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline">
+                    <div class="form-group">
+                      <label class="form-label">Main Account # *</label>
+                      <span><p-dropdown [options]="MainBillingAccountDD" optionLabel="AccountNumber" [filter]="true"
+                          filterBy="AccountNumber,AcctNumberUnformatted" [showClear]="true"
+                          [ngClass]="{'invalid-error': !f.BillingAccountHierarchyId.valid && (f.BillingAccountHierarchyId.dirty || f.BillingAccountHierarchyId.touched || submitted)}"
+                          appendTo="body" placeholder="{{mainBillingAccDD ? 'Loading' : 'Select Main Account'}}..."
+                          (onChange)="getSubBillingAccountDD(true)" formControlName="BillingAccountHierarchyId"
+                          optionValue="Id" [showClear]="false">
+                        </p-dropdown></span>
+                      <mat-error style="font-size: 12px;"
+                        *ngIf="f.BillingAccountHierarchyId.errors?.required && (f.BillingAccountHierarchyId.touched || submitted) ">
+                        Main Account is required</mat-error>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                    <div class="form-group">
+                      <label class="form-label">Sub Account # {{subAccountNumberRequired ? '*' : ''}}</label>
+                      <span>
+                        <p-dropdown [options]="subBillingAccountDD" optionLabel="AccountNumber" [filter]="true"
+                          filterBy="AccountNumber,AcctNumberUnformatted" [showClear]="true" [disabled]="!subBillingAccountDD.length"
+                          [ngClass]="{'invalid-error': !f.subAccountNumber.valid && (f.subAccountNumber.dirty || f.subAccountNumber.touched || submitted)}"
+                          (onChange)="clickToSubAccNumber()" appendTo="body"
+                          placeholder="{{loadingsubBillAccDD ? 'Loading' : f.subAccountNumber.value || subBillingAccountDD.length > 0 ? 'Select Sub Account...' : '--'}}"
+                          formControlName="subAccountNumber" optionValue="Id" [showClear]="false">
+                        </p-dropdown>
+
+                      </span>
+                      <mat-error style="font-size: 12px;"
+                        *ngIf="f.subAccountNumber.errors?.required && (f.subAccountNumber.touched || submitted) ">
+                        Sub Account is required</mat-error>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline">
+                    <div class="form-group">
+                      <label class="form-label">Payable Account #</label>
+                      <span><input type="text" class="form-control" formControlName="payableAccountNumber"
+                          disabled="true"></span>
+                      <mat-error style="font-size: 12px;"
+                        *ngIf="f.payableAccountNumber.errors?.required && (f.payableAccountNumber.touched || submitted) ">
+                        Payable Account is required</mat-error>
+                    </div>
+                  </div>
+
+                </ng-container>
+              </div>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <mat-accordion class="example-headers-align location-tab-main">
+            <div class="fb fb2">
+              <mat-expansion-panel [expanded]="true">
+
+                <button title="Link Location" type="button" *ngIf="!temRoles && !isPageAccess && typeService !== 'Child'"
+                  (click)="linkLocationPopup()"
+                  [disabled]="loadingDataFromEditApi || typeService === 'Child' || (f.customerId.value == '' || f.customerId.value == null)"
+                  class="btn btn-icon btn-outline-warning service-tab-btn"><i class="fas fa-edit fs-14"></i></button>
+                <mat-expansion-panel-header class="math borderc">
+                  <mat-panel-title>
+                    <i class="fas fa-map-marker-alt"></i>&nbsp;Location
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <!-- *ngIf="companyLocations?.length > 0 || confirmed.length > 0" -->
+                <i class="fas fa-info-circle ml-1 position-header" (click)="openDialog()" tooltipClass="tooltip-bg"></i>
+                <ng-template #IIconTooltip>
+                  <div class="mat-dialog-header">
+                    <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="text-left">
+
+                    <!-- <p class="mb-0" style="font-size: 14px;">
+                      Primary Location designation sets the inventory physical location and can be used for cost
+                      allocation by location. Additional locations added to inventory are secondary locations
+                      associated with the inventory.</p> -->
+
+                    <p class="mb-0" style="font-size: 14px;">The <b>Primary Location</b> is the site where the service
+                      is located or assigned. When cost allocation is enabled, the Location may also be responsible for
+                      the associated expenses. Each inventory item can have only one primary assignment, which can be
+                      either a person or a location.</p>
+                  </div>
+                </ng-template>
+                <div class="row m-t-20">
+
+                  <div class="col-md-12 px-0 p-listbox-main">
+                    <p-listbox [options]="companyLocations" (onChange)="onPListboxChange($event.value)" [filter]="false"
+                      [(ngModel)]="confirmed" [ngModelOptions]="{standalone: true}" [multiple]="'single'"
+                      [showToggleAll]="false" [checkbox]="true" [listStyle]="{'height': '64px'}"
+                      optionLabel="LocationDisplay" ariaFilterLabel="LocationDisplay" class="people-listbox">
+                      <ng-template let-location pTemplate="item">
+                        <div class="country-item d-flex align-items-center"
+                          [ngClass]="{'primary-location-bold' : location.PrimaryLocation}">
+                          <span class="location-label">{{location.LocationDisplay}}</span>
+                          <span class="badge m-r-5 badge-success h-100 ml-2"
+                            *ngIf="location.PrimaryLocation">Primary</span>
+                        </div>
+                      </ng-template>
+                    </p-listbox>
+                    <span style="float: right;">
+                      <span class="" *ngIf="companyLocations?.length > 0 || confirmed.length > 0"
+                        [ngClass]="{'disabled' : !confirmed.length || typeService === 'Child' || isPageAccess}"
+                        (click)="openPrimaryLOCPopup()">
+
+                        <span *ngIf="loadingSetPromary" class="spinner-border spinner-border-sm mr-2"
+                          [ngClass]="{'disabled' : loadingSetPromary }" style="color: #4580FE;"> </span> <a
+                          [ngClass]="{'disabled' : loadingSetPromary }" class="set-primary-span bb1"
+                          style="color: #4580FE;"> Set Location As Primary </a>
+                      </span>
+                      <!-- <i *ngIf="companyLocations?.length > 0 || confirmed.length > 0" class="fas fa-info-circle ml-2 icon-color set-primary-span" [placement]="'right'"
+                        container="body"
+                        ngbTooltip="Primary Location designates the inventory’s primary physical location. Additional locations assigned to the inventory are secondary locations with which the inventory is associated."
+                        tooltipClass="tooltip-bg tooltip-opacity"></i> -->
+
+                    </span>
+                  </div>
+                </div>
+
+              </mat-expansion-panel>
+            </div>
+          </mat-accordion>
+
+          <!-- People Section Start -->
+          <mat-accordion class="example-headers-align location-tab-main">
+            <div class="fb fb2">
+              <mat-expansion-panel [expanded]="true">
+
+                <button title="Link People" type="button" *ngIf="!temRoles && !isPageAccess && typeService !== 'Child'"
+                  (click)="linkPeoplePopup()"
+                  [disabled]="loadingDataFromEditApi || typeService === 'Child' || (f.customerId.value == '' || f.customerId.value == null)"
+                  class="btn btn-icon btn-outline-warning service-tab-btn"><i class="fas fa-edit fs-14"></i></button>
+                <mat-expansion-panel-header class="math borderc">
+                  <mat-panel-title>
+                    <i class="fas fa-users"></i>&nbsp;People
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <i class="fas fa-info-circle ml-1 position-header" (click)="openDialogPeople()"
+                  tooltipClass="tooltip-bg"></i>
+                <ng-template #IIconTooltipPeople>
+                  <div class="mat-dialog-header">
+                    <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="text-left">
+
+                    <!-- <p class="mb-2" style="font-size: 14px;">
+                      Primary assignment designates the owner of the inventory specially. Inventory can have only
+                      1 primary assignment a location or a user but not both.</p>
+                    <p class="mb-0" style="font-size: 14px;">
+                      For fixed service this is usually a location and for wireless service this is often a
+                      person, however you can set this up how you choose. </p> -->
+
+
+                    <p class="mb-0" style="font-size: 14px;">The <b>Primary User or Contact</b> is the individual who is
+                      the primary user or owner of the service. This person is responsible for managing the service and,
+                      when cost allocation is enabled, may also bear responsibility for expenses associated with it.
+                      Each inventory item can have only one primary assignment, which can be either a person or a
+                      location.</p>
+                  </div>
+                </ng-template>
+
+
+
+                <div class="row m-t-20">
+
+                  <div class="col-md-12 px-0 p-listbox-main">
+
+                    <p-listbox [options]="companyPeoples" (onChange)="onPListboxChange2($event.value)" [filter]="false"
+                      [(ngModel)]="confirmed2" [ngModelOptions]="{standalone: true}" [multiple]="'single'"
+                      [showToggleAll]="false" [checkbox]="true" [listStyle]="{'height': '64px'}"
+                      optionLabel="LocationDisplay" ariaFilterLabel="LocationDisplay" class="people-listbox">
+                      <ng-template let-location pTemplate="item">
+                        <div class="country-item d-flex align-items-center"
+                          [ngClass]="{'primary-location-bold' : location.PrimaryPeople}">
+                          <span class="location-label">{{location.PeopleDisplay}}</span>
+
+                          <span class="badge m-r-5 badge-success h-100 ml-2"
+                            *ngIf="location.PrimaryPeople">Primary</span>
+                        </div>
+                      </ng-template>
+                    </p-listbox>
+                    <span style="float: right;">
+                      <span class="" *ngIf="companyPeoples?.length > 0 || confirmed2.length > 0"
+                        [ngClass]="{'disabled' : !confirmed2.length || isPageAccess}"
+                        (click)="openPrimaryPeoplePopup()">
+
+                        <!-- <span *ngIf="loadingSetPromary" class="spinner-border spinner-border-sm mr-2"
+                          [ngClass]="{'disabled' : loadingSetPromary }" style="color: #4580FE;"> </span> <a
+                          [ngClass]="{'disabled' : loadingSetPromary }" class="set-primary-span bb1"
+                          style="color: #4580FE;"> Set User as Primary </a>
+                      </span> -->
+                        <span *ngIf="loadingSetPrimary1" class="spinner-border spinner-border-sm mr-2"
+                          [ngClass]="{'disabled' : loadingSetPrimary1 }" style="color: #4580FE;"> </span> <a
+                          [ngClass]="{'disabled' : loadingSetPrimary1 }" class="set-primary-span bb1"
+                          style="color: #4580FE;"> Set User
+                          As Primary </a>
+                      </span>
+
+                    </span>
+                  </div>
+
+                </div>
+
+              </mat-expansion-panel>
+            </div>
+          </mat-accordion>
+          <!-- People Section End -->
+
+        </div>
+        <div class="col-sm-12 col-xl-6 padding-right-none" [ngClass]="{'col-xl-12' : action !== 'New'}">
+          <mat-accordion class="example-headers-align">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header class="math borderc">
+                <mat-panel-title>
+                  <i class="ficon fas fa-tools"></i>&nbsp;Inventory Detail
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div *ngIf="loadingDataFromEditApi">
+                <div class="row  d-flex align-items-center">
+
+                  <div class="col-md-6 col-sm-6 col-xl-6 px-0 padding-3-3 d-flex align-items-center">
+                    <div class="logo-shimmer shimmer mr-2"></div>
+                    <div class="line shimmer" style="width: 100%;"></div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-3 padding-3-1-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-3 padding-3-1-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-3 padding-3-1-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xl-6 padding-3-3 padding-3-1-wireline shimmer-res">
+                    <div class="line shimmer"></div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!loadingDataFromEditApi">
+                <div class="row">
+                  <ng-container>
+                    <ng-container>
+                      <div class="col-md-9 col-sm-9 col-xl-9 px-0 padding-1-3 d-flex align-items-center">
+                        <div class="px-0 pr-2" *ngIf="action !== 'New'">
+                          <a href="javascript:">
+                            <img class="media-object" *ngIf="VendorAccountLogo" [src]="VendorAccountLogo" alt="Img">
+                            <img class="media-object" *ngIf="!VendorAccountLogo" src="assets/images/dummy.png"
+                              alt="Img">
+                          </a>
+                        </div>
+                        <div>
+                          <label class="form-label mb-2" style="font-weight: 500;">Is this Inventory Item a Phone
+                            Number? *&nbsp;<mat-radio-group formControlName="isPhoneNumber"
+                              class="m-l-8 d-inline-block">
+                              <mat-radio-button [value]="false">No
+                              </mat-radio-button>
+                              <mat-radio-button [value]="true" class="m-l-10">Yes
+                              </mat-radio-button>
+
+                            </mat-radio-group></label> <br>
+                          <mat-error style="font-size: 12px;"
+                            *ngIf="f.isPhoneNumber.errors?.required && (f.isPhoneNumber.touched || submitted) ">
+                            Phone Number Format is required</mat-error>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                    <div class="col-md-3 col-sm-3 col-xl-3 padding-3-1 padding-3-1-wireline align-items-center"
+                      *ngIf="action !== 'New'" style="display: grid;">
+                      <div class="form-group" style="margin-bottom: 0 !important;">
+                        <span>
+                          <p-dropdown [options]="typeOfService" appendTo="body" optionLabel="lable" optionValue="Id"
+                            [filter]="true" [disabled]="true" filterBy="lable" [showClear]="false"
+                            [(ngModel)]="typeService" [ngModelOptions]="{standalone: true}">
+                          </p-dropdown>
+                        </span>
+                      </div>
+                    </div>
+
+
+                  </ng-container>
+                </div>
+
+                <div class="row">
+                  <ng-container>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Service Number *</label>
+                        <span><input type="text" class="form-control" formControlName="serviceNumber" [maxlength]="75"
+                            [ngClass]="{'invalid-error': !f.serviceNumber.valid && (f.serviceNumber.dirty || f.serviceNumber.touched || submitted)}"></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.serviceNumber.errors?.required && (f.serviceNumber.touched || submitted) ">
+                          Service Number is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Billing ID</label>
+                        <span><input type="text" class="form-control" formControlName="billingId"
+                            disabled="true"></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.billingId.errors?.required && (f.billingId.touched || submitted) ">
+                          Billing Id is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Inventory Origin</label>
+                        <span>
+                          <p-dropdown [options]="inventoryOriginsList" appendTo="body"
+                            [ngClass]="{'invalid-error': !f.InventoryOriginId.valid && (f.InventoryOriginId.dirty || f.InventoryOriginId.touched || submitted)}"
+                            optionLabel="Name" [filter]="true" filterBy="Name" [showClear]="true" [disabled]="true"
+                            placeholder="{{loadingInventoryOrigins ? 'Loading' : 'Select Inventory Origin'}}..."
+                            formControlName="InventoryOriginId" optionValue="Id" [showClear]="false">
+                          </p-dropdown>
+                        </span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.InventoryOriginId.errors?.required && (f.InventoryOriginId.touched || submitted) ">
+                          Inventory Origin is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Status *</label>
+                        <span><p-dropdown [options]="inventoryStatusList" appendTo="body"
+                            (onChange)="changeStatus($event)"
+                            [ngClass]="{'invalid-error': !f.statusId.valid && (f.statusId.dirty || f.statusId.touched || submitted)}"
+                            [disabled]="statusFieldDisabled" optionLabel="DisplayText" [filter]="true"
+                            filterBy="DisplayText" [showClear]="true"
+                            placeholder="{{loadingInventorySts ? 'Loading': 'Select status'}}..."
+                            formControlName="statusId" optionValue="Id" [showClear]="false">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.statusId.errors?.required && (f.statusId.touched || submitted) ">
+                          Status is required</mat-error>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <div class="row">
+                  <ng-container>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Service *</label>
+                        <span>
+                          <p-dropdown [options]="services" appendTo="body"
+                            [ngClass]="{'invalid-error': !f.service.valid && (f.service.dirty || f.service.touched || submitted)}"
+                            (onChange)="getServiceTypes(true)" [disabled]="statusFieldDisabled" optionLabel="Name"
+                            [filter]="true" filterBy="Name" [showClear]="true"
+                            placeholder="{{loadingServices ? 'Loading': 'Select Service'}}..." formControlName="service"
+                            optionValue="Id" [showClear]="false">
+                          </p-dropdown>
+                        </span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.service.errors?.required && (f.service.touched || submitted) ">
+                          Service is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Service Type *</label>
+                        <span>
+                          <p-dropdown [options]="serviceTypes" appendTo="body"
+                            [ngClass]="{'invalid-error': !f.serviceType.valid && (f.serviceType.dirty || f.serviceType.touched || submitted)}"
+                            (onChange)="getProducts(true)" [disabled]="statusFieldDisabled" optionLabel="Name"
+                            [filter]="true" filterBy="Name" [showClear]="true"
+                            placeholder="{{loadingServiceTypes ? 'Loading': 'Select Service Type'}}..."
+                            formControlName="serviceType" optionValue="Id" [showClear]="false">
+                          </p-dropdown>
+
+                        </span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.serviceType.errors?.required && (f.serviceType.touched || submitted) ">
+                          Service Type is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Product *</label>
+                        <span>
+                          <p-dropdown [options]="products" appendTo="body"
+                            [ngClass]="{'invalid-error': !f.product.valid && (f.product.dirty || f.product.touched || submitted)}"
+                            (onChange)="getProductTypes(true)" [disabled]="statusFieldDisabled" optionLabel="Name"
+                            [filter]="true" filterBy="Name" [showClear]="true"
+                            placeholder="{{loadingProducts ? 'Loading': 'Select Products'}}..."
+                            formControlName="product" optionValue="Id" [showClear]="false">
+                          </p-dropdown>
+
+                        </span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.product.errors?.required && (f.product.touched || submitted) ">
+                          Product is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Product Type *</label>
+                        <span> <!-- (onChange)="getVendorProductType(true)" -->
+                          <p-dropdown [options]="productTypes" appendTo="body"
+                            [ngClass]="{'invalid-error': !f.productType.valid && (f.productType.dirty || f.productType.touched || submitted)}"
+                            (onChange)="getVendorProductType1(true)" [disabled]="statusFieldDisabled" optionLabel="Name"
+                            [filter]="true" filterBy="Name" [showClear]="true"
+                            placeholder="{{loadingProductTypes ? 'Loading': 'Select Product Type'}}..."
+                            formControlName="productType" optionValue="Id" [showClear]="false">
+                          </p-dropdown>
+                        </span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.productType.errors?.required && (f.productType.touched || submitted) ">
+                          Product Type is required</mat-error>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <div class="row">
+                  <ng-container>
+                    <div class="col-md-12 col-sm-12 col-xl-12 padding-1-3 padding-1-3-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Vendor Product *</label>
+
+                        <span><p-dropdown [options]="vendorProductDetails" optionLabel="Name" [filter]="true"
+                            filterBy="Name" [showClear]="true" appendTo="body"
+                            [disabled]="action == 'Edit' && this.rowData && this.rowData['ChildInventoryId'] ? true : false"
+                            (onChange)="getServiceProduct()"
+                            placeholder="{{loadingVendorproducttypes ? 'Loading' : 'Select Vendor Product'}}..."
+                            formControlName="vendorProductTypeId" optionValue="Id" [showClear]="false"
+                            [ngClass]="{'invalid-error': !f.vendorProductTypeId.valid && (f.vendorProductTypeId.dirty || f.vendorProductTypeId.touched || submitted)}">
+                          </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.vendorProductTypeId.errors?.required && (f.vendorProductTypeId.touched || submitted) ">
+                          Vendor Product is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xl-12 padding-1-1 padding-3-1-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Vendor Product Description</label>
+                        <textarea class="form-control textarea-full-section" rows="3" disabled
+                            [ngClass]="{'invalid-error': !f.vendorProductInventoryDescription.valid && (f.vendorProductInventoryDescription.dirty || f.vendorProductInventoryDescription.touched || submitted)}"
+                            formControlName="vendorProductInventoryDescription"></textarea>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.vendorProductInventoryDescription.errors?.required && (f.vendorProductInventoryDescription.touched || submitted) ">
+                          Vendor Product Description is required</mat-error>
+                          
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <div class="row">
+                  <ng-container>
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Service Custom 1</label>
+                        <span><input type="text" class="form-control" formControlName="inventoryCustomField1"
+                            [maxlength]="120"></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.inventoryCustomField1.errors?.required && (f.inventoryCustomField1.touched || submitted) ">
+                          Service Custom 1 is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Service Custom 2</label>
+                        <span><input type="text" class="form-control" formControlName="inventoryCustomField2"
+                            [maxlength]="120"></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.inventoryCustomField2.errors?.required && (f.inventoryCustomField2.touched || submitted) ">
+                          Service Custom 2 is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Service Custom 3</label>
+                        <span><input type="text" class="form-control" formControlName="inventoryCustomField3"
+                            [maxlength]="120"></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.inventoryCustomField3.errors?.required && (f.inventoryCustomField3.touched || submitted) ">
+                          Service Custom 3 is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline">
+                      <div class="form-group">
+                        <label class="form-label">Service Custom 4</label>
+                        <span><input type="text" class="form-control" formControlName="inventoryCustomField4"
+                            [maxlength]="120"></span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.inventoryCustomField4.errors?.required && (f.inventoryCustomField4.touched || submitted) ">
+                          Service Custom 4 is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline">
+                      <div class="datepicker-c-main" style="margin-bottom: 10px;">
+                        <label class="form-label" style="width: 117px;">Service Start Date</label>
+                        <p-calendar dateFormat="mm/dd/yy" formControlName="StartDate"
+                          (ngModelChange)="onChangeStartDate($event)" placeholder="mm/dd/yyyy" appendTo="body"
+                          [showIcon]="true"></p-calendar>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline">
+                      <label class="form-label" style="font-weight: 500;">Billing?&nbsp;<mat-radio-group
+                          class="m-l-8 d-inline-block" formControlName="BillingCharge">
+                          <mat-radio-button [value]="true">Yes
+                          </mat-radio-button>
+                          <mat-radio-button [value]="false" class="m-l-10">No
+                          </mat-radio-button>
+                        </mat-radio-group></label>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-1-3 padding-1-3-wireline"
+                      *ngIf="this.action === 'Edit'">
+                      <div class="datepicker-c-main second-datepicker" style="margin-bottom: 10px;">
+                        <label class="form-label" style="width: 132px;">Disconnection Date {{disconnectionDateReq ? '*'
+                          : ''}}</label>
+                        <p-calendar dateFormat="mm/dd/yy" formControlName="EndDate"
+                          (ngModelChange)="onChangeEndDate($event)" [minDate]="setMindate" placeholder="mm/dd/yyyy"
+                          appendTo="body" [showIcon]="true"></p-calendar>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.EndDate.errors?.required && (f.EndDate.touched || submitted) ">
+                          Disconnection Date is required</mat-error>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xl-6 padding-3-1 padding-3-1-wireline"
+                      *ngIf="this.action === 'Edit'">
+                      <div class="form-group">
+                        <label class="form-label">Invoice Cycles Remaining <em
+                            *ngIf="isIvoiceCycleRequired">*</em></label>
+                        <span>
+                          <p-dropdown appendTo="body" [filter]="true" filterBy="stringValue" [showClear]="true"
+                            placeholder="Select" [showClear]="false" [options]="days"
+                            [disabled]="!isIvoiceCycleRequired"
+                            [ngClass]="{'invalid-error': !f.InvoiceCyclesRemaining.valid && (f.InvoiceCyclesRemaining.dirty || f.InvoiceCyclesRemaining.touched || submitted)}"
+                            optionLabel="stringValue" optionValue="stringValue"
+                            formControlName="InvoiceCyclesRemaining">
+                          </p-dropdown>
+                        </span>
+                        <mat-error style="font-size: 12px;"
+                          *ngIf="f.InvoiceCyclesRemaining.errors?.required && (f.InvoiceCyclesRemaining.touched || submitted) ">
+                          Invoice Cycles Remaining is required</mat-error>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="location-tables" [ngClass]="{'col-xl-6 px-0 ' : action !== 'New'}">
+
+    <div class="col-sm-12 col-md-12 col-xl-12 padding-right-none" *ngIf="action !== 'New'">
+      <mat-accordion class="example-headers-align ccg-build">
+        <div class="row">
+          <div class="col-12 p-0">
+            <mat-expansion-panel [expanded]="true" class="panel-border-none select-charge-table-bottom-space">
+              <button type="button" class="fas fa-check c-refresh-speed" style="left: 50px; top: 5px;" title="Refresh" (click)="onLazyLoadInventoryTable('', true, true)"></button>
+              <button *ngIf="!temRoles && !isPageAccess && typeService !== 'Child'" title="Link Associated Inventory" type="button"
+                (click)="linkAssociatedInventory()" [disabled]="loadingDataFromEditApi || typeService === 'Child'"
+                class="btn btn-icon btn-outline-warning service-tab-btn">
+                <i class="fas fa-edit fs-14"></i>
+              </button>
+
+              <mat-expansion-panel-header class="math">
+                <mat-panel-title class="matt">
+                  <i class="fas ficon fas fa-user-clock "></i>&nbsp;Associated Inventory
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="card mb-0">
+                <p-table [columns]="cols" [style]="{height:'300px'}" [lazy]="true" [scrollable]="true"
+                  [ngClass]="{'no-row-to-show': childInventoryData[0]?.noValue === 1}"
+                  [totalRecords]="inventoryTableTotal" [virtualRowHeight]="24" [virtualScroll]="true"
+                  scrollHeight="flex" [resizableColumns]="true" [loading]="loadingAssInventory"
+                  (onLazyLoad)="onLazyLoadInventoryTable($event)" #dt dataKey="Id" [value]="childInventoryData">
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th *ngFor="let col of columns" class="font-p-table-header" [pSortableColumn]="col.field"
+                        [style.min-width]="col.width" [style.max-width]="col.width" [style.width]="col.width">
+                        {{col.header}}
+                        <p-sortIcon *ngIf="col.spinner" [field]="col.field"></p-sortIcon>
+                        <p-columnFilter type="text" [field]="col.field" display="menu"></p-columnFilter>
+                      </th>
+                    </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr style="height:24px">
+                      <td class="f-s-words" style="font-weight: 400;" *ngFor="let col of columns"
+                        [style.min-width]="col.width" [style.max-width]="col.width" [style.width]="col.width">
+                        <div [ngSwitch]="col.field">
+                          <div *ngSwitchDefault>{{rowData[col.field]}}</div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="4" class="text-center">{{emptymessage}}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </div>
+      </mat-accordion>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-xl-12 padding-right-none" *ngIf="action !== 'New'">
+      <mat-accordion class="example-headers-align ccg-build">
+        <div class="row">
+          <div class="col-12 p-0">
+            <mat-expansion-panel [expanded]="true" class="panel-border-none select-charge-table-bottom-space">
+              <button type="button" class="fas fa-check c-refresh-speed" style="left: 50px; top: 5px;" title="Refresh" (click)="onLazyLoadAttribute('', false, true)"></button>
+              <button *ngIf="!temRoles && !isPageAccess && typeService !== 'Child'" title="Add New Service Type Attribute"
+                type="button" (click)="addServiceType()" [disabled]="loadingDataFromEditApi || typeService === 'Child'"
+                class="btn btn-icon btn-outline-warning service-tab-btn"><i class="fas fa-edit fs-14"></i></button>
+              <mat-expansion-panel-header class="math">
+                <mat-panel-title class="matt">
+                  <i class="ficon fas fa-user-clock"></i>&nbsp;Service Type Attributes
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="card mb-0">
+                <p-table [lazy]="true" [scrollable]="true" [columns]="colsAttribute" [style]="{height:'300px'}"
+                  [ngClass]="{'no-row-to-show': rowDataServiceTypeAttr[0]?.noValue === 1}" [virtualRowHeight]="24"
+                  (onLazyLoad)="onLazyLoadAttribute($event)" #dt [loading]="loadingAttribute"
+                  [totalRecords]="attributeTotal" [virtualScroll]="true" dataKey="Id" [value]="rowDataServiceTypeAttr"
+                  scrollHeight="flex" [resizableColumns]="true" styleClass="p-datatable-striped">
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th *ngFor="let col of columns" class="font-p-table-header" [pSortableColumn]="col.field"
+                        [style.min-width]="col.width" [style.max-width]="col.width" [style.width]="col.width">
+                        {{col.header}}
+                        <p-sortIcon *ngIf="col.spinner" [field]="col.field"></p-sortIcon>
+                        <p-columnFilter type="text" [field]="col.field" display="menu"></p-columnFilter>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr style="height:24px">
+                      <td class="f-s-words" style="font-weight: 400;" *ngFor="let col of columns"
+                        [style.min-width]="col.width" [style.max-width]="col.width" [style.width]="col.width">
+                        <div [ngSwitch]="col.field">
+                          <div *ngSwitchDefault>{{rowData[col.field]}}</div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="3" class="text-center">{{emptymessageAtr}}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+
+            </mat-expansion-panel>
+          </div>
+        </div>
+      </mat-accordion>
+    </div>
+
+  </div>
+  <div class="col-sm-12 col-xl-12">
+    <div class="form-group text-center" [ngClass]="(action === 'New') ? 'margin-b-none' : 'res-btn-wireline-save' ">
+
+      <button mat-button class="btn btn-primary mr-2 mat-spinner-btn" (click)="addInventoryData()"
+        [disabled]="loadingDataFromEditApi || isPageAccess || isDisabled">
+        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoadder"></span>
+        Save
+      </button>
+
+      <!-- <button mat-button class="btn btn-primary mr-2 mat-spinner-btn" *ngIf="action == 'New'"
+        (click)="addInventoryData('save-add')" [disabled]="loadingDataFromEditApi || isDisabled">
+        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveAddButtonLoader"></span>
+        Save & Add Child Inventory
+      </button> -->
+    </div>
+  </div>
+</div>

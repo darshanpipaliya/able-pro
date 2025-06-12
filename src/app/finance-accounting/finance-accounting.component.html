@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content>
+
+                <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton"
+                    [currentIndex]="selected" [temRoles]="temRoles" [selectedTem]="selectedTem" [tems]="tems"
+                    [disableTemSearch]="disableTemSearch" [loaderParent]="loaderParent"
+                    [currentOpenEditPagevar]="currentOpenEditPagevar" [isDisabledExport]="isDisabledExport"
+                    [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit" [trackByIndex]="trackByIndex"
+                    (buttonClick)="onButtonClick($event)" (temChange)="onTemChange($event)"
+                    (filterGridByTEMId)="filterGridByTEMId($event)" [currentTabName]="currentTabName"
+                    (exportDataAsExcel)="onBtnExportDataAccountAsExcel()"
+                    (setLocationNotes)="setLocationNotes($event)"
+                    (add)="OpenAddBillingTab()"></app-header-section>
+
+                <div class="table-responsive">
+                    <mat-tab-group preserveContent [selectedIndex]="selected"
+                        (selectedIndexChange)="changeFinanceAcc($event)">
+                        <ng-container>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-money-check-alt" style="color: #4680ff;"> </i>&nbsp; Accounts
+                                </ng-template>
+
+                                <ng-template matTabContent>
+                                    <div class="mt-2">
+                                        <app-billing-accounts (rowCellDoubleClicked)="editBillingTab($event)"
+                                            (exportAccountData)="exportAccountData($event)"
+                                            (onAgGridReadyAccountEmit)="onAgGridReadyAccountEmit($event)"
+                                            (isBillingAccountExist)="isBillingAccountExist($event)"
+                                            [selectedTem]="selectedTem" [tabInfo]='selectedMenuButton'>
+                                        </app-billing-accounts>
+                                    </div>
+                                </ng-template>
+                            </mat-tab>
+
+                            <mat-tab *ngFor="let tabs of tabsArray;let i = index">
+                                <ng-template mat-tab-label *ngIf="tabs.tabTypes=='newBillingAccount'">
+                                    <ng-container *ngIf="tabs.addAfterEdit === false">
+                                        <i class="fas fa-money-check-alt" style="color: #4680ff;"></i>&nbsp;Add
+                                        Account&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                    </ng-container>
+                                    <ng-container *ngIf="tabs.addAfterEdit === true">
+                                        <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;Account -
+                                        ({{(tabs.BillingRowData.BillingAccountHierarchyNumber)?
+                                        tabs.BillingRowData.BillingAccountHierarchyNumber :
+                                        tabs.BillingRowData.AccountNumber ? tabs.BillingRowData.AccountNumber :
+                                        tabs.BillingRowData.payableAccountNumber}})&nbsp;
+                                        <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template mat-tab-label *ngIf="tabs.tabTypes=='editBillingAccount'">
+                                    <ng-container>
+                                        <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;Account -
+                                        ({{(tabs.BillingRowData.BillingAccountHierarchyNumber)?
+                                        tabs.BillingRowData.BillingAccountHierarchyNumber :
+                                        tabs.BillingRowData.AccountNumber ? tabs.BillingRowData.AccountNumber :
+                                        tabs.BillingRowData.payableAccountNumber}})&nbsp;
+                                        <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-edit-billing-account [billingAccountData]='tabs?.BillingRowData' [action]="
+                                        tabs?.BillingRowData?.Id || 
+                                        tabs?.BillingRowData?.BillingAccountId ? 'edit' : 'add' "
+                                        [selectedTem]="tabs.selectedTem" [tabInfo]='selectedMenuButton'
+                                        (updatedBillingData)="updatedBillingData($event, i)"
+                                        (onAddNotesEnabledEmit)="onAddNotesEnabledEmit($event, i)"
+                                        (sendAccHirercyToTable)="sendAccHirercyToTable($event)"
+                                        (addBillingAccountDestroy)="addBillingAccountDestroy($event, i)"
+                                        (currentOpenEditPage)="currentOpenBillingAccount($event)"
+                                        (setTemDDValueEventFromChild)="setTemDDValueEventFromChild($event)"
+                                        (onBillingAccountData)="onBillingAccountData($event)"
+                                        (onAccountNotesData)="onAccountNotesData($event)"
+                                        (onNotesAddBillingAccIdOne)="onNotesAddBillingAccIdOne($event)"
+                                        (currentTabNameEmit)="currentTabNameEmit($event)"
+                                        [loadNoteAccountComponent]="loadNoteAccountComponent" [buttonAction]="buttonAction">
+                                    </app-edit-billing-account>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                    </mat-tab-group>
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

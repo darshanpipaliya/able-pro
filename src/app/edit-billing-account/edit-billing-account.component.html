@@ -1,0 +1,72 @@
+<mat-tab-group [selectedIndex]="selectedTab" (selectedIndexChange)="selectedTab = $event;tabName(selectedTab);">
+    <mat-tab>
+        <ng-template mat-tab-label><i class="fas fa-money-check-alt" style="color: #4680ff;"></i>&nbsp;Account</ng-template>
+
+        <ng-template matTabContent>
+            <app-add-billing-account (onSaveAndBackNext)="moveOnBackNextTab($event)" (onSaveAndNext)="onSaveAndNext($event)" (onComponentDestroy)="onAddBillingAccountDestroy($event)" [tabInfo]="tabInfo"
+            (sendAccHirercyToTable)="sendAccHirercyToTableFn($event)"
+                [billingAccountData]='billingAccountData' [setIsReadOnly]="setIsReadOnly" [selectedTem]="selectedTem"
+                [action]="action" (setTemDDValueEvent)="setTemDDValueEvent($event, i)">
+            </app-add-billing-account>
+        </ng-template>
+    </mat-tab>
+
+    <mat-tab [disabled]="action === 'add'">
+        <ng-template mat-tab-label>
+        <img src="assets/images/supplier-management.svg"
+                    alt="Invoice & Data Retrieval Image">&nbsp;Invoice & Data Retrieval</ng-template>
+
+        <ng-template matTabContent>
+            <app-edit-invoice-data-retrieval [tabs]="tabs" [validationFire2Tab]="validationFire2Tab" (onSaveAndBackNext)="moveOnBackNextTab($event)" [tabInfo]="tabInfo"
+                [billingAccountData]='billingAccountData' [setIsReadOnly]="setIsReadOnly">
+            </app-edit-invoice-data-retrieval>
+        </ng-template>
+
+    </mat-tab>
+    <mat-tab [disabled]="action === 'add'">
+        <!-- class="fas fa-money-check-alt" -->
+        <ng-template mat-tab-label><i class="ficon fas fa-id-card-alt" style="color: #4680ff;"></i>&nbsp;Payments</ng-template>
+        <ng-template matTabContent>
+            <app-edit-payment-settings (onSaveAndBackNext)="moveOnBackNextTab($event)" [tabInfo]="tabInfo"
+                [billingAccountData]='billingAccountData' [setIsReadOnly]="setIsReadOnly">
+            </app-edit-payment-settings>
+        </ng-template>
+
+    </mat-tab>
+    <mat-tab [disabled]="action === 'add'">
+        <!-- class="fas fa-money-check-alt" -->
+        <ng-template mat-tab-label><i class="ficon fas fa-check-double" style="color: #4680ff;"></i>&nbsp;Approvals</ng-template>
+
+        <ng-template matTabContent>
+            <app-auto-approval (onSaveAndBackNext)="moveOnBackNextTab($event)" [billingAccountData]='billingAccountData'
+                [tabInfo]="tabInfo" [setIsReadOnly]="setIsReadOnly">
+            </app-auto-approval>
+        </ng-template>
+
+    </mat-tab>
+    
+    <mat-tab [disabled]="action === 'add'">
+        <ng-template mat-tab-label><i class="fas fa-sticky-note" style="color: #4680ff;"></i>&nbsp;Account Notes</ng-template>
+
+        <ng-template matTabContent>
+            <app-note-account [billingAccountData]="billingAccountData" (onAddNotesEmit)="onAddNotesEmit($event)"
+            (onSpinnerEmit)="onSpinnerEmit($event)" [loadNoteAccountComponent]="loadNoteAccountComponent" 
+            [buttonActionUpdated]="buttonActionUpdated" (onNotesAddBillingAccId)="onNotesAddBillingAccId($event)"></app-note-account>
+        </ng-template>
+
+    </mat-tab>
+
+    <mat-tab *ngIf="action == 'edit'">
+        <ng-template mat-tab-label>
+            <b style="  margin-right: 5%;">
+                <img src="../../../../../../assets/images/fa-sharp-fas-fa-swap.svg"
+                    alt="Change Log Image"></b>
+                Change Log
+        </ng-template>
+        <ng-template matTabContent>
+            <div class="col-sm-12 px-0">
+                <app-change-log [title]="'Account'" [billingId]="this.billingAccountData.BillingAccountID || this.billingAccountData.Id || this.billingAccountData.BillingAccountId" [column]="columns"></app-change-log>
+            </div>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>

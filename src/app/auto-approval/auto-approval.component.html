@@ -1,0 +1,147 @@
+<form class="editForm mt-2" [formGroup]="autoApprovalForm">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12 col-xl-12 px-0">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header class="math borderc">
+                            <mat-panel-title>
+                                <i class="ficon fas fa-check-double"></i>&nbsp;Auto Approval
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xl-12">
+                                <div class="form-group row">
+                                    <div class="col-sm-4 col-md-2 col-xl-2"><label>Auto Approval</label></div>
+                                    <div class="col-sm-8" [ngClass]="{'disabled-radio': setIsReadOnly || temRoles }">
+
+                                        <mat-radio-group formControlName="autoApprovalStatus" class="m-l-8 d-block">
+                                            <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null"
+                                                (change)="autoApprovalChecked(true)" [value]="true">Yes
+                                            </mat-radio-button>
+                                            <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null"
+                                                (change)="autoApprovalChecked(false)" [value]="false" class="m-l-10">No
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group row" *ngIf="!temRoles && autoApprovalIsChecked">
+                                    <div class="col-sm-4"><label> Timeline</label></div>
+                                    <div class="col-sm-8" [ngClass]="{'disabled-radio': setIsReadOnly }">
+
+                                        <mat-radio-group formControlName="autoApprovalTimelineStatus"
+                                            class="m-l-8 d-block">
+                                            <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null"
+                                                (change)="approvalTimelineChecked(true)" [value]="true">Yes
+                                            </mat-radio-button>
+                                            <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null"
+                                                (change)="approvalTimelineChecked(false)" [value]="false"
+                                                class="m-l-10">No
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+
+                                <div class="row date-picer-res-d" *ngIf="!temRoles && autoApprovalIsChecked && approvalTimelineIsChecked">
+                                    <div class="col-sm-4 col-md-4 col-xl-4 label-approval"><label style="font-weight: 500;"> Approval End Date *</label></div>
+                                    <div class="col-sm-4 col-md-4 col-xl-4">
+                                        <div class="datepicker-c-main">
+
+                                            <p-calendar dateFormat="mm/dd/yy" formControlName="approvalEndDate"
+                                                placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true"
+                                                [disabled]="setIsReadOnly"
+                                                [ngClass]="{'invalid-error': !autoApprovalForm.controls.approvalEndDate.valid && (autoApprovalForm.controls.approvalEndDate.dirty || autoApprovalForm.controls.approvalEndDate.touched || isautoApprovalFormSubmit)}"></p-calendar>
+
+                                            <ng-container
+                                                *ngIf="autoApprovalForm.controls.approvalEndDate.invalid && (autoApprovalForm.controls.approvalEndDate.touched || isautoApprovalFormSubmit)">
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="autoApprovalForm.controls.approvalEndDate.errors.required">
+                                                    Approval End Date is required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group row" *ngIf="!temRoles && autoApprovalIsChecked">
+                                    <div class="col-sm-6"><label> Approval Variance Limit</label></div>
+                                    <div class="col-sm-6" [ngClass]="{'disabled-radio': setIsReadOnly }">
+
+                                        <mat-radio-group formControlName="approvalVarianceLimitStatus"
+                                            class="m-l-8 d-block">
+                                            <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null"
+                                                (change)="varianceLimitChecked(true)" [value]="true">Yes
+                                            </mat-radio-button>
+                                            <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null"
+                                                (change)="varianceLimitChecked(false)" [value]="false" class="m-l-10">No
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                                <div class="form-group row" *ngIf="!temRoles && autoApprovalIsChecked && varianceLimitIsChecked">
+                                    <div class="col-sm-6 col-md-6 col-xl-6"><label class="mt-n12"> Approval Variance Limit % Increase
+                                            *</label></div>
+                                    <div class="col-sm-6 col-md-6 col-xl-6">
+                                        <div class="input-group mt-n12 approval-inc-width">
+                                            <input type="text" Require formControlName="approvalVariance" OnlyNumber
+                                                [ngClass]="{'invalid-error': !autoApprovalForm.controls.approvalVariance.valid && (autoApprovalForm.controls.approvalVariance.dirty || autoApprovalForm.controls.approvalVariance.touched || isautoApprovalFormSubmit)}"
+                                                class="form-control" [readonly]="setIsReadOnly"
+                                                (keyup)="managerVariance()" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false" aria-describedby="basic-addon2"
+                                                class="form-control">
+                                            <div class="input-group-append">
+                                                <span id="basic-addon2" class="input-group-text">%</span>
+                                            </div>
+                                           
+                                        </div>
+                                        <ng-container
+                                        *ngIf="autoApprovalForm.controls.approvalVariance.invalid && (autoApprovalForm.controls.approvalVariance.touched || isautoApprovalFormSubmit)">
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="autoApprovalForm.controls.approvalVariance.errors.required">
+                                            Approval Variance Limit % Increase is required
+                                        </mat-error>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="autoApprovalForm.controls.approvalVariance.errors.max || autoApprovalForm.controls.approvalVariance.errors.min">
+                                            Please enter a value between 1 and 100
+                                        </mat-error>
+                                    </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-t-10">
+                            <div class="col-md-12">
+                                <div class="col-md-12 row">
+                                    <div class="col-md-6 col-6">
+                                        <h6 style="text-align: center; color: gray;">AP Responsible Users</h6>
+                                    </div>
+
+                                    <div class="col-md-6 col-6">
+                                        <h6 style="text-align: center; color: gray;">Selected AP Responsible Users</h6>
+                                    </div>
+                                </div>
+                                <app-custom-dual-list [sort]="keepSorted" [source]="source" [key]="key"
+                                    [display]="display" [filter]="filter" [(destination)]="confirmed" height="265px"
+                                    [format]="format" [disabled]="temRoles || disabled || setIsReadOnly"></app-custom-dual-list>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+
+            <div class="col-sm-12 col-xl-12 col-md-12 text-center">
+                <button type="submit" uiSref="work" (click)="submitAutoApproval()"
+                    [disabled]="setIsReadOnly || saveButtonLoadder || !viewNEditAccount" class="btn sbubtn btn-primary btn-raised">
+                    <span *ngIf="saveButtonLoadder" class="spinner-border spinner-border-sm mr-2" role="status"></span>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

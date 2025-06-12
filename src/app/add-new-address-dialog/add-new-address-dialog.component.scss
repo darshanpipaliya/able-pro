@@ -1,0 +1,74 @@
+.row {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mat-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e5e8;
+}
+
+.mat-dialog-content {
+  max-height: calc(100vh - 160px) !important;
+  padding: 0;
+}
+
+.text-c-red {
+
+  color: #4680ff;
+  font-size: 12px;
+
+}
+
+.form-label {
+  font-weight: 500 !important;
+}
+
+:host ::ng-deep .form-control {
+  height: unset !important;
+  padding: 0 !important;
+}
+
+:host ::ng-deep.card .card-body {
+  padding: 0 !important;
+}
+
+:host ::ng-deep .editForm .row .col-md-6 {
+  padding-left: 1px !important;
+  padding-right: 3px !important;
+}
+
+:host ::ng-deep .editForm .row .col-md-6:nth-child(2n + 2) {
+  padding-left: 3px !important;
+  padding-right: 1px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+  padding: 15px 5px 5px !important;
+}
+
+:host ::ng-deep .mat-accordion .mat-expansion-panel {
+  box-shadow: none !important;
+  border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .form-group label {
+  float: left !important;
+}
+
+:host ::ng-deep .form-group span {
+  display: block;
+  overflow: hidden;
+  padding: 0 4px 0 6px;
+}
+
+
+@media only screen and (max-width: 767px) {
+
+  :host ::ng-deep .editForm .row .col-md-6,
+  :host ::ng-deep .editForm .row .col-md-6:nth-child(2n + 2){
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+}

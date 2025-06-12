@@ -1,0 +1,33 @@
+
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Link Associated Inventory <button type="button" class="fas fa-check c-refresh ml-2" title="Refresh" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button></h5>
+    </div>
+
+    <button type="button" class="close" [mat-dialog-close]="'undefined'">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content class="px-0 m-0">
+
+    <div class="card-body p-0">
+        <div class="container px-0">
+            <app-ag-grid-table [sideBar]="sideBar" [tableHeight]="'400px'"
+                [columnDefs]="columnDefs" [gridOptions]="gridOptions" [getDataPath]="getDataPath"
+                (onSelectionChangedEvent)="onSelectionChanged($event)" [autoGroupColumnDef]="autoGroupColumnDef"
+                [sheetName]="'Locations'" [exportFilename]="'Locations.xlsx'"  [treeData]="true"
+                [rowSelection]="rowSelection" [defaultColDef]="defaultColDef"
+                [suppressRowClickSelection]="true"  (onAgGridReady)="onAgGridReady($event)"
+                (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                [rowHeight]="24">
+            </app-ag-grid-table>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="pt-0" align="center">
+     <button mat-button class="btn btn-primary" (click)="saveAssociatedInventory()" cdkFocusInitial
+        [disabled]="saveButtonLoader">
+        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>
+        Save</button>
+
+</mat-dialog-actions>

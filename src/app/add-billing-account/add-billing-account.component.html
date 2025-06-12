@@ -1,0 +1,467 @@
+<form class="editForm" [formGroup]="addBillingAccountForm">
+
+  <div class="col-xl-12 px-0">
+    <div class="row ">
+      <div class="col-sm-12 col-xl-12 text-right">
+        <span class="text-c-red">*Required field</span>
+      </div>
+      <div class="col-sm-12 col-xl-6 col-md-12 padding-left-none">
+        <mat-accordion class="example-headers-align">
+          <button *ngIf="action === 'edit'" title="Add Account Note" type="button" (click)="AccountDialog()"
+            [disabled]="setIsReadOnly" class="btn btn-icon btn-outline-primary service-tab-btn"><i
+              class="fas fa-plus"></i></button>
+          <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header class="math borderc">
+              <mat-panel-title>
+                <i class="fas fa-money-check-alt"></i>&nbsp;Account
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row" *ngIf="action === 'edit'">
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="px-0 pr-2" >
+                  <a href="javascript:">
+                    <img class="media-object" [src]="billingAccountData?.VendorAccountLogo ? 'data:image/png;base64,' + billingAccountData?.VendorAccountLogo : 'assets/images/dummy.png'"
+                      alt="Img">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Customer *</label>
+
+                  <span class="tem-span-p-none"> <p-dropdown appendTo="body" [options]="customerList"
+                      optionLabel="AccountName" [filter]="true" filterBy="AccountName" [showClear]="true"
+                      placeholder="{{customerListLoading ? 'Please Wait...' : 'Select Customer...'}} "
+                      formControlName="customerAccountId" optionValue="Id" [showClear]="false"
+                      (onChange)="onCustomerSelect($event);getMainBillingAccountDD();setTemDDId()"
+                      [disabled]="(f['isMainAccountBeingAdd'].value === false && action === 'edit') || (isUserHasTEMUsersRole || setIsReadOnly) || customerListLoading"
+                      [ngClass]="{'invalid-error': !f['customerAccountId'].valid && (f['customerAccountId'].dirty || f['customerAccountId'].touched || submitted)}">
+                    </p-dropdown></span>
+
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['customerAccountId'].errors?.['required'] && (f['customerAccountId'].touched || submitted)">
+                    Customer is required</mat-error>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Vendor *</label>
+                  <span class="tem-span-p-none"><p-dropdown appendTo="body" [options]="vendorsList"
+                      optionLabel="AccountName" [filter]="true" filterBy="AccountName" [showClear]="true"
+                      placeholder="Select Vendor..." formControlName="vendorAccountId" optionValue="Id"
+                      [showClear]="false" (onChange)="getMainBillingAccountDD();vendoraccountsDetailWithId();payableVendorPopulate()"
+                      [disabled]="(f['isMainAccountBeingAdd'].value === false && action === 'edit') || isUserHasTEMUsersRole ||  setIsReadOnly"
+                      [ngClass]="{'invalid-error': !f['vendorAccountId'].valid && (f['vendorAccountId'].dirty || f['vendorAccountId'].touched || submitted)}">
+                    </p-dropdown></span>
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['vendorAccountId'].errors?.['required'] && (f['vendorAccountId'].touched || submitted) ">
+                    Vendor is required</mat-error>
+                </div>
+              </div>
+              <!-- </div> -->
+            </div>
+
+            <div class="row" *ngIf="action === 'add'">
+             
+              <div class="col-md-6 col-sm-6 col-xl-6 invoice-account-padding">
+                <div class="form-group">
+                  <div>
+                    <label class="form-control-label mr-2 d-flex">Adding a Main Account *</label>
+
+                  </div>
+                  <div [ngClass]="{'disabled-radio': setIsReadOnly || invoiceAttachDisabled || disabledOnIsAnyPayable}">
+
+                    <mat-radio-group formControlName="isMainAccountBeingAdd" class="m-l-8 d-inline-block">
+                      <mat-radio-button [value]="true" (click)="clickToMainAccountRadio(true)">Yes
+                      </mat-radio-button>
+                      <mat-radio-button [value]="false" (click)="clickToMainAccountRadio(false)" class="m-l-10">No
+                      </mat-radio-button>
+                    </mat-radio-group>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+
+              <div class="col-md-6 col-sm-6 col-xl-6" *ngIf="f['isMainAccountBeingAdd'].value === false">
+                <div class="form-group">
+                  <label class="form-label">Main Account Number *</label>
+                  <span><p-dropdown appendTo="body" [options]="MainBillingAccountDD" optionLabel="AccountNumber"
+                      [filter]="true" filterBy="AccountNumber,AcctNumberUnformatted" [showClear]="true"
+                      placeholder="Select Main Account Number..." (onChange)="getIsAnyPayableBillingAcc();getMainAccDetail()"
+                      formControlName="parentBillingAccountHierarchyId" optionValue="Id" [showClear]="false"
+                      [disabled]="setIsReadOnly || invoiceAttachDisabled ? true : null">
+                    </p-dropdown></span>
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['parentBillingAccountHierarchyId'].errors?.['required'] && (f['parentBillingAccountHierarchyId'].touched || submitted) ">
+                    Main Account Number is required</mat-error>
+                </div>
+              </div>
+              
+              <div class="col-md-6 col-sm-6 col-xl-6" *ngIf="f['isMainAccountBeingAdd'].value === true">
+                <div class="form-group">
+                  <label class="form-label">Main Account Number *</label>
+                <span><input type="text" class="form-control" style="text-overflow: ellipsis;" title="{{f.payableAccountNumber.value}}" required formControlName="payableAccountNumber"
+                    spaceTrimStartEndInput [allowStartWithSpace]="false"
+                    [ngClass]="{'invalid-error': f.payableAccountNumber.errors?.required && (f.payableAccountNumber.touched || submitted)}"></span>
+              
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['payableAccountNumber'].errors?.['required'] && (f['payableAccountNumber'].touched || submitted) ">
+                    Main Account Number is required</mat-error>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xl-6 px-0 invoice-account-padding"
+                *ngIf="f['isMainAccountBeingAdd'].value === false">
+                <div class="form-group">
+                  <label class="form-label">Sub Account
+                    Number *</label>
+                  <span><input type="text" class="form-control" style="text-overflow: ellipsis;" title="{{f.payableAccountNumber.value}}" maxlength="30" spaceTrimStartEndInput
+                      [allowStartWithSpace]="false" formControlName="payableAccountNumber"
+                      [readonly]="setIsReadOnly || invoiceAttachDisabled || disabledOnIsAnyPayable"
+                      [ngClass]="{'invalid-error': !f['payableAccountNumber'].valid && (f['payableAccountNumber'].dirty || f['payableAccountNumber'].touched || submitted)}"></span>
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['payableAccountNumber'].errors?.['required'] && (f['payableAccountNumber'].touched || submitted) ">
+                    Sub Account Number is required</mat-error>
+                </div>
+              </div>
+            </div>
+            
+
+            <div class="row" >
+              <div class="col-md-6 col-sm-6 col-xl-6 box-right"
+                [ngStyle]="{'display': (this.action == 'add' || this.action == 'edit') ? 'block' : 'none'}">
+                <div class="form-group" style="margin-bottom: 3px !important;">
+                  <label class="form-control-label" for="status" >
+                    
+                    <div style="display: inline;" [ngClass]="{'disabled-radio': setIsReadOnly || mainPayableDisabled || invoiceAttachDisabled || disabledOnIsAnyPayable}">
+                      <em *ngIf="action == 'add'" style="font-style: normal;">Is this a</em> Payable Account? *
+                    </div>
+                    
+                    <i class="fas fa-info-circle"
+                    container="body"
+                    ngbTooltip="This is the account where we send a check to the vendor and create retrieval records. This is typically the main account but may vary depending on the vendor."
+                    tooltipClass="tooltip-bg"></i>
+                  </label>
+                  <div>
+
+                    <mat-radio-group (change)="payableAccChange($event)" formControlName="isPayableAccount" [ngClass]="{'disabled-radio': setIsReadOnly || mainPayableDisabled || invoiceAttachDisabled || disabledOnIsAnyPayable}" class="d-inline-block" style="margin-left: 6px;">
+                      <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null" [value]="true">Yes
+                      </mat-radio-button>
+                      <mat-radio-button [attr.disabled]="setIsReadOnly ? true : null" [value]="false" class="m-l-10">No
+                      </mat-radio-button>
+                    </mat-radio-group>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-control-label mr-1">Process Billing? *  <i class="fas fa-info-circle"
+                    container="body"
+                    ngbTooltip="Sometimes, when adding a payable account, you may not want the system to create retrieval records immediately. Set this to 'Yes' when you would like the payable account to start creating retrieval records."
+                    tooltipClass="tooltip-bg"></i></label>
+                  <div>
+                    <mat-radio-group class="m-l-8 d-block" formControlName="ProcessingBilling"
+                    [disabled]="(f['isMainAccountBeingAdd'].value === false && f['isPayableAccount'].value === false) || (f['isMainAccountBeingAdd'].value === true && f['isPayableAccount'].value === false)" (change)="onChangeProcessBilling($event)">
+                      <mat-radio-button [value]="true">Yes
+                      </mat-radio-button>
+                      <mat-radio-button [value]="false" class="m-l-10">No
+                      </mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error style="font-size: 12px;"
+                      *ngIf="f['ProcessingBilling'].errors?.['required'] && (f['ProcessingBilling'].touched || submitted) ">
+                      Process Billing is required</mat-error>
+                  </div>
+                </div>
+              </div> 
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Invoice Currency </label>
+                  <span class="tem-span-p-none"><p-dropdown appendTo="body" [options]="currenciesList"
+                      optionLabel="label" [filter]="true" filterBy="label" [showClear]="true"
+                      placeholder="Select Currency..." formControlName="currencyId" optionValue="Id" [showClear]="false"
+                      [disabled]="setIsReadOnly ? true : null">
+                    </p-dropdown></span>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Invoice Occurrence *</label>
+                  <span class="tem-span-p-none"> <p-dropdown appendTo="body" [options]="invoicefrequenciesList"
+                      optionLabel="DisplayName" [filter]="true" filterBy="DisplayName" [showClear]="true"
+                      placeholder="Select Invoice Occurrence..." formControlName="invoiceFrequencyId" optionValue="Id"
+                      [showClear]="false" [disabled]="setIsReadOnly ? true : null"
+                      [ngClass]="{'invalid-error': !f['invoiceFrequencyId'].valid && (f['invoiceFrequencyId'].dirty || f['invoiceFrequencyId'].touched || submitted)}">
+                    </p-dropdown></span>
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['invoiceFrequencyId'].errors?.['required'] && (f['invoiceFrequencyId'].touched || submitted) ">
+                    Invoice Occurrence is required</mat-error>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Bill Day * <i class="fas fa-info-circle"
+                      container="body"
+                      ngbTooltip="The day of the month of the invoice date found on the actual invoice of record. For example, if the invoice date is 10/15/2023, the Bill Day is “15”"
+                      tooltipClass="tooltip-bg"></i></label>
+                  <span class="tem-span-p-none"> <p-dropdown appendTo="body" [options]="days" optionLabel="value"
+                      [filter]="true" placeholder="Select Bill Day..." formControlName="invoiceBillDay" optionValue="Id"
+                      [disabled]="setIsReadOnly"
+                      [ngClass]="{'invalid-error': !f['invoiceBillDay'].valid && (f['invoiceBillDay'].dirty || f['invoiceBillDay'].touched || submitted)}">
+                    </p-dropdown></span>
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['invoiceBillDay'].errors?.['required'] && (f['invoiceBillDay'].touched || submitted) ">
+                    Bill Day is required</mat-error>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Pay by # Days * <i class="fas fa-info-circle"
+                      container="body"
+                      ngbTooltip="Quantity of days after the Bill Day until the invoice payment is due."
+                      tooltipClass="tooltip-bg"></i></label>
+                  <span class="tem-span-p-none"><p-dropdown appendTo="body" [options]="days" optionLabel="stringValue"
+                      [filter]="true" placeholder="Select Pay by Day..." formControlName="payByDay"
+                      optionValue="stringValue" [disabled]="setIsReadOnly"
+                      [ngClass]="{'invalid-error': !f['payByDay'].valid && (f['payByDay'].dirty || f['payByDay'].touched || submitted)}">
+                    </p-dropdown></span>
+
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['payByDay'].errors?.['required'] && (f['payByDay'].touched || submitted) ">
+                    Pay by Day is required</mat-error>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xl-6 box-left">
+                <div class="datepicker-c-main" style="margin-bottom: 10px;">
+                  <label class="form-label" style="width: 122px; font-weight: 500;">Invoice Start Date <em
+                      *ngIf="invoiceStartDateReq">*</em></label>
+
+                  <p-calendar dateFormat="mm/dd/yy" formControlName="invoiceStartDate" placeholder="mm/dd/yyyy"
+                    appendTo="body" [showIcon]="true" (ngModelChange)="onChangeStartDate($event)"
+                    [disabled]="setIsReadOnly || invoiceAttachDisabled || disabledOnIsAnyPayable"
+                    [ngClass]="{'invalid-error': !f['invoiceStartDate'].valid && (f['invoiceStartDate'].dirty || f['invoiceStartDate'].touched || submitted)}"></p-calendar>
+
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['invoiceStartDate'].errors?.['required'] && (f['invoiceStartDate'].touched || submitted) ">
+                    Invoice Start Date is required</mat-error>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Account Status *</label>
+                  <span class="tem-span-p-none"> <p-dropdown appendTo="body" [filter]="true" [showClear]="true"
+                      optionLabel="DisplayText" (onChange)="onChangeStatus($event)" placeholder="Select Account Status"
+                      [showClear]="false" [options]="statusList" optionValue="Id"
+                      formControlName="BillingAccountStatusId">
+                    </p-dropdown></span>
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['BillingAccountStatusId'].errors?.['required'] && (f['BillingAccountStatusId'].touched || submitted) ">
+                    Account Status is required</mat-error>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="action === 'edit'">
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="datepicker-c-main disconnect-date" style="margin-bottom: 10px;">
+                  <label class="form-label" style="width: 123px; font-weight: 500;">Disconnected Date
+                    {{disconnectionDateReq ? '*' : ''}}</label>
+
+                  <p-calendar dateFormat="mm/dd/yy" formControlName="InvoiceDisconnectionDate" placeholder="mm/dd/yyyy"
+                    appendTo="body" [showIcon]="true" (onSelect)="disConnDate($event)" [minDate]="setMindate"
+                    [disabled]="!isAllowAccess || f.invoiceStartDate.value == '' || f.BillingAccountStatusId.value !== 30"
+                    [ngClass]="{'invalid-error': !f.InvoiceDisconnectionDate.valid && (f.InvoiceDisconnectionDate.dirty || f.InvoiceDisconnectionDate.touched || submitted)}"></p-calendar>
+
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f.InvoiceDisconnectionDate.errors?.required && (f.InvoiceDisconnectionDate.touched || submitted) ">
+                    Invoice Disconnection Date is required</mat-error>
+
+                </div>
+              </div>
+            </div>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion class="example-headers-align user-activity-log" *ngIf="action === 'edit'">
+          <mat-expansion-panel style="width: 100%;" [expanded]="true" class="padding-none">
+            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getProcessBilling()"></button>
+            <mat-expansion-panel-header class="math">
+              <mat-panel-title class="matt">
+                <i class="fa-duotone fa fa-sitemap"></i>&nbsp;Account Hierarchy
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p-table [columns]="cols" [value]="tableData" class="p-table-recent-note" [tableStyle]="{'width': '100%'}" responsiveLayout="scroll">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns">
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-product let-columns="columns">
+                <tr>
+                  <td>
+                    {{ product.AccountType }}
+                  </td>
+                  <td
+                    [ngClass]="{'disabled' : f.payableAccountNumber.value === product?.AccountNumber, 'hyper-link' : f.payableAccountNumber.value !== product?.AccountNumber }"
+                    (click)="f.payableAccountNumber?.value !== product.AccountNumber ? openRowRecord(product) : ''">
+                    {{ product.AccountNumber }}
+                  </td>
+                  <td>
+                    {{ product.BillingAccountStatus }}
+                  </td>
+                  <td>
+                    {{ product.ProcessingBillingDisplayValue }}
+                  </td>
+                  <td>
+                    {{ product.Payable }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="col-sm-12 col-xl-6 padding-right-none">
+        <mat-accordion class="example-headers-align">
+          <button title="Add New Remittance" type="button" (click)="openNewAddressDialog()" [disabled]="setIsReadOnly"
+            class="btn btn-icon btn-outline-primary service-tab-btn"><i class="fas fa-plus"></i></button>
+          <mat-expansion-panel [expanded]="true" class="m-0">
+            <mat-expansion-panel-header class="math borderc">
+              <mat-panel-title>
+                <i class="ficon fas fa-id-card-alt"></i>&nbsp;Remittance
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xl-6" *ngIf="isSuperTEMAdmin">
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xl-12 p-0">
+              <div class="form-group">
+                <label class="form-label">Remittance Look Up *</label>
+                
+                <span><p-dropdown appendTo="body" [options]="remitAddressesList" optionLabel="label" [filter]="true"
+                    filterBy="label" [showClear]="true" placeholder="Select Remit Address..."
+                    formControlName="remitAddressId" optionValue="Id" [showClear]="false"
+                    styleClass="p-dropdown-span-none" (onChange)="onChangeRemitAddress($event.value, true)"
+                    [disabled]="invoiceAttachDisabled || disabledRemitDD || payableVendorDisabled"
+                    [ngClass]="{'invalid-error': !f['remitAddressId'].valid && (f['remitAddressId'].dirty || f['remitAddressId'].touched || submitted)}">
+                  </p-dropdown></span>
+
+                <mat-error style="font-size: 12px;"
+                  *ngIf="f['remitAddressId'].errors?.['required'] && (f['remitAddressId'].touched || submitted) ">
+                  Address is required</mat-error>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Address One</label>
+                  <span> <input class="form-control" formControlName="addressLine1" readonly spaceTrimStartEndInput
+                      [allowStartWithSpace]="false"></span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Address Two</label>
+                  <span><input class="form-control" formControlName="addressLine2" readonly spaceTrimStartEndInput
+                      [allowStartWithSpace]="false"></span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">City</label>
+                  <span><input class="form-control" formControlName="city" readonly spaceTrimStartEndInput
+                      [allowStartWithSpace]="false"></span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Country</label>
+                  <div class="select-down-arrow">
+                    <span class="tem-span-p-none"><p-dropdown appendTo="body" [options]="CountriesList"
+                        optionLabel="Name" [filter]="true" filterBy="label" [showClear]="true"
+                        placeholder="Select Country..." (onChange)="onCountryChange($event.value)"
+                        formControlName="countryID" optionValue="Id" [showClear]="false" [disabled]="true">
+                      </p-dropdown></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">State/Province/Region</label>
+                  <div class="select-down-arrow">
+                    <span class="tem-span-p-none"><p-dropdown appendTo="body" [options]="stateList" optionLabel="Name"
+                        [filter]="true" filterBy="label" [showClear]="true"
+                        placeholder="Select State/Province/Region..." formControlName="stateID" optionValue="Id"
+                        [showClear]="false" [disabled]="true">
+                      </p-dropdown></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Zip/Postal Code</label>
+                  <span><input class="form-control" formControlName="postalCode" readonly spaceTrimStartEndInput
+                      [allowStartWithSpace]="false"></span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Payable Vendor *</label>
+
+                  <span> 
+                    <!-- <p-dropdown appendTo="body" [options]="vendorsList" optionLabel="AccountName" [filter]="true"
+                    [disabled]="payableVendorDisabled || invoiceAttachDisabled" filterBy="AccountName" [showClear]="true"
+                      placeholder="Select Payable Vendor..." formControlName="PayableVendorAccountId" optionValue="Id"
+                      [showClear]="false"
+                      [ngClass]="{'invalid-error': !f.PayableVendorAccountId.valid && (f.PayableVendorAccountId.dirty || f.PayableVendorAccountId.touched || submitted)}">
+                    </p-dropdown> -->
+                    <input class="form-control" formControlName="PayableVendorName" spaceTrimStartEndInput
+                    [allowStartWithSpace]="false"  [ngClass]="{'invalid-error': !f['PayableVendorName'].valid && (f['PayableVendorName'].dirty || f['PayableVendorName'].touched || submitted)}">
+                  </span>
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="f['PayableVendorName'].errors?.['required'] && (f['PayableVendorName'].touched || submitted) ">
+                    Payable Vendor is required</mat-error>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="col-sm-12 col-xl-12 col-md-12 text-center">
+        <button type="submit" (click)="action === 'add' ? addBillingAccount():editBillingAccount()"
+          [disabled]="setIsReadOnly || saveButtonLoadder || !viewNEditAccount" uiSref="work"
+          class="btn sbubtn btn-primary btn-raised">
+          <span *ngIf="saveButtonLoadder" class="spinner-border spinner-border-sm mr-2" role="status"></span>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+
+</form>

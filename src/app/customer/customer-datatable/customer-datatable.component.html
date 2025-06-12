@@ -46,6 +46,10 @@
                 <ng-template matTabContent>
 
                   <div class="mt-2">
+
+
+                    <!-- <app-customer-ag-grid *ngIf="customer['tabType'] === 'Table'" /> -->
+                      
                     <app-p-tree-customer *ngIf="customer['tabType'] === 'Table'" [GridAPI]="GridAPI"
                       (tableDataExist)="tableDataExistFn($event)" (exportAccountData)="exportAccountData($event)"
                       (selectedRowsEmit)="selectedRowsEmit($event)"

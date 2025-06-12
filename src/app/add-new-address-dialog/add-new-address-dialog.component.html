@@ -1,0 +1,100 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title" id="exampleModalLabel">Add Remit Address</h5>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="col-sm-12 col-xl-12 text-right">
+        <span class="text-c-red">*Required field</span>
+    </div>
+    <div class="card-body py-0">
+        <div class="container px-0">
+            <form class="editForm px-0" [formGroup]="addAddressForm">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                        <div class="row m-t-20">
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Address One *</label>
+                                    <span><input class="form-control" formControlName="line1"
+                                        [ngClass]="{'invalid-error': !addAddressForm.controls.line1.valid && (addAddressForm.controls.line1.dirty || addAddressForm.controls.line1.touched || submitted)}"
+                                        spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.line1.errors?.required && (f.line1.touched || submitted) ">
+                                        Address One required</mat-error>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Address Two</label>
+                                    <span><input class="form-control" formControlName="line2"
+                                        spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                </div>
+                            </div>
+                            </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">City *</label>
+                                    <span><input class="form-control" formControlName="city"
+                                        [ngClass]="{'invalid-error': !addAddressForm.controls.city.valid && (addAddressForm.controls.city.dirty || addAddressForm.controls.city.touched || submitted)}"
+                                        spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.city.errors?.required && (f.city.touched || submitted) ">
+                                        City is required</mat-error>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Country *</label>
+                                    <span><p-dropdown appendTo="body" (onChange)="onCountryChange($event.value)"
+                                        [options]="CountriesList" optionLabel="Name" [filter]="true" filterBy="Name"
+                                        [showClear]="true" placeholder="Select Country..." formControlName="countryId"
+                                        optionValue="Id" [showClear]="false" 
+                                        [ngClass]="{'invalid-error': !addAddressForm.controls.countryId.valid && (addAddressForm.controls.countryId.dirty || addAddressForm.controls.countryId.touched || submitted)}">
+                                    </p-dropdown></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.countryId.errors?.required && (f.countryId.touched || submitted) ">
+                                        Country is required</mat-error>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="row">
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">State/Province/Region *</label>
+                                   <span> <p-dropdown appendTo="body" [options]="stateList" optionLabel="Name" [filter]="true"
+                                        filterBy="Name" [showClear]="true" placeholder="Select State/Province/Region..."
+                                        formControlName="stateId" optionValue="Id" [showClear]="false"
+                                        [ngClass]="{'invalid-error': !addAddressForm.controls.stateId.valid && (addAddressForm.controls.stateId.dirty || addAddressForm.controls.stateId.touched || submitted)}">
+                                    </p-dropdown></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.stateId.errors?.required && (f.stateId.touched || submitted) ">
+                                        State/Province/Region is required</mat-error>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Zip/Postal Code *</label>
+                                    <span><input class="form-control" formControlName="postalCode"
+                                        [ngClass]="{'invalid-error': !addAddressForm.controls.postalCode.valid && (addAddressForm.controls.postalCode.dirty || addAddressForm.controls.postalCode.touched || submitted)}"></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.postalCode.errors?.required && (f.postalCode.touched || submitted) ">
+                                        Zip/Postal Code is required</mat-error>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions align="end">
+    <!----<button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>-->
+    <button mat-button (click)="addAddress()" class="btn btn-primary" cdkFocusInitial
+        [disabled]="saveButtonLoadder">Save</button>
+</mat-dialog-actions>

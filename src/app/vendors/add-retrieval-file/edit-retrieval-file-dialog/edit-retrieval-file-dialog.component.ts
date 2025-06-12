@@ -1,15 +1,19 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { LocationService } from '../../../location.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorWarningPopupComponent } from '../../../common-component/error-warning-popup/error-warning-popup.component';
-import { rolePermission } from '../../../../../../services/helper';
+import { ErrorWarningPopupComponent } from 'src/app/common/error-warning-popup/error-warning-popup.component';
+import { PrimgModule } from 'src/app/demo/shared/primeng.module';
+import { SharedModule } from 'src/app/demo/shared/shared.module';
+import { rolePermission } from 'src/app/services/helper';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-edit-retrieval-file-dialog',
   templateUrl: './edit-retrieval-file-dialog.component.html',
-  styleUrls: ['./edit-retrieval-file-dialog.component.scss']
+  styleUrls: ['./edit-retrieval-file-dialog.component.scss'],
+  standalone: true,
+  imports: [SharedModule, PrimgModule]
 })
 export class EditRetrievalFileDialogComponent implements OnInit {
   datas;
@@ -21,7 +25,7 @@ export class EditRetrievalFileDialogComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditRetrievalFileDialogComponent>,
-    private locationService: LocationService, @Inject(MAT_DIALOG_DATA) data, public dialog: MatDialog) { 
+    private locationService: LocationService, @Inject(MAT_DIALOG_DATA) data: any, public dialog: MatDialog) { 
     this.datas = data;
     dialogRef.disableClose = true;
     this.updateRetrievalForm = fb.group({
@@ -59,7 +63,7 @@ export class EditRetrievalFileDialogComponent implements OnInit {
     });
   }
 
-  setValueInFormControl(key, value) {
+  setValueInFormControl(key: any, value: any) {
     this.f[key].setValue(value);
   }
 
@@ -70,7 +74,7 @@ export class EditRetrievalFileDialogComponent implements OnInit {
   update(){
 
     const data = {
-      dataRetrievalFileTypeRequiredValueId : this.f.required.value
+      dataRetrievalFileTypeRequiredValueId : this.f['required'].value
     }
     this.saveBtnLoader = true;
     this.locationService.dataretrievalBaimporttemplate(this.datas.id, data).subscribe((data) => {

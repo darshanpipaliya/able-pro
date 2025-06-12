@@ -1,0 +1,56 @@
+<div class="mat-dialog-header pb-3">
+   
+        <h5 class="modal-title text-c-blue" id="exampleModalLabel">Copy Last Month's Data</h5>
+        <i class="fas fa-times" type="button" mat-dialog-close></i>
+</div>
+<div class="row">
+    <div class="col-sm-12 px-0 pt-2">
+        <div *ngIf="data.isExistInvoice">
+            <p class="mb-2 text-c-blue">
+                By completing this action, you are bypassing the account's required data files.</p>
+            <p class="mb-0 text-c-blue">
+                Click the "Download Last Month's Data Template" link below to download last month's data to the Invoice
+                Import Template. Once you have
+                made any necessary updates in the template, use the field below to locate and selected the populated
+                template file. Click the "Upload"
+                button to initiate the upload.
+            </p>
+        </div>
+        <div *ngIf="!data.isExistInvoice">
+            <p class="mb-0 text-c-blue">
+                This account has no Invoice history and we are unable to copy last month's data. Please download the blank template below and populate the template file.  Click the "Upload" button to initiate the upload.
+            </p>
+        </div>
+        <div>
+            <div>
+                <div class="my-3">
+                    <a class="linkTag mb-3" *ngIf="data.isExistInvoice" [ngClass]="{'disabled': disableDownload}" (click)="download()">Download Last Month's Data Template</a>
+                    <a class="linkTag mb-3" *ngIf="!data.isExistInvoice" [ngClass]="{'disabled': downloadBlankTemplateExport}" (click)="downloadBlankTemplate()">Download Blank Template</a>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                        <!-- <form [formGroup]="retrievalForm">
+                            <div class="input-group browse-btn-group">
+                                <input class="form-control search-text" name="filterSource" [value]="showDocValue" readonly>
+                                <button title="Search" class="btn btn-primary browse-btn ml-2 btn-sm"
+                                    (click)="fileUpload.click()">Browse</button>
+                                <input type="file" class="file-input" hidden (change)="browseFile($event)" #fileUpload>
+
+                            </div>
+                        </form> -->
+                        <p-fileUpload name="upload-invoice" [showCancelButton]="false" [chooseLabel]="'Browse'"
+                            (onSelect)="onUpload($event)" [multiple]="false" [showUploadButton]="false" (onRemove)="onRemove($event)">
+                        </p-fileUpload>
+                    </div>
+                </div>
+            </div>
+            <ng-container>
+                <div class="text-center" style="margin-top: 30px;">
+                    <button class="btn btn-primary" (click)="uploadData()" [disabled]="disableSubmit || selectedFiles.length == 0">
+                        Upload & Validate</button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

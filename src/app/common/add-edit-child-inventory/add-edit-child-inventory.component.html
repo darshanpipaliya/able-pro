@@ -1,0 +1,304 @@
+<div class="mat-dialog-header pb-1">
+    <div>
+        <h5 class="modal-title">Child Inventory</h5>
+    </div>
+
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div mat-dialog-content>
+    <div class="card-body py-0 pt-2">
+        <!-- <div class="container"> -->
+        <div class="row">
+            <div class="col-md-12 col-xl-12 px-0">
+                <div class="">
+                    <label class="form-label">Is this Child Inventory on the same Account as the Parent?</label>
+                    <mat-radio-group class="m-l-8" [(ngModel)]="isSameParent" (ngModelChange)="parentChange()">
+                        <mat-radio-button [value]="true" class="m-l-10">Yes</mat-radio-button>
+                        <mat-radio-button [value]="false" class="m-l-10">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <form class="editForm px-0" [formGroup]="inventoryForm">
+
+                <h5 class="modal-title mb-1">Add Child Inventory</h5>
+                <div class="row" *ngIf="!isSameParent">
+                    <div class="col-md-6 col-xl-6 ">
+                        <div class="form-group">
+                            <label class="form-label">Vendor *</label>
+                            <span>
+                                <p-dropdown [options]="data.vendorList" optionLabel="AccountName" [filter]="true"
+                                    filterBy="AccountName" [showClear]="true" placeholder="Select Vendor..."
+                                    [disabled]="true" formControlName="VendorIdChildDisplay" optionValue="Id"
+                                    [showClear]="false" appendTo="body" (onChange)="getMainBillingAccountDD()">
+                                </p-dropdown>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!isSameParent">
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Main Account Number *</label>
+                            <span>
+                                <p-dropdown [options]="data.MainBillingAccountDD" optionLabel="AccountNumber"
+                                    [filter]="true" filterBy="AccountNumber,AcctNumberUnformatted" [showClear]="true" appendTo="body"
+                                    placeholder="Select Main Account Number..." (onChange)="getSubBillingAccountDD()"
+                                    formControlName="BillingAccountChildHierarchyIdDisplay" optionValue="Id"
+                                    [showClear]="false"
+                                    [ngClass]="{'invalid-error': !f.BillingAccountChildHierarchyIdDisplay.valid && isFormSubmit}">
+                                </p-dropdown>
+                            </span>
+                            <mat-error style="font-size: 12px;"
+                                *ngIf="f.BillingAccountChildHierarchyIdDisplay.errors?.required && isFormSubmit">
+                                Main Account Number is required</mat-error>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Sub Account Number {{subAccountNumberRequired ? '*' : ''}}</label>
+                            <span><p-dropdown [options]="subBillingAccountDD" optionValue="Id" [filter]="true"
+                                    filterBy="AccountNumber,AcctNumberUnformatted" optionLabel="AccountNumber"
+                                    (onChange)="clickToSubAccNumber()"
+                                    [ngClass]="{'invalid-error': !f.subAccountNumberChild.valid && isFormSubmit}"
+                                    [showClear]="true" formControlName="subAccountNumberChild" appendTo="body"
+                                    placeholder="Select Sub Account Number..." [showClear]="false">
+                                </p-dropdown></span>
+
+                            <mat-error style="font-size: 12px;"
+                                *ngIf="f.subAccountNumberChild.errors?.required && isFormSubmit">
+                                Sub Account Number is required</mat-error>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!isSameParent">
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Payable Account Number</label>
+                            <span><input class="form-control" formControlName="payableAccountChildNumber"
+                                    disabled></span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-6 ">
+                        <div class="form-group">
+                            <label class="form-label">Service Number *</label>
+                            <span>
+                                <input type="text" class="form-control" formControlName="serviceNumber"
+                                    [ngClass]="{'invalid-error': !f['serviceNumber'].valid && (f['serviceNumber'].dirty || f['serviceNumber'].touched || isFormSubmit)}">
+
+                            </span>
+                            <mat-error style="font-size: 12px;"
+                                *ngIf="f['serviceNumber'].errors?.['required'] && (f['serviceNumber'].touched || isFormSubmit)">
+                                Service Number is required</mat-error>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6 ">
+                        <div class="form-group">
+                            <label class="form-label">Status *</label>
+                            <span class="pr-0">
+                                <p-dropdown [options]="inventoryStatusList" appendTo="body"
+                                    [ngClass]="{'invalid-error': !f['statusId'].valid && (f['statusId'].dirty || f['statusId'].touched || isFormSubmit)}"
+                                    optionLabel="DisplayText" [filter]="true" filterBy="DisplayText" [showClear]="true"
+                                    placeholder="{{loadingInventorySts ? 'Loading': 'Select Status'}}..."
+                                    formControlName="statusId" optionValue="Id" [showClear]="false">
+                                </p-dropdown>
+                            </span>
+                            <mat-error style="font-size: 12px;"
+                                *ngIf="f['statusId'].errors?.['required'] && (f['statusId'].touched || isFormSubmit)">
+                                Status is required</mat-error>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-6 ">
+                        <div class="form-group">
+                            <label class="form-label">Service Custom 1</label>
+                            <span><input class="form-control" formControlName="inventoryCustomField1"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6 ">
+                        <div class="form-group">
+                            <label class="form-label">Service Custom 2</label>
+                            <span class="pr-0"><input class="form-control"
+                                    formControlName="inventoryCustomField2"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Service Custom 3</label>
+                            <span><input class="form-control" formControlName="inventoryCustomField3"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Service Custom 4</label>
+                            <span class="pr-0"><input class="form-control"
+                                    formControlName="inventoryCustomField4"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row ">
+                    <div class="col-md-12 col-xl-12 text-center mb-3">
+                        
+                        <button mat-button class="btn btn-primary" (click)="save()" [disabled]="saveButtonLoader">
+                            <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>
+                            Save</button>
+                    </div>
+                </div>
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header class="math borderc">
+                            <mat-panel-title>
+                                Parent Inventory
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="row">
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Vendor</label>
+                                    <span>
+                                        <p-dropdown [options]="data.vendorList" optionLabel="AccountName"
+                                            [filter]="true" [disabled]="true" filterBy="AccountName" [showClear]="true"
+                                            placeholder="Select Vendor..." formControlName="VendorIdDisplay"
+                                            optionValue="Id" [showClear]="false" appendTo="body">
+                                        </p-dropdown>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Main Account Number</label>
+                                    <span><input class="form-control" formControlName="BillingAccountHierarchyIdDisplay"
+                                            disabled></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Sub Account Number</label>
+                                    <span class="pr-0"><input class="form-control"
+                                            formControlName="subAccountNumberDisplay" disabled></span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Payable Account Number</label>
+                                    <span><input class="form-control" formControlName="payableAccountNumberDisplay"
+                                            disabled></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label"># of Children Assigned</label>
+                                    <span class="pr-0"><input class="form-control" disabled
+                                            formControlName="assignedChildren"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Service</label>
+                                    <span>
+                                        <p-dropdown [options]="data.services" optionLabel="Name" [filter]="true"
+                                            filterBy="Name" [showClear]="true" placeholder="Select Service..."
+                                            formControlName="serviceDisplay" appendTo="body" optionValue="Id"
+                                            [showClear]="false" [disabled]="true">
+                                        </p-dropdown>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Service Type</label>
+                                    <span class="pr-0">
+                                        <p-dropdown [options]="data.serviceTypes" optionLabel="Name" [filter]="true"
+                                            filterBy="Name" [showClear]="true" placeholder="Select Service Type..."
+                                            [disabled]="true" formControlName="serviceTypeDisplay" appendTo="body"
+                                            optionValue="Id" [showClear]="false">
+                                        </p-dropdown>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Product</label>
+                                    <span>
+                                        <p-dropdown [options]="data.products" optionLabel="Name" [filter]="true"
+                                            filterBy="Name" [showClear]="true" placeholder="Select Product..."
+                                            formControlName="productDisplay" [disabled]="true" appendTo="body"
+                                            optionValue="Id" [showClear]="false">
+                                        </p-dropdown>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Product Type</label>
+                                    <span class="pr-0">
+                                        <p-dropdown [options]="data.productTypes" optionLabel="Name" [filter]="true"
+                                            filterBy="Name" [showClear]="true" placeholder="Select product Type..."
+                                            [disabled]="true" formControlName="productTypeDisplay" appendTo="body"
+                                            optionValue="Id" [showClear]="false"></p-dropdown>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Vendor Product</label>
+                                    <span>
+                                        <p-dropdown [options]="data.vendorProductDetails" optionLabel="Name"
+                                            [filter]="true" filterBy="Name" [showClear]="true" appendTo="body"
+                                            [disabled]="true" placeholder="Select Vendor Product..."
+                                            formControlName="vendorProductTypeIdDisplay" optionValue="Id"
+                                            [showClear]="false">
+                                        </p-dropdown>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-xl-12 px-0">
+                                <div class="form-group">
+                                    <label class="form-label">Vendor Product Description</label>
+                                    <span class="pr-0">
+                                        <input type="text" class="form-control" disabled
+                                            formControlName="vendorProductInventoryDescriptionDisplay">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+
+
+            </form>
+        </div>
+
+    </div>
+</div>

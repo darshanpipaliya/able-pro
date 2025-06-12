@@ -1,0 +1,40 @@
+.xmlbut {
+
+    //position: absolute;
+    right: 0;
+    //border: hidden;
+    //background: white;
+    margin-top: -7px;
+}
+
+.grid-header-wrapper {
+    margin: 4px 0px 4px 0px;
+
+    button {
+        margin-top: 0px;
+    }
+}
+
+.space-grid-header-wrapper {
+    margin: 10px 0px 30px 0px;
+
+    button {
+        margin-top: 11px;
+    }
+}
+
+// ::ng-deep .ag-theme-alpine .ag-row-hover {
+//     box-shadow: #dadce0 0px 2px 2px 0px, #dadce0 0px 2px 12px 0px;
+//     z-index: 2;
+//     background-color: #FFF !important;
+// }
+
+::ng-deep .ag-cell-wrapper.ag-row-group {
+    align-items: center !important;
+}
+
+::ng-deep {
+    .ag-header-row-column-group {
+        background: #DDDBDB //#DFDFDF; //#bfbfbf #a4a4a4  
+    }
+}
