@@ -1,0 +1,58 @@
+.c-table-spinner {
+    margin-left: 50%;
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+    margin-bottom: 10px;
+  }
+
+  ::ng-deep div.ag-rich-select .ag-rich-select-list {
+    height: 100% !important;
+  }
+
+ :host ::ng-deep ag-grid-angular{
+    padding: 0 0 15px !important;
+  }
+
+  :host ::ng-deep .ag-cell-inline-editing {
+    height: auto !important;
+}
+
+
+.mat-expansion-panel-header {
+  border-radius: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+  box-shadow: none !important;
+  border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+.math {
+  background: #80808061 !important;
+  height: 40px;
+}
+
+:host ::ng-deep .accordion-grid {
+  .mat-expansion-panel-body {
+      padding: 0 !important;
+
+      ag-grid-angular {
+          // height: 700px !important;
+          height: calc(100vh - 250px) !important;
+          padding-bottom: 0 !important;
+
+          .ag-root-wrapper {
+              border-radius: 0 0 4px 4px !important;
+          }
+      }
+
+      .grid-header-wrapper {
+          margin: 0 !important;
+      }
+  }
+}

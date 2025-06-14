@@ -50,7 +50,7 @@ export class LinkLocationDialogComponent implements OnInit {
   primaryLocationId: any;
 
   @ViewChild('IIconTooltip') IIconTooltip!: TemplateRef<any>;
-  
+
   public columnDefs: any;
   existingLocation: any;
   invenotryData: any;
@@ -58,10 +58,13 @@ export class LinkLocationDialogComponent implements OnInit {
   customerId: any;
   checkedData: any;
   isPrimaryExist = false;
-  primaryPeopleId : any;
+  primaryPeopleId: any;
   gridOptions = {
     rowModelType: 'serverSide',
-    serverSideInfiniteScroll: true,
+    serverSideInfiniteScrollOptions: {
+      storeType: 'partial',
+      cacheBlockSize: 100
+    },
     headerHeight: 35,
     groupHeaderHeight: 37,
     floatingFiltersHeight: 35
@@ -107,7 +110,7 @@ export class LinkLocationDialogComponent implements OnInit {
   }
 
   saveLocation() {
-   if(this.totalSelected == 0 || this.totalSelected == undefined) {
+    if (this.totalSelected == 0 || this.totalSelected == undefined) {
       let errorData: any = {
         messgeType: "error",
         title: "Attention",
@@ -156,7 +159,7 @@ export class LinkLocationDialogComponent implements OnInit {
   }
 
   setColumnDef() {
-    
+
     this.columnDefs = [
       {
         headerCheckboxSelection: true,
@@ -368,7 +371,7 @@ export class LinkLocationDialogComponent implements OnInit {
             filter: 'agTextColumnFilter',
             minWidth: 100,
             flex: 0,
-           
+
           },
           {
             field: 'MailingAddress1',
@@ -515,14 +518,14 @@ export class LinkLocationDialogComponent implements OnInit {
     this.checkedData = event;
 
     this.totalSelected = event.length;
-    this.lastSelected = event.filter( (e: any) => e.isChecked === false);
-    this.isExisting = event.filter( (e: any) => e.isChecked === true);
+    this.lastSelected = event.filter((e: any) => e.isChecked === false);
+    this.isExisting = event.filter((e: any) => e.isChecked === true);
 
     let data: any = {};
     if (this.invenotryData) {
       data['vendorProductInventoryId'] = this.invenotryData['VendorProductInventoryId'];
     }
-    let locationIds:any = [];
+    let locationIds: any = [];
     event.forEach((element: any) => {
       data['primaryLocationId'] = element.PrimaryLocationId ? element.PrimaryLocationId : null;
       locationIds.push(element.LocationId)
@@ -537,8 +540,8 @@ export class LinkLocationDialogComponent implements OnInit {
       rowCount: null,
       getRows: (params: any) => {
         let paramsRequest = params['request'];
-        const filterArray:any = [];
-        const filterArrayDate:any = [];
+        const filterArray: any = [];
+        const filterArrayDate: any = [];
 
         for (var key in paramsRequest.filterModel) {
           let data = paramsRequest.filterModel[key];
@@ -593,37 +596,30 @@ export class LinkLocationDialogComponent implements OnInit {
         } else {
           data['customerAccountId'] = this.customerId;
         }
-        if(data['advanceFilter'] == undefined) {
-              data['advanceFilter'] = [{
-                "filterKey": "DisplayText",
-                "filterOptionType1": "equals",
-                "filterOptionValue1": 'Active',
-                "filterOperationType": "AND",
-                "filterOptionType2": null,
-                "filterOptionValue2": null
-            }];
-          } else {
-            data['advanceFilter'].push({
-              "filterKey": "DisplayText",
-              "filterOptionType1": "equals",
-              "filterOptionValue1": 'Active',
-              "filterOperationType": "AND",
-              "filterOptionType2": null,
-              "filterOptionValue2": null
+        if (data['advanceFilter'] == undefined) {
+          data['advanceFilter'] = [{
+            "filterKey": "DisplayText",
+            "filterOptionType1": "equals",
+            "filterOptionValue1": 'Active',
+            "filterOperationType": "AND",
+            "filterOptionType2": null,
+            "filterOptionValue2": null
+          }];
+        } else {
+          data['advanceFilter'].push({
+            "filterKey": "DisplayText",
+            "filterOptionType1": "equals",
+            "filterOptionValue1": 'Active',
+            "filterOperationType": "AND",
+            "filterOptionType2": null,
+            "filterOptionValue2": null
           });
 
-          }
-        if (paramsRequest.sortModel.length > 0) {
-          Object.values(params['columnApi']['columnController']['columnDefs']).forEach((key:any) => {
-            if (key['children']) {
-              Object.values(key['children']).forEach((k:any) => {
-                if (k['field'] === paramsRequest.sortModel[0].colId) {
-                  data['OrderBy'] = k['sortingFiled'];
-                  data['SortOrder'] = paramsRequest.sortModel[0].sort;
-                }
-              });
-            }
-          });
+        }
+        if (paramsRequest?.sortModel?.length > 0) {
+          const sortModel = paramsRequest.sortModel;
+          data['OrderBy'] = sortModel[0].colId;
+          data['SortOrder'] = sortModel[0].sort;
         }
 
         this.getLocationAPIDestroy.next();
@@ -639,7 +635,7 @@ export class LinkLocationDialogComponent implements OnInit {
                 if (data.TotalRecordCount <= paramsRequest.startRow + 100) {
                   lastRow = data.TotalRecordCount;
                 }
-               
+
                 params.success({
                   rowData: data._companyLocationDto.$values,
                   rowCount: lastRow
@@ -660,7 +656,10 @@ export class LinkLocationDialogComponent implements OnInit {
               });
             },
             (error) => {
-              params.successCallback([], 0 );
+              params.success({
+                rowData: [],
+                rowCount: 0
+              });
               this.gridApi.api?.showNoRowsOverlay();
             }
           );
@@ -724,7 +723,7 @@ export class LinkLocationDialogComponent implements OnInit {
     if (this.action == 'Edit') {
       if (this.invenotryData['CustomerAccountId'] == this.customerId) {
         this.saveButtonDisabled = true;
-        
+
         if (this.isPrimaryExist && this.primaryPeopleId && primaryBtnclick && !this.primaryLocationId) {
           let errorData: any = {
             messgeType: 'error',
@@ -748,13 +747,13 @@ export class LinkLocationDialogComponent implements OnInit {
             } else {
               this.saveButtonDisabled = false;
             }
-          })  
+          })
         } else {
           this.callSaveAPI(data);
         }
 
       } else {
-        
+
         if (this.isPrimaryExist && this.primaryPeopleId) {
           let errorData: any = {
             messgeType: 'error',
@@ -789,7 +788,7 @@ export class LinkLocationDialogComponent implements OnInit {
           }
           this.dialogRef.close(data)
         }
-        
+
       }
     } else {
       let data = {

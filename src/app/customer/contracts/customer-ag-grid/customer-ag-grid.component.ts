@@ -375,18 +375,10 @@ export class CustomerAgGridComponent {
         //   data['TemAccountId'] = parseInt(this.selectedTemSearchBtn);
         // }
 
-        if (paramsRequest.sortModel.length > 0) {
-
-          Object.values(params['columnApi']['columnController']['columnDefs']).forEach((key:any) => {
-            if (key['children']) {
-              Object.values(key['children']).forEach((k:any) => {
-                if (k['field'] === paramsRequest.sortModel[0].colId) {
-                  data['OrderBy'] = k['sortingField'];
-                  data['SortOrder'] = paramsRequest.sortModel[0].sort;
-                }
-              });
-            }
-          });
+        if (paramsRequest?.sortModel?.length > 0) {
+          const sortModel = paramsRequest.sortModel;
+          data['OrderBy'] = sortModel[0].colId;
+          data['SortOrder'] = sortModel[0].sort;
         }
         // this.exportCustomerData = { ...this.exportCustomerDetail, ...data };
         // this.selectedTemDD = this.selectedTemSearchBtn;

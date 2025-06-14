@@ -1,1 +1,35 @@
-<p>remit-address works!</p>
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content>
+                <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton"
+                    [loaderParent]="loaderParent" [isDisabledExport]="isDisabledExport"
+                    [currentOpenEditPagevar]="currentOpenEditPagevar" [addbuttonCondition]="addbuttonCondition"
+                    [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit" [trackByIndex]="trackByIndex"
+                    (exportDataAsExcel)="onBtnExportDataAsExcelRemitAddress()" (buttonClick)="onButtonClick($event)" 
+                    (add)="AddRemitAdressPopup()"></app-header-section>
+
+                    <div class="table-responsive">
+                        <mat-tab-group>
+                        <mat-tab>
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+                                    <b><i class="fas fa-location-arrow" style="color: #4680ff;"></i> Remit Addresses</b>
+                                </ng-template>
+                                <ng-container>
+                                    <div class="row btn-group-list">
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <ng-container>
+                                <app-remit-addresses (exportExcelRemitData)="exportExcelRemit($event)"
+                                    (isRemitAddressExist)="remitAddressExist($event)"
+                                    (onAgGridReadyRemitAddressEmit)="onAgGridReadyRemitAddressEmit($event)"></app-remit-addresses>
+                            </ng-container>
+                        </mat-tab>
+                    </mat-tab-group>
+                    </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
