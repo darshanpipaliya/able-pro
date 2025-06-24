@@ -1,0 +1,102 @@
+::ng-deep .ag-header-group-text {
+
+  font-size: 15px;
+
+}
+
+::ng-deep .ag-header-cell-text {
+
+  font-size: 15px;
+}
+
+::ng-deep .ag-header {
+
+  background-color: #80808040 !important;
+}
+
+::ng-deep div.ag-rich-select .ag-rich-select-list {
+  height: 100% !important;
+}
+
+:host ::ng-deep ag-grid-angular {
+  padding: 0 0 10px !important;
+}
+
+//   :host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+//     border: 1px solid rgba(0, 0, 0, 0.25) !important;
+//     opacity: 1 !important;
+//     border-radius: 0.25em !important;
+// }
+.mat-expansion-panel:not([class*=mat-elevation-z]){
+  box-shadow: none !important;
+}
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper::after {
+  opacity: 0 !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+  opacity: 1 !important;
+  top: -1px !important;
+  left: -1px !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper {
+  font-size: 14px !important;
+  line-height: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+  border: 1px solid rgba(0, 0, 0, 0.25) !important;
+}
+
+.math {
+  background: #80808061 !important;
+  height: 40px;
+}
+
+.mat-expansion-panel-header {
+  border-radius: 0 !important;
+}
+
+button.close {
+  position: relative;
+  top: -15px;
+  right: -10px;
+}
+
+.matt {
+  margin-left: 40%;
+  margin-right: 0px !important;
+}
+
+:host ::ng-deep .cost-center-structure-accordian {
+
+  .mat-expansion-panel-body {
+    padding: 0 !important;
+
+    ag-grid-angular {
+      // height: 700px !important;
+      height: calc(100vh - 250px) !important;
+      padding-bottom: 0 !important;
+
+      .ag-root-wrapper {
+        border-radius: 0 0 4px 4px !important;
+      }
+    }
+
+    .grid-header-wrapper {
+      margin: 0 !important;
+    }
+  }
+}
+
+i.fas.fa-info-circle {
+  color: #4680ff !important;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  z-index: 100;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+  margin-left: 15px;
+}

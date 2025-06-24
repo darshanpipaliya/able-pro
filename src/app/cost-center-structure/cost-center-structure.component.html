@@ -1,0 +1,312 @@
+<form [formGroup]="structureForm">
+    <div class="add-new-rule-main" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-xl-2 col-lg-12 col-sm-12">
+                <div class="d-flex rule-condition">
+                    <h2 class="mb-0">Rule Conditions</h2>
+                    <div class="tooltip-relative distribution-origin-tooltip">
+                        <i class="fas fa-info-circle ml-2 mt-1" (click)="openDialog1()" tooltipClass="tooltip-bg"></i>
+                        <ng-template #DistributionOrigin>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                                <p class="mb-2">Cost Allocation is the process of allocating and ensuring 100%
+                                    of the Vendor Product Charges are assigned to a Cost Center Structure. The Cost
+                                    Center Structure defines how Charges related to the Service and Service Type of
+                                    Vendor Products are assigned to Cost Centers. The Structure assigns the amount of
+                                    the charge as a percentage, which can be allocated at 100% of amount multiple Cost
+                                    Centers with the total adding up to 100%. All charges within a Vendor Product must
+                                    be allocated at 100% in order for the cost allocation to be complete. </p>
+                                <p class="mb-1">Cost Center Structure uses Assignment Type to determine where the rules
+                                    are applied
+                                    in the sequence listed below. Multiple rules can be run on a single Service or
+                                    Service Type; however, the system cannot process rules if the allocation is over
+                                    100%.</p>
+
+
+                                <ul class="mb-0">
+
+                                    <li><strong>Company</strong> - Charges from Vendor Products on a Service Number are
+                                        assigned the Companies cost allocation rules for the Service and/or Service
+                                        Type. These rules are applied uniformly across all service and/or service types
+                                        for the Company, resulting in a straightforward cost center structure for the
+                                        company. This is a simplified cost center structure. Example: All Vendor
+                                        Products with a Service that is equal to: Data will be applied to cost center
+                                        45632 and 89956.
+                                    </li>
+                                    <li><strong>People</strong> - Some charges from Vendor Products on a Service Number
+                                        are allocated to People based on predetermined cost allocation rules for the
+                                        Service and/or Service Type. These rules may complement other cost allocation
+                                        directives that allocate certain costs to Locations or even to specific Vendor
+                                        Products. Example: All Vendor Products with a Service that is equal to: Mobility
+                                        will be applied to the Primary User assigned to that Vendor Product.</li>
+                                    <li><strong>Location</strong> - Some charges from Vendor Products on a Service
+                                        Number are allocated to a specific Location based on predetermined cost
+                                        allocation rules for the Service and/or Service Type. These rules may complement
+                                        other cost allocation directives that allocate certain costs to People or even
+                                        to specific Vendor Products. Example: All Vendor Products with a Service that is
+                                        equal to: Local and a Service Type of: Business Line will be applied to the
+                                        Primary Location assigned to that Vendor Product.</li>
+                                    <li><strong>Vendor Product</strong> - Charges on specific Service Numbers that have
+                                        specific vendor products are allocated based on predetermined cost allocation
+                                        rules for the Service or Service Type of the Vendor Product assigned to the
+                                        Service Number. These rules may complement other cost allocation directives that
+                                        allocate certain costs to People or Locations. Each Vendor Product possesses its
+                                        own set of rules, which are applicable to all other Vendor Products sharing the
+                                        same service and, potentially, service type within the cost allocation
+                                        framework. Example: An ISDN PRI Mobility will be applied to the Primary User
+                                        assigned to that Vendor Product.</li>
+                                </ul>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-10 col-lg-12 col-sm-12">
+                <div class="w-100 rule-conditions-wrapper">
+                    <div *ngIf="temAccountName" class="form-group dropdown-width">
+                        <label class="form-label">TEM</label>
+                        <!-- <span class="d-block">  -->
+                        <!-- <p-dropdown [options]="tems" optionLabel="AccountName" [filter]="true"
+                                filterBy="AccountName" placeholder="Select TEM..." appendTo="body"
+                                formControlName="temId" optionValue="Id" [showClear]="false" (onChange)="changeTem()">
+                            </p-dropdown> -->
+                        <!-- <input type="text" formControlName="temId"  />
+                        </span> -->
+                        <h6>
+                            {{temAccountName}}
+                        </h6>
+                    </div>
+                    <div class="form-group dropdown-width">
+                        <label class="form-label">Customer *</label>
+                        <ng-container *ngIf="customerAccountName">
+                            <h6>
+                                {{customerAccountName}}
+                            </h6>
+                        </ng-container>
+
+                        <ng-container *ngIf="!customerAccountName">
+                            <span class="d-block"> <p-dropdown [options]="customers" optionLabel="AccountName"
+                                    [disabled]="loadingCustomerAPI || isCompanyManager || isViewOnly" [filter]="true" formControlName="customerAccountId"
+                                    filterBy="AccountName" [ngClass]="{'invalid-error': !f.customerAccountId.valid && (f.customerAccountId.dirty || f.customerAccountId.touched || submitted)}"
+                                    placeholder="{{loadingCustomerAPI ? 'Loading' : 'Select Customer'}}..."
+                                    appendTo="body" optionValue="Id" [showClear]="false"
+                                    (onChange)="getCompanyByCustomerId();onCustomerSelect($event);getApproverDropdown()">
+                                </p-dropdown></span>
+                                <mat-error style="font-size: 12px;"
+                                *ngIf="f.customerAccountId.errors?.required && (f.customerAccountId.touched || submitted) ">
+                                Customer is required</mat-error>
+                        </ng-container>
+                    </div>
+                    <div class="form-group d-flex">
+                        <div class="dropdown-width">
+                            <label class="form-label">Company *</label>
+                            <span><p-dropdown appendTo="body" optionLabel="CompanyName" [filter]="true"
+                                    [disabled]="loadingCompanyList || action == 'edit' || isCompanyManager || isViewOnly" [options]="companies" (onChange)="getCostCenter();getApproverDropdown();"
+                                    placeholder="{{loadingCompanyList ? 'Loading' : 'Select Company'}}..."
+                                    [ngClass]="{'invalid-error': !f['companyId'].valid && (f['companyId'].dirty || f['companyId'].touched || submitted)}"
+                                    optionValue="CompanyID" [showClear]="false" formControlName="companyId">
+                                </p-dropdown></span>
+                                <mat-error style="font-size: 12px;"
+                                *ngIf="f['companyId'].errors?.['required'] && (f['companyId'].touched || submitted) ">
+                                Company is required</mat-error>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex" *ngIf="approverRequired">
+                        <div class="dropdown-width">
+                            <!-- {{this.costCenterStructureRowData?.ApprovalStatus}} -->
+                            <label class="form-label">Approver Name <em *ngIf="approverRequired" style="font-style: normal !important;">*</em></label>
+                            <span><p-dropdown appendTo="body" optionLabel="ManagerName" [filter]="true"
+                                    [disabled]="loadingApprover || isDisableApproverOption || isCompanyManager || isViewOnly"
+                                    [options]="approverList"
+                                    placeholder="{{loadingApprover ? 'Loading' : 'Select Approver'}}..."
+                                    [ngClass]="{'invalid-error': !f.PeopleApproverId.valid && (f.PeopleApproverId.dirty || f.PeopleApproverId.touched || submitted)}"
+                                    optionValue="ManagerId" [showClear]="false" formControlName="PeopleApproverId">
+                                </p-dropdown></span>
+                            <mat-error style="font-size: 12px;" *ngIf="f.PeopleApproverId.errors?.required && (f.PeopleApproverId.touched || submitted) ">
+                                Approver is required</mat-error>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex">
+                        <div class="dropdown-width">
+                            <label class="form-label">Service Type *<i class="fas fa-info-circle ml-2 mt-1"
+                                    (click)="serviceTooltip()" tooltipClass="tooltip-bg"></i>
+                                <ng-template #serviceDialog>
+                                    <div class="mat-dialog-header">
+                                        <button type="button" class="close" mat-dialog-close>
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="text-left dialog-data">
+                                        <p class="mb-0">When establishing Cost Center Structures utilizing the rules engine, rules can be created individually and in some cases in bulk. If a singular Cost Center Structure featuring identical assignment can be used on multiple 'Service Types', multiple rules can be generated simultaneously by selecting all relevant 'Service Type' during the creation of the Cost Center Structure. However, if a Cost Center Structure incorporates both ‘Service Type’ and ‘Product,’ each rule must be created individually.</p>
+                                    </div>
+                                </ng-template></label>
+                            <span> <p-multiSelect appendTo="body" (onChange)="getProducts(true)"
+                                    [options]="serviceTypes" optionValue="Id" optionLabel="Name" filterBy="Name"
+                                    formControlName="serviceTypeId" [disabled]="loadingServiceTypes || isCompanyManager || isViewOnly"
+                                    [ngClass]="{'invalid-error': !f['serviceTypeId'].valid && (f['serviceTypeId'].dirty || f['serviceTypeId'].touched || submitted)}"
+                                    placeholder="{{loadingServiceTypes ? 'Loading': 'Select Service Type'}}..."></p-multiSelect></span>
+                            <mat-error style="font-size: 12px;"
+                                *ngIf="f['serviceTypeId'].errors?.['required'] && (f['serviceTypeId'].touched || submitted) ">
+                                Service Type is required</mat-error>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex">
+                        <div class="dropdown-width">
+                            <label class="form-label">Product</label>
+                            <span><p-dropdown [options]="products" appendTo="body" (onChange)="changeServiceType()"
+                                    [disabled]="this.f['serviceTypeId'].value?.length < 1 ||  this.f['serviceTypeId'].value?.length > 1 || isCompanyManager || isViewOnly"
+                                    optionLabel="Name" [filter]="true" filterBy="Name" [showClear]="true"
+                                    placeholder="{{loadingProducts ? 'Loading': 'Select Product'}}..."
+                                    formControlName="productId" optionValue="Id" [showClear]="false">
+                                </p-dropdown></span>
+                        </div>
+                    </div>
+                    <div class="form-group dropdown-width">
+                        <label class="form-label">% of Allocate *</label>
+                        <span style="max-width: 150px;"><input type="number" min="0" max="100" class="form-control" OnlyNumber
+                                formControlName="allocationPercentage" 
+                                [ngClass]="{'invalid-error': !f['allocationPercentage'].valid && (f['allocationPercentage'].dirty || f['allocationPercentage'].touched || submitted)}"
+                                /></span>
+
+                        <ng-container
+                            *ngIf="f['allocationPercentage'].errors?.['required'] && (f['allocationPercentage'].touched || submitted)">
+                            <mat-error style="font-size: 12px;" *ngIf="f['allocationPercentage'].errors.required">
+                                % of Allocate is required
+                            </mat-error>
+                        </ng-container>
+                        <mat-error style="font-size: 12px;"
+                            *ngIf="f['allocationPercentage'].errors?.['max'] || f['allocationPercentage'].errors?.['min']">
+                            Please enter a value between 0 and 100
+                        </mat-error>
+                    </div>
+                    <div class="form-group d-flex">
+                        <div class="dropdown-width">
+                            <label class="form-label">Assignment *</label>
+                            <span><p-dropdown [disabled]="action == 'edit' || isCompanyManager || isViewOnly" appendTo="body" [filter]="true"
+                                     [options]="getFilteredAssignments()"
+                                    (onChange)="changeAssignment()" formControlName="assignmentType" optionLabel="Type"
+                                    [ngClass]="{'invalid-error': !f['assignmentType'].valid && (f['assignmentType'].dirty || f['assignmentType'].touched || submitted)}"
+                                    optionValue="Type" placeholder="Select Assignment..." [showClear]="false">
+                                </p-dropdown></span>
+                            <mat-error style="font-size: 12px;"
+                                *ngIf="f['assignmentType'].errors?.['required'] && (f['assignmentType'].touched || submitted) ">
+                                Assignment is required</mat-error>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- First accordion end -->
+    <div class="row"
+        *ngIf="this.f['assignmentType'].value == 'Vendor Product' && this.f['customerAccountId'].value !== null && this.f['serviceTypeId'].value">
+       
+        <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12">
+        </div>
+        <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12" >
+            <div class="cost-center-structure-accordian">
+                <app-p-treetable-vp-inventory [serviceTypeIds]="f.serviceTypeId.value" [primaryVPIId]="costCenterStructureRowData?.VendorProductInventoryId" [productIds]="f.productId.value" [companyId]="f.companyId.value" [CustomerAccountId]="f.customerAccountId.value" [costCenterStructuresid]="costCenterStructureRowData?.CostCenterStructureId"
+                (selectedRowsEmit)="onSelectionChangedInventory($event)">
+                </app-p-treetable-vp-inventory>
+                
+            </div>
+        </div>
+    </div>
+    <!-- First accordion end -->
+
+    <!-- Second accordion Start -->
+    <div class="row"
+        *ngIf="this.f['assignmentType'].value == 'Location' && this.f['customerAccountId'].value !== null">
+        <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12">
+        </div>
+        <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12">
+            <div class="cost-center-structure-accordian">
+
+                <app-p-treetable-location [CustomerAccountId]="f.customerAccountId.value" [companyId]="f.companyId.value"  [primaryLocationId]="costCenterStructureRowData?.LocationId"
+                [costCenterStructuresid]="costCenterStructureRowData?.CostCenterStructureId" [existingLocation]="existingLocation"
+                (selectedRowsEmit)="onSelectionChangedLocation($event)" >
+                </app-p-treetable-location>
+              
+            </div>
+        </div>
+    </div>
+    <!-- Second accordion end -->
+
+    <!-- Third accordion Start -->
+    <div class="row"
+        *ngIf="this.f['assignmentType'].value == 'People' && this.f['customerAccountId'].value !== null">
+        <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12">
+        </div>
+        <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12">
+            <div class="cost-center-structure-accordian">
+                <app-p-treetable-people 
+                [primaryPeopleId]="costCenterStructureRowData?.PeopleId"
+                [CustomerAccountId]="f.customerAccountId.value" [companyId]="f.companyId.value"  [existingPeople]="existingPeople" [costCenterStructuresid]="costCenterStructureRowData?.CostCenterStructureId" (selectedRowsEmit)="onSelectionChangedPeople($event)" >
+                </app-p-treetable-people>
+            </div>
+        </div>
+    </div>
+
+    <!-- Third accordion end -->
+   
+    <div class="add-new-rule-main">
+        <div class="row">
+            <div class="col-xl-2 col-lg-12 col-sm-12">
+            </div>
+            <div class="col-xl-10 col-lg-12 col-sm-12">
+                <div class="form-group d-flex">
+                    <div class="dropdown-width">
+                        <label class="form-label">Cost Center *</label>
+                        <span><p-dropdown appendTo="body" [filter]="true" [options]="costCenterData" [disabled]="loadingCC || isCompanyManager || isViewOnly"
+                                optionLabel="GLCodeFormatted" formControlName="costCenterId"
+                                placeholder="{{loadingCC ? 'Loading' : 'Select Cost Center'}}..."
+                                [ngClass]="{'invalid-error': !f['costCenterId'].valid && (f['costCenterId'].dirty || f['costCenterId'].touched || submitted)}"
+                                optionValue="CostCenterId" [showClear]="false">
+                            </p-dropdown></span>
+                        <mat-error style="font-size: 12px;"
+                            *ngIf="f['costCenterId'].errors?.['required'] && (f['costCenterId'].touched || submitted) ">
+                            Cost Center is required</mat-error>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-2 col-lg-12 col-sm-12">
+            </div>
+            <div class="col-xl-10 col-lg-12 col-sm-12">
+                <div class="form-group">
+                    <label class="form-label">Rule Status</label>
+                    <mat-radio-group formControlName="status">
+                        <mat-radio-button [value]="true" [checked]="true">Active
+                        </mat-radio-button>
+                        <mat-radio-button [value]="false" class="m-l-10">Inactive
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary btn-raised mr-3" (click)="saveRule()"
+            [disabled]="(f['assignmentType'].value == 'Vendor Product' && vendorProductInventoryIds.length < 1 ? true : f['assignmentType'].value == 'People' && peopleIds.length < 1 ? true : f['assignmentType'].value == 'Location' && locationIds.length < 1 ? true : false) || saveButtonLoader || isCompanyManager || isViewOnly">
+            <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span> Save </button>
+        <button *ngIf="action == 'add'" type="submit" class="btn btn-primary btn-raised" (click)="saveRule(true)"
+            [disabled]="(f['assignmentType'].value == 'Vendor Product' && vendorProductInventoryIds.length < 1 ? true : f['assignmentType'].value == 'People' && peopleIds.length < 1 ? true : f['assignmentType'].value == 'Location' && locationIds.length < 1 ? true : false) || saveAddButtonLoader || isCompanyManager || isViewOnly">
+            <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveAddButtonLoader"></span> Save & Add
+            another</button>
+    </div>
+
+
+    <!-- Change Log Section Start -->
+    <ng-container *ngIf="action == 'edit'">
+        <app-change-log [title]="'Cost Center Structure'" [ccsId]="costCenterStructureRowData?.CostCenterStructureId" [logLoader]="logLoader" [isShowAction]="true" [changelogData]="changelogData" [column]="columns" [className]="'change-log-sec-multi2'"></app-change-log>
+    </ng-container>
+    <!-- Change Log Section End -->
+</form>

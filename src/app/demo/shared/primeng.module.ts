@@ -11,6 +11,7 @@ import { TreeModule } from 'primeng/tree';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TableModule } from 'primeng/table';
 import { ListboxModule } from 'primeng/listbox';
+import { MultiSelectModule } from 'primeng/multiselect';
 @NgModule({
   declarations: [],
   imports: [
@@ -25,6 +26,7 @@ import { ListboxModule } from 'primeng/listbox';
     CheckboxModule,
     TableModule,
     ListboxModule,
+    MultiSelectModule
   ],
   exports: [
     DropdownModule,
@@ -36,7 +38,8 @@ import { ListboxModule } from 'primeng/listbox';
     TreeModule,
     CheckboxModule,
     TableModule,
-    ListboxModule
+    ListboxModule,
+    MultiSelectModule
   ]
 })
 export class PrimgModule {}

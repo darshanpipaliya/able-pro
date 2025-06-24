@@ -1,0 +1,197 @@
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    cursor: pointer; 
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.change-log-sec-multi .mat-expansion-panel {
+    border: 1px solid #cfcfcf !important;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+.rule-conditions-wrapper>.form-group {
+    margin-bottom: 15px !important;
+}
+
+.form-group h6{
+    font-weight: 400;
+}
+
+.form-group span {
+    display: block;
+    overflow: hidden;
+    // padding: 0 4px 0 6px;/
+    padding: 0;
+}
+
+.form-group label {
+    float: left !important;
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 0 !important;
+    height: unset !important;
+}
+
+.mat-radio-group {
+    font-size: 14px;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-ltr .ag-floating-filter-button {
+    margin-left: 10px !important;
+}
+
+:host ::ng-deep .ag-header-cell-text {
+    font-size: 13px !important;
+}
+
+.add-new-rule-main {
+    h2 {
+        font-size: 18px;
+        color: #373a3c;
+        font-weight: 500;
+    }
+
+    .form-label {
+        width: 130px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}
+
+div.tooltip-relative {
+    position: relative;
+}
+
+.dropdown-width {
+    width: 100%;
+    max-width: 600px;
+}
+
+:host ::ng-deep .cost-center-structure-accordian {
+
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+}
+
+h2.rule-condition-title{
+    margin-bottom: 0;
+}
+
+.cost-center-structure-accordian{
+    margin-bottom: 15px;
+}
+
+// Grid Checkbox Design start
+:host ::ng-deep .ag-header-select-all .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input,
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+  border: 1px solid rgba(0, 0, 0, 0.25) !important;
+  opacity: 1 !important;
+  border-radius: 0.25em !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper::after {
+  opacity: 0 !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+  opacity: 1 !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper {
+  font-size: 14px !important;
+  line-height: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+// Gird Checkbox Design end
+
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+
+.accordion-header-tooltip i.fa-info-circle {
+    position: absolute;
+    right: 45px;
+    top: 13px;
+}
+
+.CCStructure-spinner{
+    margin-left: 40%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 1700px) {
+    .CCStructure-spinner{
+        margin-left: 45%;
+    }
+    
+}
+
+
+@media only screen and (max-width: 1199px) {
+    .rule-conditions-wrapper>.form-group {
+        margin-bottom: 12px !important;
+    }
+
+    h2.rule-condition-title{
+        margin-bottom: 15px;
+    }
+
+    .rule-condition{
+        margin-bottom: 10px;
+    }
+
+    .cost-center-structure-accordian{
+        margin-bottom: 20px;
+    }
+    
+}
+
+@media only screen and (max-width: 991px) {
+    p {
+        font-size: 13px !important;
+    }
+
+    .add-new-rule-main h2 {
+        font-size: 16px !important;
+    }
+}

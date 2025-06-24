@@ -1,0 +1,59 @@
+<div class="mat-dialog-header pb-2">
+    <!-- <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button> -->
+    <h5 class="modal-title" style="color: #4680ff;">Manual Cost Center Import</h5>
+    <i class="fas fa-times" type="button" mat-dialog-close></i>
+</div>
+<div class="row mt-2">
+    <form class="editForm" [formGroup]="addCustomerForm" (ngSubmit)="uploadInvoice()">
+
+        <div class="col-sm-12 px-0">
+            <p class="mb-3" style="color: #4680ff;">
+                Use this page to upload the cost centers manually. Select the Customer to load the Cost
+                Centers to and then use 'Browse' to locate and select the file to upload. Select the 'Upload' button to
+                initiate the upload.
+            </p>
+
+            <div class="mb-3">
+                <span class="spinner-border spinner-border-sm mr-2" *ngIf="downloadLoader"></span>
+                <a class="linkTag" (click)="downloadBlankTemplete()" [ngClass]="{'disabled': downloadLoader}"> Download
+                    Blank Template</a>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Customer *</label>
+
+                <span><p-dropdown formControlName="customerId" [options]="customerList" [filter]="true"
+                        [disabled]="loadingCustomer"
+                        placeholder="{{loadingCustomer ? 'Loading...' : 'Select Customer'}}" optionValue="Id"
+                        [ngClass]="{'invalid-error': f['customerId'].invalid && (f['customerId'].touched || submitted)}"
+                        optionLabel="AccountName" filterBy="AccountName" appendTo="body">
+                    </p-dropdown></span>
+
+                <ng-container *ngIf="f['customerId'].invalid && (f['customerId'].touched || submitted)">
+                    <mat-error style="font-size: 12px;" *ngIf="f['customerId'].errors.required">
+                        Customer is required
+                    </mat-error>
+                </ng-container>
+            </div>
+            <div class="mt-4" [ngClass]="{'disabled': upLoader}">
+                <p-fileUpload name="upload-invoice" [showCancelButton]="false" [chooseLabel]="'Browse'"
+                accept=".csv,.txt" [ngClass]="{'invalid-error': f['file'].invalid && (f['file'].touched || submitted)}"
+                    (onSelect)="onUpload($event)" [multiple]="false" [showUploadButton]="false"
+                    (onRemove)="onRemove($event)">
+                </p-fileUpload>
+                <ng-container *ngIf="f['file'].invalid && (f['file'].touched || submitted)">
+                    <mat-error style="font-size: 12px;" *ngIf="f['file'].errors.required">
+                        File is required
+                    </mat-error>
+                </ng-container>
+                <ng-container>
+                    <div class="text-center m-t-20">
+                        <button type="submit" class="btn btn-primary" >
+                            Upload</button>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </form>
+</div>

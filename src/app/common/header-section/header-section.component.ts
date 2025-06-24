@@ -43,6 +43,7 @@ export class HeaderSectionComponent {
   @Input() customersDD: boolean = false;
   @Input() showLinkInventory: boolean = false;
   @Input() disabledLinkInventory: boolean = false;
+  @Input() showDD: boolean = true;
   @Input() trackByIndex: (index: number, item: any) => any = (index: number, item: any) => index;
 
   @Output() buttonClick = new EventEmitter<string>();

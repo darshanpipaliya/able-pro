@@ -1,0 +1,118 @@
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content>
+                <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton"
+                    [loaderParent]="loaderParent" [isDisabledExport]="isDisabledExport" [trackByIndex]="trackByIndex"
+                    [selectedTem]="selectedTem" [customers]="customers" [tems]="tems"
+                    [currentOpenEditPagevar]="currentOpenEditPagevar"
+                    [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit" [trackByIndex]="trackByIndex"
+                    (exportDataAsExcel)="onBtnExportDataAsExcelCostCenter()" (buttonClick)="onButtonClick($event)"
+                    (filterGridByTEMId)="filterCC()" (add)="OpenCostCenterTab()"></app-header-section>
+
+
+                <div class="main-banner-section">
+                    <div class="table-responsive">
+                        <div class="demo2 main">
+                            
+                            <nav mat-tab-nav-bar>
+                                <span (click)="changecc(0)" mat-tab-link [active]="selected === 0"
+                                    style="color: unset;">
+                                    <i class="fas fa-piggy-bank" style="color: #4680ff; font-size: 15px;">
+                                    </i>
+                                    <span class="mat-tab-list-title">&nbsp;Cost Centers</span>
+                                </span>
+
+                                <span style="display: table-cell !important;" *ngIf="tabsArray.length > 0">
+                                    <span style="display: table-cell !important;"
+                                        *ngFor="let tab of tabsArray;let i = index">
+                                        <span *ngIf="tab.tabTypes=='newCostCenter'" (click)="changecc(i+1)" mat-tab-link
+                                            [active]="(i+1) === selected">
+                                            <i class="fas fa-piggy-bank" style="color: #4680ff;"></i>&nbsp;
+                                            Add Cost Center&nbsp;
+                                            <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                        </span>
+
+                                        <span *ngIf="tab.tabTypes=='editCostCenter'" (click)="changecc(i+1)"
+                                            [active]="(i+1) === selected" mat-tab-link>
+                                            <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;
+                                            Edit Cost Center&nbsp;
+                                            <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                        </span>
+                                    </span>
+                                </span>
+                            </nav>
+
+                            <div class="row mat-tab-link-btn-border d-flex align-items-center px-0 mx-0"
+                                *ngIf="currentOpenEditPagevar == 'Table'">
+                                <button *ngIf="(!isTEMUser && !isCompanyUser)"
+                                    class="btn btn-primary m-r-8 cost-center-res-btn"
+                                    (click)="changeCostCenterStatus(true)" type="button"
+                                    [disabled]="callingAPICCS || isCompanyManager">
+                                    <i *ngIf="!callingAPI.active" class="feather icon-check-circle"></i>
+                                    <span class="spinner-border spinner-border-sm" role="status"
+                                        *ngIf="callingAPI.active"></span> Activate Cost Center
+                                </button>
+                                <button *ngIf="(!isTEMUser && !isCompanyUser)"
+                                    class="btn btn-primary m-r-8 cost-center-res-btn"
+                                    (click)="changeCostCenterStatus(false)"
+                                    [disabled]="callingAPICCS || isCompanyManager" type="button">
+                                    <i *ngIf="!callingAPI.deactive" class="feather icon-slash"></i>
+                                    <span class="spinner-border spinner-border-sm" role="status"
+                                        *ngIf="callingAPI.deactive"></span> Deactivate Cost Center
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div *ngIf="selected === 0">
+                            <ng-container>
+                                <app-cost-centers *ngIf="selected === 0"
+                                    (rowCellDoubleClicked)="editCostCenterTab($event)"
+                                    [selectCustomer]="selectCustomer" [selectedTem]="selectedTem"
+                                    (isCCDataExist)="ccDataExist($event)"
+                                    [rowDataCC]="rowDataCC" (selectedTemCC)="selectedTemCC($event)"
+                                    (onAgGridReadyCostCenterEmit)="onAgGridReadyCostCenterEmit($event)"
+                                    (exportCCExcelData)="exportCCExcelData($event)"
+                                    (onSelectedRow)="onCostCenterSelectedRow($event)">
+                                </app-cost-centers>
+                            </ng-container>
+                        </div>
+
+                        <div *ngIf="selected !== 0">
+                            <span *ngFor="let tab of tabsArray;let i = index">
+                                <div *ngIf="tab.tabTypes=='newCostCenter' && selected === i+1">
+                                    <app-add-edit-cost-centers [action]="'new'" [selectedCompany]="selectedCompany"
+                                        [selectedTem]="selectedTem" [selectCustomer]="selectCustomer"
+                                        [selectedWiseTemDDCC]="selectedWiseTemDDCC" [selectedCC]="selected"
+                                        [selected]="selected"
+                                        *ngIf="tab.tabTypes=='newCostCenter'"
+                                        [costCenterData]="tab.CostCenterRowData"
+                                        (onSaveCostCenterEvent)="onSaveCostCenterEvent($event,i)"
+                                        (currentOpenEditforCC)="currentOpenEditforCC($event)"
+                                        (setTemDDValueEventCC)="setTemDDValueEventCC($event)"
+                                        (onComponetDestroy)="onComponetDestroy($event, i)">
+                                    </app-add-edit-cost-centers>
+                                </div>
+
+                                <div *ngIf="tab.tabTypes=='editCostCenter' && selected === i+1">
+                                    <app-add-edit-cost-centers [action]="'edit'" [selectedTem]="selectedTem"
+                                        [selected]="selected"
+                                        *ngIf="tab.tabTypes=='editCostCenter'"
+                                        (currentOpenEditforCC)="currentOpenEditforCC($event)"
+                                        [costCenterData]='tab.CostCenterRowData'
+                                        (onComponetDestroy)="onComponetDestroy($event, i)"
+                                        (setCompanyDDValueEventCC)="setCompanyDDValueEventCC($event)"
+                                        (onSaveCostCenterEvent)="onSaveCostCenterEvent($event,i)"
+                                        (setTemDDValueEventCC)="setTemDDValueEventCC($event)">
+                                    </app-add-edit-cost-centers>
+                                </div>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="cost-center-structure-accordian mt-2">
+    <mat-accordion class="example-headers-align accordion-header-tooltip">
+        <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+            <mat-expansion-panel-header class="math">
+                <mat-panel-title class="matt">
+                    <i class="fas fa-piggy-bank"></i>&nbsp;Cost Centers
+                </mat-panel-title>
+                <i class="fas fa-info-circle" (click)="openPopup()" tooltipClass="tooltip-bg"></i>
+                <ng-template #ccText>
+                    <div class="mat-dialog-header">
+                        <button type="button" class="close" mat-dialog-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="text-left dialog-data">
+                        <div>
+                            Many Customers have long lists of Cost Centers many of which that do not apply to
+                            Fixed, Mobile or Cloud communications. Cost Centers that are used for
+                            communications, can be marked 'Active' in the Cost Center module and can be assigned
+                            to different items for cost accounting. 'Inactive' Cost Centers cannot be assigned
+                            for cost accounting.
+                        </div>
+
+                        <div class="mt-2">
+                            <b>Cost Center - Status field</b><br>
+                            These are Cost Centers related to the Customers communication Costs in the
+                            system.<br>
+                            &nbsp; &nbsp; &nbsp; &nbsp;<b>Active</b> - Cost Centers the Company is activity
+                            using<br>
+                            &nbsp; &nbsp; &nbsp; &nbsp;<b>Inactive</b> - Cost Centers the Company has stopped
+                            using or are not using yet
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-expansion-panel-header>
+
+            <ng-container style="height: max-content;">
+                <app-ag-grid-table [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [isRelodButtonVisible]="false"
+                    [sheetName]="'Cost Centers'" [exportFilename]="'Cost Centers.xlsx'"
+                    (onAgGridReadyEmit)="onAgGridReadyEmit($event)" (onAgGridReady)="onAgGridReady($event)"
+                    [gridOptions]="gridOptions"
+                    (onRefreshGrid)="onAgGridReady($event)" (onSelectionChangedEvent)="onSelectionChanged($event)"
+                    (onCellDoubleClickedEvent)="onCellDoubleClicked($event)" [sideBar]="sideBar"
+                    [singleClickEdit]="true">
+                </app-ag-grid-table>
+            </ng-container>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="text-right mt-2 mr-3">
+                <span>
+                     {{girdDataCount}} {{girdDataCount > 1 ? 'records' : 'record'}}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .cost-center-structure-accordian {
+
+    .mat-expansion-panel-body {
+        padding: 0 !important;
+
+        ag-grid-angular {
+            // height: 700px !important;
+            height: calc(100vh - 250px) !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+    margin-left: 15px;
+}
+
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+:host ::ng-deep .toggle-btn {
+    position: absolute;
+    top: 9px;
+    left: 50px;
+
+    .mat-slide-toggle .mat-slide-toggle-ripple{
+        display: none;
+    }
+
+    .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+        background-color: #6AA84F;
+    }
+
+    .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+        background-color: #fff;
+    }
+}

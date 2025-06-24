@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content>
+                <app-header-section [buttonOptions]="buttonOptions" [selectedButton]="selectedButton"
+                    [loaderParent]="loaderParent" [isDisabledExport]="isDisabledExport" [trackByIndex]="trackByIndex"
+                    [selectedTem]="selectedTemCCR" [tems]="tems" [currentOpenEditPagevar]="currentOpenEditPagevar"
+                    [tableDataExist]="tableDataExist" [viewNEdit]="viewNEdit" [trackByIndex]="trackByIndex" 
+                    [showDD]="showDD"
+                    (buttonClick)="onButtonClick($event)" (filterGridByTEMId)="filterCCR()"></app-header-section>
+
+                <div class="main-banner-section">
+                    <div class="table-responsive">
+                        <button *ngIf="selectedCCRTab == 1" type="button" class="btn btn-primary cc-upload-file-btn"
+                            mat-button (click)="UploadFile()">Upload File</button>
+
+                        <mat-tab-group [(selectedIndex)]="selectedCCRTab" (selectedIndexChange)="changeCCRTab($event)"
+                            [ngClass]="(!isTEMUser && !isCompanyUser) ? 'cost-center-repository-tab-group':''">
+                            <mat-tab>
+                                <div class="col-sm-12">
+                                    <ng-template mat-tab-label>
+                                        <b> <i class="fas fa-calendar-plus" style="color: #4680ff;"></i>
+                                            Cost Center Repository</b>
+                                    </ng-template>
+                                </div>
+                                <ng-container *ngIf="selectedCCRTab == 0">
+                                    <app-cost-center-repository (gridTable)="gridTable($event)"
+                                        (selectedTemCCrValue)="selectedCCrValue($event)"
+                                        (isCCRepoExist)="CCRepoExist($event)"
+                                        (onAgGridReadyCostCenterRepoEmit)="onAgGridReadyCostCenterRepoEmit($event)"
+                                        (exportCCRepoData)="exportCCRepoDetail($event)"
+                                        (onSelectedRow)="onCCRepoSelectedRow($event)" [selectedTemCCR]="selectedTemCCR"
+                                        [isReloadCCRepo]="isReloadCCRepo">
+                                    </app-cost-center-repository>
+                                </ng-container>
+                            </mat-tab>
+
+                            <mat-tab>
+                                <div class="col-sm-12">
+                                    <ng-template mat-tab-label>
+                                        <b> <img src="assets/images/file-monitor-icon.svg"
+                                                alt="Monitor Grid icon">&nbsp;Cost Center Upload Monitor</b>
+                                    </ng-template>
+                                </div>
+                                <ng-container *ngIf="selectedCCRTab == 1">
+                                    <app-cost-center-upload-monitor></app-cost-center-upload-monitor>
+                                </ng-container>
+                            </mat-tab>
+                        </mat-tab-group>
+
+                    </div>
+                </div>
+
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

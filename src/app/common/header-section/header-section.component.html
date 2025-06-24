@@ -13,14 +13,14 @@
 
     </div>
 
-    <div *ngIf="!temRoles && tems.length > 0" [ngClass]="{'disabled': loaderParent}">
+    <div *ngIf="!temRoles && tems.length > 0 && showDD" [ngClass]="{'disabled': loaderParent}">
       <p-dropdown class="custom-p-dropdown-outer" [options]="tems" [(ngModel)]="selectedTem"
         [ngModelOptions]="{standalone: true}" [disabled]="disableTemSearch" (onChange)="temChange.emit(selectedTem)"
         [filter]="true" [filterFields]="['AccountName']" optionValue="Id" optionLabel="AccountName">
       </p-dropdown>
     </div>
 
-    <div [ngClass]="{'disabled': loaderParent}" *ngIf="customersDD">
+    <div [ngClass]="{'disabled': loaderParent}" *ngIf="customersDD || customers?.length > 0 && showDD">
       <p-dropdown class="custom-p-dropdown-outer" [options]="customers" [(ngModel)]="selectedCustomer"
         [ngModelOptions]="{standalone: true}" [disabled]="disableTemSearch"
         (onChange)="customerChange.emit(selectedCustomer)" [filter]="true" [filterFields]="['AccountName']"
@@ -28,7 +28,7 @@
       </p-dropdown>
     </div>
 
-    <div *ngIf="tems.length > 0" [ngClass]="{'disabled': loaderParent || disableTemSearch}">
+    <div *ngIf="tems.length > 0 && showDD" [ngClass]="{'disabled': loaderParent || disableTemSearch}">
       <div class="avatar avatar-s bg-primary-50 text-primary-500 cp b-rad-20"
         (click)="filterGridByTEMId.emit(selectedTem)">
         <svg class="pc-icon">

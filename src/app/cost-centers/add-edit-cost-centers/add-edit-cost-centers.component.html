@@ -1,0 +1,183 @@
+<form class="editForm card-body pt-0 px-0" [formGroup]="costCenterForm">
+    <div class="row">
+        <div class="col-sm-12 col-xl-12 text-right">
+            <span class="text-c-red">*Required field</span>
+        </div>
+        <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title>
+                            <i class="ficon fas fa-building"></i>&nbsp;Organization
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">Customer *</label>
+                                <span><p-dropdown
+                                        (onChange)="customerChange($event.value, true);onCustomerSelect($event)"
+                                        [options]="customerList" optionLabel="AccountName" [filter]="true"
+                                        filterBy="AccountName" [showClear]="true"
+                                        placeholder="{{loadingCustomerAPI ? 'Please Wait...' : 'Select Customer...'}}"
+                                        [disabled]="loadingCustomerAPI" formControlName="AccountId" appendTo="body"
+                                        optionValue="Id" [showClear]="false"
+                                        [ngClass]="{'invalid-error': f['AccountId'].invalid && (f['AccountId'].touched || submitted)}">
+                                    </p-dropdown></span>
+
+                                <mat-error style="font-size: 12px;"
+                                    *ngIf="f['AccountId'].errors?.['required'] && (f['AccountId'].touched || submitted) ">
+                                    Customer is required</mat-error>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">Company *</label>
+
+                                <span><p-dropdown formControlName="CompanyId" [options]="companyList"
+                                        (onChange)="companyValue()" [disabled]="loadingCompanyAPI"
+                                        placeholder="{{loadingCompanyAPI ? 'Please Wait...': 'Select Company...'}}"
+                                        appendTo="body" optionValue="CompanyID" optionLabel="CompanyName"
+                                        [filter]="true" filterBy="CompanyName"
+                                        [ngClass]="{'invalid-error': f['CompanyId'].invalid && (f['CompanyId'].touched || submitted)}"
+                                        [showClear]="false">
+                                    </p-dropdown></span>
+                                <mat-error style="font-size: 12px;"
+                                    *ngIf="f['CompanyId'].errors?.['required'] && (f['CompanyId'].touched || submitted) ">
+                                    Company is required</mat-error>
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title>
+                            <i class="fas fa-piggy-bank"></i>&nbsp;Cost Center
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xl-12 px-0"
+                            style="padding-left: 1px !important; padding-right: 1px !important;">
+                            <div class="form-group">
+                                <label class="form-label">Cost Center Description</label>
+                                <span><textarea class="form-control" formControlName="Description" maxlength="250"
+                                        rows="1"></textarea></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">GL Code 1 *</label>
+                                <span> <input class="form-control" formControlName="GLCode1"
+                                        [ngClass]="{'invalid-error': !costCenterForm.controls['GLCode1'].valid && (costCenterForm.controls['GLCode1'].dirty || costCenterForm.controls['GLCode1'].touched || submitted)}"
+                                        spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                <mat-error style="font-size: 12px;"
+                                    *ngIf="f['GLCode1'].errors?.['required'] && (f['GLCode1'].touched || submitted) ">
+                                    GL code is required</mat-error>
+                            </div>
+                        </div>
+                        <div class="col-md-6  col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">GL Code 2</label>
+                                <span><input class="form-control" formControlName="GLCode2" spaceTrimStartEndInput
+                                        [allowStartWithSpace]="false"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">GL Code 3</label>
+                                <span><input class="form-control" formControlName="GLCode3" spaceTrimStartEndInput
+                                        [allowStartWithSpace]="false"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">GL Code 4</label>
+                                <span><input class="form-control" formControlName="GLCode4" spaceTrimStartEndInput
+                                        [allowStartWithSpace]="false"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">GL Code 5</label>
+                                <span><input class="form-control" formControlName="GLCode5" spaceTrimStartEndInput
+                                        [allowStartWithSpace]="false"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">GL Code 6</label>
+                                <span><input class="form-control" formControlName="GLCode6" spaceTrimStartEndInput
+                                        [allowStartWithSpace]="false"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">GL Code Type *</label>
+
+                                <span><p-dropdown [options]="glCodeTypeList" optionLabel="value" [filter]="true"
+                                        filterBy="value" [showClear]="true" placeholder="Select GL Code Type..."
+                                        formControlName="Type" appendTo="body" optionValue="Id" [showClear]="false"
+                                        [ngClass]="{'invalid-error': f['Type'].invalid && (f['Type'].touched || submitted)}">
+                                    </p-dropdown></span>
+
+                                <mat-error style="font-size: 12px;"
+                                    *ngIf="f['Type'].errors?.['required'] && (f['Type'].touched || submitted) ">
+                                    GL Code Type is required</mat-error>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-6 ">
+                            <div class="form-group">
+                                <label class="form-label">Status</label>&nbsp;
+                                <mat-radio-group class="m-l-8" formControlName="Active" [ngClass]="{'disabled': action == 'new'}">
+                                    <mat-radio-button [value]="true">Active
+                                    </mat-radio-button>
+                                    <mat-radio-button [value]="false" class="m-l-10">Inactive
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+
+        <div class="col-sm-12 col-xl-12 col-md-12 text-center">
+            <button type="submit" *ngIf="hideSave || action == 'new'" (click)="addEditCostCenter(action)"
+                [disabled]="setIsReadOnly || saveButtonLoadder" uiSref="work" class="btn sbubtn btn-primary btn-raised">
+                <span *ngIf="saveButtonLoadder" class="spinner-border spinner-border-sm mr-2" role="status"></span>
+                Save
+            </button>
+            <mat-error *ngIf="(hideSave === false && action == 'edit') || isCompanyManager" class="text-c-red">Manual editing of Cost Centers is not
+                allowed</mat-error>
+        </div>
+    </div>
+
+    <!-- Change Log Section Start -->
+    
+    <ng-container *ngIf="action == 'edit'">
+        <app-change-log [title]="'Cost Center'" [ccId]="costCenterData.CostCenterId" [className]="'change-log-sec-multi2'" [logLoader]="logLoader" [changelogData]="changelogData" [column]="columns"></app-change-log>
+    </ng-container>
+      <!-- Change Log Section End -->
+</form>
