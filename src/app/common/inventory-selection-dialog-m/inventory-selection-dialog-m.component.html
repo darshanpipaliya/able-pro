@@ -1,0 +1,49 @@
+<form [formGroup]="contractForm">
+    <div class="mat-dialog-header pb-3">
+        <h5 class="modal-title" style="color: #4680ff;">Make a selection</h5>
+        <i class="fas fa-times" [mat-dialog-close]="close"></i>
+    </div>
+    <div mat-dialog-content>
+        <div class="row pt-4 align-items-center mx-2">
+            <div class="col-md-12 popup-main-section">
+                <div class="popup-success-icon">
+                    <i class="far fa-question-circle"></i>
+                </div>
+                <div class="popup-right-desc">
+                    <p class="mb-2" style="font-size: 14px;">Please select the contract to add the Inventory to</p>
+
+                    <p-dropdown [options]="contractList" optionValue="ContractId" formControlName="ContractId"
+                        optionLabel="DocumentName" placeholder="Select Contract..."
+                        [ngClass]="{'invalid-error': !f['ContractId'].valid && (f['ContractId'].dirty || f['ContractId'].touched || submitted)}"
+                        [filter]="true" appendTo="body">
+                        <ng-template pTemplate="selectedItem" let-selectedOption>
+                            <div class="flex align-items-center gap-2">
+
+                                <div>{{ selectedOption.DocumentName }} -
+                                    {{selectedOption.InternalDocumentNumber}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-item pTemplate="item">
+                            <div class="custom-option">
+                                <div class="custom-option-label">{{ item.DocumentName }} -
+                                    {{item.InternalDocumentNumber}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <mat-error style="font-size: 12px;"
+                        *ngIf="f['ContractId'].errors?.['required'] && (f['ContractId'].touched || submitted)">
+                        Contract is required</mat-error>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mx-2">
+            <div class="col-md-12">
+                <mat-dialog-actions class="mt-4 py-0" align="end">
+                    <button mat-button class="btn btn-primary btn-raised" cdkFocusInitial (click)="saveInventory()">Add the
+                        Inventory</button>
+                </mat-dialog-actions>
+            </div>
+        </div>
+    </div>
+</form>

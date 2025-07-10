@@ -1,0 +1,155 @@
+p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+:host ::ng-deep .fa-info-circle:before {
+    color: #4680ff !important;
+}
+
+::ng-deep ngb-tooltip-window {
+    z-index: 100000 !important;
+}
+
+:host ::ng-deep .mat-dialog-container {
+    padding: 15px !important;
+}
+
+.mat-dialog-header {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #e2e5e8;
+    position: relative;
+}
+
+.mat-dialog-header button.close {
+    position: absolute !important;
+    right: 0 !important;
+}
+
+.mat-dialog-actions{
+    margin-bottom: unset;
+    min-height: unset !important;
+    padding: 0;
+}
+
+.form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+.form-group label {
+    float: left !important;
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 0 !important;
+    height: unset !important;
+}
+
+textarea.form-control.charge-code-disc {
+    border: 1px solid #ced4da;
+    padding: 5px !important;
+}
+
+textarea.form-control.charge-code-disc::placeholder {
+    padding: 2px;
+    font-size: 12px;
+}
+
+.browse-btn-group {
+    width: 50%;
+}
+
+.btn.browse-btn {
+    border-radius: 0 !important;
+}
+
+.form-control.search-text {
+    height: 34px;
+    padding: 5px 8px;
+}
+
+.add-data-file-disc {
+    margin: 10px 0 0 10px;
+}
+
+.download-link {
+    margin: 25px 0 0 25px;
+}
+
+.browse-btn {
+    padding: 5px 8px;
+}
+
+button.download-template-btn {
+    padding: 0;
+    background: transparent;
+    color: #4680ff;
+    text-decoration: underline;
+    border: none;
+    margin-bottom: 15px;
+}
+
+.download-template-btn.btn-primary:not(:disabled):not(.disabled):active {
+    background: transparent;
+    color: #4680ff;
+}
+
+
+img.media-object {
+    max-width: 70px;
+    min-width: 40px;
+    height: 100%;
+    object-fit: contain;
+}
+
+@media only screen and (max-width: 1199px) {
+    .padding-left-none {
+        padding-left: 0 !important;
+        padding-right: 5px !important;
+    }
+
+    .padding-right-none {
+        padding-right: 0 !important;
+        padding-left: 5px !important;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .card-body .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+
+    .browse-btn-group {
+        width: 100%;
+    }
+
+    .add-data-file-disc {
+        margin: 0;
+    }
+
+    .download-link {
+        margin: 0;
+    }
+
+    .padding-left-none {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .padding-right-none {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+}

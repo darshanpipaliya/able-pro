@@ -1,0 +1,38 @@
+:host ::ng-deep ag-grid-angular {
+    height: 450px !important;
+}
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+mat-panel-title {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-right: 0px;
+}
+
+mat-expansion-panel {
+    border: solid;
+    border-radius: 8px;
+    margin-bottom: 12px !important;
+    border-color: #80808061;
+}
+
+.chargecode-group > .row {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.chargecode-group > .row > .col-md-4,
+.chargecode-group > .row > .col-md-6 {
+    display: inline-block;
+    float: none;
+    border: 1px solid #4680ff;
+    border-radius: 3px;
+    padding-bottom: 15px;
+    margin-top: 15px;
+}
+
+.chargecode-table {
+    max-height: 200px;
+}

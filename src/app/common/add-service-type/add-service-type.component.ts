@@ -64,7 +64,11 @@ export class AddServiceTypeComponent implements OnInit {
     headerHeight: 35,
     groupHeaderHeight: 37,
     floatingFiltersHeight: 35,
-    enableFilter: true
+    enableFilter: true,
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
   };
 
   rowSelection: any = 'multiple';

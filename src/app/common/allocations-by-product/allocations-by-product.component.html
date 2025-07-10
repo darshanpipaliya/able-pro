@@ -1,0 +1,141 @@
+<div class="row mx-0">
+    <div class="col-sm-12 mb-15 px-0 my-2">
+        <div class="btn-group-list1 d-flex justify-content-end">
+        </div>
+    </div>
+</div>
+<div>
+    <app-invoice-overview-i (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)" [gridRowData]="gridRowData"
+        [refreshDatas]="refreshDatas" [selectedTab]="selectedTab"></app-invoice-overview-i>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="cost-center-accordian">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                    <div class="inventory-sel-accordion-left-btn">
+                        <ng-container *ngIf="showFinished">
+                            <button type="button" [disabled]="!isEnableFinished" (click)="finish()"
+                                class="btn btn-primary btn-raised mr-2">Finished!</button>
+                        </ng-container>
+                        <span class="fas fa-check c-refresh-speed" style="cursor: pointer;" title="Refresh"
+                            (click)="onAgGridReady(gridApi, true)"></span>
+
+                    </div>
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <i class="icon-size fas fa-file-invoice-dollar" style="color: #4680ff;"></i>&nbsp;
+                            Cost Allocation by Vendor Product
+                        </mat-panel-title>
+                        <i class="fas fa-info-circle" (click)="TooltipDialog1()" tooltipClass="tooltip-bg"></i>
+                    </mat-expansion-panel-header>
+
+                    <ng-template #CostAllocationVendorProduct>
+                        <div class="mat-dialog-header">
+                            <button type="button" class="close" mat-dialog-close>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="text-left dialog-data">
+                            <p class="mb-2">Cost Allocation by Vendor Product provides a summary of all charges
+                                associated with a Vendor Product, including the total charges and percentage allocated
+                                to cost center structures. If a Vendor Product isn't fully allocated to cost center
+                                structures, any unallocated costs must be assigned to an appropriate cost center
+                                structure. </p>
+                            <p class="mb-2">To do this, utilize the Allocation Summary to identify Vendor Products that
+                                aren't fully allocated, then examine the allocation details in the lower grid. Selecting
+                                the edit button will allow you to exist any existing Cost Center Structures for this
+                                Vendor Product or create new Cost Center Structures to ensure all charges in the Vendor
+                                Product are assigned at 100%.</p>
+                            <p class="mb-0">Once all updates are complete use the Rerun button at the top of the page to
+                                run the Cost Allocations and view the changes. The invoice will not leave Cost
+                                Allocation without all charges being assigned at 100%.</p>
+                        </div>
+                    </ng-template>
+                    <ng-container style="height: max-content;">
+                        <app-ag-grid-table [columnDefs]="columnDefs1" [rowData]="rowData1"
+                            [defaultColDef]="defaultColDef"
+                            (onCellDoubleClickedEvent)="onCellDoubleClicked($event)"
+                            (onAgGridReady)="onAgGridReady($event)" (onCellClickedEvent)="onCellClicked($event)"
+                            [isRelodButtonVisible]="false" [sheetName]="'Vendor Product'" [gridOptions]="gridOptions"
+                            (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                            [exportFilename]="'Vendor Product.xlsx'" [sideBar]="sideBar" [singleClickEdit]="true">
+                        </app-ag-grid-table>
+                    </ng-container>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="cost-center-accordian mt-2" *ngIf="isShowDetail">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="23px" height="auto"
+                                viewBox="0 0 211.000000 175.000000" preserveAspectRatio="xMidYMid meet">
+
+                                <g transform="translate(0.000000,175.000000) scale(0.100000,-0.100000)" fill="#4680ff"
+                                    stroke="none">
+                                    <path d="M190 1669 c-52 -16 -95 -53 -119 -103 -21 -42 -22 -56 -19 -299 l3
+                                               -255 30 -43 c57 -80 74 -84 360 -84 286 0 303 4 360 84 l30 43 0 268 0 268
+                                               -30 43 c-56 79 -76 84 -345 86 -138 1 -250 -2 -270 -8z m529 -59 c27 -13 46
+                                               -33 60 -63 19 -40 21 -60 21 -267 0 -207 -2 -227 -21 -267 -38 -78 -59 -83
+                                               -334 -83 -275 0 -296 5 -334 83 -19 40 -21 60 -21 267 0 207 2 227 21 267 37
+                                               77 56 82 332 83 217 0 241 -2 276 -20z" />
+                                    <path d="M324 1471 c-11 -5 -33 -23 -47 -41 -26 -30 -27 -36 -27 -151 l0 -119
+                                               34 -38 34 -37 127 0 127 0 34 37 34 38 0 120 0 120 -34 38 -34 37 -114 2 c-62
+                                               2 -122 -1 -134 -6z m251 -66 c23 -22 25 -31 25 -125 0 -94 -2 -103 -25 -125
+                                               -23 -23 -31 -25 -130 -25 -99 0 -107 2 -130 25 -23 22 -25 31 -25 125 0 94 2
+                                               103 25 125 23 23 31 25 130 25 99 0 107 -2 130 -25z" />
+                                    <path d="M950 1356 l0 -26 215 0 c195 0 220 -2 254 -20 62 -31 81 -82 81 -218
+                                               0 -107 1 -112 21 -112 20 0 20 4 17 134 -3 131 -4 135 -33 177 -55 77 -78 84
+                                               -332 87 l-223 3 0 -25z" />
+                                    <path d="M1390 869 c-52 -16 -95 -53 -119 -103 -21 -42 -22 -56 -19 -299 l3
+                                               -255 30 -43 c57 -80 74 -84 360 -84 286 0 303 4 360 84 l30 43 0 268 0 268
+                                               -30 43 c-56 79 -76 84 -345 86 -138 1 -250 -2 -270 -8z m529 -59 c27 -13 46
+                                               -33 60 -63 19 -40 21 -60 21 -267 0 -207 -2 -227 -21 -267 -38 -78 -59 -83
+                                               -334 -83 -275 0 -296 5 -334 83 -19 40 -21 60 -21 267 0 207 2 227 21 267 37
+                                               77 56 82 332 83 217 0 241 -2 276 -20z" />
+                                    <path d="M1524 671 c-11 -5 -33 -23 -47 -41 -26 -30 -27 -36 -27 -151 l0 -119
+                                               34 -38 34 -37 127 0 127 0 34 37 34 38 0 120 0 120 -34 38 -34 37 -114 2 c-62
+                                               2 -122 -1 -134 -6z m251 -66 c23 -22 25 -31 25 -125 0 -94 -2 -103 -25 -125
+                                               -23 -23 -31 -25 -130 -25 -99 0 -107 2 -130 25 -23 22 -25 31 -25 125 0 94 2
+                                               103 25 125 23 23 31 25 130 25 99 0 107 -2 130 -25z" />
+                                    <path d="M552 646 c3 -131 4 -135 33 -177 55 -77 78 -84 333 -87 l222 -3 0 25
+                                               0 26 -215 0 c-195 0 -220 2 -254 20 -62 31 -81 82 -81 218 0 107 -1 112 -21
+                                               112 -20 0 -20 -4 -17 -134z" />
+                                </g>
+                            </svg>&nbsp;Cost Center Structure Detail By Vendor Product
+                        </mat-panel-title>
+                        <i class="fas fa-info-circle" (click)="TooltipDialog2()" tooltipClass="tooltip-bg"></i>
+                        <ng-template #CostCenterStructureDetail>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                                <p class="mb-0">Cost Center Structures represent predefined rules utilized for the
+                                    selected
+                                    Vendor Product in the Cost Allocation by Vendor Product grid on this page. These
+                                    structures dictate how and where charges for the Vendor Product are allocated within
+                                    the
+                                    system.</p>
+                            </div>
+                        </ng-template>
+                    </mat-expansion-panel-header>
+
+                    <ng-container style="height: max-content;">
+                        <app-ag-grid-table [columnDefs]="columnDefs2" [rowData]="rowData2"
+                            [defaultColDef]="defaultColDef"
+                            [gridOptions]="gridOptions" [isRelodButtonVisible]="false"
+                            [sheetName]="'Cost Center Structure'" (onAgGridReady)="onAgGridReadyStructure($event)"
+                            [exportFilename]="'Cost Center Structure.xlsx'" [sideBar]="sideBar"
+                            [singleClickEdit]="true">
+                        </app-ag-grid-table>
+                    </ng-container>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </div>
+    </div>
+</div>

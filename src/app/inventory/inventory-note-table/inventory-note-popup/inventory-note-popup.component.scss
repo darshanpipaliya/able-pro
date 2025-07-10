@@ -1,0 +1,121 @@
+.row{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mat-dialog-header {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #e2e5e8;
+  position: relative;
+}
+
+.mat-dialog-content {
+  max-height: calc(95vh - 160px) !important;
+  padding: 0;
+}
+
+.text-c-red {
+  color: #4680ff;
+  font-size: 12px;
+}
+
+.form-label {
+  font-weight: 500 !important;
+}
+
+:host ::ng-deep .form-control {
+  height: unset !important;
+  padding: 0px 0;
+}
+
+:host ::ng-deep .form-control:disabled,
+:host ::ng-deep .form-control[readonly]{
+  opacity: 0.6 !important;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+:host ::ng-deep .form-group{
+  margin-bottom: 10px !important;
+}
+
+.mat-dialog-header button.close {
+  position: absolute !important;
+  right: 0 !important;
+}
+
+:host ::ng-deep .mat-dialog-actions{
+  padding: 0px 0 !important;
+}
+
+button.atc-btn{
+  padding: 0 16px;
+  line-height: 34px;
+}
+
+
+:host ::ng-deep.card .card-body{
+  padding: 0 !important;
+}
+
+:host ::ng-deep .editForm .row .col-md-6 {
+  padding-left: 0px !important;
+  padding-right: 3px !important;
+}
+
+:host ::ng-deep .editForm .row .col-md-6:nth-child(2n + 2) {
+  padding-left: 3px !important;
+  padding-right: 0px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body{
+  padding: 15px 5px 5px !important;
+}
+
+:host ::ng-deep .mat-accordion .mat-expansion-panel{
+  box-shadow: none !important;
+  border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .form-group label {
+  float: left !important;
+}
+
+:host ::ng-deep .form-group span {
+  display: block;
+  overflow: hidden;
+  padding: 0 4px 0 6px;
+}
+
+:host ::ng-deep .mat-radio-container {
+  top: 1px !important;
+}
+
+.math {
+  background: #80808061 !important;
+  height: 40px;
+}
+
+.borderc {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+@media only screen and (max-width: 767px) {
+  :host ::ng-deep .editForm .row .col-md-6,
+  :host ::ng-deep .editForm .row .col-md-6:nth-child(2n + 2) {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+
+  :host ::ng-deep .form-group span {
+    padding: 0 0px 0 6px;
+  }
+  
+}
+.mat-button.mat-button-disabled.mat-button-disabled{
+  color: #fff !important;
+}

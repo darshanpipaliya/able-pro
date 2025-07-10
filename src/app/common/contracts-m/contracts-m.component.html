@@ -1,0 +1,25 @@
+<div>
+    <div class="mt-2 assignment-grids">
+        <div class="fb fb2 example-headers-align">
+            <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true"  class="table-border-none">
+                <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getContracts()"></button>
+                <mat-expansion-panel-header class="math borderc">
+                    <mat-panel-title style="margin-left: 33%; margin-right: 0px !important;">
+                        <img src="../../../../../../assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                                alt="Contracts Image">&nbsp;Vendor Contracts
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                    <div class="user-activity-log-inner assignment-tab">
+                        <ng-container>
+                            <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="contractData" (onCellDoubleClickedEvent)="cellDoubleClicked($event)"
+                                [rowSelection]="rowSelection"
+                                [sideBar]="sideBar" [defaultColDef]="defaultColDef">
+                            </app-ag-grid-table>
+                        </ng-container>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </div>
+    </div>
+</div>

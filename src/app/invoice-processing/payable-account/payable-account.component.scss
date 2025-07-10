@@ -1,0 +1,157 @@
+.math {
+    background: #80808061 !important;
+    min-height: 40px;
+    height: auto;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+    margin-left: 15px;
+}
+
+button.close {
+    position: relative;
+    top: -10px;
+    right: -6px;
+    color: unset;
+}
+
+button.close:hover {
+    color: #000;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .sandbox-step-grid {
+
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+}
+
+:host ::ng-deep .p-datatable {
+    overflow-x: auto;
+
+    .p-datatable-loading-overlay {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        table-layout: fixed;
+        width: 100%;
+
+        thead tr th {
+            border-bottom: 1px solid #babfc7;
+            padding: 0px 18px;
+            font-size: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+            font-weight: 500;
+            color: #181d1f;
+            background: #EEEEEE;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            input {
+                width: 100%;
+                border: 1px solid #babfc7;
+                border-radius: 3px;
+            }
+
+            .p-column-filter-menu-button {
+                span.pi.pi-filter-icon.pi-filter {
+                    font-size: 12px;
+                }
+
+                &:hover {
+                    background: transparent;
+
+                    span.pi.pi-filter-icon.pi-filter {
+                        color: #2196f3;
+                    }
+                }
+
+                &:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                }
+            }
+
+            .p-sortable-column-icon,
+            .p-highlight .p-sortable-column-icon {
+                color: #181d1f !important;
+                font-size: 12px !important;
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: none;
+                background: #EEE !important;
+            }
+
+            &:hover,
+            &.p-sortable-column.p-highlight {
+                background: #EEE !important;
+                color: #181d1f;
+            }
+        }
+
+        tbody tr td {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+            font-size: 13px;
+            color: #181d1f;
+            font-weight: 400;
+            padding: 0px 18px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}
+
+
+:host ::ng-deep .p-datatable{
+    border: 1px solid #babfc7 !important;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+    .p-datatable-scrollable-header-box {
+        padding-right: 0 !important;
+    }
+}

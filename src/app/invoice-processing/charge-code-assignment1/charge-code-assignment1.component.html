@@ -1,0 +1,608 @@
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="sandbox-step-grid">
+            <div class="mb-2">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                        <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" [ngClass]="{'disabled': recordPublishedOrCompleted}" (click)="chargecodeContextNew()"></button>
+                        <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                                <svg width="15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 550" x="0px"
+                                    y="0px">
+                                    <g data-name="25 Step">
+                                        <path fill="#4680ff"
+                                            d="M492.8,134.4a16,16,0,0,0-22.4-3.2L464,136V96a48.05,48.05,0,0,0-48-48H376V16A16,16,0,0,0,360,0H152a16,16,0,0,0-16,16v96a16,16,0,0,0,16,16H360a16,16,0,0,0,16-16V80h40a16,16,0,0,1,16,16v40l-6.4-4.8a16,16,0,1,0-19.2,25.6L432,176v48a16,16,0,0,1-16,16H376V200a16,16,0,0,0-16-16H152a16,16,0,0,0-16,16v40H96a48.05,48.05,0,0,0-48,48v56l-6.4-4.8a16,16,0,1,0-19.2,25.6L48,384v32a48.05,48.05,0,0,0,48,48h40v32a16,16,0,0,0,16,16H360a16,16,0,0,0,16-16V400a16,16,0,0,0-16-16H152a16,16,0,0,0-16,16v32H96a16,16,0,0,1-16-16V384l25.6-19.2a16,16,0,0,0-19.2-25.6L80,344V288a16,16,0,0,1,16-16h40v40a16,16,0,0,0,16,16H360a16,16,0,0,0,16-16V272h40a48.05,48.05,0,0,0,48-48V176l25.6-19.2A16,16,0,0,0,492.8,134.4ZM344,96H168V32H344ZM168,416H344v64H168Z" />
+                                    </g>
+                                </svg>&nbsp;Charge Code Context
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row">
+                            <div class="col-md-12 px-0">
+                                <ng-container style="height: max-content;">
+                                    <app-ag-grid-table [excelBtnEnable]="true" [pageName]="'charge-code-assign1'"
+                                        [columnDefs]="columnDefs1" [rowData]="rowData"
+                                        (onSelectionChangedEvent)="onSelectionChanged($event)" [rowSelection]="'single'"
+                                        [sheetName]="'Charge Code Type'" [defaultColDef]="defaultColDef"
+                                        [sideBar]="sideBar" [singleClickEdit]="true">
+                                    </app-ag-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <div class="mb-2">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                        <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                                <!-- <i class="ficon fas fa-puzzle-piece"></i> &nbsp; -->
+                                <!DOCTYPE svg
+                                    PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="45px" height="40px"
+                                    viewBox="0 0 745.000000 436.000000" preserveAspectRatio="xMidYMid meet">
+
+                                    <g transform="translate(0.000000,436.000000) scale(0.100000,-0.100000)"
+                                        fill="#4680ff" stroke="none">
+                                        <path d="M20 3954 c-11 -12 -10 -18 3 -32 16 -15 18 -15 34 0 13 14 14 20 3
+                                        32 -7 9 -16 16 -20 16 -4 0 -13 -7 -20 -16z" />
+                                        <path d="M4645 3472 c-53 -45 -55 -53 -55 -269 0 -156 -3 -203 -12 -203 -95
+                                             -3 -313 -49 -421 -90 -28 -11 -59 -20 -69 -20 -9 0 -28 21 -44 48 -105 181
+                                             -190 311 -215 326 -67 39 -154 4 -177 -72 -16 -52 -13 -60 103 -253 52 -86 95
+                                             -159 95 -162 0 -3 -57 -43 -127 -90 -71 -46 -148 -101 -171 -121 -24 -20 -46
+                                             -36 -49 -36 -2 0 -79 74 -170 165 l-165 165 -53 0 c-58 0 -96 -25 -116 -77
+                                             -23 -62 -8 -88 158 -254 85 -86 154 -161 152 -167 -2 -5 -56 -64 -120 -130
+                                             -156 -161 -249 -281 -256 -330 -4 -31 1 -46 33 -92 20 -30 40 -57 44 -60 3 -3
+                                             37 -41 75 -85 98 -115 237 -255 335 -338 47 -40 87 -75 90 -78 14 -17 182
+                                             -135 261 -184 214 -132 403 -210 618 -255 132 -28 390 -28 522 0 188 39 338
+                                             97 549 211 46 26 205 131 265 178 172 131 374 324 506 483 26 31 57 67 69 80
+                                             45 48 73 107 67 144 -8 46 -106 172 -256 326 -64 66 -118 125 -120 130 -2 6
+                                             67 81 152 167 126 126 157 163 162 191 8 44 -6 80 -42 114 -22 21 -38 26 -79
+                                             26 l-52 0 -165 -165 c-91 -91 -168 -165 -170 -165 -3 0 -25 16 -49 36 -23 20
+                                             -101 75 -171 122 -83 55 -126 90 -123 98 3 8 44 78 92 156 113 186 118 198
+                                             102 249 -23 78 -110 113 -179 72 -20 -12 -64 -75 -136 -195 -67 -112 -112
+                                             -178 -122 -178 -9 0 -40 9 -69 20 -76 29 -235 70 -271 70 l-31 0 0 204 c0 113
+                                             -4 216 -10 231 -19 50 -58 75 -114 75 -33 -1 -58 -7 -71 -18z m185 -811 c288
+                                             -71 489 -265 582 -560 29 -91 31 -315 3 -411 -110 -386 -476 -633 -862 -580
+                                             -135 18 -217 48 -333 122 -162 103 -280 265 -335 458 -28 96 -26 320 3 411 78
+                                             247 219 410 441 512 149 67 346 87 501 48z m-900 -106 c0 -3 -24 -38 -54 -78
+                                             -78 -104 -133 -219 -172 -357 -30 -102 -27 -367 5 -475 40 -139 120 -291 193
+                                             -370 29 -31 35 -45 19 -45 -8 0 -118 70 -146 93 -5 4 -24 18 -41 30 -103 74
+                                             -246 201 -374 333 -109 112 -180 195 -180 209 0 18 220 252 340 361 88 79 206
+                                             173 304 240 87 60 106 70 106 59z m1546 -61 c156 -105 287 -215 434 -364 96
+                                             -98 210 -225 210 -235 0 -27 -257 -297 -400 -419 -213 -183 -433 -320 -322
+                                             -201 73 79 153 231 193 370 32 108 35 373 5 475 -39 138 -94 253 -172 357 -78
+                                             105 -77 105 52 17z" />
+                                        <path d="M4593 2334 c-7 -3 -2 -15 14 -32 89 -95 86 -246 -7 -342 -56 -58
+                                            -105 -74 -201 -68 -69 5 -105 22 -151 70 -15 15 -29 28 -32 28 -2 0 -8 -26
+                                            -12 -57 -9 -75 17 -187 62 -264 47 -79 131 -152 220 -189 63 -26 85 -30 164
+                                            -30 79 0 101 4 164 30 136 57 232 170 270 316 20 77 20 114 1 189 -43 173
+                                            -175 306 -339 341 -61 13 -131 17 -153 8z" />
+                                    </g>
+                                </svg> Additional Bill Detail
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="row">
+                            <div class="col-md-12 px-0">
+                                <div class="additional-bill-detail-main">
+                                    <table class="table">
+                                        <tr>
+                                            <th class="no">Vendor:</th>
+                                            
+                                            <td class="text-left">
+                                                <h3>Vendor Billing Alias</h3>
+                                                <p>{{additionalBillData?.VendorBillingAliasName}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Parent Vendor</h3>
+                                                <p>{{additionalBillData?.ParentVendorAccountName ? additionalBillData?.ParentVendorAccountName : additionalBillData?.VendorAccountName}}</p>
+                                            </td>
+                                            <!-- <td class="text-left">
+                                                <h3>Charge Code Vendor</h3>
+                                                <p>{{additionalBillData?.ChargeCodeVendorAccountName}}</p>
+                                            </td> -->
+                                            <td class="text-left">
+
+                                            </td>
+                                            <td class="text-left">
+                                                <!-- <h3>Charge Code Billing Alias</h3>
+                                                <p>{{additionalBillData?.ChargeCodeVendorBillingAliasName}}</p> -->
+                                            </td>
+                                            <td class="text-left">
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="no">Account:</th>
+                                            <td class="text-left">
+                                                <h3>Payable Account Number</h3>
+                                                <p>{{additionalBillData?.PayableAccountNumber}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Main Account Number</h3>
+                                                <p>{{additionalBillData?.MainAccountNumber}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Sub Account Number</h3>
+                                                <p>{{additionalBillData?.SubAccountNumber}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Billing ID</h3>
+                                                <p>{{additionalBillData?.BillingId}}</p>
+                                            </td>
+                                            <td class="text-left">
+
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr-border-none">
+                                            <th class="no" rowspan="4">Charge:</th>
+                                            <td class="text-left">
+                                                <h3>Charge Code</h3>
+                                                <p>{{additionalBillData?.ChargeCode}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Charge Code Name</h3>
+                                                <p>{{additionalBillData?.ChargeCodeName}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Quantity</h3>
+                                                <p>{{additionalBillData?.Quantity}}</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr-border-none">
+                                            <td class="text-left">
+                                                <h3>Charge</h3>
+                                                <p>{{additionalBillData?.Charges}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Origin</h3>
+                                                <p>{{additionalBillData?.Origin}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Unit of Measure</h3>
+                                                <p>{{additionalBillData?.UnitOfMesurement}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Prorated</h3>
+                                                <p>{{additionalBillData?.Prorated == true ? 'Yes' :'No' }}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Date Range</h3>
+                                                <p>{{additionalBillData?.DateRange}}</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr-border-none">
+                                            <td class="text-left">
+                                                <h3>Charge Description1</h3>
+                                                <p>{{additionalBillData?.ChargeDescription1}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Charge Description2</h3>
+                                                <p>{{additionalBillData?.ChargeDescription2}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Charge Description3</h3>
+                                                <p>{{additionalBillData?.ChargeDescription3}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Charge Description4</h3>
+                                                <p>{{additionalBillData?.ChargeDescription4}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Charge Description5</h3>
+                                                <p>{{additionalBillData?.ChargeDescription5}}</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-left">
+                                                <h3>Charge Description6</h3>
+                                                <p>{{additionalBillData?.ChargeDescription6}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Charge Description7</h3>
+                                                <p>{{additionalBillData?.ChargeDescription7}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Charge Description8</h3>
+                                                <p>{{additionalBillData?.ChargeDescription8}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Charge Description9</h3>
+                                                <p>{{additionalBillData?.ChargeDescription9}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Charge Description10</h3>
+                                                <p>{{additionalBillData?.ChargeDescription10}}</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Distribution:</th>
+                                            <td class="text-left">
+                                                <h3>Charge Location</h3>
+                                                <p>{{additionalBillData?.ChargeLocationType}}</p>
+                                            </td>
+                                            <td class="text-left">
+                                                <h3>Distribution Rule Applied</h3>
+                                                <p>{{additionalBillData?.DistributionRuleName}}</p>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div class="mb-2" *ngIf="!isMultipleCreate">
+                <app-charge-code-assignment-ptable [VendorBillingAliasId]="VendorBillingAliasId"
+                    [chargeCodeId]="chargeCodeId" [recordPublishedOrCompleted]="recordPublishedOrCompleted" (selectionRecordOutput)="parentChargeCodeChange($event)">
+                </app-charge-code-assignment-ptable>
+
+                <div class="col-12 text-center" [ngClass]="{'disabled': recordPublishedOrCompleted}">
+                    <button type="submit" class="btn btn-primary btn-raised my-3" [disabled]="!parentChargeCodeSelected"
+                        (click)="assignParent()">Assign
+                        Parent</button>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-xl-12 px-0">
+                <mat-accordion class="example-headers-align new-charge-code-assignment-main">
+                    <mat-expansion-panel [expanded]="true" [disabled]="f.chargeCodeTypeId.value === 'System Adjustment'">
+                        <mat-expansion-panel-header class="math borderc">
+                            <mat-panel-title>
+                                <i class="icon-size fas fa-ticket-alt" style="color: #4680ff;"></i>&nbsp;
+                                {{isMultipleCreate ? 'Multiple Charge Code Assignment': 'New Charge Code Assignment'}}   
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <button type="button" *ngIf="!isMultipleCreate" class="fas fa-check c-refresh-speed" title="Refresh" [ngClass]="{'disabled': recordPublishedOrCompleted}" (click)="refreshDropdown()"></button>
+
+                        <i class="fas fa-info-circle"  *ngIf="!isMultipleCreate" (click)="openDialogChargeCode()" tooltipClass="tooltip-bg"></i>
+                        <ng-template #ChargeCodeAssignment>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                                <p class="mb-2">All Charge Codes found must be assigned in the system to move forward in
+                                    the invoice publishing process. The correct Charge Code assignment will help
+                                    standardize the product structure and produce valuable reporting for customers.</p>
+                                <p class="mb-2">If a Parent Charge Code was not found, an assignment will need to be
+                                    created for the New Charge Code. Select the values to assign to the New Charge Code
+                                    and edit the Display Name and Description to help ensure the most accurate data for
+                                    customers. Display Name will be used in the system for the Charge Code Name.</p>
+                                <p class="mb-2">Certain types of Charge Codes will need a distribution rule set up to
+                                    distribute the charges. These are called Adjustments and Account Level Charges and
+                                    do not directly total to the Current Charges for the inventory as provided by the
+                                    carrier. Sometimes, these charges reference an inventory item but are not directly
+                                    distributed to the current charges on the inventory in the invoice by the carrier.
+                                    These charges will always need a distribution rule. In some cases, the system will
+                                    manage the distribution automatically, in others the button for distribution will be
+                                    highlighted and a rule must be set. Last, there may be some instances where a
+                                    distribution rule will be added to a charge on the inventory -- this is an optional
+                                    distribution rule and not required.</p>
+
+                                <ul class="mb-0">
+                                    <li class="mb-2">Charge Codes with a Billing ID or Service Number will first apply
+                                        to the matching service number by the system automatically. If a specific
+                                        Billing ID or Service Number is referenced on a Charge Code and it no longer
+                                        exists in the invoice the system will create a record for the Billing ID and
+                                        distribute the charges.
+                                    </li>
+                                    <li>Charges without a reference to a Billing ID or Service Number will always need a
+                                        rule created and assigned to distribute the charges.
+                                    </li>
+                                </ul>
+                            </div>
+                        </ng-template>
+
+
+                        <i class="fas fa-info-circle" *ngIf="isMultipleCreate" (click)="openDialogChargeCodeMulti()" tooltipClass="tooltip-bg"></i>
+                        <ng-template #ChargeCodeAssignmentMulti>
+                            <div class="mat-dialog-header sec">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                                <p><strong>Code Assignment Overview</strong></p>
+
+                                <p>All <strong>Charge Codes</strong> must be assigned in the system to proceed with invoice publishing. Proper Charge Code assignment ensures a standardized product structure and enables valuable reporting for customers.</p>
+                                    
+                                <p><strong>Assignment Process</strong></p>
+                                <p style="font-size: 14px;">
+                                    Charge Code assignment can be completed in two ways: 
+                                </p>
+                
+                                <ol class="mb-1" style="list-style-type: decimal;">
+                                    <li><strong>Individual Assignment</strong>
+                                        <ul>
+                                            <li>
+                                                <p>Each Charge Code is assigned uniquely to a <strong>Charge Code Type, Charge Type and
+                                                        Charge Occurrence</strong></p>
+                
+                                            </li>
+                                            <li>
+                                                <p>A <strong>Parent Charge Code</strong> can be assigned if applicable</p>
+                                            </li>
+                                            <li>
+                                                <p>The <strong>Charge Code Description</strong> can be added or updated</p>
+                                            </li>
+                                        </ul>
+                                    </li>
+                
+                                    <li><strong>Bulk Assignment</strong>
+                                        <ul>
+                                            <li>
+                                                <p>Multiple Charge Codes can be assigned at once if they share the same <strong>Charge
+                                                        Code Type, Charge Type, Occurrence</strong>,<strong> and Charge Location
+                                                    </strong>even if the Charge Codes themselves are differ</p>
+                                                <ul>
+                                                    <li>
+                                                        <p><strong>Account-Level vs. Service-Level</strong><br>If a Charge Code appears
+                                                            at both the Account and Service levels, they must be assigned separately:
+                                                        </p>
+                                                        <ul style="list-style-type: disc">
+                                                            <li>
+                                                                <p><strong>Account-Level</strong> requires a distribution code</p>
+                                                            </li>
+                                                            <li>
+                                                                <p><strong>Service-Level</strong> typically operates without
+                                                                    distribution<br>Separate assignments ensure proper configuration for
+                                                                    each context despite identical Charge Code values</p>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                
+                                            </li>
+                                            <li>
+                                                <p><strong>Parent Charge Codes cannot be assigned</strong> </p>
+                                            </li>
+                                            <li>
+                                                <p><strong>Charge Code Descriptions cannot be modified</strong> </p>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                                <p><strong>Parent Charge Codes</strong> are rare and should only be assigned when two Charge Codes have the same Charge Code but different Charge Code Names. </p>
+
+                                <p><strong>Distribution Rules for Certain Charge Codes</strong></p>
+
+                                 <p>Some Charge Codes require <strong>distribution rules</strong> to ensure charges are allocated correctly. These include:</p>
+
+                                 <ul class="mb-1" style="list-style-type: disc">
+                                    <li>
+                                        <p><strong>Adjustments</strong></p>
+                                    </li>
+                                    <li>
+                                        <p><strong>Account-Level Charges </strong></p>
+                                    </li>
+                                </ul>
+                                <p>These charges do not typically total directly to <strong>Current Charges</strong> provided by the vendor. However, the system considers them part of the <strong>Total Current Charges</strong> because they must either be paid or used as a credit to offset Current Charges. </p>
+
+                                <ul class="mb-1" style="list-style-type: disc">
+                                    <li>
+                                        <p><strong>Charge Codes without a Billing ID always require a distribution rule</strong></p>
+                                    </li>
+                                    <li>
+                                        <p><strong>Charge Codes that reference a Billing ID may also be distributed via a distribution rule </strong></p>
+                                    </li>
+                                </ul>
+
+                                <p><strong>Billing ID & Service Number Matching</strong></p>
+                                <ul class="mb-0" style="list-style-type: disc">
+                                    <li>
+                                        <p>Charge Codes associated with a <strong>Billing ID</strong> or <strong>Service Number</strong> will automatically be applied to the matching service number by the system </p>
+                                    </li>
+                                    <li>
+                                        <p>If a referenced <strong>Billing ID or Service Number</strong> no longer exists in the invoice, the system will create a record for it and distribute the charges</p>
+                                    </li>
+                                    <li>
+                                        <p>Charges <strong>without</strong> a Billing ID or Service Number reference will always require a <strong>manual distribution rule</strong></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </ng-template>
+
+                        <div class="" [ngClass]="{'disabled': recordPublishedOrCompleted}">
+                            <form [formGroup]="chargeCodeForm">
+                                <div class="row m-0">
+                                    <div class="col-md-6 col-sm-12 col-xl-6 padding-1-3">
+
+                                        <div class="form-group d-flex align-items-end justify-content-between">
+                                            <div class="charge-code-label">
+                                                <label class="form-label">Charge Code</label>
+                                                <span>
+                                                    <input type="text" class="form-control" formControlName="chargeCode" [ngStyle]="{ 'color': isMultipleCreate  ? 'red' : '' }"
+                                                        disabled
+                                                        [ngClass]="{'invalid-error': !f.chargeCode.valid && (f.chargeCode.dirty || f.chargeCode.touched || isChargeCodeFormSubmit)}">
+                                                    <!-- <p style="font-size: 14px;">{{additionalBillData?.ChargeCode}}</p> -->
+                                                </span>
+                                                <ng-container
+                                                    *ngIf="f.chargeCode.invalid && (f.chargeCode.touched || isChargeCodeFormSubmit)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f.chargeCode.errors.required">Charge Code is
+                                                        required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                            <div class="charge-code-icon mr-2">
+                                                <!-- <img class="media-object" src="assets/images/dummy.png" alt="Img"> -->
+                                                <!-- <i class="icon-size fas fa-ticket-alt" style="font-size: 42px; color: #000;"></i> -->
+
+                                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 183.000000 122.000000"
+                                                    preserveAspectRatio="xMidYMid meet">
+
+                                                    <g transform="translate(0.000000,122.000000) scale(0.100000,-0.100000)"
+                                                        fill="#000000" stroke="none">
+                                                        <path d="M100 1192 c-19 -9 -45 -32 -57 -51 -22 -32 -23 -43 -23 -232 l0 -199
+65 0 c57 0 68 -3 97 -29 27 -24 33 -36 33 -71 0 -35 -6 -47 -33 -71 -29 -26
+-40 -29 -97 -29 l-65 0 0 -199 c0 -189 1 -200 23 -232 48 -73 2 -69 872 -69
+870 0 824 -4 872 69 22 32 23 43 23 232 l0 199 -65 0 c-57 0 -68 3 -97 29 -27
+24 -33 36 -33 71 0 35 6 47 33 71 29 26 40 29 97 29 l65 0 0 199 c0 189 -1
+200 -23 232 -48 73 -2 69 -872 69 -723 0 -783 -1 -815 -18z m1604 -104 c13
+-18 16 -51 16 -149 l0 -127 -40 -7 c-90 -15 -160 -101 -160 -195 0 -94 70
+-180 160 -195 l40 -7 0 -127 c0 -98 -3 -131 -16 -149 l-15 -22 -774 0 -774 0
+-15 22 c-13 18 -16 51 -16 149 l0 127 40 7 c90 15 160 101 160 195 0 94 -70
+180 -160 195 l-40 7 0 127 c0 98 3 131 16 149 l15 22 774 0 774 0 15 -22z" />
+                                                        <path d="M446 889 l-26 -20 0 -259 0 -259 26 -20 c26 -21 37 -21 469 -21 432
+0 443 0 469 21 l26 20 0 259 0 259 -26 20 c-26 21 -37 21 -469 21 -432 0 -443
+0 -469 -21z m874 -279 l0 -200 -405 0 -405 0 0 200 0 200 405 0 405 0 0 -200z" />
+                                                    </g>
+                                                </svg>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Charge Code Name *</label>
+                                            <span><input type="text" class="form-control" [ngStyle]="{ 'color': isMultipleCreate  ? 'red' : '' }"
+                                                    [ngClass]="{'disabled': isMultipleCreate, 'invalid-error': !f.chargeCodeName.valid && (f.chargeCodeName.dirty || f.chargeCodeName.touched || isChargeCodeFormSubmit)}"
+                                                    formControlName="chargeCodeName"></span>
+                                            <ng-container
+                                                *ngIf="f.chargeCodeName.invalid && (f.chargeCodeName.touched || isChargeCodeFormSubmit)">
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="f.chargeCodeName.errors.required">Charge Code
+                                                    Name is required
+                                                </mat-error>
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="f.chargeCodeName.errors?.maxlength">
+                                                    <div> Maximum length for the Charge Code Name is 150 characters
+                                                    </div>
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Charge Code Type *</label>
+                                            <span [ngClass]="{'disabled': disabledAssignmentData}">
+                                                <p-dropdown [options]="chargeCodeTypes" appendTo="body"
+                                                    optionLabel="Name" [filter]="true"
+                                                    (onChange)="onChargeCodeTypeChange()" filterBy="Name"
+                                                    formControlName="chargeCodeTypeId"
+                                                    placeholder="Select Charge Code Type..." optionValue="Name"
+                                                    [showClear]="false"
+                                                    [ngClass]="{'invalid-error': f.chargeCodeTypeId.invalid && ( f.chargeCodeTypeId.dirty || f.chargeCodeTypeId.touched || isChargeCodeFormSubmit)}">
+                                                </p-dropdown>
+                                            </span>
+                                            <ng-container
+                                                *ngIf="f.chargeCodeTypeId.invalid && (f.chargeCodeTypeId.touched || isChargeCodeFormSubmit)">
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="f.chargeCodeTypeId.errors.required">Charge
+                                                    Code Type is required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Charge Type *</label>
+                                            <span [ngClass]="{'disabled': disabledAssignmentData}">
+                                                <p-dropdown [options]="taxTypes" appendTo="body" optionLabel="Name"
+                                                    [filter]="true" filterBy="Name" formControlName="chargeTypeId"
+                                                    placeholder="Select Charge Type..." optionValue="Name"
+                                                    [showClear]="false"
+                                                    [ngClass]="{'invalid-error': f.chargeTypeId.invalid && (f.chargeTypeId.dirty || f.chargeTypeId.touched || isChargeCodeFormSubmit)}">
+                                                </p-dropdown>
+                                            </span>
+                                            <ng-container
+                                                *ngIf="f.chargeTypeId.invalid && (f.chargeTypeId.touched || isChargeCodeFormSubmit)">
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="f.chargeTypeId.errors.required">Charge
+                                                    Type is required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Charge Code Occurrence *</label>
+                                            <span [ngClass]="{'disabled': disabledAssignmentData}">
+                                                
+                                                <p-dropdown [options]="codeOccurence" appendTo="body"
+                                                    optionLabel="Occurrence" [filter]="true" filterBy="Occurrence"
+                                                    formControlName="chargeCodeOccurrenceId"
+                                                    placeholder="Select Occurrence..." optionValue="Id"
+                                                    [showClear]="false"
+                                                    [disabled]="this.f.chargeCodeTypeId.value === 'Usage'"
+                                                    [ngClass]="{'invalid-error': f.chargeCodeOccurrenceId.invalid && (f.chargeCodeOccurrenceId.dirty || f.chargeCodeOccurrenceId.touched || isChargeCodeFormSubmit)}">
+                                                </p-dropdown>
+                                            </span>
+                                            <ng-container
+                                                *ngIf="f.chargeCodeOccurrenceId.invalid && (f.chargeCodeOccurrenceId.touched || isChargeCodeFormSubmit)">
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="f.chargeCodeOccurrenceId.errors.required">Charge Code
+                                                    Occurence is required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xl-6 padding-3-1">
+                                        <div class="form-group">
+                                            <label class="form-label">Charge Code Description</label>
+                                            <textarea [ngClass]="{'disabled': isMultipleCreate}" class="form-control charge-code-disc" rows="4"
+                                                formControlName="description" [ngStyle]="{ 'color': isMultipleCreate  ? 'red' : '' }"
+                                                placeholder="Optional text: Describe charge code"></textarea>
+                                            <ng-container *ngIf="f.description.errors?.maxlength">
+                                                <mat-error style="font-size: 12px;">
+                                                    <div> Maximum length for the Charge Code Description is 255
+                                                        characters </div>
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+                                        <!-- <div>
+                                            <mat-radio-group>
+                                                <mat-radio-button [value]="false" class="my-1"> Set Distribution Rule on this Charge Code<i class="fas fa-info-circle ml-2" [placement]="'auto'"
+                                                    container="body" ngbTooltip="Rule created will apply to all records with or without a Billing ID with this Charge Code."
+                                                    tooltipClass="tooltip-bg"></i>
+                                                </mat-radio-button><br/>
+                                                
+                                                <mat-radio-button [value]="true">Set Distribution Rule on this Charge Record selected above
+                                                </mat-radio-button><i class="fas fa-info-circle ml-2" [placement]="'auto'"
+                                                    container="body" ngbTooltip="Rule created will apply only to this Charge Record selected with or without a Billing ID specifically and will not be applied to other records with this Charge Code."
+                                                    tooltipClass="tooltip-bg"></i>
+                                            </mat-radio-group>
+                    
+                                        </div> -->
+                                        <!-- <div class="form-check pl-0">
+                                            <input type="checkbox" id="set-dis-rule" class="form-check-inner">
+                                            <label class="form-label pl-1" for="set-dis-rule">Set Distribution Rule</label>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="text-center mt-2">
+                                <button type="submit" class="btn btn-primary btn-raised"
+                                    [disabled]="VendorBillingAliasId == 0 || saveButtonDisabled || saveButtonDisabledForDistribution"
+                                    (click)="isDisableSave ? updateChargeCode() : saveChargeCode() ">
+                                    <span class="spinner-border spinner-border-sm mr-2" role="status"
+                                        *ngIf="saveButtonDisabled"></span>Save</button>
+                                <!-- <button type="submit" class="btn btn-primary btn-raised ml-3">Save and Add
+                                    Distribution</button> -->
+                                <!-- <button type="submit" class="btn btn-primary btn-raised" style="margin-left: 15px;"
+                                    [disabled]="saveButtonDisabledForDistribution || saveButtonDisabled"
+                                    (click)="isDisableSave ? updateAddDistribution() : saveAndAddDistribution()"><span
+                                        class="spinner-border spinner-border-sm mr-2" role="status"
+                                        *ngIf="saveButtonDisabledForDistribution"></span>Save & Add
+                                    Distribution</button> -->
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+</div>

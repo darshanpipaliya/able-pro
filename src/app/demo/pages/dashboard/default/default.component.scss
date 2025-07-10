@@ -27,7 +27,7 @@
 
   .dot {
     border-radius: 50%;
-    background: map-get($yellow-theme, 500);
+    // background: map-get($yellow-theme, 500);
 
     &.primary {
       background: var(--primary-500);

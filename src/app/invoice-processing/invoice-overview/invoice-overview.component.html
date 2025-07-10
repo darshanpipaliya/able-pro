@@ -1,0 +1,115 @@
+<div class="invoice-overview-main">
+
+    <div class="row sandbox-io-lable-col-c-width mx-0" [ngClass]="{'warning-active': showWarning}">
+        <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 px-0">
+            <div class="invoice-overview-left">
+                <div class="invoice-overview-label">
+                    <h2>Invoice Overview</h2>
+                </div>
+                <div class="invoice-rep">
+                    <h3><span>Rep:</span> {{invoiceOverviewData?.RepName}}</h3>
+                    <h3 *ngIf="showWarning" class="warning-text mt-2">Review Invoice Details</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 px-0">
+            <div class="invoice-overview-right" >
+                <div class="billing-detail-group">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div>
+                                <h3>Customer</h3>
+                                <p>{{invoiceOverviewData?.CustomerAccountName}}</p>
+                            </div>
+
+                            <div class="attachments-wrapper">
+                                <div class="io-cus-btn-group mb-0">
+                                    <h3>Attachments</h3>
+                                   
+                                    <button [ngClass]="{'disabled': downloadFileDisabled}" title="View Data File" (click)="downloadFile()" type="button" class="btn p-0" style="line-height: 0;">
+                                        <img src="assets/images/sb-view-data-file-icon.svg" alt="View Data File Icon">
+                                    </button>
+                                   
+                                    <button title="View Invoice" [ngClass]="{'disabled': downloadAttachmentDisabled || !invoiceOverviewData?.ExpectedInvoiceAttachmentGeneratedFileName}" (click)="downloadAttachment()" type="button" class="btn p-0 ml-2" style="line-height: 0;">
+                                        <img src="assets/images/sb-view-invoice-icon.svg" alt="View Invoice Icon">
+                                    </button>
+                                    <button title="View Pre SB Table Data" type="button" class="btn p-0 ml-2" style="line-height: 0;" [ngClass]="{'disabled':isDisabledExport || !invoiceOverviewData?.IsEdiOrBdF}" (click)="onBtnExportDataAsExcel()">
+                                        <img src="assets/images/fa-file-chart-column.svg" alt="View Pre SB Table Data Icon">
+                                    </button>
+                                    <button title="View Sandbox Data" type="button" [ngClass]="{'disabled': isDisabledExport ||  !sandBoxGridRowData?.InvoiceNumber}" class="btn p-0 ml-2" style="line-height: 0;" (click)="onBtnExportDataAsExcel(true)">
+                                        <img src="assets/images/sb-view-data-file-icon-red.svg" alt="View Sandbox Data">
+                                    </button>
+                                </div>
+
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div>
+                                <h3>Vendor</h3>
+                                <p>{{invoiceOverviewData?.VendorAccountName}}</p>
+                            </div>
+
+                            <div>
+                                <h3>Invoice Number</h3>
+                                <p>{{invoiceOverviewData?.InvoiceNumber}}</p>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div>
+                                <h3>Payable Account</h3>
+                                <p>{{invoiceOverviewData?.PayableAccountNumber}}</p>
+                            </div>
+
+                            <div>
+                                <h3>Invoice Date</h3>
+                                <p>{{invoiceDate }}</p>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div>
+                                <h3>Status</h3>
+                                <p>{{invoiceOverviewData?.SandboxStatusDisplayText}}</p>
+                            </div>
+
+                                <div>
+                                    <h3>Amount to Pay</h3>
+                                    <p>{{invoiceOverviewData?.CurrencySymbol}} {{invoiceOverviewData?.AmountToPay | number:'1.2-2'}}</p>
+                                </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div>
+                                <h3>SLA Days Remaining</h3>
+                                <p [ngStyle]="{'color':(invoiceOverviewData?.SLADaysRemaining == '0' || invoiceOverviewData?.SLADaysRemaining == '0.00' || invoiceOverviewData?.SLADaysRemaining > 0) ? 'rgba(0,0,0,.87)' : '#f44336' }">{{invoiceOverviewData?.SLADaysRemaining}}</p>
+                            </div>
+
+                            <div>
+                                <h3>Detail Charges {{invoiceOverviewData?.IsAddedCreditBalanceAdjustment || invoiceOverviewData?.IsAddedPastDueAdjustment ? '*' : ''}}</h3>
+                                <p>{{invoiceOverviewData?.CurrencySymbol}} {{invoiceOverviewData?.ChargeDetailTotal | number:'1.2-2'}}</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-raised data-issue-btn"
+                                    [disabled]="showLoader || (invoiceOverviewData?.SandboxStatusDisplayText == 'Published')"
+                                    (click)="changeStatus(invoiceOverviewData.SandboxStatusDisplayText)">
+                                    <span class="spinner-border spinner-border-sm" role="status"
+                                        *ngIf="showLoader"></span>
+                                   {{invoiceOverviewData?.SandboxStatusDisplayText == 'Data Issue' ?  'Working' : 'Data Issue'}} </button>
+                            </div>
+
+                            <div>
+                                <h3>Difference</h3>
+                                <p [ngStyle]="{'color':(invoiceOverviewData?.DifferencesDisplay == '0' || invoiceOverviewData?.DifferencesDisplay == '0.00') ? 'rgb(96, 154, 28)' : '#f44336'}">{{invoiceOverviewData?.CurrencySymbol}} {{invoiceOverviewData?.DifferencesDisplay | number:'1.2-2'}}</p>
+                             </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

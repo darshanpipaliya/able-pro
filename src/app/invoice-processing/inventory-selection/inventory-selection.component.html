@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="sandbox-step-grid">
+            <mat-accordion class="example-headers-align accordion-toggle-btn-right">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                    <div class="inventory-sel-accordion-left-btn">
+                        <button type="button" class="btn btn-primary btn-raised" *ngIf="showNext" (click)="redirectNext()">Next</button>
+                        <!-- <button type="button" class="btn btn-primary btn-raised" [disabled]="!isShowAddButton" (click)="addVendorProduct()">Add Vendor Product</button> -->
+                        <button type="button" class="fas fa-check c-refresh" title="Refresh" [ngClass]="{'disabled': recordPublishedOrCompleted}" (click)="getvendorProductAssignment(true)"></button>
+                    </div>
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <!-- <i class="ficon fas fa-puzzle-piece"></i> &nbsp; -->
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" height="14px"
+                                viewBox="0 0 192.000000 124.000000" preserveAspectRatio="xMidYMid meet">
+                                <g transform="translate(0.000000,124.000000) scale(0.100000,-0.100000)" fill="#4680ff"
+                                    stroke="none">
+                                    <path d="M907 1180 c-23 -27 -47 -104 -47 -151 0 -18 -3 -16 -26 10 -36 44
+                                        -59 54 -105 46 -36 -6 -38 -8 -27 -28 6 -12 28 -42 49 -66 37 -42 59 -92 59
+                                        -137 0 -21 -2 -20 -62 12 -62 33 -118 44 -118 23 0 -6 8 -24 17 -40 18 -30 15
+                                        -34 -51 -82 -7 -5 1 -18 22 -36 25 -21 32 -35 32 -63 0 -80 23 -86 126 -34 38
+                                        19 70 33 73 31 2 -3 -8 -22 -22 -44 -32 -49 -86 -82 -142 -89 -39 -4 -48 -1
+                                        -75 27 l-32 31 -46 -41 c-48 -43 -133 -89 -165 -89 -51 0 -97 53 -97 111 0 23
+                                        4 23 62 3 26 -8 61 -14 80 -12 31 3 33 5 33 41 0 35 3 39 43 57 23 11 45 26
+                                        48 35 9 24 -31 61 -80 75 -24 6 -43 17 -43 23 1 39 -4 47 -30 47 -34 0 -74
+                                        -26 -113 -71 l-29 -34 -1 39 c0 33 7 47 49 91 33 35 52 65 56 89 4 20 5 39 3
+                                        41 -11 11 -108 -49 -130 -81 l-26 -36 -11 35 c-12 35 -43 69 -74 80 -18 7 -87
+                                        -16 -87 -28 0 -3 11 -18 25 -33 36 -38 80 -134 101 -222 16 -63 19 -117 19
+                                        -327 0 -212 2 -255 15 -267 9 -9 49 -24 90 -35 148 -37 277 -46 690 -46 413 0
+                                        542 9 690 46 41 11 81 26 90 35 13 12 15 55 15 267 0 210 3 264 19 327 21 88
+                                        65 184 101 222 14 15 25 30 25 33 0 12 -69 35 -87 28 -31 -11 -62 -45 -74 -80
+                                        l-11 -35 -21 30 c-23 33 -67 65 -109 81 -25 9 -28 8 -28 -10 0 -35 27 -83 69
+                                        -124 35 -33 41 -45 41 -80 l-1 -40 -29 34 c-39 45 -79 71 -112 71 -27 0 -32
+                                        -8 -31 -47 0 -6 -19 -17 -43 -23 -49 -14 -89 -51 -80 -75 3 -9 25 -24 48 -35
+                                        40 -18 43 -22 43 -57 0 -36 2 -38 33 -41 19 -2 54 4 80 12 58 20 62 20 62 -3
+                                        0 -58 -46 -111 -97 -111 -32 0 -117 46 -165 89 l-46 41 -32 -31 c-27 -28 -36
+                                        -31 -75 -27 -56 7 -110 40 -142 89 -14 22 -24 41 -22 44 3 2 35 -12 73 -31
+                                        103 -52 126 -46 126 34 0 28 7 41 33 63 l32 27 -29 24 c-16 12 -34 26 -40 30
+                                        -7 5 -5 17 7 37 9 16 17 34 17 40 0 21 -56 10 -119 -24 l-64 -34 7 47 c6 46
+                                        28 84 88 154 17 21 29 40 27 42 -3 3 -24 8 -47 12 -39 6 -44 4 -82 -34 -31
+                                        -31 -40 -35 -40 -21 0 45 -24 122 -47 149 -33 40 -73 40 -106 0z m379 -970
+                                        c288 -17 454 -44 427 -71 -15 -15 -149 -37 -313 -50 -398 -32 -1142 -1 -1193
+                                        50 -54 54 607 98 1079 71z" />
+                                </g>
+                            </svg>&nbsp;Inventory Selection
+                        </mat-panel-title>
+                        <i class="fas fa-info-circle" (click)="openDialog()" tooltipClass="tooltip-bg"></i>
+                        <ng-template #InventorySelection>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                                <p class="mb-0">Select Inventory to start Vendor Product assignment via the Billing ID, Sub Account or Account</p>
+                            </div>
+                        </ng-template>
+                    </mat-expansion-panel-header>
+                    
+                    <!-- <div class="toggle-btn">
+                        <mat-slide-toggle (change)="changeEvent($event)">View All</mat-slide-toggle>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-md-12 px-0">
+                            <ng-container style="height: max-content;">
+                                <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs1"
+                                    [rowData]="rowData" (onCellDoubleClickedEvent)="onCellDoubleClicked($event)"
+                                    [rowSelection]="rowSelection" [sheetName]="'Charge Code Type'"
+                                    [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true"
+                                    (onAgGridReady)="onAgGridReady($event)">
+                                </app-ag-grid-table>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

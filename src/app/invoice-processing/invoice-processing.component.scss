@@ -1,0 +1,1235 @@
+/* Ag grid all check and check box  design start*/
+:host ::ng-deep .ag-header-select-all .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input,
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    opacity: 1 !important;
+    border-radius: 0.25em !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper::after {
+    opacity: 0 !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Ag grid all check and check box  design end*/
+
+:host ::ng-deep .ag-theme-alpine .ag-ltr .ag-floating-filter-button {
+    margin-left: 10px !important;
+}
+
+:host ::ng-deep .ag-header-cell-text {
+    font-size: 13px !important;
+}
+
+:host ::ng-deep .row.margin-x-none {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+:host ::ng-deep .padding-x-none {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+:host ::ng-deep .sandbox-step-1-tooltip-data {
+
+    max-width: 100%;
+
+    .table {
+        border: 1px solid #E2E5E8;
+
+        tr {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+            th {
+                padding: 8px;
+                font-size: 14px;
+                font-weight: 700;
+                color: #181d1f;
+                border-right: 1px solid #E2E5E8;
+            }
+
+            td {
+                font-size: 13px;
+                color: #181d1f;
+                font-weight: 400;
+                padding: 8px;
+                line-height: 1.2em;
+                white-space: unset !important;
+            }
+        }
+    }
+}
+
+:host ::ng-deep .tooltip.show {
+    // transform: translate(-214px, -164px) !important;
+    // transform: unset !important;
+    max-width: 1270px !important;
+    // overflow-x: auto;
+
+}
+
+:host ::ng-deep .tooltip-inner {
+    max-width: 100% !important;
+}
+
+
+/* Responsive Scrollbar Start */
+// ::-webkit-scrollbar {
+//     height: 3px;
+//     width: 12px;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//     background: #c1c1c1;
+//     -webkit-border-radius: 1ex;
+// }
+
+/* Responsive Scrollbar End */
+
+:host ::ng-deep .padding-1-3 {
+    padding-left: 1px !important;
+    padding-right: 3px !important;
+}
+
+:host ::ng-deep .padding-1-1 {
+    padding-left: 1px !important;
+    padding-right: 1px !important;
+}
+
+:host ::ng-deep .padding-3-1 {
+    padding-left: 3px !important;
+    padding-right: 1px !important;
+}
+
+
+.margin-b-none {
+    margin-bottom: 0 !important;
+}
+
+.mat-stepper-horizontal {
+    margin-top: 8px;
+}
+
+.mat-mdc-form-field {
+    margin-top: 16px;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+    position: relative;
+}
+
+.customer-btn {
+    padding: 0;
+    font-size: 24px;
+}
+
+.form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+.form-group label {
+    float: left !important;
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 0 !important;
+    height: unset !important;
+}
+
+.summary-total-main {
+    padding: 20px 0 0;
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .invoice-overview-main {
+        margin-bottom: 25px;
+        background-color: #EAEAEA;
+        padding: 12px 10px 10px;
+        border-radius: 12px;
+        // border: 1px solid #181D1F;
+
+        li.list-group-item {
+            background-color: transparent;
+        }
+
+    }
+
+
+    .invoice-overview-label h2,
+    .validate-summary-total-label h2 {
+        font-size: 22px;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        letter-spacing: normal;
+        font-weight: 500;
+        margin-bottom: 0;
+        color: #181d1f;
+    }
+
+    .invoice-overview-right {
+
+        ul {
+            flex-direction: row;
+            display: flex;
+            justify-content: space-between;
+            overflow: auto;
+
+            li {
+                padding: 0 15px 0 0;
+                border: none;
+
+                h3 {
+                    font-size: 14px;
+                    font-family: Roboto, "Helvetica Neue", sans-serif;
+                    letter-spacing: normal;
+                    font-weight: 500;
+                    margin-bottom: 0;
+                    color: #181d1f;
+                    white-space: nowrap;
+                }
+
+                p {
+                    white-space: nowrap;
+                }
+
+                div:nth-of-type(1) {
+                    margin-bottom: 16px;
+                }
+
+                i {
+                    font-size: 24px;
+                }
+
+                img {
+                    width: 18px;
+                }
+            }
+        }
+    }
+
+    .validate-summary-total-main {
+
+        h3 {
+            font-size: 14px;
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+            letter-spacing: normal;
+            font-weight: 500;
+            margin-bottom: 0;
+            color: #181d1f;
+        }
+
+        .validate-summary-total-label,
+        .validate-summary-total-desc {
+            max-width: 600px;
+        }
+
+        .validate-summary-total-desc p {
+            font-size: 14px;
+        }
+
+        .pay-totals-details table {
+            max-width: 400px;
+            margin-bottom: 0;
+
+            thead {
+                tr {
+                    th {
+                        border: none;
+                        size: 14px;
+                        color: #181d1f;
+                        background: none;
+                        text-transform: none;
+                        text-align: end;
+                        padding: 0 0 15px 0;
+
+                    }
+
+                    :nth-child(2) {
+                        display: none;
+                    }
+                }
+            }
+
+            tr {
+                i {
+                    color: #059f11;
+                    font-size: 16px;
+                }
+
+                td {
+                    padding: 0 0 12px 0;
+                    border: none;
+                }
+
+                td.check-icon {
+                    width: 50px;
+                }
+
+                td:not(:first-child) {
+                    text-align: end;
+                }
+
+                &.total-amount td {
+                    padding: 0 0 40px 0;
+                }
+
+                &:not(:first-child) td.check-icon:last-child {
+                    display: none;
+                }
+            }
+        }
+
+        .edit-table {
+
+            thead {
+                tr {
+                    th {
+                        border: none;
+                        size: 14px;
+                        color: #181d1f;
+                        background: none;
+                        text-transform: none;
+                        text-align: end;
+                        padding: 0 0 15px 0;
+
+                    }
+
+                    :nth-child(2) {
+                        display: block !important;
+                    }
+                }
+            }
+
+            tr {
+                td:nth-child(2) {
+                    text-decoration: underline;
+                }
+
+                &:last-child td,
+                &:nth-last-child(3) td {
+                    text-decoration: none;
+                }
+
+                &:not(:first-child) td:last-child {
+                    display: block !important;
+                }
+            }
+        }
+
+        .mat-expansion-panel {
+            box-shadow: none;
+        }
+
+        .mat-expansion-panel-header {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+
+:host ::ng-deep .sandbox-step-grid {
+
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            // height: 658px !important;
+            height: calc(100vh - 250px) !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+}
+
+.additional-bill-detail-main {
+    background: #ddd;
+    overflow-x: auto;
+
+    table {
+        margin-bottom: 0;
+
+        tr {
+
+            border-right: 1px solid #babfc7;
+            border-bottom: 1px solid #babfc7;
+            border-left: 1px solid #babfc7;
+
+            th {
+                vertical-align: middle;
+                border-top: none;
+                font-size: 18px;
+                padding: 10px 8px;
+            }
+
+            td {
+                border-top: none;
+                padding: 10px 8px;
+            }
+
+            p {
+
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                line-height: 1.2em;
+                padding-top: 2px;
+            }
+        }
+
+        tr.tr-border-none {
+            border-bottom: none !important;
+        }
+    }
+}
+
+:host ::ng-deep span.p-dropdown-label.p-inputtext {
+    font-size: 13px !important;
+}
+
+.parent-panel-body {
+    padding: 20px;
+    border: 1px solid #babfc7;
+    border-radius: 0 0 4px 4px;
+}
+
+
+textarea.charge-code-disc {
+    border: 1px solid #ced4da !important;
+}
+
+
+:host ::ng-deep .new-charge-code-assignment-main .mat-expansion-panel-body {
+    padding: 15px 5px !important;
+    border: 1px solid #babfc7;
+    border-radius: 0 0 4px 4px;
+}
+
+:host ::ng-deep .search-CC-panel-body .mat-expansion-panel-body {
+    border: 1px solid #babfc7;
+    border-radius: 0 0 4px 4px;
+
+    ag-grid-angular {
+        .ag-root-wrapper {
+            border-radius: 4px !important;
+        }
+    }
+
+
+}
+
+.search-CC-panel-body .parent-charge-code-wrapper {
+    padding: 10px;
+}
+
+.form-group textarea,
+.form-group textarea::placeholder {
+    padding: 5px !important;
+}
+
+img.media-object {
+    max-width: 70px;
+    min-width: 40px;
+    height: 100%;
+    object-fit: contain;
+}
+
+.parent-CCA-field-l {
+    padding-left: 0;
+}
+
+.parent-CCA-field-r {
+    padding-right: 0;
+}
+
+.search-charge-code-res .responsive-btn-position .btn.btn-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.add-new-rule-main {
+    h2 {
+        font-size: 18px;
+        color: #373a3c;
+        font-weight: 500;
+    }
+
+    .add-new-rule-right .form-label {
+        width: 200px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}
+
+.rule-con-tooltip-position {
+    position: absolute;
+    right: 15px;
+    top: 63px;
+}
+
+.distribution-method-radio {
+    display: grid;
+    position: relative;
+
+    i.fa-info-circle {
+        position: absolute;
+        bottom: 5px;
+        left: 165px;
+    }
+}
+
+.parent-charge-code-wrapper .ag-root-wrapper {
+    border-radius: 4px !important;
+}
+
+.io-cus-btn-group .fas.fa-file-invoice::before {
+    content: '';
+    display: block;
+    background: url('/assets/images/icn-file-invoice-1.png') no-repeat center center;
+    z-index: 10;
+    background-size: 100%;
+    // width: 50px;
+    width: 20px;
+    height: 28px;
+}
+
+.io-cus-btn-group .fas.fa-file-invoice-dollar::before {
+    content: '';
+    display: block;
+    background: url('/assets/images/icn-file-invoice.png') no-repeat center center;
+    z-index: 10;
+    background-size: 100%;
+    // width: 50px;
+    width: 20px;
+    height: 28px;
+}
+
+i.charge-code-icon {
+    float: right;
+    margin-right: 13px;
+    margin-top: 4px;
+}
+
+/*Sandbox Step 4 Main CSS Start*/
+
+
+:host ::ng-deep .accordion-toggle-btn-right {
+
+    .inventory-sel-accordion-left-btn {
+        position: absolute;
+        top: 5px;
+        gap: 10px;
+        display: flex;
+        align-items: center;
+
+        button {
+            padding: 4px 12px;
+        }
+    }
+
+    .inventory-sel-accordion-left-btn.step4a {
+        position: absolute;
+        top: 7px;
+        left: 10px;
+        gap: 10px;
+        display: flex;
+        align-items: center;
+
+        button {
+            padding: 2px 6px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+    }
+
+    .toggle-btn {
+        // position: absolute;
+        // top: 9px;
+        // right: 20px;
+        display: flex;
+        align-items: center;
+        .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+            background-color: #6AA84F;
+        }
+
+        .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+            background-color: #fff;
+        }
+    }
+
+    .toggle-btn-5c {
+
+
+        .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+            background-color: #6AA84F;
+        }
+
+        .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+            background-color: #fff;
+        }
+    }
+
+}
+
+
+/*Sandbox Step 4 Main CSS End*/
+
+
+/* Sandbox Step 4 sub 4B CSS Start */
+.select-charge-code-build-charge-box {
+    border: 1px solid #80808061;
+    border-radius: 4px;
+    padding: 0 !important;
+}
+
+.select-charge-code-build-charge-box .row {
+    margin: 0;
+}
+
+.accordion-header-tooltip-right-arrow .mat-expansion-panel-header i.fa-info-circle {
+    position: absolute;
+    right: 45px;
+    top: 12px;
+}
+
+
+/* p-table start */
+:host ::ng-deep p-table {
+    table {
+        border: 1px solid #babfc7;
+        border-radius: 12px;
+        border-collapse: separate;
+        border-spacing: 0;
+
+        .p-datatable-thead {
+            height: 37px;
+
+            tr {
+
+                th {
+                    background: #EEE;
+                    border-bottom: 1px solid #babfc7;
+                    padding: 0px 17px !important;
+                    font-size: 15px;
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+                    font-weight: 700;
+                    color: #181d1f;
+                    // white-space: nowrap;
+                    // width: 100%;
+                }
+            }
+
+            &:nth-of-type(1) {
+                th {
+                    &:nth-of-type(1) {
+                        border-top-left-radius: 11px !important;
+                    }
+
+                    &:last-child {
+                        border-top-right-radius: 11px !important;
+                    }
+                }
+            }
+        }
+
+        .p-datatable-tbody {
+            tr {
+                padding: 0 10px !important;
+
+                td {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+                    ;
+                    font-size: 13px !important;
+                    color: #181d1f !important;
+                    font-weight: 400 !important;
+                    padding: 0px 17px !important;
+                    line-height: 1.2em;
+                    height: 24px;
+                    text-overflow: ellipsis !important;
+                    white-space: nowrap !important;
+                    overflow: hidden !important;
+
+                    &:nth-of-type(1) {
+                        border-bottom-left-radius: 11px !important;
+                    }
+
+                    &:last-child {
+                        border-bottom-right-radius: 11px !important;
+                    }
+                }
+
+                &:nth-of-type(1) {
+                    white-space: wrap !important;
+                    overflow: visible !important;
+                }
+            }
+
+            &:last-child td {
+                border-width: 0;
+                border-bottom: none !important;
+            }
+        }
+    }
+
+}
+
+:host ::ng-deep .select-charge-code-build-charge-box .mat-expansion-panel-body {
+    padding: 10px !important;
+}
+
+:host ::ng-deep .select-charge-code-build-charge-box .mat-accordion:nth-child(1) .mat-expansion-panel-body {
+    padding: 10px 10px 0 !important;
+}
+
+:host ::ng-deep .build-charge-code-group-accordian thead tr th:nth-of-type(1),
+:host ::ng-deep .build-charge-code-group-accordian table tr td:nth-of-type(1) {
+    padding: 0px 0 0px 17px !important;
+}
+
+:host ::ng-deep .build-charge-code-group-accordian table tr th p-tableheadercheckbox .p-checkbox-box,
+:host ::ng-deep .build-charge-code-group-accordian table tr td p-tablecheckbox .p-checkbox-box {
+    height: 14px;
+    width: 14px;
+    border-color: rgba(0, 0, 0, 0.25) !important;
+    border-width: 1px;
+    margin-top: 3px;
+}
+
+:host ::ng-deep .build-charge-code-group-accordian table tr th p-tableheadercheckbox .p-checkbox-box.p-highlight,
+:host ::ng-deep .build-charge-code-group-accordian table tr td p-tablecheckbox .p-checkbox-box.p-highlight {
+    border: none !important;
+}
+
+:host ::ng-deep .build-charge-code-group-accordian table tr th p-tableheadercheckbox .p-checkbox-box.p-highlight span::before,
+:host ::ng-deep .build-charge-code-group-accordian table tr td p-tablecheckbox .p-checkbox-box.p-highlight span::before {
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    display: block !important;
+}
+
+
+:host ::ng-deep .build-charge-code-group-accordian table tr th input.table-serachfield {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* p-table end */
+
+/* Sandbox Step 4 sub 4B CSS End */
+
+.sandbox-tooltip-table table {
+    border: 1px solid #E2E5E8;
+    margin-bottom: 0;
+
+    tr {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        text-align: left;
+
+        th {
+            padding: 6px 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #181d1f;
+            border-right: 1px solid #E2E5E8;
+            background: transparent;
+            text-transform: unset;
+            line-height: 1em;
+        }
+
+        td {
+            font-size: 13px;
+            color: #181d1f;
+            font-weight: 400;
+            padding: 6px 8px;
+            line-height: 1em;
+            white-space: unset !important;
+        }
+    }
+
+}
+
+:host ::ng-deep .tooltip.show {
+    top: 35px !important;
+    left: unset !important;
+    transform: unset !important;
+    right: 0 !important;
+
+    .arrow {
+        left: unset !important;
+        right: 25px !important;
+    }
+
+    .tooltip-inner {
+        padding: 12px !important;
+    }
+}
+
+.main-grid-lf-btn {
+    position: absolute;
+    content: '';
+    width: 32px;
+    height: 32px;
+    top: 4px;
+    left: 10px;
+    z-index: 1;
+}
+
+
+
+@media only screen and (max-width: 1780px) {
+
+    /* Sandbox Step 4 sub 4A CSS Start */
+    .accordion-toggle-btn-right.step4a .mat-expansion-panel-header {
+        align-items: end;
+        padding-bottom: 8px !important;
+    }
+
+    .accordion-toggle-btn-right.step4a .math {
+        height: 70px;
+    }
+
+    // :host ::ng-deep .tooltip.show {
+    //     max-width: 1300px !important;
+    //     transform: translate(-20px, 21px) !important;
+
+    //     .arrow {
+    //         display: none;
+    //     }
+    // }
+
+}
+
+
+@media only screen and (max-width: 1199px) {
+
+    :host ::ng-deep .padding-1-3,
+    :host ::ng-deep .padding-1-1,
+    :host ::ng-deep .padding-3-1 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .summary-total-main {
+        // padding: 20px 0 0;
+
+        .invoice-overview-label h2,
+        .validate-summary-total-label h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .pay-totals-details table {
+            margin-right: auto;
+        }
+
+    }
+
+    // :host ::ng-deep .tooltip.show {
+    //     max-width: 700px !important;
+    //     will-change: transform !important;
+    //     transform: translate(20px, 21px) !important;
+    // }
+
+}
+
+@media only screen and (max-width: 1100px) {
+    .accordion-toggle-btn-right.step4a .toggle-btn {
+        top: 42px;
+    }
+
+}
+
+@media only screen and (max-width: 991px) {
+
+    .invoice-summary-box .form-group span,
+    p {
+        font-size: 13px !important;
+    }
+
+    .invoice-overview-label h2,
+    .validate-summary-total-label h2 {
+        font-size: 20px !important;
+    }
+
+
+    .parent-panel-body {
+        padding: 10px;
+    }
+
+    .add-new-rule-main h2,
+    .additional-bill-detail-main th {
+        font-size: 16px !important;
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+    .search-charge-code-res {
+        padding-top: 26px;
+    }
+
+    .search-charge-code-res .responsive-btn-position {
+        position: absolute;
+        top: 5px;
+        text-align: right !important;
+        right: 10px;
+    }
+
+    .search-charge-code-res .responsive-btn-position .btn.btn-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .rule-con-tooltip-position {
+        position: unset;
+    }
+
+    /* Sandbox Step 4 sub 4A CSS Start */
+    .accordion-toggle-btn-right.step4a .mat-expansion-panel-header {
+        align-items: end;
+        padding-bottom: 8px !important;
+    }
+
+    /* Sandbox Step 4 sub 4A CSS End */
+
+    .invoice-summary-box .form-group .form-label {
+        min-width: unset !important;
+        margin-right: 6px !important;
+    }
+
+}
+
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+// Dialog box
+
+.dialog-box {
+    // margin-top: -9px;
+    // margin-bottom: -10px;
+
+    .mat-dialog-header {
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid #e2e5e8;
+        position: relative;
+        padding-bottom: 10px;
+
+        .icon-close-btn {
+            position: absolute !important;
+            right: 0 !important;
+            display: flex;
+            gap: 10px;
+
+            i.fa-info-circle {
+                margin-top: 2px;
+            }
+
+            button.close {
+                position: unset;
+            }
+        }
+    }
+
+    .dialog-box-body {
+
+        .attention-box {
+            border: 1px solid #ccc;
+            padding: 8px;
+            border-radius: 12px;
+            margin-top: 15px;
+
+            .attention-title h2 {
+                font-size: 18px;
+                font-weight: 500 !important;
+                color: rgba(0, 0, 0, .87);
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 5px;
+            }
+
+            .attention-disc {
+
+                p {
+                    font-size: 14px;
+                    margin-bottom: 0;
+                }
+
+                a {
+                    color: #4680ff !important;
+                    text-decoration: underline !important;
+                    cursor: pointer;
+                    text-wrap: nowrap;
+                }
+            }
+        }
+
+        .invoice-summary-box {
+
+            .form-group {
+                margin-bottom: 2px !important;
+
+                .form-label {
+                    min-width: 140px;
+                }
+            }
+
+
+
+            .mat-expansion-panel {
+                box-shadow: none !important;
+                border: 1px solid #cfcfcf !important;
+                border-radius: 0;
+
+                .mat-expansion-panel-header {
+                    border-radius: 0;
+                }
+            }
+
+            :nth-of-type(1) .mat-expansion-panel:first-of-type {
+                border-top-right-radius: 4px;
+                border-top-left-radius: 4px;
+            }
+
+            :nth-of-type(3) .mat-expansion-panel:last-of-type {
+                border-bottom-right-radius: 4px;
+                border-bottom-left-radius: 4px;
+            }
+
+            .mat-expansion-panel-body {
+                border: 1px solid #babfc7;
+                border-radius: 0;
+            }
+
+            .mat-expansion-panel-body {
+                padding: 0 !important;
+            }
+
+        }
+    }
+}
+
+// .dialog-box .dialog-box-body .invoice-summary-box .form-group .form-label
+
+
+.invoice-summary-box .account-inventory-box .row .col-md-6.col-xl-6:nth-child(odd) .form-group .form-label {
+    min-width: 245px !important;
+}
+
+.invoice-summary-box .account-inventory-box .row .col-md-6.col-xl-6:nth-child(even) .form-group .form-label {
+    min-width: 160px !important;
+}
+
+.invoice-summary-box .mat-expansion-panel-header.math{
+    height: 30px !important;
+}
+
+@media only screen and (max-width: 576px) {
+
+    .parent-CCA-field-l,
+    .parent-CCA-field-r {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+
+
+.search-container form {
+    display: flex;
+    height: 36px;
+
+    input {
+        width: 100%;
+        border: 1px solid #ced4da;
+        border-right: none;
+    }
+
+    button {
+        border: 1px solid #ced4da;
+        border-left: none;
+        background: transparent;
+    }
+}
+
+:host ::ng-deep .cost-center-tooltip {
+    position: absolute;
+    top: 49px !important;
+    left: 196px !important;
+    will-change: transform;
+    transform: translate(117px, -22px);
+    margin-top: 5px;
+
+    &.bs-popover-left .arrow,
+    &.bs-popover-right .arrow {
+        top: 25% !important;
+    }
+
+    .popover-body {
+        background-color: #f7f7f7 !important;
+        border-top: 1px solid #ebebeb;
+        border-bottom-left-radius: calc(0.3rem - 1px);
+        border-bottom-right-radius: calc(0.3rem - 1px);
+    }
+}
+
+:host ::ng-deep .cost-center-tooltip.right-btn-position {
+    width: 200px !important;
+    transform: translate(-145px, -53px) !important;
+}
+
+:host ::ng-deep .cost-center-tooltip.right-btn-position-edit-page {
+    width: 250px !important;
+    transform: translate(-243px, -53px) !important;
+}
+
+.inner-option {
+    cursor: pointer;
+    font-weight: 600;
+    // border-bottom: solid 0.5px black;
+    margin-bottom: 5px;
+
+    :hover {
+        color: #4680ff;
+    }
+}
+
+:host ::ng-deep .bs-popover-left>.arrow,
+.bs-popover-auto[x-placement^="left"]>.arrow {
+    transform: rotate(180deg);
+    right: unset;
+    left: -9px;
+}
+
+.select-action-button {
+    width: 32px !important;
+    height: 32px !important;
+    position: absolute;
+    left: 10px;
+    top: 4px;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+    margin-left: 15px;
+}
+
+.mat-dialog-content.no-current-charges {
+    max-height: 84vh !important;
+
+    .mat-dialog-actions{
+        display: inline !important;
+    }
+}
+
+
+@media (min-width: 1200px) {
+
+    :host ::ng-deep .row.sandbox-io-lable-col-c-width {
+        .col-xl-3 {
+            flex: 0 0 20% !important;
+            max-width: 20% !important;
+        }
+
+        .col-xl-9 {
+            flex: 0 0 80% !important;
+            max-width: 80% !important;
+        }
+    }
+}
+
+:host ::ng-deep .toggle-btn {
+    // position: absolute;
+    // top: 9px;
+    // left: 50px;
+    display: flex;
+    align-items: center;
+
+    .mat-slide-toggle .mat-slide-toggle-ripple {
+        display: none;
+    }
+
+    .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+        background-color: #6AA84F;
+    }
+
+    .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+        background-color: #fff;
+    }
+}
+
+.custome-export {
+    color: #609a1c !important;
+    border-color: #609a1c !important;
+}
+
+.custome-export:hover {
+    background-color: #609a1c !important;
+    color: white !important;
+}
+
+.btn-group-list {
+    position: absolute;
+    z-index: 10;
+    top: 4px;
+    left: 10px;
+    gap: 8px;
+}
+
+.btn.btn-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.fas.fa-check.c-refresh {
+    border: 0;
+    background: transparent;
+    padding: 0;
+}
+
+.fas.fa-check.c-refresh::before {
+    content: '\f021' !important;
+    font-size: 18px;
+    border: 1px solid #4680ff;
+    color: #4680ff;
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+}

@@ -1,0 +1,504 @@
+<div class="row">
+    <div class="col-12">
+        <div class="summary-total-main">
+            <app-invoice-overview-i [gridRowData]="gridRowData"
+                (invoiceOverviewDataOutput)="overviewDetail($event)"></app-invoice-overview-i>
+        </div>
+        <div class="invoice-overview-main">
+            <div class="row mx-0">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                    <div class="io-main">
+                        <div class="invoice-overview-wrapper">
+                            <div class="invoice-overview-left">
+                                <div class="invoice-overview-label">
+                                    <h2>Cost Overview</h2>
+                                </div>
+                            </div>
+                            <div class="invoice-overview-right">
+                                <div class="billing-detail-group">
+                                    <ul class="list-group d-none">
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Past Due</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.PastDueAmount}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Invoice Amount To Pay</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.AmountToPay}}</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Pay Past Due?</h3>
+                                                <p>{{invoiceOvervewData?.PayPastdueDisplay}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Previous Charges</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.PrevBillBalance}}</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Payment On Invoice*</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.PaymentAmount}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Difference %</h3>
+                                                <p>{{invoiceOvervewData?.DifferencePerSantage}} %</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item" style="justify-content: end; margin-bottom: 5px;">
+                                            <div>
+                                                <h3>Difference $</h3>
+                                                <p style="position: relative; bottom: 1px;">$
+                                                    {{invoiceOvervewData?.Difference}}</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Average Last 3 Months</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}} {{costOverviewData &&
+                                                    costOverviewData[0]?.AvgAmountToPay}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Highest Last 3 Months</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}} {{costOverviewData &&
+                                                    costOverviewData[0]?.HighestAmountToPay}}</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+
+
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Total Current Charges </h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.TotalCurrentCharges}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Invoice Amount To Pay</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.AmountToPay}}</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Previous Charges</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.PrevBillBalance}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Past Due</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.PastDueAmount}}</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Difference %</h3>
+                                                <p>{{invoiceOvervewData?.DifferencePerSantage}} %</p>
+                                            </div>
+                                            <div>
+                                                <h3>Pay Past Due?</h3>
+                                                <p>{{invoiceOvervewData?.PayPastdueDisplay}}</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Difference $</h3>
+                                                <p style="position: relative; bottom: 1px;">$
+                                                    {{invoiceOvervewData?.Difference}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Last Payment</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.PaymentAmount}}</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Average Last 3 Months</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}} {{costOverviewData &&
+                                                    costOverviewData[0]?.AvgTotalCurrentCharges}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Highest Last 3 Months</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}} {{costOverviewData &&
+                                                    costOverviewData[0]?.HighestTotalCurrentCharges}}</p>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="graph-main">
+                            <div class="card mb-0">
+                                <!-- <p-chart type="bar" [data]="basicData" [options]="basicOptions" [width]="180"
+                                    [responsive]="true"></p-chart> -->
+                                    <div id="overview_chart"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="mt-2 assignment-grids">
+                <div class="fb fb2 example-headers-align">
+                    <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true"
+                        class="table-border-none">
+                        <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                            (click)="loadNodes(pTableContain, true)"></button>
+                        <mat-expansion-panel-header class="math borderc">
+                            <mat-panel-title
+                                style="margin-left: 33%; margin-right: 0px !important;font-weight: 700 !important;">
+                                <i class="fas fa-sticky-note" style="color: #4680ff;"></i>&nbsp;Invoice Notes
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <div class="user-activity-log-inner assignment-tab table-filter">
+                                <ng-container>
+                                    <p-treeTable #treeTable [value]="files" columnResizeMode="expand"
+                                        [columns]="displaycols" [rows]="10" [lazy]="true"
+                                        (onLazyLoad)="loadNodes($event, true)" [totalRecords]="totalRecords"
+                                        [scrollable]="true" [resizableColumns]="true" selectionMode="checkbox"
+                                        [reorderableColumns]="true" (onColResize)="handleColumnResize($event)"
+                                        [metaKeySelection]="true" dataKey="InvoiceNoteId"
+                                        [(selection)]="selectedRecords">
+                                        <!-- style="overflow-x: scroll;" -->
+
+                                        <ng-template pTemplate="colgroup" let-columns>
+                                            <colgroup>
+                                                <ng-container *ngFor="let col of columns">
+                                                    <col
+                                                        [ngStyle]="{'width': col.width || 'auto', 'min-width': col.width || '100px'}" />
+                                                </ng-container>
+                                            </colgroup>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr class="header-row p-treetable-thead-parent">
+
+                                                <ng-container *ngFor="let col of cols">
+                                                    <ng-container *ngIf="col.isChildren && col.isParentVisible">
+                                                        <th [attr.data-parent-id]="col.parent"
+                                                            [attr.colspan]="col.colspan" ttResizableColumn
+                                                            class="parent-header" [style.min-width]="col.width"
+                                                            [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                                                            <span>{{ col.header }}</span>
+                                                            <i class='pi pi-fw pi-chevron-right icon-contracted'
+                                                                *ngIf="!innerLoading && col.isChildren && col.isicon == 1 && col.isToggle"
+                                                                (click)="toggleColumn(col.parent , 'close')"></i>
+                                                            <i class='pi pi-fw pi-chevron-left icon-expanded'
+                                                                *ngIf="!innerLoading && col.isChildren && col.isicon == 0 && col.isToggle"
+                                                                (click)="toggleColumn(col.parent , 'open')"></i>
+                                                        </th>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tr>
+
+                                            <tr class="header-row p-treetable-thead-child">
+                                                <ng-container *ngFor="let col of columns">
+                                                    <ng-container>
+                                                        <th ttResizableColumn ttReorderableColumn
+                                                            (click)="OrderBy(col.field  )" class="child-header"
+                                                            [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
+                                                            {{ col.childHeader }}
+                                                            <i class='pi pi-arrow-up' *ngIf="col.sorting === 'asc'"></i>
+                                                            <i class='pi pi-arrow-down'
+                                                                *ngIf="col.sorting === 'desc'"></i>
+                                                        </th>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tr>
+
+                                            <tr class="header-row p-treetable-thead-filter" *ngIf="fieldsName?.type">
+
+                                                <ng-container *ngFor="let col of columns">
+                                                    <ng-container>
+                                                        <th class="child-header" [style.min-width]="col.width"
+                                                            [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
+                                                            <input type="text" [(ngModel)]="col.valuesset"
+                                                                [disabled]="col.isenable" pInputText size="8"
+                                                                *ngIf="col.type === 'text'"
+                                                                (input)="filerOutSide($event, col)"
+                                                                style="width: auto" />
+
+                                                            <input type="text" OnlyNumber [(ngModel)]="col.valuesset"
+                                                                [disabled]="col.isenable" pInputText size="8"
+                                                                *ngIf="col.type === 'numberFilter'"
+                                                                (input)="filerOutSide($event, col)"
+                                                                style="width: auto" />
+
+
+                                                            <p-calendar dateFormat="mm-dd-yy"
+                                                                class="p-treeTable-calender-grid"
+                                                                [disabled]="col.isenable"
+                                                                (ngModelChange)="filerOutSide($event, col)"
+                                                                *ngIf="col.type === 'dateFilter' && !col.isenable"
+                                                                [(ngModel)]="col.valuesset" placeholder="mm-dd-yyyy"
+                                                                appendTo="body" [showIcon]="true">
+                                                            </p-calendar>
+
+                                                            <input type="text"
+                                                                *ngIf="col.type === 'dateFilter' && col.isenable"
+                                                                [(ngModel)]="col.valuesset" [disabled]="col.isenable"
+                                                                pInputText size="8" style="width: auto" />
+
+                                                            <button type="text" pButton
+                                                                icon="pi pi-filter-icon pi-filter icon-filter"
+                                                                (click)="openContextMenu($event,col )"></button>
+                                                        </th>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="body" let-rowNode let-rowData="rowData"
+                                            let-columns="columns">
+                                            <tr class="body-row" (dblclick)="onRowDoubleClick(rowData)">
+                                                <ng-container *ngFor="let col of columns;  let i = index">
+                                                    <ng-container>
+
+                                                        <td [(selection)]="selectedNode"
+                                                            (contextmenu)="showContextMenu($event, contextMenu , rowData[col.field])"
+                                                            class="cell" [style.min-width]="col.width"
+                                                            [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
+
+                                                            <p-treeTableToggler [rowNode]="rowNode" [ngClass]="{'disabled': innerLoading}"
+                                                                *ngIf="i === 0 && ( rowNode.node?.leaf === false || rowNode.parent != null )"></p-treeTableToggler>
+
+                                                            <ng-container [ngSwitch]="col.field">
+                                                                <span *ngSwitchCase="'InvoiceNoteCreatedDate'">{{
+                                                                    rowData[col.field] |
+                                                                    date:
+                                                                    'MM/dd/yyyy' }}</span>
+                                                                <span *ngSwitchCase="'Notes'" class="noteBox">{{
+                                                                    rowData[col.field] }}</span>
+                                                                <span *ngSwitchDefault>{{ rowData[col.field]
+                                                                    }}</span>
+                                                            </ng-container>
+                                                        </td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tr>
+
+                                            <tr class="body-row"
+                                                *ngIf=" (isApiAlerdayCall && lastNode?.data.InvoiceNoteId === rowNode.node.data.InvoiceNoteId)">
+                                                <td class="cell">
+                                                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="emptymessage" let-columns>
+                                            <tr>
+                                                <td class="cell" [attr.colspan]="columns.length">
+                                                    <span class="spinner-border spinner-border-sm" role="status"
+                                                        *ngIf="loading"></span>
+                                                    <span *ngIf="!loading && totalRecords === 0">
+                                                        No Record Found
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-treeTable>
+                                    <!-- custome-sidebar -->
+                                    <div class="custome-side-buttons">
+                                        <div class="custome-side-button" [ngClass]="{'active-border': sidebarVisible }">
+                                            <!-- vericaltext -->
+                                            <a class="custom-side-button-button ag-icon ag-icon-columns"
+                                                (click)="openSidebar()">
+                                                <!-- <i class="fa fa-check"></i>  -->
+                                                Columns</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="sidebar" *ngIf="sidebarVisible">
+                                        <div class="sidebar-content">
+                                            <p-tree [value]="filesColumns" selectionMode="checkbox"
+                                                (onNodeSelect)="nodeSelect($event)"
+                                                (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles">
+                                            </p-tree>
+                                        </div>
+                                    </div>
+                                    <p-contextMenu
+                                        [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}"
+                                        #contextMenu [model]="items"></p-contextMenu>
+
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                    <div class="total-record-span records-text mt-2 float-right"
+                        style="margin-right: 1.6rem !important">
+                        <span>{{totalRecords > 0 ? totalRecords : 0}} records</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p-dialog [(visible)]="displayModal" modal="true" [closable]="true" [draggable]="false" [resizable]="false"
+            [dismissableMask]="true" [header]="''" #treeTable
+            [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+
+                        <p-dropdown [(ngModel)]="selectedOption1" class="rounded-inputs20 select-select col-md-12"
+                            [options]="countries" optionValue="name" optionLabel="display" appendTo="body">
+                        </p-dropdown>
+
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                    <div class="col-md-12">
+                        <input type="text" [(ngModel)]="textboxValue1"
+                            placeholder="{{selectedOption1 === 'inrange' ? 'From' : 'Filter...'}}"
+                            (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                    </div>
+                </div>
+                <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                    <div class="col-md-12">
+                        <input type="text" OnlyNumber [(ngModel)]="textboxValue1"
+                            placeholder="{{selectedOption1 === 'inrange' ? 'From' : 'Filter...'}}"
+                            (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                    </div>
+                </div>
+                <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                    <div class="col-md-12">
+                        <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                            (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1"
+                            placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+                    </div>
+                </div>
+
+                <!-- First In Range -->
+                <div *ngIf="selectedOption1 == 'inrange'">
+                    <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                        <div class="col-md-12">
+                            <input type="text" [(ngModel)]="textboxValue1_1" placeholder="To"
+                                (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                        <div class="col-md-12">
+                            <input type="text" OnlyNumber [(ngModel)]="textboxValue1_1" placeholder="To"
+                                (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                        <div class="col-md-12">
+                            <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                                (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1_1"
+                                placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- First In Range Over -->
+                <div class="row my-1" *ngIf="displayModal1">
+                    <div class="col-md-12 d-flex justify-content-center condition-label">
+                        <label *ngFor="let radiobutton of radioItems">
+                            <input type="radio" name="options" (click)="model.option = radiobutton"
+                                [checked]="radiobutton === model.option" />{{ radiobutton }}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="displayModal1">
+                    <div class="col-md-12 mb-2">
+
+                        <p-dropdown [(ngModel)]="selectedOption2" class="rounded-inputs20 select-select col-md-12"
+                            [options]="countries" optionValue="name" optionLabel="display" appendTo="body">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <!-- -------------- -->
+
+                <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'text' ">
+                    <div class="col-md-12">
+                        <input placeholder="{{selectedOption2 === 'inrange' ? 'From' : 'Filter...'}}" type="text"
+                            [(ngModel)]="textboxValue2" pInputText size="8" style="width: auto" />
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'numberFilter' ">
+                    <div class="col-md-12">
+                        <input placeholder="{{selectedOption2 === 'inrange' ? 'From' : 'Filter...'}}" type="text"
+                            OnlyNumber [(ngModel)]="textboxValue2" pInputText size="8" style="width: auto" />
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'dateFilter' ">
+                    <div class="col-md-12">
+                        <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2" placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+
+                    </div>
+                </div>
+
+                <!-- Second In Range -->
+                <div *ngIf="displayModal1 && selectedOption2 == 'inrange'">
+                    <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                        <div class="col-md-12">
+                            <input type="text" [(ngModel)]="textboxValue2_1" placeholder="To" pInputText size="8"
+                                style="width: auto" />
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                        <div class="col-md-12">
+                            <input type="text" OnlyNumber [(ngModel)]="textboxValue2_1" placeholder="To" pInputText
+                                size="8" style="width: auto" />
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                        <div class="col-md-12">
+                            <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2_1" placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
+                            </p-calendar>
+                        </div>
+                    </div>
+                </div>
+                <!-- Second In Range Over -->
+                <!-- -------------- -->
+
+
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-12">
+                        <button type="text" class="btn btn-primary btn-sm" pButton (click)="onFilterChangedValue()">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </p-dialog>
+        <!-- </div> -->
+    </div>
+</div>

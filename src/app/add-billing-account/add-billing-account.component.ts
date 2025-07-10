@@ -290,7 +290,6 @@ export class AddBillingAccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(' tabInfo 0', this.tabInfo); 
     for (let i = 1; i <= 31; i++) {
       this.days.push({ Id: i, value: i, stringValue: i.toString() });
     }
@@ -1232,7 +1231,6 @@ export class AddBillingAccountComponent implements OnInit, OnDestroy {
           data: errorData,
         });
         dialogRef.afterClosed().subscribe((result) => {
-          console.log('Mihir 45', result);
           this.vendorChangeDetect = result;
           // if (!isValuesUndefined(result)) {
           if (result == false) {
@@ -1427,7 +1425,6 @@ export class AddBillingAccountComponent implements OnInit, OnDestroy {
       }
       const dialogRef = this.dialog.open(ErrorWarningPopupComponent, { panelClass: 'error-warning', data: errorData });
       dialogRef.afterClosed().subscribe(res => {
-        console.log('Mihir ', res);
         
         if(res == false) {
           this.saveButtonLoadder = true;

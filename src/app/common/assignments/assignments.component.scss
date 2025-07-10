@@ -1,0 +1,188 @@
+mat-panel-title {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-right: 0px;
+    font-weight: 700 !important;
+}
+
+mat-expansion-panel {
+    border: solid;
+    // border-radius: 8px;
+    margin-bottom: 12px !important;
+    border-color: #80808061;
+}
+.custome-export{
+    color: #609a1c !important;
+    border-color: #609a1c !important;
+}
+.custome-export:hover{
+    background-color: #609a1c !important;
+    color: white !important;
+}
+:host ::ng-deep .mat-expansion-panel.location-bottom-space {
+    // margin-bottom: 5px !important;
+    margin-bottom: 0 !important;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+mat-panel-title i {
+    color: #4680ff !important;
+}
+
+.borderc {
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+:host ::ng-deep .grid-header-wrapper {
+    margin: 0 !important;
+}
+
+:host ::ng-deep .assignment-grids .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+:host ::ng-deep .assignment-grids .ag-theme-alpine {
+    padding-bottom: 0 !important;
+}
+
+:host ::ng-deep ag-grid-angular {
+    padding: 0 !important;
+}
+
+.c-table-spinner {
+    margin-left: 50%;
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+    margin-top: 52px;
+    margin-bottom: 10px;
+}
+
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    opacity: 1 !important;
+    border-radius: 0.25em !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper::after {
+    opacity: 0 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+
+    &.filter-body-visible {
+        overflow: visible !important;
+
+        .ag-root-wrapper {
+            overflow: visible !important;
+        }
+    }
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 0 !important;
+    border: none !important;
+
+    span.ag-overlay-no-rows-center {
+        position: absolute !important;
+        top: 50% !important;
+        margin-top: 35px !important;
+    }
+}
+
+.btn.btn-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.assignment-grids{
+    position: relative;
+}
+
+.btn-group-list{
+    position: absolute;
+    z-index: 10;
+    top: 3px;
+    left: 10px;
+    gap: 8px;
+}
+
+
+button.fas.fa-check.c-refresh {
+    border: 0;
+    background: transparent;
+    padding: 0;
+}
+
+.fas.fa-check.c-refresh::before {
+    content: '\f021' !important;
+    font-size: 18px;
+    border: 1px solid #4680ff;
+    color: #4680ff;
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+}
+
+.edit-btn-tab-right{
+    position: absolute;
+    z-index: 10;
+    top: 3px;
+    right: 60px;
+}
+.fas.fa-info-circle{
+    color: #4680ff !important;
+    position: absolute;
+    cursor: pointer;
+    top: 12px;
+    right: 0;
+}
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+@media only screen and (max-width: 991px) {
+    .btn.btn-icon {
+        width: 32px;
+        height: 32px;
+    }
+}

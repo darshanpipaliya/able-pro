@@ -1,0 +1,24 @@
+<div class="col-sm-12 col-xl-12 col-md-12 mt-2 px-0">
+    <mat-accordion class="example-headers-align user-activity-log" multi>
+        <div class="fb fb2">
+            <mat-expansion-panel [expanded]="true" [disabled]="true"  class="table-border-none">
+                <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                <mat-expansion-panel-header class="math borderc">
+
+                    <mat-panel-title style="margin-left: 33%; margin-right: 0px !important;">
+                        <i class="ficon fas fa-child"></i>&nbsp;Child Inventory
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="">
+                    <div class="user-activity-log-inner accordion-grid">
+                          <app-ag-grid-table [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                                [columnDefs]="columnDefs" [rowData]="childinventoryRowData" (onAgGridReadyEmit)="onAgGridReadyEmit($event)" 
+                                (onSelectionChangedEvent)="onSelectionChanged($event)" [gridOptions]="gridOptions"
+                                (onAgGridReady)="onAgGridReady($event)" [frameworkComponents]="frameworkComponents"></app-ag-grid-table>
+
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </div>
+    </mat-accordion>
+</div>

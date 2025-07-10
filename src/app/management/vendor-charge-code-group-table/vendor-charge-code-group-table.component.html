@@ -1,0 +1,117 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row header-btn-responsive">
+                    <ng-container *ngFor="let option of buttonOptions">
+                        <button ngDefaultControl class="bbtn  btn btn-outline-primary" type="button"
+                            [ngClass]="(option.value === 'codegroup') ? 'btn btn-primary active round bg' : 'btn round'"
+                            [value]="option.value" (click)="goToPage(option.value);selected=0">
+                            <i class="fas {{option.icon}}"> </i>
+                            {{option.label}}
+                        </button>
+                    </ng-container>
+                </div>
+                <div class="row btn-group-list" *ngIf="currentOpenEditPagevar == 'Table'">
+
+                    <button [ngClass]="{'disabled': isDisabledExport || rowData.length < 1}" title="Export"
+                        type="button" class=" btn btn-icon btn-outline-success" [disabled]="rowData.length < 1"
+                        (click)="!isDisabledExport ? onBtnExportDataAsExcel() : ''">
+                        <i class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)"
+                        id="charge-code-table-tab"
+                        [ngClass]="{'mat-tab-header-add' : currentOpenEditPagevar === 'Add', 'mat-tab-header-edit' : currentOpenEditPagevar === 'Edit'}">
+                        <mat-tab>
+                            <div class="col-sm-12 px-0">
+                                <ng-template mat-tab-label>
+                                    <b> <i class="fa-layer-group fas" style="color: #4680ff;"> </i> Charge Codes Group
+                                    </b>
+                                </ng-template>
+
+                            </div>
+                            <ng-template mat-tab-label>
+                                <b>
+                                    <i class="fas fa-layer-group" style="color: #4680ff;"> </i>
+                                    Charge Codes Group</b>
+                            </ng-template>
+
+                            <div class="col-sm-12 px-0">
+                                <div class="mt-2">
+                                    <mat-accordion class="example-headers-align accordion-grid ">
+                                        <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                                            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                                                (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                                            <mat-expansion-panel-header class="math">
+                                                <mat-panel-title class="matt font-weight-bold">
+                                                    <i class="fas fa-layer-group"
+                                                        style="color: #4680ff;"></i>&nbsp;Charge Codes Group
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData"
+                                                (onAgGridReady)="onAgGridReady($event)" [sheetName]="'Charge Code'"
+                                                [exportFilename]="'Charge Code.xlsx'" [gridOptions]="gridOptions"
+                                                [rowSelection]="rowSelection"
+                                                [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                                                [singleClickEdit]="true"
+                                                (onCellDoubleClickedEvent)="onChargeCodeCellDoubleClicked($event)"
+                                                (onAgGridReadyEmit)="onAgGridReadyEmit($event)">
+                                            </app-ag-grid-table>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                                            <div class="text-right mt-2 mr-3">
+                                            <span>
+                                                {{girdDataCount}} {{girdDataCount > 1 ? 'records' : 'record'}}
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+
+                        <ng-container *ngFor="let userData of editChargeCodeArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;
+                                    Charge Code Group&nbsp;({{userData.GroupId}})&nbsp;<mat-icon
+                                        (click)="removeChargeCodeTab(i)">cancel
+                                    </mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-charge-codes-group-datatable [action]="userData?.GroupId ? 'Edit' : 'Add'"
+                                        [userData]="userData" (addEditSaveEvent)="editSaveEvent($event, i)"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)">
+                                    </app-charge-codes-group-datatable>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let chargeCode of addChargeCodeArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i _ngcontent-tbo-c431="" class="fas fa-layer-group"
+                                        style="color: #4680ff;"></i>&nbsp;
+                                    Add Charge Code Group&nbsp;<mat-icon (click)="removeAddChargeCodeTab(i)">cancel
+                                    </mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-charge-codes-group-datatable [action]="'Add'" [userData]="chargeCode"
+                                        (addEditSaveEvent)="addSaveEvent($event, i)">
+                                    </app-charge-codes-group-datatable>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

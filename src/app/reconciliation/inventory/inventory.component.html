@@ -1,0 +1,407 @@
+<div class="row">
+    <div class="col-sm-12">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12 top-btn-group-container header-btn-responsive d-flex" style="flex-wrap: wrap;">
+                        <ng-container *ngFor="let option of buttonOptions">
+                            <button ngDefaultControl class=" btn btn-outline-primary btn-primary active round bg"
+                                type="button" [value]="option.value" [(ngModel)]="selectedButton"
+                                (click)="goToPage(option);selectedTab=0;">
+                                <i [ngClass]="option.icon"></i>&nbsp;{{option.label}}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="!temRoles">
+                            <select class="custom-select select-width" [(ngModel)]="selectedTem" [disabled]="selected != 0"
+                                (change)="onChangeTem($event)" [ngModelOptions]="{standalone: true}">
+                                <option value="all" [disabled]="this.locationService.isDisableTemDD()">All</option>
+                                <option *ngFor="let tem of tems" [value]="tem.Id"
+                                    [disabled]="this.locationService.isDisableTemDD()">
+                                    {{tem.AccountName}}
+                                </option>
+                            </select>
+                        </ng-container>
+                        <ng-container>
+                            <select class="custom-select select-width" [(ngModel)]="selectedCustomer" [disabled]="selected != 0"
+                                [disabled]="loadingCustomerAPI" [ngModelOptions]="{standalone: true}">
+                                <option value="" *ngIf="loadingCustomerAPI">Loading...</option>
+                                <option value="all" *ngIf="!loadingCustomerAPI">All</option>
+                                <option *ngFor="let customer of customers"
+                                    [value]="customer.AccountID ? customer.AccountID : customer.Id">
+                                    {{customer.AccountName}}
+                                </option>
+                            </select>
+                        </ng-container>
+
+                        <ng-container>
+                            <button title="Search" class="btn btn-primary" [disabled]="selected != 0" (click)="searchInvoice()">Search</button>
+                        </ng-container>
+
+                        <ng-container *ngIf="selected != 0">
+                            <div class="p-steps-main invoice-ret-edit">
+                                <p-steps [model]="items" [readonly]="false"></p-steps>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="main-banner-section">
+                    <div class="table-responsive">
+
+                        <div class="demo2 main">
+                            <nav mat-tab-nav-bar>
+                                <span mat-tab-link [active]="selected === 0" style="color: unset;"
+                                    (click)="clickMainTab(0)">
+                                    <b><i class="fa fa-smile" style="color: #4680ff;">
+                                        </i><span>&nbsp;Recon Overview</span></b>
+                                </span>
+
+                                <span mat-tab-link [active]="selected === 1" style="color: unset;"
+                                    (click)="clickMainTab(1, selected === 0)" [disabled]="selected === 0" *ngIf="selected !== 0">
+                                    <b><i class="fa fa-check" style="color: #4680ff;">
+                                        </i><span>&nbsp;Inventory Assignment Step 1</span></b>
+                                </span>
+
+                                <span (click)="clickMainTab(2, selected === 0 || latestInvoiceData?.IsDistribution === false)" [active]="selected === 2" mat-tab-link
+                                    style="color: unset;"
+                                    [ngClass]="{'disabled': selected === 0 || latestInvoiceData?.IsDistribution === false}"
+                                    *ngIf="selected !== 0"><b><i class="fas fa-users" style="color: #4680ff;">
+                                        </i><span>&nbsp;All Distributions Step 2</span></b></span>
+
+                
+
+                                <span mat-tab-link [active]="selected === 3" style="color: unset;"
+                                    (click)="clickMainTab(3, selected === 0 || (latestInvoiceData?.IsDistribution === false && latestInvoiceData?.IsAllocation === false))"
+                                    [ngClass]="{'disabled': selected === 0 || (latestInvoiceData?.IsDistribution === false && latestInvoiceData?.IsAllocation === false)}"
+                                    *ngIf="selected !== 0">
+                                    <b><i class="fas fa-file-invoice-dollar" style="color: #4680ff;">
+                                        </i><span>&nbsp;All Allocations Step 3 </span></b>
+                                </span>
+                            </nav>
+                        </div>
+
+                        <div class="" *ngIf="selected === 0" [disabled]="selected === 1">
+                            <app-recon-main [selectedRow]="selectedRow" (onReload)="onReload($event)"
+                                [selectedTem]="selectedTem"
+                                (rowCellDoubleClicked)="rowCellDoubleClicked($event)"></app-recon-main>
+                        </div>
+
+
+                        <div class="" *ngIf="selected === 1">
+                            <div class="table-responsive">
+                                <div class="demo2 sub">
+                                    <nav mat-tab-nav-bar>
+
+                                        <a mat-tab-link [active]="selectedChildrenOfStep1 === 0" style="color: unset;"
+                                            (click)="clickToSubtabOfStep1(0)">
+                                            <b><i class="fa fa-check" style="color: #4680ff;">
+                                                </i><span>&nbsp;Inventory Assignment Step 1</span></b>
+                                        </a>
+
+                                        <a mat-tab-link [active]="selectedChildrenOfStep1 === 1"
+                                            [disabled]="selectedChildrenOfStep1 === 0" style="color: unset;"
+                                            (click)="clickToSubtabOfStep1(1)">
+                                            <b><i class="fa fa-thumb-tack" style="color: #4680ff;">
+                                                </i><span>&nbsp;Assign Locations A</span></b>
+                                        </a>
+
+                                        <a mat-tab-link [active]="selectedChildrenOfStep1 === 2" style="color: unset;"
+                                            (click)="clickToSubtabOfStep1(2)"
+                                            [disabled]="selectedChildrenOfStep1 === 0">
+                                            <b><i class="fas fa-users" style="color: #4680ff;">
+                                                </i><span>&nbsp;Assign People B</span></b>
+                                        </a>
+
+                                    </nav>
+                                </div>
+
+                                <div class="" *ngIf="selectedChildrenOfStep1 === 0">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-xl-12 mt-2">
+                                            <mat-card class="accordion-grid p-0">
+                                                <ng-template #reconTooltip>
+                                                    <div class="mat-dialog-header">
+                                                        <button type="button" class="close" mat-dialog-close
+                                                            (click)="closeModal()">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="text-left">
+
+                                                        <p class="mb-2">A Service Number is called a Billing ID in the
+                                                            system
+                                                            until it's linked
+                                                            with a person or location. Billing ID(s) that are newly
+                                                            added to the
+                                                            system and lack an assigned Primary Person or Location
+                                                            require
+                                                            Reconciliation. All Vendor Products are associated with
+                                                            Billing
+                                                            ID(s),
+                                                            which must be integrated into the inventory and linked with
+                                                            a person
+                                                            or
+                                                            location for allocation, approval, and payment.
+                                                            Reconciliation can
+                                                            be
+                                                            carried out individually for each Billing ID or collectively
+                                                            by
+                                                            selecting multiple Billing ID(s). In order to do bulk
+                                                            reconciliation
+                                                            the
+                                                            Billing ID(s) selected need to be on the same Vendor
+                                                            Product. </p>
+
+                                                        <p class="mb-0">
+                                                            Opting for bulk reconciliation will result in all Billing
+                                                            ID(s)
+                                                            displayed on the page being assigned to the same person or
+                                                            location.
+                                                        </p>
+                                                    </div>
+                                                </ng-template>
+
+                                                <mat-card-content>
+                                                    <div class="summary-total-main">
+                                                        <app-invoice-overview-i
+                                                            (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)"
+                                                            [gridRowData]="summaryData"></app-invoice-overview-i>
+                                                    </div>
+
+                                                    <app-inventory-assignment-p-table [selected]="selected"
+                                                        [isShowNext]="isShowNext"
+                                                        (selectedChildrenOfStep1Emit)="selectedChildrenOfStep1Emit($event)"
+                                                        [summaryData]="summaryData" (nextEmit)="next(true)"
+                                                        [disableCheck]="disableCheck">
+
+                                                    </app-inventory-assignment-p-table>
+
+                                                </mat-card-content>
+                                            </mat-card>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="" *ngIf="selectedChildrenOfStep1 === 1">
+                                    <app-assign-location-recon [selectedRow]="selectedRow" [isSelectAll]="isSelectAll" [gridRowData]="summaryData"
+                                        (onReload)="onReload($event)"></app-assign-location-recon>
+                                </div>
+                                <div class="" *ngIf="selectedChildrenOfStep1 === 2">
+                                    <app-assign-people-recon [selectedRow]="selectedRow" [isSelectAll]="isSelectAll" [gridRowData]="summaryData"
+                                        (onReload)="onReload($event)"></app-assign-people-recon>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div *ngIf="selected === 2">
+                            <div class="table-responsive">
+                                <div class="demo2 sub">
+                                    <nav mat-tab-nav-bar>
+                                        <a [active]="selectedTabChildrenDist === 0" (click)="clickToSubTabDist(0)"
+                                            mat-tab-link style="color: unset;"><b><i class="fa fa-check"
+                                                    style="color: #4680ff;">
+                                                </i><span>&nbsp;Distribution Event A</span></b></a>
+                                        <a [active]="selectedTabChildrenDist === 1" (click)="clickToSubTabDist(1)"
+                                            mat-tab-link style="color: unset;">
+                                            <b> <img src="../../../../../../assets/images/Invoices-B-acco-icon.svg"
+                                                    alt="New Distribution B Image"><span>&nbsp;New
+                                                    Distribution B</span></b>
+                                        </a>
+                                        <a [disabled]="selectedTabChildrenDist !== 2"
+                                            [active]="selectedTabChildrenDist === 2" (click)="clickToSubTabDist(2)"
+                                            mat-tab-link style="color: unset;">
+                                            <b><img src="../../../../../../assets/images/wand-magic-sparkles.svg"
+                                                    alt="Distribution Rules Engine C Image"><span>&nbsp;Distribution
+                                                    Rules Engine C</span></b>
+                                        </a>
+                                        <a [disabled]="selectedTabChildrenDist !== 3"
+                                            [active]="selectedTabChildrenDist === 3" (click)="clickToSubTabDist(3)"
+                                            mat-tab-link style="color: unset;">
+                                            <b><img src="../../../../../../../assets/images/sandbox-icon/Final-Distribution-Detail-5B-blue.svg"
+                                                    alt="Distribution Detail D Image"><span>&nbsp;Distribution
+                                                    Detail D</span></b>
+                                        </a>
+                                    </nav>
+                                    <div class="demo">
+                                        <div *ngIf="selectedTabChildrenDist === 0"
+                                            class="row btn-group-list1 d-flex align-items-center px-0 mx-0">
+                                            <button *ngIf="isRerunAccess" type="button"
+                                                class="btn btn-outline fas fa-check fa-sharp-duotone fa-solid fa-hat-wizard mr-2"
+                                                title="Reprocess Invoice" (click)="refresh()"></button>
+                                            <button (click)="addDistribution()" title="Add Distribution" type="button"
+                                                class="btn btn-icon btn-outline-primary"><i
+                                                    class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="selectedTabChildrenDist === 0">
+                                    <app-invoice-main [fromTab]="'inventory'" [gridRowData]="summaryData"
+                                        (redirectTab)="redirectTab2($event)" [refeshGrid]="refeshGrid"
+                                        (refeshGridOutput)="refeshGridOutput($event)"
+                                        (isDistributionCompleted)="isDistributionCompleted($event)">
+                                    </app-invoice-main>
+                                </div>
+                                <div *ngIf="selectedTabChildrenDist === 1">
+                                    <app-new-distribution-invoice (redirectTab)="redirectTab2($event)"
+                                        [gridRowData]="summaryData"></app-new-distribution-invoice>
+                                </div>
+                                <div *ngIf="selectedTabChildrenDist === 2">
+                                    <app-distribution-engine-c-i [gridRowData]="summaryData"
+                                        (redirectTab)="redirectTab2($event)" [clickedRecord]="clickedRowData"
+                                        [overViewData]="overViewData" [isForEditDistribution]="isForEditDistribution">
+                                    </app-distribution-engine-c-i>
+                                </div>
+
+                                <div *ngIf="selectedTabChildrenDist === 3">
+                                    <app-distribution-detail-d-i [gridRowData]="summaryData"
+                                        (redirectTab)="redirectTab2($event)"
+                                        [clickedRecord]="clickedRowData"></app-distribution-detail-d-i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="" *ngIf="selected === 3">
+                            <div class="table-responsive">
+                                <div class="demo2 sub">
+                                    <nav mat-tab-nav-bar>
+                                        <a [active]="selectedTabChildrenAllow === 0" (click)="clickToSubTabAllow(0)"
+                                            mat-tab-link style="color: unset;"><b><i class="fas fa-file-invoice-dollar"
+                                                    style="color: #4680ff;">
+                                                </i><span>&nbsp;All Allocations by Product A
+
+                                                </span></b></a>
+                                        <a [active]="selectedTabChildrenAllow === 1" (click)="clickToSubTabAllow(1)"
+                                            mat-tab-link style="color: unset;">
+                                            <b><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="23px"
+                                                    viewBox="0 0 211.000000 175.000000"
+                                                    preserveAspectRatio="xMidYMid meet">
+
+                                                    <g transform="translate(0.000000,175.000000) scale(0.100000,-0.100000)"
+                                                        fill="#4680ff" stroke="none">
+                                                        <path d="M190 1669 c-52 -16 -95 -53 -119 -103 -21 -42 -22 -56 -19 -299 l3
+                                                           -255 30 -43 c57 -80 74 -84 360 -84 286 0 303 4 360 84 l30 43 0 268 0 268
+                                                           -30 43 c-56 79 -76 84 -345 86 -138 1 -250 -2 -270 -8z m529 -59 c27 -13 46
+                                                           -33 60 -63 19 -40 21 -60 21 -267 0 -207 -2 -227 -21 -267 -38 -78 -59 -83
+                                                           -334 -83 -275 0 -296 5 -334 83 -19 40 -21 60 -21 267 0 207 2 227 21 267 37
+                                                           77 56 82 332 83 217 0 241 -2 276 -20z" />
+                                                        <path d="M324 1471 c-11 -5 -33 -23 -47 -41 -26 -30 -27 -36 -27 -151 l0 -119
+                                                           34 -38 34 -37 127 0 127 0 34 37 34 38 0 120 0 120 -34 38 -34 37 -114 2 c-62
+                                                           2 -122 -1 -134 -6z m251 -66 c23 -22 25 -31 25 -125 0 -94 -2 -103 -25 -125
+                                                           -23 -23 -31 -25 -130 -25 -99 0 -107 2 -130 25 -23 22 -25 31 -25 125 0 94 2
+                                                           103 25 125 23 23 31 25 130 25 99 0 107 -2 130 -25z" />
+                                                        <path d="M950 1356 l0 -26 215 0 c195 0 220 -2 254 -20 62 -31 81 -82 81 -218
+                                                           0 -107 1 -112 21 -112 20 0 20 4 17 134 -3 131 -4 135 -33 177 -55 77 -78 84
+                                                           -332 87 l-223 3 0 -25z" />
+                                                        <path d="M1390 869 c-52 -16 -95 -53 -119 -103 -21 -42 -22 -56 -19 -299 l3
+                                                           -255 30 -43 c57 -80 74 -84 360 -84 286 0 303 4 360 84 l30 43 0 268 0 268
+                                                           -30 43 c-56 79 -76 84 -345 86 -138 1 -250 -2 -270 -8z m529 -59 c27 -13 46
+                                                           -33 60 -63 19 -40 21 -60 21 -267 0 -207 -2 -227 -21 -267 -38 -78 -59 -83
+                                                           -334 -83 -275 0 -296 5 -334 83 -19 40 -21 60 -21 267 0 207 2 227 21 267 37
+                                                           77 56 82 332 83 217 0 241 -2 276 -20z" />
+                                                        <path d="M1524 671 c-11 -5 -33 -23 -47 -41 -26 -30 -27 -36 -27 -151 l0 -119
+                                                           34 -38 34 -37 127 0 127 0 34 37 34 38 0 120 0 120 -34 38 -34 37 -114 2 c-62
+                                                           2 -122 -1 -134 -6z m251 -66 c23 -22 25 -31 25 -125 0 -94 -2 -103 -25 -125
+                                                           -23 -23 -31 -25 -130 -25 -99 0 -107 2 -130 25 -23 22 -25 31 -25 125 0 94 2
+                                                           103 25 125 23 23 31 25 130 25 99 0 107 -2 130 -25z" />
+                                                        <path d="M552 646 c3 -131 4 -135 33 -177 55 -77 78 -84 333 -87 l222 -3 0 25
+                                                           0 26 -215 0 c-195 0 -220 2 -254 20 -62 31 -81 82 -81 218 0 107 -1 112 -21
+                                                           112 -20 0 -20 -4 -17 -134z" />
+                                                    </g>
+                                                </svg><span>&nbsp;All Allocations by Structure B
+                                                </span></b>
+                                        </a>
+                                        <a [active]="selectedTabChildrenAllow === 2"
+                                            [disabled]="selectedTabChildrenAllow !== 2" (click)="clickToSubTabAllow(2)"
+                                            mat-tab-link style="color: unset;">
+                                            <b><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="23px"
+                                                    viewBox="0 0 203.000000 122.000000"
+                                                    preserveAspectRatio="xMidYMid meet">
+
+                                                    <g transform="translate(0.000000,122.000000) scale(0.100000,-0.100000)"
+                                                        fill="#4680ff" stroke="none">
+                                                        <path d="M637 1203 c-28 -7 -47 -60 -35 -96 14 -39 42 -47 174 -47 l114 0 0
+                                               -50 0 -49 -261 -3 -261 -3 -24 -28 c-22 -26 -24 -36 -24 -138 l0 -109 -80 0
+                                               -80 0 0 130 c0 117 -2 132 -20 150 -11 11 -33 20 -50 20 -17 0 -39 -9 -50 -20
+                                               -19 -19 -20 -33 -20 -350 0 -317 1 -331 20 -350 26 -26 74 -26 100 0 18 18 20
+                                               33 20 150 l0 130 80 0 80 0 0 -134 c0 -128 1 -136 24 -163 23 -26 29 -28 120
+                                               -31 l96 -4 65 -79 c100 -121 71 -114 485 -114 341 0 357 1 395 21 22 11 54 40
+                                               70 63 l30 43 3 279 c4 343 7 331 -127 442 -52 44 -106 80 -128 86 -21 6 -100
+                                               11 -175 11 l-138 0 0 50 0 50 113 0 c61 0 123 3 136 7 54 14 57 114 4 134 -24
+                                               9 -621 11 -656 2z m46 -517 c48 -44 48 -108 0 -152 -36 -33 -100 -33 -136 0
+                                               -71 66 -29 176 68 176 31 0 49 -7 68 -24z m300 0 c48 -44 48 -108 0 -152 -36
+                                               -33 -100 -33 -136 0 -71 66 -29 176 68 176 31 0 49 -7 68 -24z m300 0 c48 -44
+                                               48 -108 0 -152 -36 -33 -100 -33 -136 0 -71 66 -29 176 68 176 31 0 49 -7 68
+                                               -24z" />
+                                                        <path d="M1774 801 c-53 -23 -54 -29 -54 -393 l0 -337 24 -28 c23 -27 27 -28
+                                               121 -28 94 0 98 1 121 28 l24 28 0 339 0 339 -24 28 c-23 26 -30 28 -108 30
+                                               -45 2 -93 -1 -104 -6z" />
+                                                    </g>
+                                                </svg><span>&nbsp;Cost Center Structure Rules Engine C
+                                                </span></b>
+                                        </a>
+
+
+                                    </nav>
+                                    <div class="demo">
+                                        <div *ngIf="selectedTabChildrenAllow === 0" class="d-flex">
+                                            <button *ngIf="isRerunAccess" type="button"
+                                                class="btn btn-outline fas fa-check fa-sharp-duotone fa-solid fa-hat-wizard mr-2"
+                                                title="Reprocess Invoice" (click)="allocationType('rerun')"></button>
+                                            <button title="Export" type="button" (click)="allocationType('export')"
+                                                [disabled]="isDisableExportAllocation"
+                                                class="btn btn-icon btn-outline-success">
+                                                <i class="fas fa-file-excel"></i></button>
+                                        </div>
+                                        <div *ngIf="selectedTabChildrenAllow === 1">
+
+                                            <button [ngClass]="{'disabled': isccsDataDisabled || !isccsDataExist}"
+                                                title="Export" type="button" class=" btn btn-icon btn-outline-success"
+                                                (click)="!isccsDataDisabled ? costAllocationStructureExport() : ''">
+                                                <i class="{{isccsDataDisabled ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                                            </button>
+                                        </div>
+                                        <div *ngIf="selectedTabChildrenAllow === 2">
+                                            <button type="button" title="Add Rule" class="btn btn-icon btn-outline-primary"
+                                                (click)="addRuleClicked()"> <i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="selectedTabChildrenAllow === 0">
+                                    <app-allocations-by-product [fromTab]="'inventory'" [gridRowData]="summaryData"
+                                        [showFinished]="true" (redirectAllocationTab)="redirectAllocationTab($event)"
+                                        [fromRecon]="true" (onExportDisableEvent)="onExportDisableAllocation($event)"
+                                        (redirectToRuleTab)="redirectToRuleTab($event)" [selectedTab]="selected"
+                                        [allocationType]="allocationTypeValue"
+                                        (isRecordFinished)="isRecordFinished($event)"
+                                        (resetVariable)="resetVariables($event)"></app-allocations-by-product>
+                                </div>
+                                <div *ngIf="selectedTabChildrenAllow === 1">
+                                    <app-allocations-by-structure [gridRowData]="summaryData" [fromRecon]="true"
+                                        (isCCSData)="CCSDataExist($event)"
+                                        (exportCCSExcelData)="exportCCSExcelData($event)">
+                                    </app-allocations-by-structure>
+                                </div>
+
+                                <div *ngIf=" selectedTabChildrenAllow===2">
+
+                                    <app-cost-center-structure-engine [gridRowData]="summaryData" [fromRecon]="true"
+                                        [editRecord]="editRecord" [isAddClicked]="isAddClicked"
+                                        (addClicked)="addClickedEmit($event)" [fromEditIcon]="true"
+                                        (redirectAllocationTab)="redirectAllocationTab($event)">
+                                    </app-cost-center-structure-engine>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

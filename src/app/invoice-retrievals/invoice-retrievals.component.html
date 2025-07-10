@@ -1,0 +1,151 @@
+<div class="row">
+    <div class="col-sm-12">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12 top-btn-group-container header-btn-responsive d-flex" style="flex-wrap: wrap;">
+                        <ng-container *ngIf="currentUrl === '/invoices/invoice-retrievals'">
+                            <button class="btn btn-primary" type="button"><i class="fa-calendar-plus fas ir-c-icon">
+                                </i>
+                                Invoice Retrievals
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="currentUrl === '/invoices/invoice-retrieval'">
+                            <button class="btn btn-primary" type="button" (click)="goToPage('/invoices/invoice-retrieval')"><i class="fa-calendar-plus fas ir-c-icon">
+                                </i>
+                                Invoice Retrievals
+                            </button>
+                            <button class="btn btn-primary" type="button" (click)="goToPage('/invoices/invoice-proccessing')"><i class="ip-c-icon fa-calendar-plus">
+                                </i>
+                                Invoice Processing
+                            </button>
+                            <button class="btn btn-primary" type="button" (click)="goToPage('/invoices/file-monitor')"><i class="fa-camera">
+                                </i>
+                                File Monitor
+                            </button>
+
+                        </ng-container>
+
+                        <ng-container>
+                            <select name="select" (change)="monthFilter($event.target.value)"
+                                [disabled]="disableTemSearchDD" class="custom-select select-width month-width">
+                                <option value="3">3 months</option>
+                                <option value="6">6 months</option>
+                                <option value="12">1 year</option>
+                                <option value="all">All</option>
+                            </select>
+                            <select *ngIf="!temRoles" class="custom-select select-width"
+                                [(ngModel)]="selectedTemRetrival" [ngModelOptions]="{standalone: true}"
+                                [disabled]="disableTemSearchDD">
+                                <option value="all" [disabled]="this.locationService.isDisableTemDD()">All</option>
+                                <option *ngFor="let tem of tems" [value]="tem.Id"
+                                    [disabled]="this.locationService.isDisableTemDD()">{{tem.AccountName}}
+                                </option>
+                            </select>
+                            <button title="Search" class="btn btn-primary" [disabled]="disableTemSearch"
+                                (click)="filterCustomerGridByTEMIdRetrival()">Search</button>
+                        </ng-container>
+
+                    </div>
+                </div>
+
+                <div class="row btn-group-list1 align-items-center">
+                    <ng-container *ngIf="currentOpenEditForecasting == 'Table'" style="gap: 10px;">
+                        <button [ngClass]="{'disabled': isDisabledretrieval || !isRowDataExist}" title="Export"
+                            type="button" class=" btn btn-icon btn-outline-success m-r-8"
+                            (click)="!isDisabledretrieval ? onBtnExportDataAsExcelRetrival() : ''">
+                            <i
+                                class="{{isDisabledretrieval ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                        </button>
+
+                        <button
+                            *ngIf="(!isTEMUser && !isCompanyUser) && !temRoles && (selectedMenuButton?.value !== 'Invoice Retrievals')"
+                            title="Add Invoice Retrieval" type="button" class="btn btn-icon btn-outline-primary"
+                            (click)="addForecastingRecordPopup()">
+                            <i class="fas fa-plus"></i></button>
+                    </ng-container>
+                </div>
+
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="changeInvoiceTab($event)"
+                        id="invoice-retrieval-table-tab">
+                        <mat-tab>
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+                                    <b>
+                                        <img src="assets/images/Invoice-Retrieval-icon.svg"
+                                            alt="Invoice Retrieval icon">
+                                        &nbsp; {{ selectedMenuButton?.label }}
+                                    </b>
+                                </ng-template>
+                                <ng-container>
+                                    <div class="row btn-group-list">
+
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <ng-container>
+                                <app-invoice-retrieval [selectedMonth]="selectedMonth"
+                                    [pageName]="selectedMenuButton?.value"
+                                    (clickEditInvRitriBillingAc)="editBillingTab($event, 'retrival')"
+                                    (selectedTemValue)="selectedInvoiceTem($event)"
+                                    (rowCellDoubleClicked)="editForcastingDoubleClick($event)"
+                                    [selectedTemIR]="selectedTemRetrival" (exportExcelData)="exportExcelData($event)"
+                                    (rowDataExist)="rowDataExist($event)">
+                                </app-invoice-retrieval>
+                            </ng-container>
+                        </mat-tab>
+                        <mat-tab *ngFor="let tabs of tabsArray;let i = index">
+                            <ng-template mat-tab-label *ngIf="tabs.tabTypes=='newForcasting'">
+                                <i class="fas fa-calendar-plus" style="color: #4680ff;"></i>&nbsp;Add Invoice
+                                Retrieval&nbsp;
+                                <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                            </ng-template>
+                            <ng-template mat-tab-label *ngIf="tabs.tabTypes=='editForcasting'">
+                                <i class="fas fa-edit"
+                                    style="color: #4680ff;"></i>&nbsp;{{tabs['RowData']['AccountNumber']}}
+                                ({{tabs['RowData']['CustomerAccountName']}}) &nbsp;
+                                <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                            </ng-template>
+                            <ng-template mat-tab-label *ngIf="tabs?.tabTypes=='editBillingAccount'">
+                                <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;Account -
+                                ({{tabs?.BillingRowData?.PayableAccountNumber}})&nbsp;
+                                <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                            </ng-template>
+                            <ng-template mat-tab-label *ngIf="tabs?.tabTypes=='newBillingAccount'">
+                                <i class="fas fa-money-check-alt" style="color: #4680ff;"></i>&nbsp;New
+                                Account&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                            </ng-template>
+                            <ng-template matTabContent>
+                                <app-edit-billing-account [billingAccountData]='tabs?.BillingRowData'
+                                    *ngIf="tabs.tabTypes=='editBillingAccount' || tabs.tabTypes=='newBillingAccount'"
+                                    [action]="tabs?.BillingRowData?.Id || tabs?.BillingRowData?.BillingAccountID? 'edit' : 'add' "
+                                    [tabInfo]='selectedMenuButton'
+                                    (sendAccHirercyToTable)="sendAccHirercyToTable($event)"
+                                    (addBillingAccountDestroy)="addBillingAccountDestroy($event, i)"
+                                    (currentOpenEditPage)="currentOpenBillingAccount($event)"
+                                    (onNotesAddBillingAccIdOne)="onNotesAddBillingAccIdOne($event)"
+                                    (setTemDDValueEventFromChild)="setTemDDValueEventFromChild($event)">
+                                </app-edit-billing-account>
+                                <app-add-forecasting-record-dialog (onUserAddEvent)="onUserAddEvent($event, i)"
+                                    (openEditBillingTab)="openEditBillingTab($event, i)"
+                                    [selectedTemRetrival]="selectedTemRetrival" (addNewInvoice)="addNewInvoice($event)"
+                                    (onComponentDestroy)="onAddInvoiceRetrivalDestroy($event, i)"
+                                    *ngIf="tabs.tabTypes=='newForcasting'" [rowData]='tabs.RowData'
+                                    (currentOpenEditPage)="currentOpenEditforcasting($event)">
+                                </app-add-forecasting-record-dialog>
+                                <app-edit-forcasting-record-dialog (onUserAddEvent)="onUserAddEvent($event, i)"
+                                    (addNewInvoice)="addNewInvoice($event)"
+                                    (openEditBillingTab)="openEditBillingTab($event, i)"
+                                    *ngIf="tabs.tabTypes=='editForcasting'" [rowData]='tabs.RowData'
+                                    (currentOpenEditPage)="currentOpenEditforcasting($event)"
+                                    (setTemDDValueEvent)="setTemDDValueEvent($event, i)">
+                                </app-edit-forcasting-record-dialog>
+                            </ng-template>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

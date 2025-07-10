@@ -1,0 +1,52 @@
+::ng-deep .mat-dialog-container .app-error-warning-popup-c,
+.mat-dialog-container .app-error-warning-popup-c{
+  min-width: 350px !important;
+  width: auto !important;
+  max-width: 700px !important;
+}
+
+.popup-main-section {
+  display: flex;
+  align-items: center;
+}
+
+.popup-left-icon i{
+  font-size: 45px;
+}
+
+.fa-question-circle{
+  color: #4680ff;
+}
+
+.popup-left-icon, .popup-success-icon {
+  width: 60px;
+}
+
+.popup-right-desc {
+  width: calc(100% - 60px);
+}
+
+.mat-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e5e8;
+}
+
+.mat-dialog-content {
+  max-height: calc(100vh - 160px) !important;
+  padding: 0;
+}
+
+.attention-popup-btn {
+  text-align: end !important;
+}
+
+.popup-success-icon i{
+  font-size: 30px;
+}
+
+a.linkTag{
+    text-decoration: underline;
+    cursor: pointer;
+    color: #4680ff;
+}

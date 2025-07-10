@@ -1,0 +1,124 @@
+<div class="mt-2">
+  <mat-accordion class="example-headers-align accordion-grid ">
+    <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+      <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+      <mat-expansion-panel-header class="math">
+        <mat-panel-title class="matt font-weight-bold">
+          <img src="assets/images/Invoice-Retrieval-icon.svg" alt="Invoice Retrieval icon">&nbsp;Invoice Retrievals
+        </mat-panel-title>
+        <i class="fas fa-info-circle ml-1 position-header" (click)="openDialog()"
+        tooltipClass="tooltip-bg"></i>
+    <ng-template #IIconTooltip>
+        <div class="mat-dialog-header">
+            <button type="button" class="close" mat-dialog-close>
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div mat-dialog-content class="px-0 m-0 mt-3">
+            <div class="sandbox-tooltip-table">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>Waiting Arrival</td>
+                            <td>This is a record for the current invoice period and we are waiting for the files to be available.</td>
+                        </tr>
+                        <tr>
+                            <td>Open</td>
+                            <td>This is a Record status. This is a record for the current invoice period and we are waiting for the files to be available.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Completed</td>
+                            <td>The system has successfully received, validated, and processed a correct invoice or data file(s) and has placed it in Sandbox</td>
+                        </tr>
+                        <tr>
+                            <td>Missing</td>
+                            <td>We have not received the required Invoice, Invoice Import Template or data files and they are past due</td>
+                        </tr>
+                        <tr>
+                            <td>Error</td>
+                            <td>Errors were detected in the Invoice Import Template or data files</td>
+                        </tr>
+                        <tr>
+                            <td>Processing</td>
+                            <td>This is a Data status. The system is currently processing the Invoice Import Template or data files</td>
+                        </tr>
+                        <tr>
+                            <td>Validating</td>
+                            <td>This is a Data status. The system is currently validating the data files</td>
+                        </tr>
+                        <tr>
+                            <td>Pending Validation</td>
+                            <td>This is a Data status. The Invoice Import Template or data files have been uploaded and are awaiting system validation</td>
+                        </tr>
+                        <tr>
+                            <td>Terminated</td>
+                            <td>This is a Record status. The expected invoice record has been terminated, and no additional records will be generated</td>
+                        </tr>
+                        <tr>
+                            <td>Future</td>
+                            <td>This is a Record status. The expected invoice record for the upcoming invoice period
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </ng-template>
+      </mat-expansion-panel-header>
+      <div class="toggle-btn">
+        <mat-slide-toggle (change)="toggle()" ngDefaultControl [(ngModel)]="isFilterData">{{isFilterData ? 'All' :
+          'Open'}}</mat-slide-toggle>
+      </div>
+      <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData" [rowSelection]="rowSelection"
+        [sheetName]="'Invoice Retrievals'" [exportFilename]="'Invoice Retrievals.xlsx'"
+        (onAgGridReadyEmit)="onAgGridReadyEmit($event)" (onAgGridReady)="onAgGridReady($event)"
+        [gridOptions]="gridOptions" [defaultColDef]="defaultColDef"
+        [sideBar]="sideBar" [singleClickEdit]="true" (onCellDoubleClickedEvent)="onCellDoubleClicked($event)">
+      </app-ag-grid-table>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="text-right mt-2 mr-3">
+          <span>
+            {{invoiceDataCount}} {{invoiceDataCount > 1 ? 'records' : 'record'}}
+        </span>
+        </div>
+    </div>
+</div>
+</div>
+
+<ng-template #actionicons let-row>
+  <div class="actionicons-template">
+
+    <span class="verified-button">
+      <span class="inbtn " [ngClass]="{'disabled': !(isSuperTEMManager || isSuperTEMAdmin || isSuperTEMUsers )}"
+        tooltipClass="tooltip-bg" ngbTooltip="{{row.InvRetrievalNote}}" container="body"><i
+          class="fas fa-file-alt"></i></span>
+      <span class="inbtn " [ngClass]="{'disabled': !(isSuperTEMManager || isSuperTEMAdmin || isSuperTEMUsers )}"
+        tooltipClass="tooltip-bg" ngbTooltip="Edit Account" container="body" (click)="editBillingAccount(row)"
+        style="left: 30px;"><i class="fas fa-edit"></i></span>
+      <span class="inbtn " [ngClass]="{'disabled': !(isSuperTEMManager || isSuperTEMAdmin || isSuperTEMUsers )}"
+        tooltipClass="tooltip-bg" ngbTooltip="Terminate Retrieval" container="body"
+        (click)="invoiceRetrievalDeactive(row)" style="left: 60px;"><i class="fas fa-exclamation-triangle"></i></span>
+      <span class="inbtn " [ngClass]="{'disabled': !(isSuperTEMManager || isSuperTEMAdmin || isSuperTEMUsers )}"
+        tooltipClass="tooltip-bg" ngbTooltip="Upload Invoice" container="body" *ngIf="!row.AttachmentFilePath"
+        (click)="invoiceUpload(row)" style="left: 90px;"><i class="fas fa-cloud-upload-alt"></i></span>
+      <span class="inbtn " [ngClass]="{'disabled': !(isSuperTEMManager || isSuperTEMAdmin || isSuperTEMUsers )}"
+        tooltipClass="tooltip-bg" ngbTooltip="Remove Attachment" container="body" *ngIf="row.AttachmentFilePath"
+        (click)="removeAttachment(row)" style="left: 90px;"><i class="fas fa-trash"></i></span>
+      <span class="inbtn " [ngClass]="{'disabled': downloadFileDisabled || !(isSuperTEMManager || isSuperTEMAdmin || isSuperTEMUsers )}"
+        tooltipClass="tooltip-bg" ngbTooltip="Download Invoice" container="body" *ngIf="row.AttachmentFilePath"
+        (click)="downloadFile(row)" style="left: 120px;"><i class="fas fa-cloud-download-alt"></i></span>
+    </span>
+  </div>
+</ng-template>

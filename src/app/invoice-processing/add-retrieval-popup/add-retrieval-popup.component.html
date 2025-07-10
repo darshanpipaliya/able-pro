@@ -1,0 +1,120 @@
+<div class="mat-dialog-header justify-content-center pb-2">
+    <div class="row">
+        <div class="col-12 px-0">
+            <h5 class="modal-title" id="exampleModalLabel">Add Retrieval</h5>
+        </div>
+    </div>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="card-body py-0 mt-3">
+        <div class="container px-0">
+            <form class="editForm col-xl-12 px-0" [formGroup]="addInvoiceRetrivalForm">
+                <div class="row px-0">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">TEM </label>
+                                    <span><p-dropdown [options]="tems" optionLabel="AccountName"
+                                            (onChange)="filterCustomerGridByTEMId();" [filter]="true"
+                                            filterBy="AccountName" [showClear]="true" placeholder="Select TEM..."
+                                            formControlName="TEM"
+                                            [ngClass]="{'invalid-error': f.TEM.invalid && (f.TEM.touched || submitted)}"
+                                            appendTo="body" optionValue="Id" [showClear]="false">
+                                        </p-dropdown></span>
+                                    <ng-container *ngIf="f.TEM.invalid && (f.TEM.touched || submitted)">
+                                        <mat-error style="font-size: 12px;" *ngIf="f.TEM.errors.required">TEM is
+                                            required</mat-error>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Customer *</label>
+                                    <span><p-dropdown (onChange)="onCutomerChange($event.value);setTemDDId()"
+                                            [options]="customerList" optionLabel="AccountName" [filter]="true"
+                                            filterBy="AccountName" [showClear]="true" placeholder="Select Customer..."
+                                            formControlName="customerAccountId" appendTo="body" optionValue="Id"
+                                            [showClear]="false"
+                                            [ngClass]="{'invalid-error': f.customerAccountId.invalid && (f.customerAccountId.touched || submitted)}">
+                                        </p-dropdown></span>
+
+                                    <ng-container
+                                        *ngIf="f.customerAccountId.invalid && (f.customerAccountId.touched || submitted)">
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.customerAccountId.errors.required">Customer
+                                            is
+                                            required</mat-error>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Vendor *</label>
+                                    <span><p-dropdown (onChange)="onVendorChange($event.value);" [options]="vendorsList"
+                                            optionLabel="AccountName" [filter]="true" filterBy="AccountName"
+                                            [showClear]="true" placeholder="Select Vendor..."
+                                            formControlName="vendorAccountId" appendTo="body" optionValue="Id"
+                                            [showClear]="false" [disabled]="isDisable"
+                                            [ngClass]="{'invalid-error': f.vendorAccountId.invalid && (f.vendorAccountId.touched || submitted)}">
+                                        </p-dropdown></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.vendorAccountId.errors?.required && (f.vendorAccountId.touched || submitted) ">
+                                        Vendor is required</mat-error>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Account Number *</label>
+                                    <span><p-dropdown (onChange)="fetchDates();" [options]="billingAccount"
+                                            optionLabel="AccountNumber" [filter]="true" filterBy="AccountNumber"
+                                            [showClear]="true" placeholder="Select Account Number..."
+                                            formControlName="billingAccountId" appendTo="body" optionValue="value"
+                                            [showClear]="false"
+                                            [ngClass]="{'invalid-error': f.billingAccountId.invalid && (f.billingAccountId.touched || submitted)}">
+                                        </p-dropdown></span>
+
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.billingAccountId.errors?.required && (f.billingAccountId.touched || submitted) ">
+                                        Account Number is required</mat-error>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Bill Day</label>
+                                    <span><input type="text" class="form-control" value="{{billDay}}" readonly
+                                            spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Retrieval Date</label>
+                                    <span> <input type="text" class="form-control"
+                                            formControlName="invoiceRetrievalDate" readonly spaceTrimStartEndInput
+                                            [allowStartWithSpace]="false"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Missing Date</label>
+                                    <span> <input type="text" class="form-control" formControlName="invoiceExpectedDate"
+                                            readonly spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-12 col-md-12 text-center mt-2">
+                        <button type="submit" [disabled]="saveButtonLoadder" (click)="saveInvoiceForcastData()"
+                            class="btn sbubtn btn-primary btn-raised">Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

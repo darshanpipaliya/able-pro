@@ -1,0 +1,161 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Add or Edit Service Type Attributes</h5>
+    </div>
+
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+
+    <div class="card-body py-0">
+        <div class="container px-0">
+            <form class="editForm px-0" [formGroup]="addServiceAttributeForm">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0 pt-2">
+                        <div class="row m-t-15">
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Service Number</label>
+                                    <span><input class="form-control" formControlName="serviceNumber"
+                                            disabled="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Parent Service Number</label>
+                                    <span class="pr-0"><input class="form-control" formControlName="parentServiceNumber"
+                                            disabled="true"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Vendor Product</label>
+                            <span> <input class="form-control" formControlName="vendorProduct" disabled="true" /></span>
+                            <mat-error style="font-size: 12px;"
+                                *ngIf="f.vendorProduct.errors?.required && (f.vendorProduct.touched || submitted) ">
+                                Vendor Product is required</mat-error>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Service</label>
+                            <span><input class="form-control" formControlName="service" disabled="true"></span>
+                            <mat-error style="font-size: 12px;"
+                                *ngIf="f.service.errors?.required && (f.service.touched || submitted) ">
+                                Service is required</mat-error>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xl-12 px-0">
+                        <div class="form-group">
+                            <label class="form-label">Vendor Product Description</label>
+                            <textarea class="form-control textarea-full-section" rows="3" formControlName="VendorProductDescription"
+                                    disabled="true"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                        <div class="row">
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Product</label>
+                                    <span><input class="form-control" formControlName="product" disabled="true"></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.product.errors?.required && (f.product.touched || submitted) ">
+                                        Product is required</mat-error>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6 ">
+                                <div class="form-group">
+                                    <label class="form-label">Product Type</label>
+                                    <span class="pr-0"><input class="form-control" formControlName="productType"
+                                            disabled="true"></span>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.productType.errors?.required && (f.productType.touched || submitted) ">
+                                        Product Type is required</mat-error>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="!stopSpinner">
+                    <div class="spinner-border text-primary m-2"
+                        style="margin-left: calc(50% - 20px) !important; width: 2.5rem !important;height: 2.5rem !important; "
+                        role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="stopSpinner">
+                    <div class="build-charge-code-group-accordian">
+                        <p-table  #dt dataKey="Id" [value]="rowData" (onHeaderCheckboxToggle)="onHeaderSelectionChange($event)"
+                            selectionMode="multiple" [(selection)]="selectedAttribute">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="font-p-table-header">
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th>
+                                    <th class="font-p-table-header" field="serviceType" width="30%">Service Type</th>
+                                    <th class="font-p-table-header" field="attribute"
+                                        width="calc(40% - 35px)">Attribute</th>
+                                    <th class="font-p-table-header" field="attributeValue" width="30%">Attribute
+                                        Value</th>
+                                </tr>
+
+                            </ng-template>
+                            <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+                                <tr>
+                                    <td>
+                                        <p-tableCheckbox [value]="row" #checkElm [binary]="true"
+                                            (click)="getAttribute(row, $event, true)"></p-tableCheckbox>
+                                    </td>
+                                    <td class="f-s-words" width="30%" style="font-weight: 400;">
+                                        {{row.ServiceType.Name}} </td>
+                                    <td class="f-s-words" width="calc(40% - 35px)" style="font-weight: 400;">
+                                        {{row.Attributes.Name}} </td>
+                                    <td width="30%" style="font-weight: 400;">
+                                        <input maxlength="100" value="{{row.attribute_value ? row.attribute_value : ''}}"
+                                            (keyup)="getAttribute(row, $event)" class="" />
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="4" class="text-center" style="height: calc(100% + 0px);">No Row To Show
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </ng-container>
+
+                <ng-template #attributeCell let-row>
+                    <input value="{{row.attribute_value ? row.attribute_value : ''}}"
+                        (keyup)="getAttribute(row, $event)" placeholder="Enter Attribute value"
+                        class="attribute-value" />
+                </ng-template>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<mat-dialog-actions class="py-3" align="center">
+    <button [disabled]="saveButtonLoader || isUserAccess" mat-button class="btn btn-primary mat-spinner-btn"
+        (click)="addServiceTypeAttribute()" cdkFocusInitial>
+        <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>
+        Save</button>
+</mat-dialog-actions>

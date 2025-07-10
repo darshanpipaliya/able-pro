@@ -1,0 +1,102 @@
+<div class="row mx-0">
+    <div class="col-sm-12 mb-15 px-0 my-2">
+        <div class="btn-group-list1 d-flex justify-content-end">
+         
+        </div>
+    </div>
+</div>
+<app-invoice-overview-i [refreshDatas]="dataRefresh" [gridRowData]="gridRowData" (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)" ></app-invoice-overview-i>
+
+<div class="row mx-0" *ngIf="isShowGrid">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+        <div class="accordion-grid grid1">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <i class="fa fa-check"></i>&nbsp;Charge Codes that Need Rules
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <i class="fas fa-info-circle" (click)="openDialog()"></i>
+                    <ng-template #tooltipText>
+                        <div class="mat-dialog-header">
+                            <button type="button" class="close" mat-dialog-close>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="text-left">
+                            <p class="mb-0">
+                                Each of these charge detail records in this grid have Charge Codes that we NOT used to
+                                determine which Vendor Product belong to what Service Number(s) and can be distributed
+                                now. Either a distribution rule needs to be assigned to the charge detail record, Status
+                                = Needs Rule. Utilize the Add/Edit icon to create a new rule or review the existing rule
+                                for the Charge Code.
+                            </p>
+                        </div>
+                    </ng-template>
+
+                    <div class="row">
+                        <div class="col-md-12 px-0">
+                            <ng-container style="height: max-content;" *ngIf="overviewData">
+                                <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs" [rowData]="rowData"
+                                    [rowSelection]="rowSelection" [gridOptions]="gridOptions"
+                                    [frameworkComponents]="frameworkComponents" [defaultColDef]="defaultColDef"
+                                    [sideBar]="sideBar" [singleClickEdit]="true">
+                                </app-ag-grid-table>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2 mx-0">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+        <div class="accordion-grid">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                    <div class="inventory-sel-accordion-left-btn">
+                        <button type="button" (click)="next()" [disabled]="!isEnableNext"
+                            class="btn btn-primary btn-raised">Next</button>
+                        <span class="ml-2 fas fa-check c-refresh-speed" style="cursor: pointer;" title="Refresh"
+                            (click)="getDistributionEvent()"></span>
+                    </div>
+
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <i class="fa fa-check"></i>&nbsp;Distribution Rules by Event
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <i class="fas fa-info-circle" (click)="openDialog2()"></i>
+                    <ng-template #tooltipText1>
+                        <div class="mat-dialog-header">
+                            <button type="button" class="close" mat-dialog-close>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="dialog-data">
+                            <p class="mb-0">These Charge Codes have a Distribution Rule assigned and the rule has been
+                                executed or are being executed. Utilize the Edit icon to review the existing rule for
+                                the Charge Code and the View icon to view the detail of the distribution.</p>
+                        </div>
+                    </ng-template>
+
+                    <div class="row">
+                        <div class="col-md-12 px-0">
+                            <ng-container style="height: max-content;">
+                                <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefsEv" 
+                                    [rowData]="rowDataEv" [rowSelection]="rowSelection" [gridOptions]="gridOptions" [frameworkComponents]="frameworkComponents"
+                                    [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true">
+                                </app-ag-grid-table>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

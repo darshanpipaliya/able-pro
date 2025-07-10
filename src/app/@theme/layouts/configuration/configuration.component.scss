@@ -1,4 +1,4 @@
-@import '../../styles/theme-palette-colors.scss';
+@use '../../styles/theme-palette-colors.scss';
 
 .menu-styler {
   display: block;
@@ -107,9 +107,9 @@
           height: 60px;
           border-radius: 20px;
 
-          .pc-icon.light {
-            color: map-get($yellow-theme, 500);
-          }
+          // .pc-icon.light {
+          //   color: map-get($yellow-theme, 500);
+          // }
 
           &.active {
             border: 2px solid var(--primary-500);
@@ -167,45 +167,45 @@
               }
             }
 
-            &.blue-layout {
-              background: map-get($blue-theme, 500);
-            }
+            // &.blue-layout {
+            //   background: map-get($blue-theme, 500);
+            // }
 
-            &.indigo-layout {
-              background: map-get($indigo-theme, 500);
-            }
+            // &.indigo-layout {
+            //   background: map-get($indigo-theme, 500);
+            // }
 
-            &.purple-layout {
-              background: map-get($purple-theme, 500);
-            }
+            // &.purple-layout {
+            //   background: map-get($purple-theme, 500);
+            // }
 
-            &.pink-layout {
-              background: map-get($pink-theme, 500);
-            }
+            // &.pink-layout {
+            //   background: map-get($pink-theme, 500);
+            // }
 
-            &.red-layout {
-              background: map-get($red-theme, 500);
-            }
+            // &.red-layout {
+            //   background: map-get($red-theme, 500);
+            // }
 
-            &.orange-layout {
-              background: map-get($orange-theme, 500);
-            }
+            // &.orange-layout {
+            //   background: map-get($orange-theme, 500);
+            // }
 
-            &.yellow-layout {
-              background: map-get($yellow-theme, 500);
-            }
+            // &.yellow-layout {
+            //   background: map-get($yellow-theme, 500);
+            // }
 
-            &.green-layout {
-              background: map-get($green-theme, 500);
-            }
+            // &.green-layout {
+            //   background: map-get($green-theme, 500);
+            // }
 
-            &.teal-layout {
-              background: map-get($teal-theme, 500);
-            }
+            // &.teal-layout {
+            //   background: map-get($teal-theme, 500);
+            // }
 
-            &.cyan-layout {
-              background: map-get($cyan-theme, 500);
-            }
+            // &.cyan-layout {
+            //   background: map-get($cyan-theme, 500);
+            // }
 
             &.active {
               flex: 1;

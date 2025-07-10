@@ -1,0 +1,103 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title" id="exampleModalLabel">Add Vendor Product</h5>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="container-fluid">
+        <div class="card-body">
+            <form [formGroup]="addProductForm">
+                <div class="col-md-12 col-sm-12 col-xl-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Vendor</label>
+
+                                <p-dropdown [options]="vendors" optionLabel="AccountName" [filter]="true"
+                                    filterBy="AccountName" [showClear]="true" placeholder="Select Vendor..."
+                                    formControlName="vendorAccountId" optionValue="Id" [showClear]="false"
+                                    appendTo="body">
+                                </p-dropdown>
+
+                                <ng-container
+                                    *ngIf="f.vendorAccountId.invalid && (f.vendorAccountId.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.vendorAccountId.errors.required">Vendor
+                                        is
+                                        required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Product Type</label>
+
+                                <p-dropdown [options]="productTypes" placeholder="Select Product Type" appendTo="body"
+                                    formControlName="productTypeId" optionValue="Id" optionLabel="Name" [filter]="true"
+                                    filterBy="Name" [showClear]="false">
+                                </p-dropdown>
+
+                                <ng-container
+                                    *ngIf="f.productTypeId.invalid && (f.productTypeId.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.productTypeId.errors.required">Product
+                                        Type
+                                        is
+                                        required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Vendor Product Name</label>
+                                <input type="text" class="form-control" required formControlName="name"
+                                    [ngClass]="{'invalid-error': !f.name.valid && (f.name.dirty || f.name.touched || isProductFormSubmit)}"
+                                    placeholder="Enter Vendor Product Name" spaceTrimStartEndInput
+                                    [allowStartWithSpace]="false">
+                                <ng-container *ngIf="f.name.invalid && (f.name.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.name.errors.required">Name is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Vendor Product Description</label>
+                                <input type="text" class="form-control" required formControlName="description"
+                                    [ngClass]="{'invalid-error': !f.description.valid && (f.description.dirty || f.description.touched || isProductFormSubmit)}"
+                                    placeholder="Enter Product Description" spaceTrimStartEndInput
+                                    [allowStartWithSpace]="false">
+                                <ng-container
+                                    *ngIf="f.description.invalid && (f.description.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.description.errors.required">
+                                        Description is
+                                        required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <p-dropdown [options]="statusList" optionLabel="Name" [filter]="false" filterBy="Name" [showClear]="true" placeholder="Select Status..." formControlName="status" appendTo="body" optionValue="Id" [showClear]="false">
+                                </p-dropdown>
+                                <ng-container *ngIf="f.status.invalid && (f.status.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.status.errors.required">Status
+                                        selection is
+                                        required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="py-3" align="end">
+    <button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>
+    <button mat-button (click)="saveProduct()" class="btn btn-primary" cdkFocusInitial>Save</button>
+</mat-dialog-actions>

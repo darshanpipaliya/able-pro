@@ -1,0 +1,109 @@
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 12px !important;
+}
+
+:host ::ng-deep ag-grid-angular {
+    padding: 0 !important;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+:host ::ng-deep .accordion-grid {
+    .mat-expansion-panel-body {
+        padding: 0 !important;
+
+        ag-grid-angular {
+            // height: 600px !important;
+             height: calc(100vh - 260px) !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+.report-header {
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.report-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-family: "Poppins", sans-serif !important;
+}
+
+.header-btn-responsive {
+    gap: 10px;
+}
+
+.btn.active .fas.fa-file-lock,
+.btn:hover .fas.fa-file-lock,
+.btn .fas.fa-file-lock{
+    color: transparent;
+    transition: all 0.4s;
+    position: relative;
+    margin-right: 16px;
+    top: 6px;
+}
+
+.fas.fa-file-lock::before{
+    content: '111';
+    display: block;
+    color: transparent;
+    background-image: url('../../../assets/images/Contract/fa-solid-fa-file-lock-white.svg') !important;
+    background-size: 100%;
+    max-width: 16px;
+}
+
+.btn.btn-primary .fas.fa-file-lock::before,
+.btn.active .fas.fa-file-lock::before,
+.btn:hover .fas.fa-file-lock::before {
+    background-image: url('../../../assets/images/Contract/fa-solid-fa-file-lock-white.svg') !important;
+    background-size: 100%;
+    max-width: 16px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: -18px;
+}
+
+.btn .fas.fa-file-lock::before{
+    background-image: url('../../../assets/images/Contract/fa-solid-fa-file-lock.svg') !important;
+    background-size: 100%;
+    max-width: 16px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: -18px;
+}
+
+

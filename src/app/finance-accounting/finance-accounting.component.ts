@@ -356,7 +356,6 @@ export class FinanceAccountingComponent {
   selected: any = 0;
 
   OpenAddBillingTab() {
-    console.log('OpenAddBillingTab');
     this.tabsArray.push({
       tabTypes: 'newBillingAccount',
       BillingRowData: null,
@@ -506,7 +505,6 @@ export class FinanceAccountingComponent {
   currentTabName: any;
   currentTabNameEmit(event: any) {
     this.currentTabName = event;
-    console.log('currentTabName123 ',this.currentTabName);
   }
 
   setLocationNotes(event: any) {

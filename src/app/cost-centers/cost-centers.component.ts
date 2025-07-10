@@ -225,9 +225,11 @@ export class CostCentersComponent implements OnInit {
     if (this.isCustomerAdmin || this.isCompanyAdmin) {
       this.gridOptions = {
         rowModelType: 'serverSide',
-        rowSelection: 'multiple',
         rowSelectionCheckboxes: true,
-       
+        rowSelection: {
+          type: 'multiple',
+          enableClickSelection: true
+        },
         enableFiltering: true,
         headerHeight: 35,
         groupHeaderHeight: 37,
@@ -243,7 +245,10 @@ export class CostCentersComponent implements OnInit {
     } else {
       this.gridOptions = {
         rowModelType: 'serverSide',
-        rowSelection: 'multiple',
+        rowSelection: {
+          type: 'multiple',
+          enableClickSelection: true
+        },
         rowSelectionCheckboxes: true,
         serverSideInfiniteScrollOptions: {
           storeType: 'partial',

@@ -17,7 +17,7 @@
                 (onSelectionChangedEvent)="onSelectionChanged($event)" [autoGroupColumnDef]="autoGroupColumnDef"
                 [sheetName]="'Locations'" [exportFilename]="'Locations.xlsx'"  [treeData]="true"
                 [rowSelection]="rowSelection" [defaultColDef]="defaultColDef"
-                [suppressRowClickSelection]="true"  (onAgGridReady)="onAgGridReady($event)"
+                (onAgGridReady)="onAgGridReady($event)"
                 (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
                 [rowHeight]="24">
             </app-ag-grid-table>

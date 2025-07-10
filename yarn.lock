@@ -312,7 +312,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^18.1.0", "@angular/core@^19.0.0", "@angular/core@^19.0.0 || ^20.0.0", "@angular/core@^19.0.0-rc.0 || ^19.0.0", "@angular/core@^6.0.0 || ^7.0.0 || ^8.0.0", "@angular/core@>= 17.0.0", "@angular/core@>=12", "@angular/core@>=13", "@angular/core@>=13.0.0", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0", "@angular/core@>=16", "@angular/core@>=17.0.0", "@angular/core@>=17.3.0", "@angular/core@>=18.2.0", "@angular/core@19.0.5":
+"@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^18.1.0", "@angular/core@^19.0.0", "@angular/core@^19.0.0 || ^20.0.0", "@angular/core@^19.0.0-rc.0 || ^19.0.0", "@angular/core@^6.0.0 || ^7.0.0 || ^8.0.0", "@angular/core@>= 17.0.0", "@angular/core@>=12", "@angular/core@>=13", "@angular/core@>=13.0.0", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0", "@angular/core@>=16", "@angular/core@>=17.0.0", "@angular/core@>=17.3.0", "@angular/core@>=18.2.0", "@angular/core@>=2.0.0 <5.0.0", "@angular/core@19.0.5":
   version "19.0.5"
   resolved "https://registry.npmjs.org/@angular/core/-/core-19.0.5.tgz"
   integrity sha512-Ywc6sPO6G/Y1stfk3y/MallV/h0yzQ0vdOHRWueLrk5kD1DTdbolV4X03Cs3PuVvravgcSVE3nnuuHFuH32emQ==
@@ -1664,6 +1664,13 @@
   integrity sha512-GeSAz4yiGq49psdte8kcf+Y562wB3jK/qKRAkh6iA32lcXmy2sfQXVAmlHdjZ3AyP+E8lf3yMwuPdSKiYcDgSg==
   dependencies:
     tslib "^2.3.0"
+
+"@ng-select/ng-select@^15.0.0":
+  version "15.0.0"
+  resolved "https://registry.npmjs.org/@ng-select/ng-select/-/ng-select-15.0.0.tgz"
+  integrity sha512-JOcmO8u/TPk2nn/IgGhvk82Oq5SY6OWcUB61LMMQ44hJ0G0yeb8rQQPgiqrPK5fV1kl4Qyz0r7lPA5PxxbzK+w==
+  dependencies:
+    tslib "^2.3.1"
 
 "@ngtools/webpack@19.2.13":
   version "19.2.13"
@@ -4704,6 +4711,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
+lodash.difference@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npmjs.org/lodash.difference/-/lodash.difference-4.5.0.tgz"
+  integrity sha512-dS2j+W26TQ7taQBGN8Lbbq04ssV3emRw4NY58WErlTO29pIqS0HmoT5aJ9+TUQ1N3G+JOZSji4eugsWwGp9yPA==
+
 lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz"
@@ -4714,7 +4726,7 @@ lodash.merge@^4.6.2:
   resolved "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
-lodash@4.17.21:
+lodash@^4.17.4, lodash@4.17.21:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -5150,6 +5162,14 @@ ng-recaptcha@13.2.1:
   dependencies:
     "@types/grecaptcha" "^3.0.7"
     tslib "^2.2.0"
+
+ngx-dual-listbox@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/ngx-dual-listbox/-/ngx-dual-listbox-0.2.0.tgz"
+  integrity sha512-ldftZUMY5x9EqhXzz0NOIj/grjD5LcmIN3aGGI2secNzyvdVeE0VxNaOlvgITSZA17i2Y5IY0342KBpeaz3WQg==
+  dependencies:
+    lodash "^4.17.4"
+    lodash.difference "^4.5.0"
 
 ngx-editor@18.0.0:
   version "18.0.0"
@@ -6886,7 +6906,7 @@ tslib@^1.9.0:
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2, tslib@^2.0.0, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.0, tslib@^2.4.0, tslib@^2.4.1, tslib@2, tslib@2.8.1:
+tslib@^2, tslib@^2.0.0, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.4.1, tslib@2, tslib@2.8.1:
   version "2.8.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==

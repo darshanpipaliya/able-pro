@@ -1,0 +1,101 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title" id="exampleModalLabel">Upload Invoice </h5>
+    <button type="button" class="close" [mat-dialog-close]="false" [ngClass]="{'disabled pointer-null': apiCalling }">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="card-body forcasting-upload">
+        <div class="container">
+            <form class="editForm m-t-10">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+
+
+                        <table class="table table-bordered text-center">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="capitalize">Organization</th>
+                                    <th class="capitalize">Vendor</th>
+                                    <th class="capitalize">Payable Account Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+
+                                    <td>{{messageData?.CustomerName}}</td>
+                                    <td>{{messageData?.VendorName}}</td>
+                                    <td>{{messageData?.PayableAccountNumber}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+
+                        <table class="table table-bordered text-center">
+                            <thead class="thead-light">
+                                <tr>
+
+                                    <th class="capitalize">Invoice Month</th>
+                                    <th class="capitalize">Invoice Bill Date</th>
+                                    <th class="capitalize">Invoice Year</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+
+                                    <td>{{messageData?.InvoiceMonth}}</td>
+                                    <td>{{messageData?.InvoiceDate | date }}</td>
+                                    <td>{{messageData?.InvoiceYear}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+
+
+                    </div>
+                    <!-- <div class="col-md-12 col-sm-12 col-xl-12">
+                        <div class="form-group">
+                            <label class="form-label">Upload Invoice</label>
+                            <input type="file" class="form-control" (change)="onFileUploaded($event)" #fileUpload>
+                        </div>
+                    </div> -->
+
+                    <div class="col-md-4 col-sm-4 col-xl-4 d-flex align-items-center">
+                        <button type="button" class="btn sbubtn btn-primary btn-raised"
+                            (click)="fileUpload.click()">Upload
+                            Invoice</button>
+                        <input type="file" class="file-input" hidden (change)="onFileUploaded($event)" #fileUpload>
+                        <div class="tooltip-msg-fix">
+                            <i class="fas fa-info-circle m-l-10 tooltip">
+                                <span class="tooltiptext">File should be a PDF format</span>
+                            </i>
+                            
+                                
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xl-8"
+                        style="display: flex;line-height: 41px;font-size: 17px;color: #838383;">
+                        {{addCompanyForm?.value?.CompanyLogoImage?.name}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="py-3" align="end">
+    <button mat-button [mat-dialog-close]="false" class="btn"
+        [ngClass]="{'disabled pointer-null': apiCalling }">Cancel</button>
+    <button mat-button class="btn btn-primary" type="button"
+        [ngClass]="{'disabled pointer-null': !fileUploaded || apiCalling }" (click)="uploadDocument()"
+        ngbTooltip="{{addCompanyForm?.value?.CompanyLogoImage?.name ? '' : 'Please Upload File' }}">
+        <span class="spinner-border spinner-border-sm" role="status" *ngIf="apiCalling"></span>
+        Save
+    </button>
+
+</mat-dialog-actions>

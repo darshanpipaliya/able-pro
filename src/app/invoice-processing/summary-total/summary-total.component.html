@@ -1,0 +1,213 @@
+<form class="editForm px-0" [formGroup]="summaryTotalForm">
+    <div class="review-section">
+        <div class="review-banner text-center">
+            <div class="review-banner text-center">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 review-box-res">
+                        <div class="review-box">
+                            <div class="review-header">
+                                <h2>Previous Bill Information</h2>
+                            </div>
+                            <div class="review-body">
+
+                                <span *ngIf="!overviewData">
+                                    <div class="shimmer-box">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10" >
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                </span>
+
+                                <div class="body-list-wrapper" *ngIf="overviewData">
+                                    <div class="body-list">
+                                        <h4>Past Due Balance</h4>
+                                        <p>{{overviewData?.CurrencySymbol}} {{f.PastDueAmount.value | number:'1.2-2'}}</p>
+                                    </div>
+                                    <div class="body-list">
+                                        <h4>Should we pay the Past Due Balance?</h4>
+                                        <label class="form-label" style="font-weight: 500;">&nbsp;<mat-radio-group
+                                                formControlName="PayPastDue"
+                                                [disabled]="recordPublishedOrCompleted || isDisablePayPastDue">
+                                                <mat-radio-button [value]="false" (change)="clickToYesNo(false)">No
+                                                </mat-radio-button>
+                                                <mat-radio-button [value]="true" (change)="clickToYesNo(true)"
+                                                    class="ml-4">Yes
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.PayPastDue.errors?.required && (f.PayPastDue.touched || saveButtonLoader) ">
+                                                Pay Past Due is required</mat-error></label>
+                                    </div>
+                                    <div class="body-list">
+                                        <h4>Previous Bill Amount</h4>
+                                        <span *ngIf="!stepOneData" class="spinner-border spinner-border-sm"
+                                            role="status"></span>
+                                        <span *ngIf="!editEnabled && stepOneData">{{overviewData?.CurrencySymbol}} {{f.PreviousBillBalance.value |
+                                             number:'1.2-2' }}</span>
+                                        <em class="error-msg-p">
+                                            <input id="fixed2" *ngIf="editEnabled" type="text"
+                                                formControlName="PreviousBillBalance" (input)="totalCurrentCharge(); "
+                                                (keypress)="setDecimalLimit()" /></em>
+                                    </div>
+                                    <div class="body-list">
+                                        <h4>Payments Applied <i class="fas fa-info-circle" container="body"
+                                                ngbTooltip="Payments sometimes cross in the mail.  If a payment was sent but did not appear on the invoice, it is not advisable to pay the Past Due Balance."
+                                                tooltipClass="tooltip-bg"></i></h4>
+                                        <span *ngIf="!stepOneData" class="spinner-border spinner-border-sm"
+                                            role="status"></span>
+                                        <span *ngIf="!editEnabled && stepOneData">{{overviewData?.CurrencySymbol}} {{f.PaymentAmount.value |
+                                             number:'1.2-2' }}</span>
+                                        <input id="fixed2_1" *ngIf="editEnabled" type="text"
+                                            (input)="totalCurrentCharge();" formControlName="PaymentAmount"
+                                            (keypress)="setDecimalLimit()" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 review-box-res">
+                        <div class="review-box">
+                            <div class="review-header">
+                                <h2>Current Details</h2>
+                            </div>
+                            <div class="review-body">
+
+                                <span *ngIf="!overviewData">
+                                    <div class="shimmer-box">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10" >
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                </span>
+
+                                <div class="body-list-wrapper" *ngIf="overviewData">
+                                    <div class="body-list">
+                                        <h4>Adjustments</h4>
+                                        <span *ngIf="!stepOneData" class="spinner-border spinner-border-sm"
+                                            role="status"></span>
+                                        <span *ngIf=" stepOneData">{{overviewData?.CurrencySymbol}} {{f.TotalAdjustment.value |
+                                             number:'1.2-2'}}</span>
+                                    </div>
+                                    <div class="body-list">
+                                        <h4>Total Current Charges</h4>
+                                        <span *ngIf="!stepOneData" class="spinner-border spinner-border-sm"
+                                            role="status"></span>
+                                        <span *ngIf=" stepOneData">{{overviewData?.CurrencySymbol}} {{f.TotalCurrentCharges.value |
+                                             number:'1.2-2'}}</span>
+                                    </div>
+                                    <div class="body-list">
+                                        <h4>Total Amount Due</h4>
+                                        <span *ngIf="!stepOneData" class="spinner-border spinner-border-sm"
+                                            role="status"></span>
+                                        <span *ngIf="!editEnabled && stepOneData">{{overviewData?.CurrencySymbol}} {{f.TotalDueAmount.value |
+                                             number:'1.2-2'}}</span>
+                                        <em class="error-msg-p"><mat-error style="font-size: 12px;"
+                                                *ngIf="f.TotalDueAmount.errors?.required && (f.TotalDueAmount.touched || saveButtonLoader) ">
+                                                Total Amount Due is required</mat-error>
+                                            <input id="fixed2_3" *ngIf="editEnabled" type="text"
+                                                formControlName="TotalDueAmount" (input)="totalCurrentCharge();"
+                                                (keypress)="setDecimalLimit()" /></em>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 review-box-res">
+                        <div class="review-box">
+                            <div class="review-header">
+                                <h2>Amount to Pay</h2>
+                            </div>
+                            <div class="review-body">
+                                <span *ngIf="!overviewData">
+                                    <div class="shimmer-box">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10" >
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                    <div class="shimmer-box m-t-10">
+                                        <div class="shimmer"></div>
+                                    </div>
+                                </span>
+
+                                <div class="body-list-wrapper" *ngIf="overviewData">
+                                    <!-- <h4>Amount to Pay <i class="fas fa-info-circle" container="body"
+                                            [ngbTooltip]="AmounttoPay" tooltipClass="tooltip-bg"></i>
+                                        <ng-template #AmounttoPay>This is a system-generated field that represents the lesser of two values: Total Current Charges or Total Amount Due. If the lesser value is negative, it will be set to zero. 
+
+                                            The Amount to Pay may also be adjusted if the "Pay the Past Due Balance" option is set to "Yes." In this case, the Amount to Pay will increase by the Past Due amount. 
+                                            
+                                            Please note: Total Current Charges are calculated as the sum of Adjustments and the Total Current Charges applied to this invoice.</ng-template>
+                                    </h4> -->
+
+                                    <h4>Amount to Pay <i class="fas fa-info-circle" (click)="openPopup()" tooltipClass="tooltip-bg"></i>
+                                        <ng-template #ccText>
+                                            <div class="mat-dialog-header">
+                                                <button type="button" class="close" mat-dialog-close>
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="text-left dialog-data">
+                                                <p class="mb-2">
+                                                    This is a system-generated field that represents the lesser of two values: Total Current Charges or Total Amount Due. If the lesser value is negative, it will be set to zero. 
+                                                </p>
+
+                                                <p class="mb-2">
+                                                    The Amount to Pay may also be adjusted if the "Pay the Past Due Balance" option is set to "Yes." In this case, the Amount to Pay will increase by the Past Due amount. 
+                                                </p>
+
+                                                <p class="mb-0">
+                                                    Please note: Total Current Charges are calculated as the sum of Adjustments and the Total Current Charges applied to this invoice.
+                                                </p>
+                                            </div>
+                                        </ng-template>
+                                </h4>
+
+
+                                    <span *ngIf="!stepOneData" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                    <span *ngIf="stepOneData">{{overviewData?.CurrencySymbol}} {{f.AmountToPay.value |
+                                             number:'1.2-2'}}</span>
+                                </div>
+                                <div class="body-list-wrapper" *ngIf="overviewData">
+                                    <button type="submit" (click)="saveSummaryTotal()"
+                                        [disabled]="saveButtonLoader || recordPublishedOrCompleted"
+                                        class="btn btn-primary"> <span class="spinner-border spinner-border-sm mr-1"
+                                            role="status" *ngIf="saveButtonLoader"></span>This is correct! Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

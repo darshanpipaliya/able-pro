@@ -1,0 +1,108 @@
+.validate-summary-total-label h2 {
+    font-size: 22px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #181d1f;
+}
+
+:host ::ng-deep .sandbox-step-grid {
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+    margin-left: 15px;
+}
+
+button.close {
+    position: relative;
+    top: -10px;
+    right: -6px;
+    color: unset;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+
+
+// :host ::ng-deep .ag-theme-alpine .ag-row {
+//     z-index: 0 !important;
+// }
+
+// :host ::ng-deep .ag-theme-alpine #sample-class {
+//     z-index: 10 !important;
+// }
+@media (min-width: 1200px) {
+
+    .row.sandbox-io-lable-col-c-width {
+        .col-xl-3 {
+            flex: 0 0 20% !important;
+            max-width: 20% !important;
+        }
+
+        .col-xl-9 {
+            flex: 0 0 80% !important;
+            max-width: 80% !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 1520px) {
+    .validate-summary-total-label h2 {
+        font-size: 20px !important;
+    }
+}
+
+@media only screen and (max-width: 1423px) {
+    .validate-summary-total-label h2 {
+        font-size: 18px !important;
+    }
+}
+
+@media only screen and (max-width: 1199px) {
+    .validate-summary-total-label h2 {
+        margin-bottom: 8px;
+    }
+}

@@ -1,0 +1,275 @@
+<div class="row">
+    <div class="col-sm-12 col-xl-12 px-0" id="FixedDiv">
+        <form class="editForm" [formGroup]="addUserForm" (ngSubmit)="saveUser()">
+            <div class="container-fluid px-0">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 text-right px-0">
+                        <span class="text-c-red">*Required field</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xl-6 padding-left-none">
+                            <mat-accordion class="example-headers-align">
+                                <div>
+                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                        <mat-expansion-panel-header class="math">
+                                            <mat-panel-title class="matt">
+                                                <i class="ficon fas fa-id-card-alt"></i>&nbsp;TEM
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="row m-t-20">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">TEM *</label>
+                                                    <span><p-dropdown [options]="accounts" optionLabel="AccountName"
+                                                            [filter]="true" filterBy="AccountName" [showClear]="true"
+                                                            [ngClass]="{'invalid-error': f.accountID.invalid && (f.accountID.touched || isUserFormSubmit)}"
+                                                            placeholder="Select TEM..." formControlName="accountID"
+                                                            appendTo="body" optionValue="Id" [showClear]="false">
+                                                        </p-dropdown></span>
+                                                    <ng-container
+                                                        *ngIf="addUserForm.controls['accountID'].invalid && (addUserForm.controls['accountID'].touched || isUserFormSubmit)">
+                                                        <mat-error style="font-size: 12px;"
+                                                            *ngIf="addUserForm.controls['accountID'].errors.required">
+                                                            TEM selection is required</mat-error>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </mat-expansion-panel>
+                                </div>
+                            </mat-accordion>
+                            <mat-accordion class="example-headers-align">
+                                <div>
+                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                        <mat-expansion-panel-header class="math">
+                                            <mat-panel-title class="matt">
+                                                <i class="ficon fas fa-id-card"></i>&nbsp;Personal
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="row m-t-20">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">First Name *</label>
+                                                    <span><input type="text" class="form-control" required
+                                                            formControlName="firstName"
+                                                            [ngClass]="{'invalid-error': !addUserForm.controls['firstName'].valid && (addUserForm.controls['firstName'].dirty || addUserForm.controls['firstName'].touched || isUserFormSubmit)}"
+                                                            spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                                    <ng-container
+                                                        *ngIf="addUserForm.controls['firstName'].invalid && (addUserForm.controls['firstName'].touched || isUserFormSubmit)">
+                                                        <mat-error style="font-size: 12px;"
+                                                            *ngIf="addUserForm.controls['firstName'].errors.required">
+                                                            First name is required
+                                                        </mat-error>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Last Name *</label>
+                                                    <span><input type="text" class="form-control" required
+                                                            formControlName="lastName"
+                                                            [ngClass]="{'invalid-error': !addUserForm.controls['lastName'].valid && (addUserForm.controls['lastName'].dirty || addUserForm.controls['lastName'].touched || isUserFormSubmit)}"
+                                                            spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                                    <ng-container
+                                                        *ngIf="addUserForm.controls['lastName'].invalid && (addUserForm.controls['lastName'].touched || isUserFormSubmit)">
+                                                        <mat-error style="font-size: 12px;"
+                                                            *ngIf="addUserForm.controls['lastName'].errors.required">
+                                                            Last name is required
+                                                        </mat-error>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="phone">User Title</label>
+                                                    <span><input class="form-control input-md" id="phone"
+                                                            formControlName="Title" spaceTrimStartEndInput
+                                                            [allowStartWithSpace]="false" type="text"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="margin-bottom: 0 !important;">
+                                                    <label class="mr-2">Block Email <i class="fas fa-info-circle"
+                                                            (click)="BlockEmailTooltip()"
+                                                            tooltipClass="tooltip-bg"></i></label>
+                                                    <ng-template #BlockEmailTool>
+                                                        <div class="mat-dialog-header">
+                                                            <button type="button" class="close" mat-dialog-close
+                                                                (click)="closeModal()">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="text-left dialog-data">
+                                                            <p class="mb-0">When ‘Yes’ this will block all emails except
+                                                                for new user, password reset and MFA emails.</p>
+                                                        </div>
+                                                    </ng-template>
+                                                    <mat-radio-group [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="blockEmail" class="m-l-8"
+                                                        style="margin-left: -10px;">
+                                                        <mat-radio-button [value]="true" class="m-l-10">Yes
+                                                        </mat-radio-button>
+                                                        <mat-radio-button [value]="false" class="m-l-10">No
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="email">Email *</label>
+                                                    <span><input class="form-control input-md" id="email" required
+                                                            formControlName="email"
+                                                            [ngClass]="{'invalid-error': !addUserForm.controls['email'].valid && (addUserForm.controls['email'].dirty || addUserForm.controls['email'].touched || isUserFormSubmit)}"
+                                                            type="text" spaceTrimStartEndInput
+                                                            [allowStartWithSpace]="false"></span>
+                                                    <ng-container
+                                                        *ngIf="addUserForm.controls['email'].invalid && (addUserForm.controls['email'].touched || isUserFormSubmit)">
+                                                        <mat-error style="font-size: 12px;"
+                                                            *ngIf="addUserForm.controls['email'].errors.required">
+                                                            Email is required</mat-error>
+                                                        <mat-error style="font-size: 12px;"
+                                                            *ngIf="addUserForm.controls.email.errors.pattern && !addUserForm.controls.email.errors.required">
+                                                            Email is invalid</mat-error>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group" style="margin-bottom: 0 !important;">
+                                                    <label class="mr-2">Status</label>
+                                                    <mat-radio-group [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="status" class="m-l-8" style="margin-left: -10px;">
+                                                        <mat-radio-button [disabled]="true" [value]="true"
+                                                            class="m-l-10">Active
+                                                        </mat-radio-button>
+                                                        <mat-radio-button [disabled]="true" [value]="false"
+                                                            class="m-l-10">Inactive
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="phone">Mobile Number</label>
+                                                    <span><input class="form-control input-md" id="phone"
+                                                            formControlName="PrimaryMobile" type="text"
+                                                            spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="phone">Desk Phone</label>
+                                                    <span><input class="form-control input-md" id="phone"
+                                                            formControlName="PrimaryLandline" type="text"
+                                                            spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </div>
+                            </mat-accordion>
+                        </div>
+
+                        <div class="col-sm-12 col-xl-6 padding-right-none">
+                            <mat-accordion class="example-headers-align system-access-accordian new-sa-acc" multi>
+                                <div>
+                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                        <mat-expansion-panel-header class="math">
+                                            <mat-panel-title class="matt">
+                                                <i class="ficon fas fa-users-cog"></i>&nbsp;System Access
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="sa-box-main">
+                                            <div class="sa-box">
+                                                <div class="sacc2">
+                                                    <div class="sa-box-header"> <b>Roles</b></div>
+                                                    <div class="sa-box-body">
+                                                        <mat-radio-group formControlName="roles">
+                                                            <mat-radio-button
+                                                                *ngFor="let option of roleOptions; let i=index;"
+                                                                [disabled]="option.disabled"
+                                                                [value]="option.value">{{option.label}}
+                                                            </mat-radio-button>
+                                                        </mat-radio-group>
+                                                    </div>
+                                                </div>
+                                                <ng-container
+                                                    *ngIf="addUserForm.controls['roles'].invalid && (addUserForm.controls['roles'].touched || isUserFormSubmit)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="addUserForm.controls['roles'].errors.required">
+                                                        Please select one role</mat-error>
+                                                </ng-container>
+                                            </div>
+
+                                            <div class="sa-box">
+                                                <div class="sacc2">
+                                                    <div class="sa-box-header">
+                                                        <div><b>Other Roles</b></div>
+                                                    </div>
+
+                                                    <div class="sa-box-body">
+                                                        <div class="state-line">
+                                                            <div formArrayName="otherRoles">
+                                                                <ng-container
+                                                                    *ngFor="let role of otherAccessOptions; let i = index">
+                                                                    <div class="form-group form-check"
+                                                                        style="margin-left:10px;">
+                                                                        <input [formControlName]="i" type="checkbox"
+                                                                            class="form-check-input" />
+                                                                        <label
+                                                                            class="form-check-label float-right">{{role.label}}</label>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="sa-box">
+                                                <div class="sacc2">
+                                                    <div class="sa-box-header"> <b>Portal Access</b></div>
+                                                    <div class="sa-box-body">
+                                                        <div class="state-line">
+                                                            <div formArrayName="portalRoles">
+                                                                <ng-container
+                                                                    *ngFor="let role of portalAccessOptions; let i = index">
+                                                                    <div class="form-group form-check"
+                                                                        style="margin-left:10px;">
+                                                                        <input [formControlName]="i" type="checkbox"
+                                                                            class="form-check-input" />
+                                                                        <label
+                                                                            class="form-check-label float-right">{{role.label}}</label>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </div>
+                            </mat-accordion>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="form-group text-center margin-b-none">
+                            <button type="submit" class="btn btn-primary btn-raised" [disabled]="saveButtonLoadder">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

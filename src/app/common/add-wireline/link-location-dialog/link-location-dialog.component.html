@@ -29,7 +29,7 @@
             <app-ag-grid-table [sideBar]="sideBar" [tableHeight]="'400px'" [columnDefs]="columnDefs"
                 [gridOptions]="gridOptions" (onSelectionChangedEvent)="onSelectionChanged($event)"
                 [sheetName]="'Locations'" [exportFilename]="'Locations.xlsx'" [rowSelection]="rowSelection"
-                [defaultColDef]="defaultColDef" [suppressRowClickSelection]="true" [rowModelType]="'serverSide'"
+                [defaultColDef]="defaultColDef" [rowModelType]="'serverSide'"
                 (onAgGridReady)="onAgGridReady($event)" (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
                 [rowHeight]="24" [sideBar]="sideBar" >
             </app-ag-grid-table>

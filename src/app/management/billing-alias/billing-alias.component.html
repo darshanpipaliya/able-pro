@@ -1,0 +1,112 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row header-btn-responsive">
+                    <ng-container *ngFor="let option of buttonOptions">
+                        <button ngDefaultControl class="bbtn  btn btn-outline-primary" type="button"
+                            [ngClass]="(option.value === 'billing-alias') ? 'btn btn-primary active round bg' : 'btn round'"
+                            [value]="option.value" (click)="goToPage(option.value);selected=0">
+                            <i class="fas {{option.icon}}"> </i>
+                            {{option.label}}
+                        </button>
+                    </ng-container>
+                </div>
+                <div class="row btn-group-list" *ngIf="isShowButton">
+
+                    <button [ngClass]="{'disabled': isDisabledExport || rowData.length < 1}" title="Export"
+                        type="button" class=" btn btn-icon btn-outline-success m-r-8" [disabled]="rowData.length < 1"
+                        (click)="!isDisabledExport ? onBtnExportDataAsExcel() : ''">
+                        <i class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                    </button>
+
+                    <button *ngIf="viewNEdit" title="Add Billing Alias" type="button" (click)="addNewBillingAlias()"
+                        class="btn btn-icon btn-outline-primary"> <i class="fas fa-plus"></i></button>
+                </div>
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)"
+                        id="billing-alias-table-tab"
+                        [ngClass]="{'mat-tab-header-add' : currentOpenEditPagevar === 'Add', 'mat-tab-header-edit' : currentOpenEditPagevar === 'Edit'}">
+                        <mat-tab>
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+                                    <b> <i class="fas fa-user-ninja" style="color: #4680ff;"> </i> Billing Alias</b>
+                                </ng-template>
+                                <ng-container>
+                                </ng-container>
+                            </div>
+
+                            <div class="mt-2">
+                                <mat-accordion class="example-headers-align accordion-grid ">
+                                    <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                                        <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                                            (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                                        <mat-expansion-panel-header class="math">
+                                            <mat-panel-title class="matt font-weight-bold">
+                                                <i class="fas fa-user-ninja" style="color: #4680ff;"></i>&nbsp;Billing
+                                                Alias
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData"
+                                            [gridOptions]="gridOptions" [sheetName]="'Biiling Alias '"
+                                            [exportFilename]="'Biiling Alias.xlsx'" [rowSelection]="rowSelection"
+                                            (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                            [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true"
+                                            (onAgGridReady)="onAgGridReady($event)"
+                                            (onCellDoubleClickedEvent)="onCellDoubleClicked($event)">
+                                        </app-ag-grid-table>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                                        <div class="text-right mt-2 mr-3">
+                                        <span>
+                                             {{girdDataCount}} {{girdDataCount > 1 ? 'records' : 'record'}}
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <ng-container *ngFor="let billingAliasTab of addeditBillingAliasTabs;let i = index">
+                            <mat-tab *ngIf="billingAliasTab.tab=='edit'">
+                                <ng-template mat-tab-label>
+                                    <b>
+                                        <i class="fas fa-edit" style="color: #4680ff;"> </i>
+                                        Billing Alias
+                                        ({{billingAliasTab['rowData']['VendorBillingAliasName']}})</b>&nbsp;<mat-icon
+                                        (click)="removeAddEditBillingAliasTab(i)">
+                                        cancel
+                                    </mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-edit-billing-alias (afterBillingAliasEdit)="removeAddEditBillingAliasTab(i)"
+                                        [billingAliasData]="billingAliasTab.rowData">
+                                    </app-edit-billing-alias>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngIf="billingAliasTab.tab=='add'">
+                                <ng-template mat-tab-label>
+                                    <b>
+                                        <i class="fas fa-user-ninja" style="color: #4680ff;"> </i>
+                                        Add Billing Alias</b>&nbsp;<mat-icon (click)="removeAddEditBillingAliasTab(i)">
+                                        cancel
+                                    </mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-billing-alias
+                                        (onAddBillingAliasComponentDestroy)="onAddBillingAliasComponentDestroy($event,i)"
+                                        (afterBillingAliasAdd)="removeAddEditBillingAliasTab(i)"
+                                        [billingAliasData]="billingAliasTab.rowData">
+                                    </app-add-billing-alias>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

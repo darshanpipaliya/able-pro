@@ -1,0 +1,392 @@
+.ssss {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.btn-container-inner .btn-icon {
+    width: 45px;
+    height: 45px;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+select.custom-select {
+    width: 250px;
+    padding: 10px 35px 10px 20px;
+    border: 1px solid #babfc7;
+}
+
+/* Checkbox Design Start*/
+:host ::ng-deep .ag-header-select-all .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input,
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    opacity: 1 !important;
+    border-radius: 0.25em !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper::after {
+    opacity: 0 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Checkbox Design End*/
+
+// .fas.fa-check.c-check-circle {
+//     display: block;
+// }
+
+.fas.fa-check.c-check-circle::before {
+    content: '\f058' !important;
+    // position: absolute;
+    display: block;
+    font-weight: 300;
+    font-size: 35px;
+    color: #4680ff;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    z-index: 100;
+    right: 45px;
+    top: 13px;
+}
+
+.summary-total-main {
+    // padding: 20px 0 0;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 12px !important;
+}
+
+:host ::ng-deep .show.tooltip {
+    max-width: 300px !important;
+    transform: unset !important;
+    right: 30px !important;
+    left: unset !important;
+    top: 42px !important;
+
+    .arrow {
+        top: 12px;
+        right: 0 !important;
+    }
+
+    .tooltip-inner {
+        max-width: 100%;
+    }
+
+    p {
+        text-align: left;
+    }
+}
+
+:host ::ng-deep .mat-card.accordion-grid {
+    box-shadow: none !important;
+}
+
+:host ::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
+}
+
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+:host ::ng-deep .accordion-grid {
+    .mat-expansion-panel-body {
+        padding: 0 !important;
+
+        ag-grid-angular {
+            height: 700px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+.inventory-sel-accordion-left-btn {
+    position: absolute;
+    top: 4px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+
+    button {
+        padding: 4px 12px;
+    }
+}
+
+.inventory-sel-accordion-left-btn2 {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    display: flex;
+    align-items: center;
+
+    .fas.fa-check.c-refresh::before {
+        height: 35px;
+        width: 35px;
+        margin-top: 2px;
+    }
+
+}
+
+:host ::ng-deep .toggle-btn {
+    position: absolute;
+    top: 9px;
+    left: 20px;
+
+    .mat-slide-toggle .mat-slide-toggle-ripple {
+        display: none;
+    }
+
+    .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+        background-color: #6AA84F;
+    }
+
+    .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+        background-color: #fff;
+    }
+}
+
+.table-responsive {
+    overflow-x: unset !important;
+}
+
+:host ::ng-deep .p-steps-main {
+    // width: 100%;
+    // max-width: 380px;
+    margin: 0 auto;
+
+    ::-webkit-scrollbar {
+        height: 3px;
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        -webkit-border-radius: 1ex;
+    }
+
+    ul {
+        overflow-x: auto;
+
+        li.p-steps-item {
+
+            width: 140px;
+
+            &:nth-of-type(1):before {
+                width: 50%;
+                right: 0;
+                left: auto;
+            }
+
+            &:last-child:before {
+                width: 50%;
+
+            }
+
+            &:last-child .p-steps-title {
+                padding-right: 0;
+            }
+
+            a:focus {
+                outline: none;
+                box-shadow: none !important;
+            }
+
+            .p-steps-title {
+                font-size: 14px;
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                letter-spacing: normal;
+                font-weight: 500;
+                margin-top: 0px !important;
+                margin-bottom: 0;
+                color: #181d1f !important;
+                // white-space: nowrap;
+                // padding-right: 16px !important;
+                padding-inline: 8px !important;
+            }
+
+            .p-menuitem-link .p-steps-number {
+                background: #bababa;
+                min-width: 1.5em;
+                // height: 1.5em;
+                // line-height: 1.5em;
+                font-size: 16px;
+                position: relative;
+            }
+        }
+
+        .p-steps-item:before {
+            margin-top: -10px !important;
+        }
+    }
+
+    .success-step {
+        .p-menuitem-link .p-steps-number::before {
+            content: '\f058' !important;
+            position: absolute !important;
+            font-family: "Font Awesome 5 Free" !important;
+            font-weight: 900 !important;
+            background: #fff !important;
+            font-size: 24px;
+            color: #93C47D;
+        }
+    }
+
+    .danger-step {
+        .p-menuitem-link .p-steps-number::after {
+            content: '\f057' !important;
+            position: absolute !important;
+            font-family: "Font Awesome 5 Free" !important;
+            font-weight: 900 !important;
+            background: #fff !important;
+            font-size: 24px;
+            color: #CF2A27;
+        }
+    }
+}
+
+:host ::ng-deep .p-steps-main.invoice-ret-edit {
+    overflow-x: auto;
+}
+
+.btn.btn-primary {
+    padding: 10px 19px;
+    height: fit-content;
+}
+
+button.fas.fa-check.c-refresh {
+    border: 0;
+    background: transparent;
+    padding: 0;
+
+}
+
+.fas.fa-check.c-refresh::before {
+    content: '\f021' !important;
+    font-size: 18px;
+    border: 1px solid #4680ff;
+    color: #4680ff;
+    border-radius: 50%;
+    padding: 5px;
+    height: 32px;
+    width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn.btn-icon {
+    width: 40px;
+    height: 40px;
+}
+
+
+:host ::ng-deep .invoice-overview-main {
+    margin-bottom: 15px !important;
+}
+
+@media only screen and (max-width: 1600px) {
+
+ 
+    :host ::ng-deep {
+        .p-steps-main ul li.p-steps-item{
+            width: 126px !important;
+        }
+        .p-steps-main ul li.p-steps-item .p-steps-title{
+            font-size: 13px !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 1410px) {
+    .p-steps-main {
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .fas.fa-check.c-check-circle::before {
+        font-size: 35px;
+    }
+
+    .btn.btn-icon,
+    .fas.fa-check.c-refresh::before {
+        width: 35px;
+        height: 35px;
+    }
+
+    .header-btn-responsive button,
+    .header-btn-responsive .custom-select {
+        padding: 8px 12px;
+        height: fit-content;
+    }
+
+}
+
+.fa-hat-wizard {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #4680ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important;
+    font-size: 18px;
+    color: #4680ff;
+    transition: all 0.3s ease;
+}
+
+.fa-hat-wizard:hover{
+    background: #4680ff !important;
+    color: #fff !important;
+}

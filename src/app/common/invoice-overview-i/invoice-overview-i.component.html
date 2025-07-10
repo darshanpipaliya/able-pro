@@ -1,0 +1,86 @@
+<div class="invoice-overview-main">
+    <div class="row mx-0">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+            <div class="invoice-overview-wrapper">
+                <div class="invoice-overview-left">
+                    <div class="invoice-overview-label">
+                        <h2>Invoice Overview</h2>
+                    </div>
+                </div>
+                <div class="invoice-overview-right">
+                    <div class="billing-detail-group">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <h3>Customer</h3>
+                                <p>{{invoiceOvervewData?.CustomerAccountName}}</p>
+                            </li>
+
+                            <li class="list-group-item">
+                                <h3>Vendor</h3>
+                                <p>{{invoiceOvervewData?.VendorAccountName}}</p>
+                            </li>
+
+                            <li class="list-group-item">
+                                <h3>Invoice Status</h3>
+                                <p>{{invoiceOvervewData?.InvoiceStatusDisplayText}}</p>
+                            </li>
+
+                            <li class="list-group-item">
+                                <h3>Payable Account</h3>
+                                <p>{{invoiceOvervewData?.PayableAccountNumber}}</p>
+                            </li>
+
+                            <li class="list-group-item">
+                                <h3>Account Status</h3>
+                                <p>{{invoiceOvervewData?.BillingAccountStatusDisplay}}</p>
+                            </li>
+
+                            <li class="list-group-item">
+                                <h3>Invoice Number</h3>
+                                <p>{{invoiceOvervewData?.InvoiceNumber}}</p>
+                            </li>
+
+                            <li class="list-group-item">
+                                <h3>Invoice Date</h3>
+                                <p>{{invoiceOvervewData?.InvoiceBillDate}}</p>
+                            </li>
+
+                            <li class="list-group-item">
+                                <h3>Pay By Date</h3>
+                                <p>{{invoiceOvervewData?.InvoicePayByDate}}</p>
+                            </li>
+
+                            <!-- <li class="list-group-item">
+                                <h3>AP Responsible</h3>
+                                <p>{{invoiceOvervewData?.APResponsible}}</p>
+                            </li> -->
+
+                            <li class="list-group-item">
+                                <h3>Approval Status</h3>
+                                <p></p>
+                            </li>
+
+                            <li class="list-group-item">
+                                <div class="attachments-wrapper">
+                                    <div class="io-cus-btn-group mb-0">
+                                        <h3>Attachment</h3>
+                                        <button title="View Invoice" type="button" class="btn p-0 ml-2" (click)="downloadAttachment()"
+                                            style="line-height: 0;" [disabled]="!invoiceOvervewData?.IsExpectedInvoicePDFAvailable || downloadinvoiceloader ? 'disabled' : ''">
+                                            <img src="../../../../../../../assets/images/invoice-attach-icon.svg"
+                                                alt="Invoice Attachments icon">
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item">
+                                <h3>AP Responsible</h3>
+                                <p>{{invoiceOvervewData?.APResponsible}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

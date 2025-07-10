@@ -1,0 +1,331 @@
+<div class="row">
+    <div class="col-sm-12">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12 top-btn-group-container header-btn-responsive d-flex" style="flex-wrap: wrap;">
+                        <button class="btn btn-primary" type="button" (click)="goToPage('/invoices/invoice-retrieval')"><i class="fa-calendar-plus fas ir-c-icon">
+                        </i>
+                        Invoice Retrievals
+                    </button>
+                    <button class="btn btn-primary" type="button" (click)="goToPage('/invoices/invoice-proccessing')"><i class="ip-c-icon fa-calendar-plus">
+                        </i>
+                        Invoice Processing
+                    </button>
+                    <button class="btn btn-primary" type="button" (click)="goToPage('/invoices/file-monitor')"><i class="fa-camera">
+                        </i>
+                        File Monitor
+                    </button>
+                    </div>
+                </div>
+
+                <div class="sb-header-milestone-sec">
+                    <ng-container >
+                        <div class="p-steps-main">
+                            <p-steps [model]="items" [readonly]="false"></p-steps>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="table-responsive">
+                    <mat-tab-group
+                        [(selectedIndex)]="selectedIP"
+                        (selectedIndexChange)="activeTab($event);clickOnTabFn(true)">
+                        <mat-tab>
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+                                    <b><img src="assets/images/sandbox-icon/sand-box-main-step-icon.svg"
+                                            alt="Sandbox icon">&nbsp;Sandbox</b>
+                                </ng-template>
+                            </div>
+                            <ng-container *ngIf="activatedTab === 0">
+
+                                <app-invoice-processing [openPage]="'sandbox-grid'"
+                                    (openInvoiceRetrieval)="openInvoiceRetrieval($event)"
+                                    (onDoubleClickSandboxData)="onDoubleClickSandboxData($event)"
+                                    (invoiceOverviewDataOP)="invoiceOverviewDataOP($event)"
+                                    (onDoubleClickSandbox)="onDoubleClickSandbox($event)"
+                                    (onRecordPublishedOrCompleted)="onRecordPublishedOrCompleted($event)">
+                                </app-invoice-processing>
+                            </ng-container>
+                        </mat-tab>
+                        <mat-tab
+                            [disabled]="(!sandBoxGridRowData?.SBInvoiceId || selectedIP == 0 ) || (1 > disabledTab)">
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+
+                                    <span class="step-num-circle">
+                                        <b>
+                                            <svg class="sandbox-step-1-tab-icon" xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px"
+                                                viewBox="0 0 50 55" style="enable-background:new 0 0 60 60;"
+                                                xml:space="preserve">
+                                                <path fill="#4680ff"
+                                                    d="M48.3518677,15.9612427L37.6844482,5.2938232c-0.0916138-0.0918579-0.2010498-0.1652832-0.3226929-0.2160645  C37.2409058,5.0272827,37.1103516,5,36.9765625,5H12.3544922c-0.5527344,0-1,0.4477539-1,1v48c0,0.5522461,0.4472656,1,1,1  h35.2910156c0.5527344,0,1-0.4477539,1-1V16.6689453c0-0.1334229-0.0271606-0.263916-0.0775757-0.3847656  C48.5171509,16.1625366,48.4437256,16.0529175,48.3518677,15.9612427z M37.9765625,8.4140625l7.2548828,7.2548828h-7.2548828  V8.4140625z M13.3544922,53V7h22.6220703v9.6689453c0,0.5522461,0.4472656,1,1,1h9.6689453V53H13.3544922z" />
+                                                <path fill="#4680ff"
+                                                    d="M17.0302734,13.590332h12.9736328c0.5527344,0,1-0.4477539,1-1s-0.4472656-1-1-1H17.0302734c-0.5527344,0-1,0.4477539-1,1  S16.4775391,13.590332,17.0302734,13.590332z" />
+                                                <path fill="#4680ff"
+                                                    d="M17.0302734,20.5541992h17.3339844c0.5527344,0,1-0.4477539,1-1s-0.4472656-1-1-1H17.0302734c-0.5527344,0-1,0.4477539-1,1  S16.4775391,20.5541992,17.0302734,20.5541992z" />
+                                                <path fill="#4680ff"
+                                                    d="M43.5449219,25.5180664H17.0302734c-0.5527344,0-1,0.4477539-1,1s0.4472656,1,1,1h26.5146484c0.5527344,0,1-0.4477539,1-1  S44.0976562,25.5180664,43.5449219,25.5180664z" />
+                                                <path fill="#4680ff"
+                                                    d="M30,30.0615234c-5.6230469,0-10.1972656,4.574707-10.1972656,10.1972656  c0,5.6230469,4.5742188,10.1977539,10.1972656,10.1977539s10.1972656-4.574707,10.1972656-10.1977539  C40.1972656,34.6362305,35.6230469,30.0615234,30,30.0615234z M30,48.456543c-4.5195312,0-8.1972656-3.6777344-8.1972656-8.1977539  S25.4804688,32.0615234,30,32.0615234s8.1972656,3.6772461,8.1972656,8.1972656S34.5195312,48.456543,30,48.456543z" />
+                                                <path fill="#4680ff"
+                                                    d="M30,36.6293945c0.7246094,0,1.3144531,0.5898438,1.3144531,1.3149414c0,0.5522461,0.4472656,1,1,1s1-0.4477539,1-1  c0-1.4754028-0.975769-2.7141724-2.3105469-3.1426392v-0.0717163c0-0.5522461-0.4472656-1-1-1s-1,0.4477539-1,1v0.0693359  c-1.3388062,0.4260254-2.3183594,1.666748-2.3183594,3.1450195c0,1.8276367,1.4873047,3.3149414,3.3144531,3.3149414  c0.7246094,0,1.3144531,0.5898438,1.3144531,1.3144531c0,0.7250977-0.5898438,1.3149414-1.3144531,1.3149414  s-1.3144531-0.5898438-1.3144531-1.3149414c0-0.5522461-0.4472656-1-1-1s-1,0.4477539-1,1  c0,1.4782715,0.9795532,2.7189941,2.3183594,3.1450195v0.0712891c0,0.5522461,0.4472656,1,1,1s1-0.4477539,1-1v-0.0736694  c1.3347778-0.4284668,2.3105469-1.6672363,2.3105469-3.1426392c0-1.8276367-1.4873047-3.3144531-3.3144531-3.3144531  c-0.7246094,0-1.3144531-0.5898438-1.3144531-1.3149414S29.2753906,36.6293945,30,36.6293945z" />
+                                            </svg>&nbsp;Invoice Total</b>
+                                        <h5>1</h5>
+                                    </span>
+
+                                </ng-template>
+                            </div>
+                            <ng-container *ngIf="activatedTab === 1">
+                                <app-invoice-processing [openPage]="'vststep1'"
+                                    [recordPublishedOrCompleted]="recordPublishedOrCompleted"
+                                    [sandBoxGridRowData]="sandBoxGridRowData" (clickOnSaved)="clickOnSaved($event)"
+                                    (invoiceOverviewDataOP)="invoiceOverviewDataOP($event)"
+                                    (step1Done)="step1DoneFn($event)">
+
+                                </app-invoice-processing>
+                            </ng-container>
+                        </mat-tab>
+
+                        <mat-tab
+                            [disabled]="(!sandBoxGridRowData?.SBInvoiceId || selectedIP == 0 ) || (2 > disabledTab)">
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+                                    <span class="step-num-circle"><b><i class="fas fa-sitemap"
+                                                style="color: #4680ff;"></i>&nbsp;VBA</b>
+                                        <h5>2</h5>
+                                    </span>
+                                </ng-template>
+                            </div>
+                            <ng-container *ngIf="activatedTab === 2">
+                                <app-invoice-processing [recordPublishedOrCompleted]="recordPublishedOrCompleted"
+                                    [openPage]="'vbastep2'" (step2Done)="step2DoneFn($event)"
+                                    [sandBoxGridRowData]="sandBoxGridRowData" (clickOnSaved)="clickOnSaved($event)"
+                                    (invoiceOverviewDataOP)="invoiceOverviewDataOP($event)">
+
+                                </app-invoice-processing>
+                            </ng-container>
+                        </mat-tab>
+                        <mat-tab
+                        [disabled]="(!sandBoxGridRowData?.SBInvoiceId || selectedIP == 0) || (4 > disabledTab) ">
+                        <div class="col-sm-12">
+                            <ng-template mat-tab-label>
+                                <span class="step-num-circle"><b><svg version="1.0"
+                                            xmlns="http://www.w3.org/2000/svg" height="15px"
+                                            viewBox="0 0 214.000000 221.000000" preserveAspectRatio="xMidYMid meet">
+
+                                            <g transform="translate(0.000000,221.000000) scale(0.100000,-0.100000)"
+                                                fill="#4680ff" stroke="none">
+                                                <path
+                                                    d="M970 2100 l0 -110 90 0 90 0 0 110 0 110 -90 0 -90 0 0 -110z" />
+                                                <path d="M100 1825 l0 -65 86 0 c84 0 85 0 78 -22 -4 -13 -62 -196 -130 -407
+                                   -69 -214 -124 -401 -124 -422 0 -102 91 -233 198 -286 50 -25 68 -28 152 -28
+                                   82 0 103 4 152 27 104 48 185 155 203 264 5 36 -12 99 -125 454 -73 226 -130
+                                   413 -128 416 3 2 277 3 609 2 l605 -3 -134 -415 -134 -415 16 -65 c31 -121
+                                   108 -207 224 -251 80 -30 197 -24 275 15 108 52 197 184 197 289 0 26 -50 194
+                                   -130 442 l-129 400 97 5 97 5 3 63 3 62 -981 0 -980 0 0 -65z m374 -536 c58
+                                   -179 106 -331 106 -337 0 -14 -426 -18 -433 -4 -4 8 212 676 218 670 2 -1 51
+                                   -150 109 -329z m1404 6 c55 -170 103 -320 106 -332 l7 -23 -220 0 c-122 0
+                                   -221 3 -221 8 0 22 215 670 221 664 4 -4 52 -146 107 -317z" />
+                                                <path
+                                                    d="M980 1120 l0 -540 90 0 90 0 0 540 0 540 -90 0 -90 0 0 -540z" />
+                                                <path
+                                                    d="M850 390 l0 -90 220 0 220 0 0 90 0 90 -220 0 -220 0 0 -90z" />
+                                                <path
+                                                    d="M430 100 l0 -90 640 0 640 0 0 90 0 90 -640 0 -640 0 0 -90z" />
+                                            </g>
+                                        </svg>&nbsp;Charge
+                                        Validation</b>
+                                    <h5>4</h5>
+                                </span>
+                            </ng-template>
+                        </div>
+                        <ng-container *ngIf="activatedTab === 4">
+                            <app-charge-validation-tab [recordPublishedOrCompleted]="recordPublishedOrCompleted"
+                                [selectedTab]="selectedIP" [sendTo4D]="sendTo4D"
+                                (mainTabRedirect)="mainTabRedirect($event)"
+                                [sandBoxGridRowData]="sandBoxGridRowData"
+                                (invoiceOverviewDataOP)="invoiceOverviewDataOP($event)"
+                                (chargeValidationDestroy)="chargeValidationDestroy($event)"></app-charge-validation-tab>
+                        </ng-container>
+                    </mat-tab>
+                    <mat-tab
+                        [disabled]="(!sandBoxGridRowData?.SBInvoiceId || selectedIP == 0 ) || (5 > disabledTab)">
+                        <div class="col-sm-12">
+                            <ng-template mat-tab-label>
+                                <span class="step-num-circle"><b><svg version="1.0"
+                                            xmlns="http://www.w3.org/2000/svg" width="23px"
+                                            viewBox="0 0 167.000000 113.000000" preserveAspectRatio="xMidYMid meet">
+
+                                            <g transform="translate(0.000000,113.000000) scale(0.100000,-0.100000)"
+                                                fill="#4680ff" stroke="none">
+                                                <path d="M570 1105 c0 -3 15 -34 32 -68 18 -34 34 -65 36 -69 2 -4 -15 -16
+                                   -38 -28 -23 -12 -40 -25 -38 -30 5 -16 190 -211 195 -206 2 2 -5 34 -16 71
+                                   -27 85 -26 92 4 99 14 4 25 10 25 15 0 4 -22 56 -50 115 l-50 106 -50 0 c-27
+                                   0 -50 -2 -50 -5z" />
+                                                <path d="M333 640 c-119 -24 -217 -121 -241 -237 -7 -34 -12 -39 -42 -43 -31
+                                   -4 -35 -8 -35 -35 0 -27 3 -30 38 -33 27 -2 37 -8 37 -20 1 -70 111 -197 197
+                                   -226 60 -21 157 -20 219 1 99 33 194 160 194 259 0 86 150 125 228 59 23 -19
+                                   30 -35 34 -74 14 -143 149 -261 299 -261 87 0 148 22 208 76 48 43 101 130
+                                   101 166 0 14 8 18 40 18 39 0 40 1 40 35 0 34 -1 35 -40 35 -37 0 -40 2 -40
+                                   28 0 41 -43 124 -85 167 -90 90 -237 116 -349 61 -65 -32 -141 -112 -157 -166
+                                   l-12 -38 -41 19 c-53 24 -139 24 -192 0 l-41 -19 -12 38 c-16 53 -92 134 -154
+                                   164 -60 28 -134 38 -194 26z m181 -88 c82 -45 126 -121 126 -219 -1 -147 -115
+                                   -251 -264 -241 -85 5 -149 44 -192 116 -132 220 104 466 330 344z m852 13
+                                   c129 -54 186 -220 118 -345 -47 -86 -122 -130 -221 -130 -71 0 -127 24 -176
+                                   75 -76 79 -90 207 -31 301 31 51 111 109 163 117 37 7 110 -3 147 -18z" />
+                                            </g>
+                                        </svg>&nbsp;Cost Distribution Rules Step</b>
+                                    <h5>4 ¾</h5>
+                                </span>
+                            </ng-template>
+                        </div>
+                        <ng-container *ngIf="activatedTab === 5">
+                            <app-cost-distribution-step4-main
+                                [recordPublishedOrCompleted]="recordPublishedOrCompleted"
+                                (invoiceOverviewDataOP)="invoiceOverviewDataOP($event)" [fromTab]="'false'"
+                                [selectedTab]="selectedIP" (switchTab)="switchNext($event)"
+                                [sandBoxGridRowData]="sandBoxGridRowData"></app-cost-distribution-step4-main>
+                        </ng-container>
+                    </mat-tab>
+
+                    <mat-tab
+                            [disabled]="(!sandBoxGridRowData?.SBInvoiceId || selectedIP == 0 ) || (6 > disabledTab)">
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+                                    <span class="step-num-circle"><b>
+                                            <!DOCTYPE svg
+                                                PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+                                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" height="14px"
+                                                viewBox="0 0 192.000000 124.000000" preserveAspectRatio="xMidYMid meet">
+
+                                                <g transform="translate(0.000000,124.000000) scale(0.100000,-0.100000)"
+                                                    fill="#4680ff" stroke="none">
+                                                    <path d="M907 1180 c-23 -27 -47 -104 -47 -151 0 -18 -3 -16 -26 10 -36 44
+                                        -59 54 -105 46 -36 -6 -38 -8 -27 -28 6 -12 28 -42 49 -66 37 -42 59 -92 59
+                                        -137 0 -21 -2 -20 -62 12 -62 33 -118 44 -118 23 0 -6 8 -24 17 -40 18 -30 15
+                                        -34 -51 -82 -7 -5 1 -18 22 -36 25 -21 32 -35 32 -63 0 -80 23 -86 126 -34 38
+                                        19 70 33 73 31 2 -3 -8 -22 -22 -44 -32 -49 -86 -82 -142 -89 -39 -4 -48 -1
+                                        -75 27 l-32 31 -46 -41 c-48 -43 -133 -89 -165 -89 -51 0 -97 53 -97 111 0 23
+                                        4 23 62 3 26 -8 61 -14 80 -12 31 3 33 5 33 41 0 35 3 39 43 57 23 11 45 26
+                                        48 35 9 24 -31 61 -80 75 -24 6 -43 17 -43 23 1 39 -4 47 -30 47 -34 0 -74
+                                        -26 -113 -71 l-29 -34 -1 39 c0 33 7 47 49 91 33 35 52 65 56 89 4 20 5 39 3
+                                        41 -11 11 -108 -49 -130 -81 l-26 -36 -11 35 c-12 35 -43 69 -74 80 -18 7 -87
+                                        -16 -87 -28 0 -3 11 -18 25 -33 36 -38 80 -134 101 -222 16 -63 19 -117 19
+                                        -327 0 -212 2 -255 15 -267 9 -9 49 -24 90 -35 148 -37 277 -46 690 -46 413 0
+                                        542 9 690 46 41 11 81 26 90 35 13 12 15 55 15 267 0 210 3 264 19 327 21 88
+                                        65 184 101 222 14 15 25 30 25 33 0 12 -69 35 -87 28 -31 -11 -62 -45 -74 -80
+                                        l-11 -35 -21 30 c-23 33 -67 65 -109 81 -25 9 -28 8 -28 -10 0 -35 27 -83 69
+                                        -124 35 -33 41 -45 41 -80 l-1 -40 -29 34 c-39 45 -79 71 -112 71 -27 0 -32
+                                        -8 -31 -47 0 -6 -19 -17 -43 -23 -49 -14 -89 -51 -80 -75 3 -9 25 -24 48 -35
+                                        40 -18 43 -22 43 -57 0 -36 2 -38 33 -41 19 -2 54 4 80 12 58 20 62 20 62 -3
+                                        0 -58 -46 -111 -97 -111 -32 0 -117 46 -165 89 l-46 41 -32 -31 c-27 -28 -36
+                                        -31 -75 -27 -56 7 -110 40 -142 89 -14 22 -24 41 -22 44 3 2 35 -12 73 -31
+                                        103 -52 126 -46 126 34 0 28 7 41 33 63 l32 27 -29 24 c-16 12 -34 26 -40 30
+                                        -7 5 -5 17 7 37 9 16 17 34 17 40 0 21 -56 10 -119 -24 l-64 -34 7 47 c6 46
+                                        28 84 88 154 17 21 29 40 27 42 -3 3 -24 8 -47 12 -39 6 -44 4 -82 -34 -31
+                                        -31 -40 -35 -40 -21 0 45 -24 122 -47 149 -33 40 -73 40 -106 0z m379 -970
+                                        c288 -17 454 -44 427 -71 -15 -15 -149 -37 -313 -50 -398 -32 -1142 -1 -1193
+                                        50 -54 54 607 98 1079 71z" />
+                                                </g>
+                                            </svg>&nbsp;Vendor Product
+                                        </b>
+                                        <h5>5</h5>
+                                    </span>
+                                </ng-template>
+                            </div>
+                            <ng-container *ngIf="activatedTab === 6">
+                                <app-vendor-product-assignment-tab
+                                    [recordPublishedOrCompleted]="recordPublishedOrCompleted" [selectedTab]="selectedIP"
+                                    [sandBoxGridRowData]="sandBoxGridRowData"
+                                    (invoiceOverviewDataOP)="invoiceOverviewDataOP($event)"
+                                    (redirectNext)="redirectNext($event)"></app-vendor-product-assignment-tab>
+                            </ng-container>
+                        </mat-tab>
+                        <mat-tab
+                            [disabled]="(!sandBoxGridRowData?.SBInvoiceId || selectedIP == 0) || (7 > disabledTab) ">
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+                                    <span class="step-num-circle"><b><svg version="1.0"
+                                                xmlns="http://www.w3.org/2000/svg" height="15px"
+                                                viewBox="0 0 229.000000 229.000000" preserveAspectRatio="xMidYMid meet">
+
+                                                <g transform="translate(0.000000,229.000000) scale(0.100000,-0.100000)"
+                                                    fill="#4680ff" stroke="none">
+                                                    <path d="M1113 2238 c-54 -58 -153 -193 -153 -208 0 -29 23 -40 82 -40 l58 0
+                                       0 -139 0 -139 -70 -16 c-70 -15 -143 -48 -213 -94 l-38 -25 -95 94 c-52 51
+                                       -94 98 -94 104 0 6 18 29 40 50 71 70 57 83 -115 104 -186 24 -181 29 -160
+                                       -139 9 -69 20 -135 25 -147 14 -34 41 -28 85 17 21 22 44 40 50 40 6 0 53 -42
+                                       104 -94 l94 -94 -37 -56 c-42 -64 -81 -161 -91 -229 l-7 -47 -139 0 -139 0 0
+                                       63 c0 62 -11 87 -38 87 -7 0 -63 -39 -123 -86 -78 -62 -109 -92 -109 -108 0
+                                       -25 198 -186 230 -186 27 0 40 30 40 89 l0 51 138 0 137 0 12 -60 c13 -67 61
+                                       -177 100 -228 l26 -34 -99 -99 -98 -99 -46 45 c-51 50 -76 56 -90 22 -12 -30
+                                       -41 -264 -34 -281 3 -8 12 -17 20 -20 17 -7 251 22 282 34 33 14 27 39 -23 90
+                                       l-45 46 99 98 98 98 62 -41 c64 -41 154 -76 229 -87 l42 -7 0 -138 0 -139 -63
+                                       0 c-62 0 -87 -11 -87 -38 0 -7 39 -63 86 -123 68 -86 92 -109 108 -107 19 3
+                                       133 133 177 202 30 48 12 66 -66 66 l-65 0 0 138 0 138 65 13 c71 14 171 58
+                                       224 98 l33 26 99 -99 99 -98 -45 -46 c-50 -51 -56 -76 -22 -90 30 -12 264 -41
+                                       281 -34 8 3 17 12 20 20 7 17 -22 251 -34 282 -14 33 -39 27 -90 -23 l-46 -45
+                                       -98 99 -98 98 41 62 c41 64 76 154 87 229 l7 42 138 0 139 0 0 -56 c0 -63 13
+                                       -94 38 -94 9 0 65 39 125 85 79 63 107 91 107 108 0 16 -28 44 -105 105 -58
+                                       45 -114 82 -125 82 -27 0 -40 -30 -40 -89 l0 -51 -139 0 -138 0 -13 62 c-14
+                                       73 -47 150 -91 214 l-31 46 98 99 98 99 46 -45 c51 -50 76 -56 90 -22 12 30
+                                       41 264 34 281 -3 8 -12 17 -20 20 -17 7 -251 -22 -281 -34 -34 -14 -28 -39 22
+                                       -90 l45 -46 -99 -98 -98 -98 -62 41 c-61 39 -150 74 -223 87 l-38 6 0 139 0
+                                       139 58 0 c59 0 82 11 82 41 0 25 -162 224 -186 227 -11 2 -29 -7 -41 -20z
+                                       m152 -633 c169 -45 302 -173 350 -339 23 -80 17 -219 -14 -298 -46 -120 -159
+                                       -233 -279 -279 -86 -33 -220 -38 -311 -10 -137 42 -260 155 -312 288 -33 86
+                                       -38 221 -11 310 75 246 331 392 577 328z" />
+                                                    <path d="M1035 1522 c-120 -41 -196 -109 -249 -221 -28 -60 -31 -75 -31 -162
+                                       0 -90 2 -99 37 -171 45 -91 103 -147 196 -191 61 -29 76 -32 162 -32 86 0 101
+                                       3 162 32 91 43 151 101 194 188 87 176 38 376 -120 496 -96 73 -243 98 -351
+                                       61z m155 -122 c0 -24 7 -33 40 -50 40 -21 70 -63 70 -100 0 -32 -62 -28 -84 6
+                                       -15 22 -23 25 -69 22 -46 -3 -53 -6 -61 -30 -14 -39 14 -68 66 -68 88 0 148
+                                       -55 148 -137 0 -33 -7 -50 -31 -78 -17 -19 -42 -38 -55 -41 -19 -5 -24 -13
+                                       -24 -40 0 -33 -1 -34 -40 -34 -38 0 -40 2 -40 30 0 24 -7 33 -40 50 -40 21
+                                       -70 63 -70 100 0 17 6 20 38 20 29 0 39 -5 47 -22 19 -43 120 -37 131 8 9 37
+                                       -19 64 -69 64 -84 0 -147 57 -147 133 0 52 26 94 72 115 32 14 38 22 38 50 0
+                                       31 2 32 40 32 38 0 40 -2 40 -30z" />
+                                                </g>
+                                            </svg>&nbsp;Final Distribution</b>
+                                        <h5>6</h5>
+                                    </span>
+                                </ng-template>
+                            </div>
+                            <ng-container *ngIf="activatedTab === 7">
+                                <app-cost-distribution-step4-main (switchTab)="switchNext($event)"
+                                    [recordPublishedOrCompleted]="recordPublishedOrCompleted" [fromTab]="'true'"
+                                    [selectedTab]="selectedIP" (invoiceOverviewDataOP)="invoiceOverviewDataOP($event)"
+                                    [sandBoxGridRowData]="sandBoxGridRowData"></app-cost-distribution-step4-main>
+                            </ng-container>
+                        </mat-tab>
+                        <mat-tab
+                            [disabled]="(!sandBoxGridRowData?.SBInvoiceId || selectedIP == 0) || (8 > disabledTab) ">
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+                                    <span class="step-num-circle"><img src="assets/images/sb-final-review-icon.svg"
+                                                alt="Final Review icon">&nbsp;<b>Final Review</b>
+                                        <h5>7</h5>
+                                    </span>
+                                </ng-template>
+                            </div>
+                            <ng-container *ngIf="activatedTab === 8">
+                                <app-final-review-tab [recordPublishedOrCompleted]="recordPublishedOrCompleted"
+                                    [sandBoxGridRowData]="sandBoxGridRowData" [selectedTab]="selectedIP"
+                                    (clickOnSavedfn)="clickOnSaved($event)" (moveToGridPage)="moveToGridPageFn($event)"
+                                    (invoiceOverviewDataOP)="invoiceOverviewDataOP($event)"
+                                    (onClickHyperlinkSend)="onClickHyperlinkSend($event)"
+                                    (moveToStep6Tab)="moveToStep6Tab($event)" (moveToStep4Tab)="moveToStep4Tab($event)"></app-final-review-tab>
+                            </ng-container>
+                        </mat-tab>
+                       
+                    </mat-tab-group>
+
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

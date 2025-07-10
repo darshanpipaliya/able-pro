@@ -81,7 +81,6 @@ export class EditBillingAccountComponent implements OnInit {
     this.isTEMUser = this.locationService.isUserHasTEMUserRole();
     this.viewNEditAccount =  rolePermission(['SuperTEMAdmin', 'SuperTEMManager', 'SuperTEMUser']);
 
-     console.log('tabInfo ',this.tabInfo.value);
     if (this.tabInfo && this.tabInfo.value == 'finances-accounting' || (isCustomerAdmin || isCompanyAdmin || isCompanyManager || isCompanyUser || isTEMUserRole)) {
       if (this.isCompanyUser || this.isTEMUser) {
         this.setIsReadOnly = true;
@@ -116,7 +115,6 @@ export class EditBillingAccountComponent implements OnInit {
 
   tabName(selectedTab: any){
     this.currentTabName = this.tabNames[selectedTab];
-    console.log('currentTabName456 ',this.currentTabName);
     this.currentTabNameEmit.emit(this.currentTabName);
   }
   onAddBillingAccountDestroy(data: any) {

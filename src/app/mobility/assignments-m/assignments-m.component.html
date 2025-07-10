@@ -1,0 +1,123 @@
+<div>
+    <!-- People  -->
+    <div class="mt-2 assignment-grids">
+        <div class="row btn-group-list">
+
+            <button [ngClass]="{'disabled': isDisablePeople || peopleTotal < 1}" title="Export" type="button"
+                class=" btn btn-icon btn-outline-success custome-export" [disabled]="peopleTotal < 1"
+                (click)="!isDisablePeople ? onBtnExportDataAsExcel() : ''">
+                <i class="{{isDisablePeople ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel f-14'}} "></i>
+            </button>
+
+            <button *ngIf="!temRoles" type="button" class="btn btn-icon btn-outline-warning" title="Assign People"><i
+                    class="fas fa-edit f-14" (click)="linkPeople()"></i></button>
+            <button type="button" class="fas fa-check c-refresh" title="Refresh"
+                (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+        </div>
+
+        <div class="row edit-btn-tab-right">
+            <i class="fas fa-info-circle" (click)="openDialog()"></i>
+            <ng-template #tooltipText>
+                <div class="mat-dialog-header">
+                    <button type="button" class="close" mat-dialog-close>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="text-left">
+                    <p class="mb-0" style="font-size: 14px;">The <b>Primary User or Contact</b> is the individual who is
+                        the primary user or owner of the service. This person is responsible for managing the service
+                        and,
+                        when cost allocation is enabled, may also bear responsibility for expenses associated with it.
+                        Each inventory item can have only one primary assignment, which can be either a person or a
+                        location.</p>
+                </div>
+            </ng-template>
+
+        </div>
+        <div class="fb fb2 example-headers-align">
+            <mat-expansion-panel style="width: 100%;" [expanded]="true" class="filter-body-visible">
+                <mat-expansion-panel-header class="math borderc">
+                    <mat-panel-title style="margin-left: 33%; margin-right: 0px !important;">
+                        <i class="ficon fas fa-user-edit"></i>&nbsp;People
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="user-activity-log-inner assignment-tab">
+                    <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs"
+                        (onAgGridReadyEmit)="onAgGridReadyEmit($event)" (onAgGridReady)="onAgGridReady($event)"
+                        [gridOptions]="gridOptions" [rowSelection]="rowSelection"
+                        [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true"
+                        [tableHeight]="'244px'">
+                    </app-ag-grid-table>
+                </div>
+            </mat-expansion-panel>
+        </div>
+    </div>
+
+
+    <!-- Location  -->
+    <div class="mt-2 assignment-grids">
+        <div class="row btn-group-list">
+
+            <button [ngClass]="{'disabled': isDisableLocation || locationTotal < 1}" title="Export" type="button"
+                class=" btn btn-icon btn-outline-success custome-export" [disabled]="locationTotal < 1"
+                (click)="!isDisableLocation ? onBtnExportDataAsExcelLocation() : ''">
+                <i class="{{isDisableLocation ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel f-14'}} "></i>
+            </button>
+
+            <button *ngIf="!temRoles" type="button" title="Assign Location"
+                class="btn btn-icon btn-outline-warning ng-star-inserted"><i class="fas fa-edit f-14"
+                    (click)="linkLocation()"></i></button>
+            <button type="button" class="fas fa-check c-refresh" title="Refresh"
+                (click)="onAgGridReadyLocation(this.gridApiLocation.api ? this.gridApiLocation.api : this.gridApiLocation)"></button>
+        </div>
+
+        <div class="row edit-btn-tab-right">
+
+            <i class="fas fa-info-circle" (click)="openDialog2()"></i>
+            <ng-template #tooltipText1>
+                <div class="mat-dialog-header">
+                    <button type="button" class="close" mat-dialog-close>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="text-left">
+
+                    <p class="mb-0" style="font-size: 14px;">The <b>Primary Location</b> is the site where the service
+                        is located or assigned. When cost allocation is enabled, the Location may also be responsible
+                        for
+                        the associated expenses. Each inventory item can have only one primary assignment, which can be
+                        either a person or a location.</p>
+                </div>
+            </ng-template>
+        </div>
+        <div class="fb fb2 example-headers-align ">
+            <mat-expansion-panel style="width: 100%;" [expanded]="true"
+                class="location-bottom-space filter-body-visible">
+                <mat-expansion-panel-header class="math borderc">
+                    <mat-panel-title style="margin-left: 33%; margin-right: 0px !important;">
+                        <i class="ficon fas fa-map-marker-alt "></i>&nbsp;Locations
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="user-activity-log-inner assignment-tab">
+                    <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="locationColumnDefs"
+                        (onAgGridReady)="onAgGridReadyLocation($event)" [rowSelection]="rowSelection"
+                        [defaultColDef]="defaultColDef2"
+                        (onAgGridReadyEmit)="onAgGridReadyEmitLocation($event)" [sideBar]="sideBar"
+                        [gridOptions]="gridOptions" [singleClickEdit]="true" [tableHeight]="'244px'">
+                    </app-ag-grid-table>
+                </div>
+            </mat-expansion-panel>
+        </div>
+    </div>
+    <!-- / Location Over -->
+</div>
+
+<!-- / People Over -->
+<ng-template #primaryCell let-row>
+    {{row.CustomerAccountName}}<span class="badge m-r-5 badge-success h-100 ml-2"
+        *ngIf="row?.PrimaryPeople == true">Primary</span>
+</ng-template>
+<ng-template #locationCell let-row>
+    {{row.LocationName}}<span class="badge m-r-5 badge-success h-100 ml-2"
+        *ngIf="row?.PrimaryLocation == true">Primary</span>
+</ng-template>

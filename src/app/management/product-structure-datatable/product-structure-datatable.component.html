@@ -1,0 +1,372 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row header-btn-responsive">
+                    <ng-container *ngFor="let option of buttonOptions">
+                        <button ngDefaultControl class="bbtn  btn btn-outline-primary" type="button"
+                            [ngClass]="(option.value === 'productstructure') ? 'btn btn-primary active round bg' : 'btn round'"
+                            [value]="option.value" (click)="goToPage(option.value)">
+                            <ng-container><i class="fas {{option.icon}}"> </i>
+                            </ng-container>
+                            {{option.label}}
+                        </button>
+                    </ng-container>
+                </div>
+
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="selected = $event"
+                        id="product-structure-table-tab">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <b>
+                                    <i class="fas fa-sitemap" style="color: #4680ff;"> </i>
+                                    Product Structure</b>
+                            </ng-template>
+                            <div class="">
+                                <ng-container *ngIf="rowData && rowData.length === 0 && !stopSpinner">
+                                    <div class="spinner-border text-primary c-table-spinner" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </ng-container>
+
+                                <div class="col-sm-12 col-xl-12 px-0" id="FixedDiv">
+                                    <div class="row">
+                                        <div class="col-md-6 padding-left-none">
+                                            <mat-accordion class="example-headers-align">
+                                                <div>
+                                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                                        <button type="button"
+                                                            class="fas fa-check c-refresh-speed extra-style"
+                                                            title="Refresh"
+                                                            (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                                                        <mat-expansion-panel-header class="math">
+                                                            <mat-panel-title class="matt">
+                                                                <i class="ficon fas fa-puzzle-piece"></i>&nbsp;Industry
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="row">
+                                                            <div class="col-md-12 px-0">
+                                                                <ng-container>
+                                                                    <div class="header-btn-group">
+
+                                                                        <button
+                                                                            [ngClass]="{'disabled': isDisabledExport || rowData.length < 1}"
+                                                                            title="Export" type="button"
+                                                                            class=" btn btn-icon btn-outline-success m-r-8"
+                                                                            (click)="!isDisabledExport ? onBtnExportDataAsExcel() : ''">
+                                                                            <i
+                                                                                class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                                                                        </button>
+
+                                                                        <button title="Add Industry"
+                                                                            (click)="addProduct('Industry','','true')"
+                                                                            *ngIf="isSuperTEMAdmin" type="button"
+                                                                            class="btn btn-icon btn-outline-primary">
+                                                                            <i class="fas fa-plus"></i></button>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container>
+                                                                    <app-ag-grid-table
+                                                                        (onAgGridReady)="onAgGridReady($event)"
+                                                                        [gridOptions]="gridOptions"
+                                                                        [excelBtnEnable]="true"
+                                                                        [columnDefs]="columnDefs" [rowData]="rowData"
+                                                                        [rowSelection]="rowSelection"
+                                                                        [sheetName]="'Industrys'"
+                                                                        [exportFilename]="'Industrys.xlsx'"
+                                                                        [defaultColDef]="defaultColDef"
+                                                                        [sideBar]="sideBar" [singleClickEdit]="true"
+                                                                        (onCellClickedEvent)="onCellClicked($event)"
+                                                                        (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                                                        (onCellDoubleClickedEvent)="onCellDoubleClicked($event,'Industry')"
+                                                                        (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                                                    </app-ag-grid-table>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-expansion-panel>
+                                                </div>
+                                            </mat-accordion>
+                                        </div>
+                                        <div class="col-md-6 padding-right-none">
+                                            <mat-accordion class="example-headers-align">
+                                                <div>
+                                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                                        <button type="button"
+                                                            class="fas fa-check c-refresh-speed extra-style"
+                                                            title="Refresh"
+                                                            (click)="onAgGridReady1(this.gridApiService.api ? this.gridApiService.api : this.gridApiService)"></button>
+                                                        <mat-expansion-panel-header class="math">
+                                                            <mat-panel-title class="matt">
+                                                                <i class="ficon fas fa-puzzle-piece"></i>&nbsp;Service
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="row">
+                                                            <div class="col-md-12 px-0">
+                                                                <ng-container>
+                                                                    <div class="header-btn-group">
+
+                                                                        <button
+                                                                            [ngClass]="{'disabled': isServiceExport || rowData1.length < 1}"
+                                                                            title="Export" type="button"
+                                                                            class=" btn btn-icon btn-outline-success m-r-8"
+                                                                            (click)="!isServiceExport ? onBtnExportDataAsExcelService() : ''">
+                                                                            <i
+                                                                                class="{{isServiceExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                                                                        </button>
+
+                                                                        <button title="Add Service"
+                                                                            (click)="addProduct('Service','','true')"
+                                                                            type="button" *ngIf="isSuperTEMAdmin"
+                                                                            class="btnaddl btn btn-icon btn-outline-primary">
+                                                                            <i class="fas fa-plus"></i></button>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container>
+                                                                    <app-ag-grid-table [excelBtnEnable]="true"
+                                                                        [columnDefs]="columnDefs1" [rowData]="rowData1"
+                                                                        [rowSelection]="rowSelection"
+                                                                        (onAgGridReady)="onAgGridReady1($event)"
+                                                                        [gridOptions]="gridOptions"
+                                                                        [sheetName]="'Services'"
+                                                                        [exportFilename]="'Services.xlsx'"
+                                                                        [defaultColDef]="defaultColDef"
+                                                                        [sideBar]="sideBar" [singleClickEdit]="true"
+                                                                        (onCellClickedEvent)="onCellClicked($event)"
+                                                                        (onAgGridReadyEmit)="onAgGridReadyEmitService($event)"
+                                                                        (onCellDoubleClickedEvent)="onCellDoubleClicked($event,'Service')"
+                                                                        (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                                                    </app-ag-grid-table>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-expansion-panel>
+                                                </div>
+                                            </mat-accordion>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 padding-left-none">
+                                            <mat-accordion class="example-headers-align">
+                                                <div>
+                                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                                        <button type="button"
+                                                            class="fas fa-check c-refresh-speed extra-style"
+                                                            title="Refresh"
+                                                            (click)="onAgGridReady5(this.gridApiServiceType.api ? this.gridApiServiceType.api : this.gridApiServiceType)"></button>
+                                                        <mat-expansion-panel-header class="math">
+                                                            <mat-panel-title class="matt">
+                                                                <i class="ficon fas fa-puzzle-piece"></i>&nbsp;Service
+                                                                Type
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="row">
+                                                            <div class="col-md-12 px-0">
+                                                                <ng-container>
+                                                                    <div class="header-btn-group">
+                                                                        <button
+                                                                            [ngClass]="{'disabled': isServiceType || rowData2.length < 1}"
+                                                                            title="Export" type="button"
+                                                                            class=" btn btn-icon btn-outline-success m-r-8"
+                                                                            (click)="!isServiceType ? onBtnExportDataAsExcelServiceType() : ''">
+                                                                            <i
+                                                                                class="{{isServiceType ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                                                                        </button>
+
+                                                                        <button title="Add Service Type"
+                                                                            (click)="addProduct('Service Type','','true')"
+                                                                            type="button" *ngIf="isSuperTEMAdmin"
+                                                                            class="btnaddl btn btn-icon btn-outline-primary">
+                                                                            <i class="fas fa-plus"></i></button>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container>
+                                                                    <app-ag-grid-table [excelBtnEnable]="true"
+                                                                        [columnDefs]="columnDefs2" [rowData]="rowData2"
+                                                                        [rowSelection]="rowSelection"
+                                                                        [sheetName]="'Service Types'"
+                                                                        [exportFilename]="'Service Types list.xlsx'"
+                                                                        [defaultColDef]="defaultColDef"
+                                                                        [gridOptions]="gridOptions" [sideBar]="sideBar"
+                                                                        [singleClickEdit]="true"
+                                                                        (onAgGridReady)="onAgGridReady5($event)"
+                                                                        (onCellClickedEvent)="onCellClicked($event)"
+                                                                        (onAgGridReadyEmit)="onAgGridReadyEmitServiceType($event)"
+                                                                        (onCellDoubleClickedEvent)="onCellDoubleClicked($event,'Service Type')"
+                                                                        (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                                                    </app-ag-grid-table>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-expansion-panel>
+                                                </div>
+                                            </mat-accordion>
+                                        </div>
+                                        <div class="col-md-6 padding-right-none">
+                                            <mat-accordion class="example-headers-align">
+                                                <div>
+                                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                                        <button type="button"
+                                                            class="fas fa-check c-refresh-speed extra-style"
+                                                            title="Refresh"
+                                                            (click)="onAgGridReady3(this.gridApiProduct.api ? this.gridApiProduct.api : this.gridApiProduct)"></button>
+                                                        <mat-expansion-panel-header class="math">
+                                                            <mat-panel-title class="matt">
+                                                                <i class="ficon fas fa-puzzle-piece"></i>&nbsp;Product
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="row">
+                                                            <div class="col-md-12 px-0">
+                                                                <ng-container>
+                                                                    <div class="header-btn-group">
+
+                                                                        <button
+                                                                            [ngClass]="{'disabled': isProductExport || rowData3.length < 1}"
+                                                                            title="Export" type="button"
+                                                                            class=" btn btn-icon btn-outline-success m-r-8"
+                                                                            (click)="!isProductExport ? onBtnExportDataAsExcelProduct() : ''">
+                                                                            <i
+                                                                                class="{{isProductExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                                                                        </button>
+
+                                                                        <button title="Add Product"
+                                                                            (click)="addProduct('Product','','true')"
+                                                                            type="button" *ngIf="isSuperTEMAdmin"
+                                                                            class="btn btn-icon btn-outline-primary">
+                                                                            <i class="fas fa-plus"></i></button>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container>
+                                                                    <app-ag-grid-table [excelBtnEnable]="true"
+                                                                        [columnDefs]="columnDefs3"
+                                                                        [rowSelection]="rowSelection"
+                                                                        [sheetName]="'products'"
+                                                                        [exportFilename]="'products.xlsx'"
+                                                                        [gridOptions]="gridOptions"
+                                                                        [defaultColDef]="defaultColDef"
+                                                                        [sideBar]="sideBar" [singleClickEdit]="true"
+                                                                        (onAgGridReady)="onAgGridReady3($event)"
+                                                                        (onCellClickedEvent)="onCellClicked($event)"
+                                                                        (onAgGridReadyEmit)="onAgGridReadyEmitExcelProduct($event)"
+                                                                        (onCellDoubleClickedEvent)="onCellDoubleClicked($event,'Product')"
+                                                                        (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                                                    </app-ag-grid-table>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-expansion-panel>
+                                                </div>
+                                            </mat-accordion>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 padding-left-none">
+                                            <mat-accordion class="example-headers-align">
+                                                <div>
+                                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                                        <button type="button"
+                                                            class="fas fa-check c-refresh-speed extra-style"
+                                                            title="Refresh"
+                                                            (click)="onAgGridReady4(this.gridApiProductType.api ? this.gridApiProductType.api : this.gridApiProductType)"></button>
+                                                        <mat-expansion-panel-header class="math">
+                                                            <mat-panel-title class="matt">
+                                                                <i class="ficon fas fa-puzzle-piece"></i>&nbsp;Product
+                                                                Type
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="row">
+                                                            <div class="col-md-12 px-0">
+                                                                <ng-container>
+                                                                    <div class="header-btn-group">
+
+                                                                        <button
+                                                                            [ngClass]="{'disabled': isProductTypeExport || rowData4.length < 1}"
+                                                                            title="Export" type="button"
+                                                                            class=" btn btn-icon btn-outline-success m-r-8"
+                                                                            [disabled]="rowData.length < 1"
+                                                                            (click)="!isProductTypeExport ? onBtnExportDataAsExcelProductType() : ''">
+                                                                            <i class="{{isProductTypeExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                                                                        </button>
+
+                                                                        <button title="Add Product Type"
+                                                                            (click)="addProduct('Product Type','','true')"
+                                                                            type="button" *ngIf="isSuperTEMAdmin"
+                                                                            class="btnaddl btn btn-icon btn-outline-primary">
+                                                                            <i class="fas fa-plus"></i></button>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container>
+                                                                    <app-ag-grid-table [excelBtnEnable]="true"
+                                                                        [columnDefs]="columnDefs4" [rowData]="rowData4"
+                                                                        [rowSelection]="rowSelection"
+                                                                        [sheetName]="'product Types '"
+                                                                        [exportFilename]="'product Types.xlsx'"
+                                                                        [defaultColDef]="defaultColDef"
+                                                                        [gridOptions]="gridOptions" [sideBar]="sideBar"
+                                                                        [singleClickEdit]="true"
+                                                                        (onCellClickedEvent)="onCellClicked($event)"
+                                                                        (onAgGridReady)="onAgGridReady4($event)"
+                                                                        (onAgGridReadyEmit)="onAgGridReadyEmitProductType($event)"
+                                                                        (onCellDoubleClickedEvent)="onCellDoubleClicked($event,'Product Type')"
+                                                                        (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                                                    </app-ag-grid-table>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-expansion-panel>
+                                                </div>
+                                            </mat-accordion>
+                                        </div>
+                                    </div>
+                                    <!--</div>-->
+                                </div>
+
+                            </div>
+                        </mat-tab>
+
+                        <ng-container *ngFor="let productData of editProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-user-edit" style="color: #4680ff;"></i>&nbsp;
+                                    {{productData.Name}}&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-edit-product [productData]="productData"></app-edit-product>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let user of addProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-user-plus" style="color: #4680ff;"></i>&nbsp;New User&nbsp;
+                                    <mat-icon (click)="removeUser(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-tem-user (onUserAddEvent)="onUserAddEvent($event)"></app-add-tem-user>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let upload of uploadProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-cloud-upload-alt" style="color: #4680ff;"> </i>&nbsp;Upload&nbsp;
+                                    <mat-icon (click)="removeUploadPage(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-files-upload></app-files-upload>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+
+.summary-total-main {
+    padding: 20px 0 0;
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .invoice-overview-main {
+        margin-bottom: 25px;
+        background-color: #EAEAEA;
+        padding: 12px 10px 10px;
+        border-radius: 12px;
+        // border: 1px solid #181D1F;
+
+        li.list-group-item {
+            background-color: transparent;
+        }
+
+    }
+
+
+    .invoice-overview-label h2,
+    .validate-summary-total-label h2 {
+        font-size: 22px;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        letter-spacing: normal;
+        font-weight: 500;
+        margin-bottom: 0;
+        color: #181d1f;
+    }
+
+    .invoice-overview-right {
+
+        ul {
+            flex-direction: row;
+            display: flex;
+            justify-content: space-between;
+            overflow: auto;
+
+            li {
+                padding: 0 15px 0 0;
+                border: none;
+
+                h3 {
+                    font-size: 14px;
+                    font-family: Roboto, "Helvetica Neue", sans-serif;
+                    letter-spacing: normal;
+                    font-weight: 500;
+                    margin-bottom: 0;
+                    color: #181d1f;
+                    white-space: nowrap;
+                }
+
+                p {
+                    white-space: nowrap;
+                }
+
+                div:nth-of-type(1) {
+                    margin-bottom: 16px;
+                }
+
+                i {
+                    font-size: 24px;
+                }
+
+                img {
+                    width: 18px;
+                }
+            }
+        }
+    }
+
+    .validate-summary-total-main {
+
+        h3 {
+            font-size: 14px;
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+            letter-spacing: normal;
+            font-weight: 500;
+            margin-bottom: 0;
+            color: #181d1f;
+        }
+
+        .validate-summary-total-label,
+        .validate-summary-total-desc {
+            max-width: 600px;
+        }
+
+        .validate-summary-total-desc p {
+            font-size: 14px;
+        }
+
+        .mat-expansion-panel {
+            box-shadow: none;
+        }
+
+        .mat-expansion-panel-header {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 1199px) {
+
+   
+    .summary-total-main {
+        // padding: 20px 0 0;
+
+        .invoice-overview-label h2,
+        .validate-summary-total-label h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+    }
+}

@@ -1,0 +1,40 @@
+<div class="mt-4">
+    <div class="mt-2">
+        <div class="row assignment-grids m-0">
+
+            <button type="button" title="Assign Location" (click)="addRetrieval()" class="btn btn-icon btn-outline-primary btn-group-list"><i
+                    class="fas fa-plus"></i></button>
+        </div>
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel [expanded]="true" class="padding-t-none">
+                <mat-expansion-panel-header class="math">
+                    <mat-panel-title>
+                        Invoice & Data Retrieval
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="row m-0">
+                    <div class="col-md-12 px-0">
+                        <div class="user-activity-log-inner">
+                        <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData1"
+                            [sheetName]="'Invoice Retrievals'" [exportFilename]="'Invoice Retrievals.xlsx'"
+                            (onAgGridReady)="onAgGridReady($event)" [gridOptions]="gridOptions"
+                            (onSelectionChangedEvent)="onSelectionChanged($event)"
+                            [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true">
+                        </app-ag-grid-table>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xl-12">
+                    <div class="form-group text-center mt-2">
+                        <button mat-button class="btn btn-primary mr-2 mat-spinner-btn text-white" (click)="save()"
+                            [disabled]="selected && selected.length == 0">
+                            <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoadder"></span>
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

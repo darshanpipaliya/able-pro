@@ -1,0 +1,221 @@
+<div class="mat-dialog-header justify-content-center pb-2">
+    <div class="row">
+        <div class="col-12 px-0">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Retrieval</h5>
+        </div>
+    </div>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="card-body py-0 mt-3">
+        <div class="container px-0">
+            <form class="editForm col-xl-12 px-0" [formGroup]="addInvoiceRetrivalForm">
+                <div class="row mt-3">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">TEM *</label>
+
+                                    <span><p-dropdown [disabled]="true" [options]="tems" optionLabel="AccountName"
+                                            (onChange)="filterCustomerGridByTEMId();" [filter]="true"
+                                            filterBy="AccountName" [showClear]="true" placeholder="Select TEM..."
+                                            formControlName="TEM" appendTo="body" optionValue="Id" [showClear]="false"
+                                            [ngClass]="{'invalid-error': f.TEM.invalid && (f.TEM.touched || submitted)}">
+                                        </p-dropdown></span>
+                                    <mat-error style="font-size: 12px" *ngIf="
+                        f.TEM.errors?.required &&
+                        (f.TEM.touched || submitted)
+                      ">
+                                        TEM is required</mat-error>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6"></div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Customer *</label>
+                                    <span><p-dropdown [disabled]="true" (onChange)="onCutomerChange($event.value)"
+                                            [options]="customerList" appendTo="body" optionLabel="AccountName"
+                                            [filter]="true" filterBy="AccountName" formControlName="CustomerAccountId"
+                                            placeholder="Select customer..." optionValue="Id" [showClear]="false"
+                                            [ngClass]="{'invalid-error': f.CustomerAccountId.invalid && (f.CustomerAccountId.touched || submitted)}">
+                                        </p-dropdown></span>
+
+                                    <mat-error style="font-size: 12px" *ngIf="
+            f.CustomerAccountId.errors?.required &&
+            (f.CustomerAccountId.touched || submitted)
+          ">
+                                        Customer is required</mat-error>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Vendor *</label>
+                                    <span><p-dropdown [disabled]="true" [options]="vendorsList" optionLabel="AccountName" [filter]="true"
+                                            filterBy="AccountName" [showClear]="true" placeholder="Select Vendor..."
+                                            [ngClass]="{'invalid-error': f.VendorAccountId.invalid && (f.VendorAccountId.touched || submitted)}"
+                                            formControlName="VendorAccountId" optionValue="Id" [showClear]="false"
+                                            appendTo="body" (onChange)="onVendorChange($event.value)">
+                                        </p-dropdown></span>
+
+                                    <mat-error style="font-size: 12px" *ngIf="
+            f.VendorAccountId.errors?.required &&
+            (f.VendorAccountId.touched || submitted)
+          ">
+                                        Vendor is required</mat-error>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Account Number *</label>
+                                    <span><p-dropdown [disabled]="true" (onChange)="fetchDates();" [options]="billingAccount"
+                                            optionLabel="AccountNumber" [filter]="true" filterBy="AccountNumber"
+                                            [showClear]="true" placeholder="Select Account Number..."
+                                            formControlName="BillingAccountID" appendTo="body" optionValue="value"
+                                            [showClear]="false"
+                                            [ngClass]="{'invalid-error': f.BillingAccountID.invalid && (f.BillingAccountID.touched || submitted)}">
+                                        </p-dropdown></span>
+
+                                    <mat-error style="font-size: 12px" *ngIf="
+            f.BillingAccountID.errors?.required &&
+            (f.BillingAccountID.touched || submitted)
+          ">
+                                        Account Number is required</mat-error>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Bill Day</label>
+                                    <span> <input type="text" class="form-control" value="{{ billDay }}" readonly
+                                            spaceTrimStartEndInput [allowStartWithSpace]="false" /></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Retrieval Date</label>
+                                    <span><input type="date" class="form-control" readonly
+                                            formControlName="RetrievalDate" /></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Missing Date</label>
+                                    <span><input type="date" class="form-control" readonly
+                                            formControlName="ExpectedDate" /></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Retrieval Method</label>
+                                    <span><p-dropdown [options]="InvoiceRetrievalMethods" optionLabel="DisplayName"
+                                            [filter]="false" [disabled]="true" filterBy="DisplayName" [showClear]="true"
+                                            placeholder="Select Method..." formControlName="InvoiceRetrievalMethodId"
+                                            appendTo="body" optionValue="Id" [showClear]="false">
+                                        </p-dropdown></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Retrieval Status</label>
+
+                                    <span><p-dropdown [options]="InvoiceRetrievalStatus" optionLabel="DisplayName"
+                                            [filter]="false" [disabled]="true" filterBy="DisplayName" [showClear]="true"
+                                            placeholder="Select Method..." formControlName="RetrievalStatusID"
+                                            appendTo="body" optionValue="Id" [showClear]="false">
+                                        </p-dropdown></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Retrieval Received</label>
+                                    <span> <input type="date" class="form-control" formControlName="ReceivedDate" [readonly]="true"
+                                            (input)="checkValidReceivedDate()" (focusout)="checkValidReceivedDate()"
+                                            [ngClass]="{
+            'invalid-error':
+              !f.ReceivedDate.value &&
+              (f.ReceivedDate.dirty || f.ReceivedDate.touched)
+          }" /></span>
+                                    <mat-error style="font-size: 12px"
+                                        *ngIf="!f.ReceivedDate.value && f.ReceivedDate.touched">
+                                        Invalid Date</mat-error>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Invoice Processed</label>
+                                    <span><input type="date" class="form-control" formControlName="ProcessedDate" [readonly]="true"
+                                            (input)="checkValidProcessDate()" (focusout)="checkValidProcessDate()"
+                                            [ngClass]="{
+            'invalid-error':
+              !f.ProcessedDate.value &&
+              (f.ProcessedDate.dirty || f.ProcessedDate.touched)
+          }" /></span>
+                                    <mat-error style="font-size: 12px"
+                                        *ngIf="!f.ProcessedDate.value && f.ProcessedDate.touched">
+                                        Invalid Date</mat-error>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">URL</label>
+                                    <span><input type="text" class="form-control" formControlName="WebUrl" [readonly]="true"
+                                            spaceTrimStartEndInput [allowStartWithSpace]="false" /></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Login</label>
+                                    <span><input type="text" class="form-control" formControlName="WebLogin" [readonly]="true"
+                                            spaceTrimStartEndInput [allowStartWithSpace]="false" /></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="" for="exampleInputPassword1"
+                                        style="font-weight: 500;">Password</label>
+                                    <span> <input class="form-control" matInput [type]="hide ? 'password' : 'password'" [readonly]="true"
+                                            id="WebPassword" formControlName="WebPassword" spaceTrimStartEndInput
+                                            [allowStartWithSpace]="false" /></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Notes </label>
+                                    <span><textarea class="form-control textarea-row-fix" style="height: 42px;" rows="1"
+                                        [readonly]="true" formControlName='InvoiceRetrievalNotes'>
+        </textarea></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group d-flex align-items-center">
+                                    <label class="form-label mr-3">Terminate Retrieval</label>
+                                    <button type="button" disabled
+                                        class="btn btn-icon-custom btn-danger has-ripple ter-ret-danger-btn"
+                                        (click)="invoiceRetrievalDeactive()">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xl-12 col-md-12 text-center">
+                    <button type="submit" (click)="saveInvoiceForcastData()" [disabled]="saveButtonLoadder"
+                        class="btn sbubtn btn-primary btn-raised ">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

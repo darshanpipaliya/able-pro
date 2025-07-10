@@ -1,0 +1,123 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row">
+                    <ng-container *ngFor="let option of buttonOptions">
+                        <button ngDefaultControl class="bbtn  btn btn-outline-primary" type="button"
+                            [ngClass]="(option.value === 'billing') ? 'btn btn-primary active round bg' : 'btn round'"
+                            [value]="option.value" [(ngModel)]="selectedButton" (click)="goToPage(option.value)">
+                            <ng-container *ngIf="option.value === 'vendors'"><i class="fas fa-snowplow"> </i>
+                            </ng-container>
+                            <ng-container *ngIf="option.value === 'users'"><i class="fas fa-users"> </i>
+                            </ng-container>
+                            <ng-container *ngIf="option.value === 'products'"><i class="fas fa-box-open"> </i>
+                            </ng-container>
+                            <ng-container *ngIf="option.value === 'charge'"><i class="fas fa-copyright"> </i>
+                            </ng-container>
+                            {{option.label}}
+                        </button>
+                    </ng-container>
+                </div>
+
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="selected = $event" id="billing-account-table-tab">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <b>
+                                    <i class="fas fa-box-open" style="color: #4680ff;"> </i>
+                                    Products</b>
+                            </ng-template>
+                            <ng-container *ngIf="isSuperTEMAdmin || isSuperTEMManager">
+                                <div class="row">
+                                    <button title="Add Vendor Product" type="button"
+                                        class="btnaddl btn btn-icon btn-outline-primary" (click)="addVendorProduct()">
+                                        <i class="fas fa-boxes"></i></button>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isSuperTEMAdmin || isSuperTEMManager">
+                                <div class="row">
+                                    <button title="Add New Product" type="button" style="left: 130px;"
+                                        class="btnaddl btn btn-icon btn-outline-primary" (click)="addProduct()"> <i
+                                            class="fas fa-box-open"></i></button>
+                                </div>
+                            </ng-container>
+                            <div class="col-sm-12">
+                                <ng-container *ngIf="rowData && rowData.length === 0 && !stopSpinner">
+                                    <div class="spinner-border text-primary c-table-spinner"
+                                        role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="rowData && rowData.length > 0 || stopSpinner">
+                                    <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData" [sheetName]="'BillingAccount list'" [exportFilename]="'BillingAccount list.xlsx'"
+                                        [rowSelection]="rowSelection" [suppressRowClickSelection]="true"
+                                        [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true"
+                                        (onCellClickedEvent)="onCellClicked($event)"
+                                        (onCellDoubleClickedEvent)="onCellDoubleClicked($event)"
+                                        (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                    </app-ag-grid-table>
+                                </ng-container>
+                            </div>
+                        </mat-tab>
+
+                        <ng-container *ngFor="let productData of editProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-user-edit" style="color: #4680ff;"></i>&nbsp;
+                                    {{productData.Name}}&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <ng-container *ngIf="isSuperTEMAdmin || isSuperTEMManager">
+                                        <div class="row">
+                                            <button title="Add Vendor Product" type="button"
+                                                class="btnaddl btn btn-icon btn-outline-primary"
+                                                (click)="addChargeCodeGroup()"> <i class="fas fa-boxes"></i></button>
+                                        </div>
+                                    </ng-container>
+                                    <app-edit-vendor-product [productData]="productData"></app-edit-vendor-product>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                        <ng-container *ngFor="let user of addProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-user-plus" style="color: #4680ff;"></i>&nbsp;New User&nbsp;
+                                    <mat-icon (click)="removeUser(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-tem-user (onUserAddEvent)="onUserAddEvent($event)"></app-add-tem-user>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let upload of uploadProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-cloud-upload-alt" style="color: #4680ff;"> </i>&nbsp;Upload&nbsp;
+                                    <mat-icon (click)="removeUploadPage(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-files-upload></app-files-upload>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let charge of chargeCodeGroupArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-cloud-upload-alt" style="color: #4680ff;"> </i>&nbsp;Add
+                                    Charge Code Group&nbsp;
+                                    <mat-icon (click)="removeChargePage(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-charge-code-group [productData]="productData"></app-add-charge-code-group>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

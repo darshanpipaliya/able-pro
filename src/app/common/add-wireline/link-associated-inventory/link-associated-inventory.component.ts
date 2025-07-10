@@ -67,7 +67,11 @@ export class LinkAssociatedInventoryComponent implements OnInit {
     serverSideInfiniteScroll: true,
     headerHeight: 35,
     groupHeaderHeight: 37,
-    floatingFiltersHeight: 35
+    floatingFiltersHeight: 35,
+    rowSelection: {
+      type: 'multiple',   
+      enableClickSelection: true
+    },
   };
   defaultColDef = {
     editable: true,
@@ -251,7 +255,11 @@ export class LinkAssociatedInventoryComponent implements OnInit {
             });
       },
     };
-    this.gridApi.api!.setGridOption("serverSideDatasource", dataSource);
+    if (this.gridApi.api) {
+      this.gridApi.api!.setGridOption("serverSideDatasource", dataSource);
+    } else {
+      this.gridApi!.setGridOption("serverSideDatasource", dataSource);
+    }
   }
 
   saveAssociatedInventory() {

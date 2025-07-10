@@ -1,0 +1,267 @@
+<!-- <ng-container *ngIf="!stopSpinner">
+    <div class="spinner-border text-primary"
+        style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px);width: 3.5rem !important;height: 3.5rem !important;"
+        role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</ng-container> -->
+<!-- *ngIf="stopSpinner" -->
+<div class="row mx-0 mt-2" >
+    <!-- <div class="col-sm-12">
+        <div class="row">
+            <div class="col-12 mt-2">
+                <i style="cursor: pointer;" class="fas fa-info-circle grid-top-tooltip" tooltipClass="tooltip-bg"
+                    (click)="AssignLocationsTooltip()"></i>
+            </div>
+        </div>
+        <ng-template mat-tab-label>
+            <b><i class="fa fa-thumb-tack" style="color: #4680ff;"> </i><span>&nbsp;Assign
+                    Locations</span></b>
+        </ng-template>
+        <ng-container>
+
+        </ng-container>
+    </div> -->
+
+    <div class="col-sm-12 mb-15 px-0">
+        <!-- <i class="fas fa-info-circle" [placement]="'left'" tooltipClass="tooltip-bg" [ngbTooltip]="ReconTooltip"></i>
+
+        <ng-template #ReconTooltip>
+            <p>
+                All Billing IDs must be assigned to a Person or Location. If more than 1 Billing ID was selected from
+                the Reconciliation grid all Billing IDs shown on this page will be assigned to the same Person or
+                Location selected on this page. If you have selected a Billing ID in error, simply uncheck the checkbox
+                to the left of the Billing ID on the grid and this Billing ID will be excluded from the assignment made
+                on this page. Unselected Billing IDs will be returned to the main Reconciliation grid and will still
+                need to be assigned.</p>
+
+            <p class="mb-0">Reconciliation to a Person or Location is often driven by the Product on the Billing ID. For
+                instance, Mobile Services or Conferencing services are usually assigned to a person who 'owns' this
+                service whereas a Circuit for Internet services or Voice services used on a PBX are assigned to a
+                location. Sometimes the business requires services traditionally assigned to a Person or Location to be
+                assigned differently. If you choose to assign something differently this is not restricted in the
+                application. Simply select the other tab from the top and make the assignment there.</p>
+        </ng-template> -->
+        <ng-container style="height: max-content;">
+
+            <div class="row">
+                <div class="col-12 px-0">
+                    <mat-card class="accordion-grid py-0 ">
+                        <mat-card-content>
+
+                            <div class="summary-total-main">
+                                <app-invoice-overview-i (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)"
+                                    [gridRowData]="gridRowData"></app-invoice-overview-i>
+                            </div>
+
+                            <mat-accordion class="example-headers-align accordion-grid">
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                                    <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                                        (click)="loadNodes(pTableContain, true)"></button>
+                                    <mat-expansion-panel-header class="math">
+                                        <mat-panel-title class="matt font-weight-bold">
+                                            <i class="fas fa-users" style="color: #4680ff;"></i>&nbsp;Reconcile with
+                                            People
+                                        </mat-panel-title>
+                                        <i style="cursor: pointer;" class="fas fa-info-circle" tooltipClass="tooltip-bg"
+                                            (click)="AssignLocationsTooltip()"></i>
+                                    </mat-expansion-panel-header>
+
+                                
+                                    <p-treeTable #treeTable [value]="files" columnResizeMode="expand"
+                                    [columns]="displaycols" [rows]="10" [lazy]="false"
+                                    (onLazyLoad)="loadNodes($event, true)" [totalRecords]="totalRecords"
+                                    [scrollable]="true" [resizableColumns]="true" selectionMode="checkbox"
+                                    selectionMode="single" [reorderableColumns]="true"
+                                    (onColResize)="handleColumnResize($event)" style="overflow-x: scroll;">
+
+                                    <ng-template pTemplate="colgroup" let-columns>
+                                        <colgroup>
+                                            <ng-container *ngFor="let col of columns">
+                                                <col
+                                                    [ngStyle]="{'width': col.width || 'auto', 'min-width': col.width || '100px'}" />
+                                            </ng-container>
+                                        </colgroup>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr class="header-row p-treetable-thead-parent">
+                                            <ng-container *ngFor="let col of cols">
+                                                <ng-container *ngIf="col.isChildren && col.isParentVisible">
+                                                    <th [attr.data-parent-id]="col.parent"
+                                                        [attr.colspan]="col.colspan" ttResizableColumn
+                                                        class="parent-header"
+                                                        [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                                                        <span>{{ col.header }}</span>
+                                                        <i class='pi pi-fw pi-chevron-right icon-contracted'
+                                                            *ngIf="!innerLoading && col.isChildren && col.isicon == 1 && col.isToggle"
+                                                            (click)="toggleColumn(col.parent , 'close')"></i>
+                                                        <i class='pi pi-fw pi-chevron-left icon-expanded'
+                                                            *ngIf="!innerLoading && col.isChildren && col.isicon == 0 && col.isToggle"
+                                                            (click)="toggleColumn(col.parent , 'open')"></i>
+                                                    </th>
+                                                </ng-container>
+                                            </ng-container>
+                                        </tr>
+
+                                        <tr class="header-row p-treetable-thead-child">
+                                            <ng-container *ngFor="let col of columns">
+                                                <ng-container>
+                                                    <th ttResizableColumn ttReorderableColumn [ttSortableColumn]="col.field"
+                                                        class="child-header"
+                                                        [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
+                                                        {{ col.childHeader }}
+                                                        <!-- <i class='pi pi-arrow-up' *ngIf="col.sorting === 'asc'"></i>
+                                                        <i class='pi pi-arrow-down'
+                                                            *ngIf="col.sorting === 'desc'"></i> -->
+
+                                                        <p-treetable-sort-icon [field]="col.field"></p-treetable-sort-icon> 
+                                                    </th>
+                                                </ng-container>
+                                            </ng-container>
+                                        </tr>
+
+                                        <tr class="header-row p-treetable-thead-filter">
+                                            <ng-container *ngFor="let col of columns">
+                                                <ng-container>
+                                                    <th class="child-header"
+                                                        [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
+                                                        <input type="text" [(ngModel)]="col.valuesset"
+                                                            [disabled]="col.isenable" pInputText size="8"
+                                                            *ngIf="col.type === 'text'"
+                                                            (input)="filerOutSide($event, col)"
+                                                            style="width: auto" />
+
+                                                        <input type="text" OnlyNumber [allowNegative]="true"
+                                                            [(ngModel)]="col.valuesset" [disabled]="col.isenable"
+                                                            pInputText size="8" *ngIf="col.type === 'numberFilter'"
+                                                            (input)="filerOutSide($event, col)"
+                                                            style="width: auto" />
+
+                                                        <p-calendar dateFormat="mm-dd-yy"
+                                                            class="p-treeTable-calender-grid"
+                                                            [disabled]="col.isenable"
+                                                            (ngModelChange)="filerOutSide($event, col)"
+                                                            *ngIf="col.type === 'dateFilter' && !col.isenable"
+                                                            [(ngModel)]="col.valuesset" placeholder="mm-dd-yyyy"
+                                                            appendTo="body" [showIcon]="true">
+                                                        </p-calendar>
+
+                                                        <input type="text"
+                                                            *ngIf="col.type === 'dateFilter' && col.isenable"
+                                                            [(ngModel)]="col.valuesset" [disabled]="col.isenable"
+                                                            pInputText size="8" style="width: auto" />
+
+                                                        <!-- <button type="text" pButton
+                                                            icon="pi pi-filter-icon pi-filter icon-filter"
+                                                            (click)="openContextMenu($event,col )"></button> -->
+                                                    </th>
+                                                </ng-container>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowNode let-rowData="rowData"
+                                        let-columns="columns">
+                                        <tr class="body-row">
+                                            <ng-container *ngFor="let col of columns;  let i = index">
+                                                <ng-container>
+                                                    <td [(selection)]="selectedNode"
+                                                        class="cell"
+                                                        [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': col.field === 'Charge' ? 'right' : 'left'}">
+
+                                                        <p-treeTableToggler [rowNode]="rowNode"
+                                                            [ngClass]="{'disabled': innerLoading}"
+                                                            *ngIf="col.childHeader == 'Service Number' && i === 0 && ( rowNode.node?.leaf === false || rowNode.parent != null )"></p-treeTableToggler>
+                                                        <ng-container [ngSwitch]="col.type">
+                                                            <ng-container [ngSwitch]="col.type">
+                                                                <span *ngSwitchCase="'select'">
+                                                                    <p-dropdown
+                                                                        [options]="formatUser"
+                                                                        appendTo="body"
+                                                                        placeholder="Select a User"
+                                                                        optionValue="id"
+                                                                        optionLabel="name"
+                                                                        filterBy="name"
+                                                                        [filter]="true"
+                                                                        (onChange)="onValueChange($event, rowData)">
+                                                                    </p-dropdown>
+                                                                </span>
+                                                                <span *ngSwitchDefault>
+                                                            
+                                                                    
+                                                                      <ng-container *ngIf="col.field === 'Charge'">
+                                                                        {{ currencyFormatter(rowData[col.field], rowData.CurrencySymbol) }}
+                                                                      </ng-container>
+                                                                    
+                                                                      <ng-container *ngIf="col.field !== 'Charge'">
+                                                                        {{ rowData[col.field] }}
+                                                                      </ng-container>
+
+
+                                                                </span>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </td>
+                                                </ng-container>
+                                            </ng-container>
+                                        </tr>
+
+
+                                    </ng-template>
+
+                                    <ng-template pTemplate="emptymessage" let-columns>
+                                        <tr>
+                                            <td class="cell" [attr.colspan]="columns.length">
+                                                <span class="spinner-border spinner-border-sm" role="status" *ngIf="loading"></span>
+                                                <span *ngIf="!loading && totalRecords === 0">
+                                                    No Record Found
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-treeTable>
+                                <!-- custome-sidebar -->
+                                <div class="custome-side-buttons">
+                                    <div class="custome-side-button" [ngClass]="{'active-border': sidebarVisible }">
+                                        <!-- vericaltext -->
+                                        <a class="custom-side-button-button ag-icon ag-icon-columns"
+                                            (click)="openSidebar()">
+                                            Columns</a>
+                                    </div>
+                                </div>
+
+                                <div class="sidebar" *ngIf="sidebarVisible">
+                                    <div class="sidebar-content">
+                                        <p-tree [value]="filesColumns" selectionMode="checkbox"
+                                            (onNodeSelect)="nodeSelect($event)"
+                                            (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles">
+                                        </p-tree>
+                                    </div>
+                                </div>
+                                <p-contextMenu
+                                    [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}"
+                                    #contextMenu [model]="items"></p-contextMenu>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="col-12 d-flex justify-content-between align-items-start mt-2 p-0 px-3">
+        <div class="d-flex align-items-center" [ngClass]="{'disabled': disabledAssignAllCheckbox || files.length === 1}" >
+            <input type="checkbox" id="vehicle1" name="vehicle1" [(ngModel)]="isAssignAllChecked" (change)="onchangeAllCheck()">
+            <label for="vehicle1" *ngIf="!setRedColorAllCheckbox" class="ml-1"> Assign All</label>
+            <label for="vehicle1" *ngIf="setRedColorAllCheckbox" class="ml-1" style="color: red;"> Assign All</label>
+        </div>
+        <div class="text-center mt-1">
+            <button type="submit" class="btn btn-primary" [disabled]="saveButtonLoader" (click)="savePrimary()">
+                <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoader"></span>Save</button>
+        </div>
+        <div>
+            {{files.length}} {{files.length > 1 ? 'records' : 'record'}}
+        </div>
+    </div>
+</div>

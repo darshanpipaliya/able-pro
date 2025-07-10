@@ -1,0 +1,38 @@
+.verified-button {
+    .inbtn {
+        cursor: pointer;
+        margin-right: 5px;
+
+        i {
+            font-size: 12px;
+        }
+    }
+
+    .fa.fa-eye.c-refresh::before {
+        content: '\f021' !important;
+        color: #34b3a6;
+    }
+
+    // .fa.fa-eye.c-refresh:hover::before{
+    //     color: #fff !important;
+    //     background: #4680ff !important;
+    // }
+    
+    .fa.fa-eye.c-refresh::before{
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    
+
+    .fas.fa-check.c-check-circle::before {
+        content: '\f058' !important;
+        font-weight: 300;
+    }
+
+    .fa-cloud-download-alt {
+        color: #05a646;
+    }
+
+    .fa-edit {
+        color: #4680ff;
+    }
+}

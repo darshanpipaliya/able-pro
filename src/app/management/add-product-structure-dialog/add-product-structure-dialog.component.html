@@ -1,0 +1,92 @@
+<div class="app-add-product-structure-dialog-c">
+    <div class="mat-dialog-header pb-3">
+        <h5 class="modal-title" id="exampleModalLabel">{{dialogData.data ?'Update' : 'Add'}} {{from}}</h5>
+        <button type="button" class="close" mat-dialog-close>
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class=" text-right rfield">
+        <span class="text-c-red">*Required field</span>
+    </div>
+    <div mat-dialog-content>
+        <div class="container-fluid">
+            <div class="card-body py-0 px-2">
+                <form [formGroup]="addProductForm">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xl-6 padding-left-none">
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 500;">{{from}} *</label>
+                               
+                                    <span><input type="text" class="form-control" required formControlName="name"
+                                        [ngClass]="{'invalid-error': !f.name.valid && (f.name.dirty || f.name.touched || isProductFormSubmit)}"
+                                        [maxlength]="maxChars"></span>
+                                <div class="row w-100">
+                                    <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.name.invalid && (f.name.touched || isProductFormSubmit)">
+                                            <div *ngIf="f.name.errors.required ">{{from}} is required</div>
+                                        </mat-error>
+                                        <mat-error style="font-size: 12px;" *ngIf="f.name.errors?.maxlength">
+                                            <div> Maximum length for the Product name is 30 characters </div>
+                                        </mat-error>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xl-6">
+                                        <div class="character-style">
+                                            <!-- {{f.name.value.length}}/{{maxChars}} -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xl-6 padding-right-none">
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 500;">Status *</label>
+
+                                <span class="pr-0" style="padding-right: 1px !important;"><p-dropdown [options]="statusList" optionLabel="Name"
+                                    [filter]="false" filterBy="Name" [showClear]="true"
+                                    placeholder="Select Status..." formControlName="active"
+                                    appendTo="body" optionValue="Id" [showClear]="false"
+                                    [disabled]="disableStatus"
+                                    [ngClass]="{'invalid-error': f.active.invalid && (f.active.touched || isProductFormSubmit)}">
+                                </p-dropdown></span>
+                                <ng-container *ngIf="f.active.invalid && (f.active.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.active.errors.required">Status is
+                                        required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="from === 'Service Type'">
+                        <div class="col-md-6 col-sm-6 col-xl-6 padding-left-none">
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 500;">Default Inventory Type *</label>
+
+                                <span class="pr-0" style="padding-right: 1px !important;"><p-dropdown [options]="inventoryList" optionLabel="DisplayName"
+                                    [filter]="false" filterBy="DisplayName" [showClear]="true"
+                                    placeholder="Select Inventory..." formControlName="inventoryTypeId"
+                                    appendTo="body" optionValue="Id" [showClear]="false"
+                                    [ngClass]="{'invalid-error': f.inventoryTypeId.invalid && (f.inventoryTypeId.touched || isProductFormSubmit)}">
+                                </p-dropdown></span>
+                                <ng-container *ngIf="f.inventoryTypeId.invalid && (f.inventoryTypeId.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.inventoryTypeId.errors.required">Inventory is
+                                        required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" class="pt-0">
+        <!--<button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>-->
+        <button mat-button (click)="saveProduct()" class="btn btn-primary" cdkFocusInitial
+            [disabled]="(dialogData.data && !isSuperTEMAdmin) || saveButtonLoadder">
+            <span class="spinner-border spinner-border-sm mr-1" role="status" *ngIf="saveButtonLoadder"></span>
+            Save</button>
+    </mat-dialog-actions>
+</div>

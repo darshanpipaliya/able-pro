@@ -1,0 +1,81 @@
+<div class="mat-dialog-header pb-2 mb-3">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Charge Code</h5>
+    </div>
+
+    <button type="button" class="close" [mat-dialog-close]="'undefined'">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content class="px-0">
+    <div class="card-body p-0">
+        <div class="container">
+            <form>
+                <div class="row mx-0">
+                    <div class="col-sm-12 col-md-6 padding-left-none">
+                        <div class="form-group d-flex align-items-end justify-content-between">
+                            <div style="width: calc(100% - 90px)">
+                                <label class="form-label">Charge Code</label>
+                                <span>
+                                    <input type="text" class="form-control">
+                                </span>
+                            </div>
+                            <div>
+                                <img class="media-object" src="assets/images/dummy.png" alt="Img">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Charge Code Name</label>
+                            <span><input type="text" class="form-control" formControlName="chargeCodeName"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Charge Code Type</label>
+                            <span>
+                                <p-dropdown appendTo="body" optionLabel="Name" [filter]="true" filterBy="Name"
+                                     placeholder=""
+                                    optionValue="Id" [showClear]="false">
+                                </p-dropdown>
+                            </span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Charge Type</label>
+                            <span>
+                                <p-dropdown appendTo="body" optionLabel="Name" [filter]="true" filterBy="Name"
+                                    placeholder="Monthly Recurring" optionValue="Id"
+                                    [showClear]="false">
+                                </p-dropdown>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 padding-right-none">
+                        <div class="form-group">
+                            <label class="form-label">Charge Code Description</label>
+                            <textarea formControlName="description" class="form-control charge-code-disc" rows="4"
+                                placeholder="Acct level plan billed to account for group of pooled lines Shares 500 Domestic GB of data, Domestic Uni Voice and Msg and Uni Inti LD MSG"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Charge Code Occurrence</label>
+                            <span>
+                                <p-dropdown appendTo="body" optionLabel="Occurrence" [filter]="true"
+                                    filterBy="Occurrence"
+                                    placeholder="Monthly Recurring" optionValue="Id" [showClear]="false">
+                                </p-dropdown>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<mat-dialog-actions align="center">
+    <button mat-button class="btn btn-primary">Save</button>
+    <!-- <button mat-button class="btn btn-primary">Save and Add Distribution</button> -->
+</mat-dialog-actions>

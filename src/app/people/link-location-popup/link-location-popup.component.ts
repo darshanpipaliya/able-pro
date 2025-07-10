@@ -11,7 +11,9 @@ import { ErrorWarningPopupComponent } from 'src/app/common/error-warning-popup/e
 import { CommonPTreeTableComponent } from 'src/app/common/common-p-tree-table/common-p-tree-table.component';
 import { api_list } from 'src/app/services/api-list';
 import { createColumn } from 'src/app/utils/column-utils';
-
+import { ModuleRegistry } from 'ag-grid-community';
+import { ServerSideRowModelModule } from 'ag-grid-enterprise';
+ModuleRegistry.registerModules([ServerSideRowModelModule]);
 @Component({
   selector: 'app-link-location-popup',
   templateUrl: './link-location-popup.component.html',
@@ -20,7 +22,7 @@ import { createColumn } from 'src/app/utils/column-utils';
   imports: [
     SharedModule,
     PrimgModule,
-    CommonPTreeTableComponent
+    CommonPTreeTableComponent,
   ]
 })
 export class LinkLocationPopupComponent implements OnInit {
@@ -57,7 +59,11 @@ export class LinkLocationPopupComponent implements OnInit {
     serverSideInfiniteScroll: true,
     headerHeight: 35,
     groupHeaderHeight: 37,
-    floatingFiltersHeight: 35
+    floatingFiltersHeight: 35,
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
   };
 
   defaultColDef = {
@@ -304,12 +310,15 @@ export class LinkLocationPopupComponent implements OnInit {
                 if (data.TotalRecordCount <= paramsRequest.startRow + 100) {
                   lastRow = data.TotalRecordCount;
                 }
-                params.successCallback(
-                  data._companyLocationDto.$values,
-                  lastRow
-                );
+                params.success({
+                  rowData: data._companyLocationDto.$values,
+                  rowCount: lastRow
+                });
               } else {
-                params.successCallback([], 0 );
+                params.success({
+                  rowData: [],
+                  rowCount: 0
+                });
                 this.gridApi.showNoRowsOverlay();
               }
 
@@ -328,13 +337,20 @@ export class LinkLocationPopupComponent implements OnInit {
               }
             },
             (error) => {
-              params.successCallback([], 0 );
+              params.success({
+                rowData: [],
+                rowCount: 0
+              });
               this.gridApi.showNoRowsOverlay();
             }
           );
       },
     };
-    this.gridApi.setServerSideDatasource(dataSource);
+    if(this.gridApi.api){
+      this.gridApi.api!.setGridOption("serverSideDatasource", dataSource);
+    } else {
+      this.gridApi!.setGridOption("serverSideDatasource", dataSource);
+    }
   }
 
   saveLocationPrimary() {

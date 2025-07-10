@@ -1,0 +1,339 @@
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+:host ::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
+}
+
+.icon-size {
+    font-size: 16px;
+}
+
+select.custom-select {
+    width: 250px;
+    padding: 10px 35px 10px 20px;
+    border: 1px solid #babfc7;
+}
+
+.mat-tab-list-title {
+    margin-left: 4px;
+}
+
+:host ::ng-deep #customer-table-tab .mat-tab-body.mat-tab-body-active {
+    top: 0 !important;
+}
+
+:host ::ng-deep ag-grid-angular {
+    padding: 0 !important;
+}
+
+:host ::ng-deep .mat-card.accordion-grid{
+    box-shadow: none !important;
+}
+
+:host ::ng-deep .accordion-grid {
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+:host ::ng-deep.ag-cell {
+    display: flex !important;
+    align-items: center !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 12px !important;
+}
+
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    opacity: 1 !important;
+    border-radius: 0.25em !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper::after {
+    opacity: 0 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 12px !important;
+}
+
+
+:host ::ng-deep .ag-cell-inline-editing {
+    height: auto !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 12px !important;
+}
+
+.mat-button.mat-button-disabled.mat-button-disabled {
+    color: #fff !important;
+}
+
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.brown-box {
+    background-color: #80808061;
+    border-radius: 12px;
+    padding: 25px 15px;
+    display: flex;
+}
+
+.heading-text {
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    overflow-x: scroll;
+
+    li {
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+/* Responsive Scrollbar Start */
+::-webkit-scrollbar {
+    height: 3px;
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    -webkit-border-radius: 1ex;
+}
+
+
+p {
+    margin-bottom: 0;
+}
+
+.summary-total-main {
+    padding: 20px 0 0;
+}
+
+.invoice-overview-label h2 {
+    font-size: 22px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #181d1f;
+}
+
+.invoice-overview-left {
+    width: 170px;
+}
+
+.invoice-overview-main .io-main{
+    display: flex;
+    gap: 15px;
+}
+.invoice-overview-main .invoice-overview-wrapper,
+.invoice-overview-main .graph-main {
+    margin-bottom: 9px;
+    background-color: #EAEAEA;
+    padding: 12px 10px 10px;
+    border-radius: 12px;
+    width: 100%;
+}
+
+.invoice-overview-main .graph-main{
+    max-width: 250px;
+    padding: 0 !important;
+}
+
+.invoice-overview-main .graph-main .card{
+    background: transparent;
+    box-shadow: none;
+}
+
+.invoice-overview-main .invoice-overview-wrapper li.list-group-item {
+    background-color: transparent;
+
+    > div{
+        min-height: 36px;
+    }
+}
+
+
+.io-cus-btn-group .fas.fa-file-invoice-dollar::before {
+    content: '';
+    display: block;
+    background: url('/assets/images/icn-file-invoice.png') no-repeat center center;
+    z-index: 10;
+    background-size: 100%;
+    width: 20px;
+    height: 28px;
+}
+
+.differences-red {
+    color: #f44336;
+}
+
+.invoice-overview-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.invoice-overview-right {
+    width: calc(100% - 170px);
+    overflow: auto;
+
+    ul {
+        flex-direction: row;
+        display: flex;
+        justify-content: space-between;
+        overflow: unset;
+        gap: 15px;
+
+        li {
+            padding: 0;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            h3 {
+                font-size: 14px;
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                letter-spacing: normal;
+                font-weight: 500;
+                margin-bottom: 0;
+                color: #181d1f;
+                white-space: nowrap;
+            }
+
+            p {
+                white-space: nowrap;
+                font-weight: normal;
+            }
+            // .graph-main{
+            //     width: 160px;
+            // }
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: 1400px) {
+    
+}
+
+@media only screen and (max-width: 1199px) {
+
+    .invoice-overview-label h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .invoice-overview-wrapper {
+        display: block;
+
+        .invoice-overview-left,
+        .invoice-overview-right {
+            width: 100%;
+        }
+
+        // .invoice-overview-right {
+
+        //     ul {
+        //         gap: 12px;
+
+        //         li {
+        //             gap: 6px;
+
+        //             h3 {
+        //                 font-size: 11px;
+        //             }
+
+        //             p {
+        //                 font-size: 10px;
+        //             }
+        //         }
+        //     }
+        // }
+
+        // .invoice-overview-label h2 {
+        //     font-size: 16px;
+        //     margin-bottom: 10px;
+        // }
+    }
+    p {
+        font-size: 13px !important;
+    }
+
+    .invoice-overview-label h2 {
+        font-size: 20px !important;
+    }
+
+    .invoice-overview-right ul li {
+        gap: 8px;
+    }
+}

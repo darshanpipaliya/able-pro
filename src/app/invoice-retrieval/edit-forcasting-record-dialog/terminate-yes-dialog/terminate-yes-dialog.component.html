@@ -1,0 +1,72 @@
+<div class="mat-dialog-header">
+    <button type="button" class="close" mat-dialog-close (click)="closeDialog()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="row">
+    <span class="dialog-header-c">Terminate Retrieval</span>
+    <div class="col-sm-12 px-0">
+        <div>
+            <p>
+                Use this page to terminate the retrieval record. If this account is no longer active, set the account
+                status to "Inactive" to prevent future
+                retrieval records.
+            </p>
+        </div>
+        <div>
+            <form class="editForm px-0">
+                <div class="row">
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Customer</label>
+                            <span>
+                                <input disabled type="text" class="form-control"
+                                    placeholder="" [value]="retrievalData?.CustomerAccountName">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Vendor</label>
+                            <span>
+                                <input disabled type="text" class="form-control" placeholder=""
+                                [value]="retrievalData?.VendorAccountName">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Payable Account #</label>
+                            <span>
+                                <input disabled type="text" class="form-control" placeholder=""
+                                [value]="retrievalData?.PayableAccountNumber">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Billing Period</label>
+                            <span>
+                                <input disabled type="text" class="form-control" placeholder="" [value]="retrievalData?.BillingPeriod">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mt-2">
+            <ng-container>
+                <div class="btn-group-dialog mt-4">
+                    <a class="linkTag" (click)="dialogRef.close(false)">Just kidding, cancel</a>
+                    <button class="btn btn-primary" (click)="terminateAndInactive()">
+                        Terminate Retrieval & Make Account Inactive
+                    </button>
+                    <button class="btn btn-primary" (click)="terminateOnly()">
+                        Terminate Retrieval Only</button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

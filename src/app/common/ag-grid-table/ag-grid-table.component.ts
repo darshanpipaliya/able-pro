@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import 'ag-grid-enterprise';
 import moment from 'moment';
-import { FirstDataRenderedEvent } from 'ag-grid-community';
+import { ClientSideRowModelModule, FirstDataRenderedEvent } from 'ag-grid-community';
 import { CommonModule } from '@angular/common';
 import { AgGridAngular } from 'ag-grid-angular';
 
@@ -10,14 +10,12 @@ import {
   GridReadyEvent,
   GridApi,
   ServerSideRowModelModule,
-  IServerSideDatasource,
-  IServerSideGetRowsParams,
 } from 'ag-grid-enterprise';
 import { ModuleRegistry } from 'ag-grid-enterprise';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import 'ag-grid-enterprise';
 
-ModuleRegistry.registerModules([ServerSideRowModelModule]);
+ModuleRegistry.registerModules([ClientSideRowModelModule, ServerSideRowModelModule]);
 
 @Component({
   selector: 'app-ag-grid-table',
@@ -31,7 +29,6 @@ export class AgGridTableComponent implements OnInit {
   @Input() rowSelection: any;
   @Input() defaultColDef: any;
   @Input() sideBar: any;
-  @Input() suppressRowClickSelection: any;
   @Input() tableHeight: any = '600px';
   @Input() columnDefs: any;
   @Input() singleClickEdit: any;
@@ -42,7 +39,6 @@ export class AgGridTableComponent implements OnInit {
   @Input() isRelodButtonVisible: boolean = false;
   @Input() gridOptions: any;
   @Input() sheetName: any = 'Sheet1';
-  @Input() rowMultiSelectWithClick: boolean = false;
   @Input() exportFilename: any = 'export.xlsx';
   @Input() autoGroupColumnDef: any;
   @Input() treeData: any;
@@ -55,7 +51,7 @@ export class AgGridTableComponent implements OnInit {
 
   tooltipShowDelay = 100;
   public gridApi: GridApi | undefined;
-  public modules: any[] = [ServerSideRowModelModule];
+  public modules: any[] = [ClientSideRowModelModule, ServerSideRowModelModule];
   private gridColumnApi: any;
 
   @Output() onCellClickedEvent: EventEmitter<any> = new EventEmitter<any>();
@@ -123,7 +119,6 @@ export class AgGridTableComponent implements OnInit {
       ...this.defaultColDef
     };
 
-    // Ensure gridOptions has our required settings
     this.gridOptions = {
       ...this.gridOptions,
       suppressFloatingFilter: false,

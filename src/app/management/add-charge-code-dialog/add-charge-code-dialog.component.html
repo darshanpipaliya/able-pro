@@ -1,0 +1,143 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title" id="exampleModalLabel">Add Charge Code</h5>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="container-fluid">
+        <div class="card-body">
+            <form [formGroup]="addChargeCodeForm">
+                <div class=" row">
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+
+                        <div class="form-group">
+                            <label class="form-label">Vendor</label>
+
+                            <span><p-dropdown (onChange)="onVendorChange()" [options]="vendors" optionLabel="AccountName"
+                                [filter]="true" filterBy="AccountName" [showClear]="true" placeholder="Select Vendor..."
+                                formControlName="vendorAccountId" optionValue="Id" [showClear]="false" appendTo="body">
+                            </p-dropdown></span>
+
+                            <ng-container
+                                *ngIf="f.vendorAccountId.invalid && (f.vendorAccountId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.vendorAccountId.errors.required">Vendor is
+                                    required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+
+                        <div class="form-group">
+                            <label class="form-label">Vendor Billing Alias</label>
+                            <span><p-dropdown [options]="billingAlias" optionLabel="Name"
+                                [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select billing alias..."
+                                formControlName="vendorBillingAliasId" optionValue="Id" [showClear]="false" appendTo="body">
+                            </p-dropdown></span>
+
+                            <ng-container
+                                *ngIf="f.vendorBillingAliasId.invalid && (f.vendorBillingAliasId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;"
+                                    *ngIf="f.vendorBillingAliasId.errors.required">Billing Alias is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+
+                        <div class="form-group">
+                            <label class="form-label">Charge Code</label>
+                            <input type="text" class="form-control" required formControlName="chargeCodeName"
+                                [ngClass]="{'invalid-error': !f.chargeCodeName.valid && (f.chargeCodeName.dirty || f.chargeCodeName.touched || isChargeCodeFormSubmit)}"
+                                placeholder="Enter Name" spaceTrimStartEndInput [allowStartWithSpace]="false">
+                            <ng-container
+                                *ngIf="f.chargeCodeName.invalid && (f.chargeCodeName.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.chargeCodeName.errors.required">Charge Code
+                                    is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-control" required formControlName="description"
+                                [ngClass]="{'invalid-error': !f.description.valid && (f.description.dirty || f.description.touched || isChargeCodeFormSubmit)}"
+                                placeholder="Enter Name" spaceTrimStartEndInput [allowStartWithSpace]="false">
+                            <ng-container
+                                *ngIf="f.description.invalid && (f.description.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.description.errors.required">Description is
+                                    required.
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Charge Type *</label>
+
+                            <span><p-dropdown (onChange)="onChargeCodeTypeChange()" [options]="vendors" optionLabel="Name"
+                                [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select charge type..."
+                                formControlName="chargeCodeTypeId" optionValue="Id" [showClear]="false" appendTo="body"
+                                [ngClass]="{'invalid-error': !f.chargeCodeTypeId.valid && (f.chargeCodeTypeId.dirty || f.chargeCodeTypeId.touched || isChargeCodeFormSubmit)}"
+                                >
+                            </p-dropdown></span>
+
+                            <ng-container
+                                *ngIf="f.chargeCodeTypeId.invalid && (f.chargeCodeTypeId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.chargeCodeTypeId.errors.required">Charge
+                                    Type is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+
+                        <div class="form-group">
+                            <label class="form-label">Tax/Regulatory Type</label>
+
+                            <span><p-dropdown [options]="taxTypes" optionLabel="Name"
+                                [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select tax/regulatory type..."
+                                formControlName="chargeTypeId" optionValue="Id" [showClear]="false" appendTo="body"
+                                [ngClass]="{'invalid-error': !f.chargeTypeId.valid && (f.chargeTypeId.dirty || f.chargeTypeId.touched || isChargeCodeFormSubmit)}"
+                                >
+                            </p-dropdown></span>
+
+                            <ng-container
+                                *ngIf="f.chargeTypeId.invalid && (f.chargeTypeId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.chargeTypeId.errors.required">Tax/Regulatory Type is required
+                                </mat-error>
+                            </ng-container>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+
+                        <div class="form-group">
+                            <label class="form-label">Origin</label>
+
+                            <span><p-dropdown [options]="origins" optionLabel="Name"
+                                [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select Origin..."
+                                formControlName="chargeCodeOriginId" optionValue="Id" [showClear]="false" appendTo="body"
+                                [ngClass]="{'invalid-error': !f.chargeCodeOriginId.valid && (f.chargeCodeOriginId.dirty || f.chargeCodeOriginId.touched || isChargeCodeFormSubmit)}"
+                                >
+                            </p-dropdown></span>
+
+                            <ng-container
+                                *ngIf="f.chargeCodeOriginId.invalid && (f.chargeCodeOriginId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.chargeCodeOriginId.errors.required">Origin is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="py-3" align="end">
+    <button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>
+    <button mat-button (click)="saveChargeCode()" class="btn btn-primary" cdkFocusInitial>Add Charge Code</button>
+</mat-dialog-actions>

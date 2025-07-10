@@ -1,0 +1,136 @@
+<div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="sandbox-step-grid first">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                        <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                        [ngClass]="{'disabled': recordPublishedOrCompleted}" 
+                        (click)="!recordPublishedOrCompleted && preDistributionDetails()"></button>
+                        <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                                <img src="../../../../../../../assets/images/sandbox-icon/Final-Distribution-Detail-5B-blue.svg" alt="Final Distribution Detail 5B Image">&nbsp;Distribution Event
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <i class="fas fa-info-circle font-large" container="body" (click)="openDialog()"
+                            tooltipClass="tooltip-bg"></i>
+                        <div class="row">
+                            <div class="col-md-12 px-0">
+                                <ng-container style="height: max-content;">
+                                    <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs" [sideBar]="sideBar"
+                                        [rowData]="rowData" [rowSelection]="rowSelection" [frameworkComponents]="frameworkComponents"
+                                        [sheetName]="'Charge Code Type'" [exportFilename]="'Charge Code Type.xlsx'"
+                                        [defaultColDef]="defaultColDef"
+                                        [singleClickEdit]="true">
+                                    </app-ag-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <ng-template #DistributionGrid>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left">
+                                <span>This process involves assigning a Charge Code along with other rule settings that make up a Distribution Rule that then is linked to an Event ID.  The distributed charges on the Billing ID will share the same Event ID as the original Distributed Charge. Once the distribution to Billing ID(s) is finalized, the original charge detail record that was distributed is deactivated.</span>
+                            </div>
+                        </ng-template>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="sandbox-step-grid">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+
+                        <button [ngClass]="{'disabled': isDisabledExport || rowDataSecond.length < 1 || recordPublishedOrCompleted}" title="Export" type="button"
+                            class=" btn btn-icon btn-outline-success service-tab-btn"
+                            (click)="!isDisabledExport ? exportExcel() : ''">
+                            <i class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                        </button>
+
+                        <button type="button" class="fas fa-check c-refresh-speed ml-4 pl-3" title="Refresh"
+                        [ngClass]="{'disabled': recordPublishedOrCompleted}" 
+                        (click)="!recordPublishedOrCompleted && onAgGridReady(gridApi)">
+                        </button>
+
+                        <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" height="14px"
+                                    viewBox="0 0 182.000000 162.000000" preserveAspectRatio="xMidYMid meet">
+
+                                    <g transform="translate(0.000000,162.000000) scale(0.100000,-0.100000)"
+                                        fill="#4680ff" stroke="none">
+                                        <path d="M557 1585 c-67 -23 -127 -99 -127 -160 0 -20 -5 -25 -25 -25 -23 0
+                                                                -25 -4 -25 -41 0 -95 31 -109 240 -109 126 0 169 3 195 15 37 18 55 51 55 100
+                                                                0 31 -3 35 -25 35 -19 0 -25 5 -25 23 -1 38 -36 103 -71 129 -64 48 -124 58
+                                                                -192 33z" />
+                                        <path
+                                            d="M1535 1482 c-94 -44 -129 -125 -123 -287 l3 -90 195 0 195 0 3 113
+                                                                c2 103 0 119 -22 167 -31 68 -82 104 -157 111 -40 4 -65 0 -94 -14z" />
+                                        <path
+                                            d="M142 1379 c-50 -25 -85 -68 -102 -124 -8 -29 -10 -191 -8 -565 3
+                                                                -510 4 -526 24 -565 11 -22 40 -53 63 -70 l43 -30 452 -3 452 -3 44 24 c30 16
+                                                                55 40 75 72 l30 48 0 546 0 546 -27 47 c-31 51 -79 86 -131 95 l-34 5 -5 -59
+                                                                c-7 -73 -34 -128 -86 -175 -63 -57 -93 -63 -312 -63 -193 0 -196 0 -252 28
+                                                                -86 42 -138 126 -138 223 0 39 -3 44 -22 44 -13 0 -42 -10 -66 -21z" />
+                                        <path d="M1417 953 c-4 -3 -7 -172 -7 -375 0 -289 3 -376 14 -401 17 -41 125
+                                                                -144 160 -153 14 -3 38 -3 52 0 31 8 140 109 160 148 11 22 14 101 14 408 l0
+                                                                380 -193 0 c-107 0 -197 -3 -200 -7z" />
+                                    </g>
+                                </svg>&nbsp;Distribution Details
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <i class="fas fa-info-circle font-large" container="body" (click)="openDisDetail()" tooltipClass="tooltip-bg"></i>
+                        <div class="row">
+                            <div class="col-md-12 px-0">
+                                <ng-container style="height: max-content;">
+                                    <app-ag-grid-table 
+                                    (onAgGridReady)="onAgGridReady($event)" (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                    [excelBtnEnable]="true" [columnDefs]="columnDefs2" [gridOptions]="gridOptions"
+                                        [rowData]="rowDataSecond" [rowSelection]="rowSelection"
+                                        [sheetName]="'Charge Code Type'" [exportFilename]="'Charge Code Type.xlsx'"
+                                        [defaultColDef]="defaultColDef"
+                                        [sideBar]="sideBar" [singleClickEdit]="true">
+                                    </app-ag-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <ng-template #DistributionDetail>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left">
+                                <span>This grid provides a breakdown of the distribution event, outlining the Billing ID(s) and the corresponding amounts distributed for each charge involved in the distribution event.</span>
+                            </div>
+                        </ng-template>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="grid-save-section">
+                <div class="text-center mt-3">
+                    <button class="btn btn-primary" (click)="redirect()">
+                        Close
+                    </button>
+                </div>
+                <div class="record-count-text">
+                    <span>
+                        {{totalCount}} {{totalCount > 1 ? 'records' : 'record'}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

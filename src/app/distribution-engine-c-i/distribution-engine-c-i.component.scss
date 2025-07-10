@@ -1,0 +1,338 @@
+.summary-total-main {
+    padding: 20px 0 0;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+.mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+.accordion-grid.grid1 .mat-expansion-panel {
+    border: 0 !important;
+}
+
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+.rule-conditions-wrapper>.form-group {
+    margin-bottom: 15px !important;
+}
+
+.form-group span {
+    display: block;
+    overflow: hidden;
+    // padding: 0 4px 0 6px;/
+    padding: 0;
+}
+
+.form-group label {
+    float: left !important;
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 0 !important;
+    height: unset !important;
+}
+
+
+:host ::ng-deep .ag-theme-alpine .ag-ltr .ag-floating-filter-button {
+    margin-left: 10px !important;
+}
+
+:host ::ng-deep .ag-header-cell-text {
+    font-size: 13px !important;
+}
+
+
+:host ::ng-deep .accordion-grid {
+
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.additional-bill-detail-main {
+    background: #ddd;
+    overflow-x: auto;
+
+    table {
+        margin-bottom: 0;
+
+        h3 {
+            font-size: 14px;
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+            letter-spacing: normal;
+            font-weight: 500;
+            margin-bottom: 0;
+            color: #181d1f;
+            // white-space: nowrap;
+        }
+
+        tr {
+
+            border-right: 1px solid #babfc7;
+            border-bottom: 1px solid #babfc7;
+            border-left: 1px solid #babfc7;
+
+            th {
+                vertical-align: middle;
+                border-top: none;
+                font-size: 18px;
+                padding: 10px 8px;
+                width: 150px;
+
+            }
+
+            td {
+                border-top: none;
+                padding: 10px 8px;
+                white-space: unset;
+                max-width: 130px;
+                text-wrap: wrap;
+                overflow-wrap: break-word;
+            }
+
+            p {
+
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                line-height: 1.2em;
+                padding-top: 2px;
+                margin-bottom: 0;
+            }
+        }
+
+        tr.tr-border-none {
+            border-bottom: none !important;
+        }
+    }
+}
+
+td p.price-right {
+    margin-left: 20px;
+}
+
+h6 {
+    margin-bottom: 0;
+    line-height: 1.2rem;
+}
+
+.add-new-rule-main {
+    h2 {
+        font-size: 18px;
+        color: #373a3c;
+        font-weight: 500;
+    }
+
+    .save-rule-wrapper {
+        margin-left: 30px;
+    }
+
+    .add-new-rule-right .form-label {
+        width: 180px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}
+
+:host ::ng-deep .show.tooltip {
+    max-width: 1000px !important;
+    width: max-content !important;
+    transform: unset !important;
+    top: 0 !important;
+    left: 15px !important;
+
+    .arrow {
+        top: 4px;
+    }
+
+    .tooltip-inner {
+        max-width: 100%;
+
+        ol li {
+            font-size: 13px;
+        }
+    }
+}
+
+div.tooltip-relative {
+    position: relative;
+}
+
+.conditions-data-flex {
+    margin-left: 15px;
+}
+
+.save-rule-flex {
+    margin-left: 30px;
+    display: flex;
+}
+
+/* Checkbox Design Start*/
+:host ::ng-deep .ag-header-select-all .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input,
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    opacity: 1 !important;
+    border-radius: 0.25em !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper::after {
+    opacity: 0 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+:host ::ng-deep .mat-tab-header {
+    max-width: 100% !important;
+    margin-top: 0;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    cursor: pointer;
+
+    &.grid-tooltip {
+        position: absolute;
+        top: 14px;
+        right: 45px;
+    }
+}
+
+.mat-tab-label-active {
+    opacity: 1 !important;
+}
+
+/* Checkbox Design End*/
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+:host ::ng-deep .mat-expansion-panel.mat-expansion-panel.mat-expanded.mat-expansion-panel-spacing{
+    border: 1px solid #cfcfcf !important;
+}
+
+
+@media only screen and (max-width: 1540px) {
+    :host ::ng-deep .show.tooltip {
+        max-width: 770px !important;
+    }
+}
+
+@media only screen and (max-width: 1270px) {
+    :host ::ng-deep .show.tooltip {
+        max-width: 600px !important;
+    }
+}
+
+@media only screen and (max-width: 1170px) {
+    :host ::ng-deep .show.tooltip {
+        max-width: 550px !important;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    p {
+        font-size: 13px !important;
+    }
+
+    .add-new-rule-main h2,
+    .additional-bill-detail-main th {
+        font-size: 16px !important;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    :host ::ng-deep .show.tooltip {
+        max-width: 450px !important;
+    }
+}
+
+.line {
+    width: 100%;
+    height: 20px;
+    border-radius: 3px;
+  }
+.shimmer {
+    animation-duration: 2.2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: shimmer;
+    animation-timing-function: linear;
+    background: #ddd;
+    background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+    background-size: 1200px 100%;
+  }
+  
+  .shimmer-res {
+    padding-top: 8px !important;
+  
+  }
+  
+  @-webkit-keyframes shimmer {
+    0% {
+      background-position: -100% 0;
+    }
+  
+    100% {
+      background-position: 100% 0;
+    }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -1200px 0;
+    }
+  
+    100% {
+      background-position: 1200px 0;
+    }
+  }
+  

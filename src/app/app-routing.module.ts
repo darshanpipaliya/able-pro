@@ -84,6 +84,31 @@ const routes: Routes = [
         loadChildren: () => import('./finance-dashboard/finance-dashboard.module').then(module => module.FinanceDashboardModule),
         canActivate: [AuthGuard]
       },
+      {
+        path: 'invoices',
+        loadChildren: () => import('./invoices-module/invoices.module').then(module => module.InvoicesModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'inventory',
+        loadChildren: () => import('./inventory/inventory.module').then(module => module.InventoryModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'analytics',
+        loadChildren: () => import('./analytics/analytics.module').then(module => module.AnalyticsModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'reconciliation',
+        loadChildren: () => import('./reconciliation/reconciliation.module').then(module => module.ReconciliationModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'management',
+        loadChildren: () => import('./management/management.module').then(module => module.ManagementModule),
+        canActivate: [AuthGuard]
+      },
     ]
   },
   {

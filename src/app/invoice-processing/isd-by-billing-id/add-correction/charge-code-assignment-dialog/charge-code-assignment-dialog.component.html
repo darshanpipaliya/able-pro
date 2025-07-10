@@ -1,0 +1,37 @@
+
+<div class="app-error-warning-popup-c">
+    <div class="mat-dialog-header pb-3">
+        <h5 class="modal-title" style="color: #4680ff;">Attention</h5>
+        <i class="fas fa-times" mat-dialog-close (click)="dialogRef.close()"></i>
+    </div>
+    <div mat-dialog-content class="pt-3">
+        <div class="container">
+            <div class="row mx-0 px-2 align-items-center">
+                <div class="col-md-12 popup-main-section">
+                    <div class="popup-left-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="popup-right-desc">
+                        <ul class="mb-0 p-0 list-unstyled text-c-blue">
+                            <li *ngIf="dataa?.msg1">{{dataa?.msg1}}</li>
+                            <li *ngIf="dataa?.msg2">{{dataa?.msg2}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <mat-dialog-actions class="py-3" align="end">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 attention-popup-btn">
+                    <a class="linkTag" (click)="saveassignment()">{{dataa?.btnMsg}}</a>
+                    <button class="btn btn-primary ml-4" (click)="dialogRef.close()">
+                        Close & Review</button>
+                </div>
+            </div>
+        </div>
+
+    </mat-dialog-actions>
+</div>  

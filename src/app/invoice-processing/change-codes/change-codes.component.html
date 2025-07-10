@@ -1,0 +1,390 @@
+<mat-accordion class="example-headers-align accordion-grid accordion-toggle-btn-right">
+    <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+        <div class="inventory-sel-accordion-left-btn ml-2">
+            <button type="button" class="btn btn-primary btn-raised" [disabled]="!matchRecord"
+                (click)="clickNext()">Next</button>
+            <div class="text-right" title="Assign New Charge Code 3A">
+                <i class="fas fa-check c-check-circle" [ngClass]="{'disabled': selectedCheckBoxData?.length == 0}"
+                    (click)="redirectTab3A()"></i>
+            </div>
+
+            <button type="button" class="fas fa-check c-refresh" title="Refresh" (click)="refreshClick()" 
+            [ngClass]="{'disabled': recordPublishedOrCompleted}"></button>
+        </div>
+        <mat-expansion-panel-header class="math">
+            <mat-panel-title class="matt">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 0 182.000000 162.000000"
+                    preserveAspectRatio="xMidYMid meet">
+
+                    <g transform="translate(0.000000,162.000000) scale(0.100000,-0.100000)" fill="#4680ff"
+                        stroke="none">
+                        <path d="M557 1585 c-67 -23 -127 -99 -127 -160 0 -20 -5 -25 -25 -25 -23 0
+                                        -25 -4 -25 -41 0 -95 31 -109 240 -109 126 0 169 3 195 15 37 18 55 51 55 100
+                                        0 31 -3 35 -25 35 -19 0 -25 5 -25 23 -1 38 -36 103 -71 129 -64 48 -124 58
+                                        -192 33z" />
+                        <path d="M1535 1482 c-94 -44 -129 -125 -123 -287 l3 -90 195 0 195 0 3 113
+                                        c2 103 0 119 -22 167 -31 68 -82 104 -157 111 -40 4 -65 0 -94 -14z" />
+                        <path d="M142 1379 c-50 -25 -85 -68 -102 -124 -8 -29 -10 -191 -8 -565 3
+                                        -510 4 -526 24 -565 11 -22 40 -53 63 -70 l43 -30 452 -3 452 -3 44 24 c30 16
+                                        55 40 75 72 l30 48 0 546 0 546 -27 47 c-31 51 -79 86 -131 95 l-34 5 -5 -59
+                                        c-7 -73 -34 -128 -86 -175 -63 -57 -93 -63 -312 -63 -193 0 -196 0 -252 28
+                                        -86 42 -138 126 -138 223 0 39 -3 44 -22 44 -13 0 -42 -10 -66 -21z" />
+                        <path d="M1417 953 c-4 -3 -7 -172 -7 -375 0 -289 3 -376 14 -401 17 -41 125
+                                        -144 160 -153 14 -3 38 -3 52 0 31 8 140 109 160 148 11 22 14 101 14 408 l0
+                                        380 -193 0 c-107 0 -197 -3 -200 -7z" />
+                    </g>
+                </svg>&nbsp;Charge Code Assignment
+            </mat-panel-title>
+            <i class="fas fa-info-circle" (click)="openTooltipDialog()" tooltipClass="tooltip-bg"></i>
+        <ng-template #termMainTooltip>
+            <div class="mat-dialog-header">
+                <button type="button" class="close" mat-dialog-close>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="text-left dialog-data">
+                <p class="mb-2" style="font-size: 14px;">
+                    <strong>Code Assignment in the UI</strong> can be completed in two ways:
+                </p>
+
+                <ol style="list-style-type: decimal;" style="margin-bottom: 0 !important;">
+                    <li><strong>Individual Assignment:</strong>
+                        <ul class="mb-2">
+                            <li>
+                                <p>Each Charge Code is assigned uniquely to a <strong>Charge Code Type, Charge Type and
+                                        Charge Occurrence</strong></p>
+
+                            </li>
+                            <li>
+                                <p>A <strong>Parent Charge Code</strong> can be assigned</p>
+                            </li>
+                            <li>
+                                <p>The <strong>Charge Code Description</strong> can be added or updated</p>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li><strong>Bulk Assignment:</strong>
+                        <ul class="mb-0">
+                            <li>
+                                <p class="mb-2">Multiple Charge Codes can be assigned at once if they share the same <strong>Charge
+                                        Code Type, Charge Type, Occurrence</strong>,<strong> and Charge Location
+                                    </strong>even if the Charge Codes themselves are different</p>
+                                <ul class="mb-0">
+                                    <li>
+                                        <p><strong>Account-Level vs. Service-Level</strong><br>If a Charge Code appears
+                                            at both the Account and Service levels, they must be assigned separately:
+                                        </p>
+                                        <ul class="mb-2" style="list-style-type: disc">
+                                            <li>
+                                                <p><strong>Account-Level</strong> requires a distribution code</p>
+                                            </li>
+                                            <li>
+                                                <p><strong>Service-Level</strong> typically operates without
+                                                    distribution<br>Separate assignments ensure proper configuration for
+                                                    each context despite identical Charge Code values</p>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li>
+                                <p><strong>Parent Charge Codes</strong> <strong>cannot</strong> be assigned when using
+                                    Bulk Assignment</p>
+                            </li>
+                            <li>
+                                <p><strong>Charge Code Descriptions</strong> <strong>cannot</strong> be added or updated
+                                    when using Bulk Assignment</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+
+            </div>
+        </ng-template>
+
+        </mat-expansion-panel-header>
+        
+        <p-treeTable #treeTable [value]="files" filter="true" columnResizeMode="expand" [columns]="displaycols"
+            [rows]="10" [lazy]="true" (onLazyLoad)="loadNodes($event, true)" [totalRecords]="totalRecords"
+            (selectionChange)="onSelectionChange($event)" [scrollable]="true" [resizableColumns]="true"
+            selectionMode="checkbox" [(selection)]="selectedNodes" [reorderableColumns]="true"
+            (onColResize)="handleColumnResize($event)" (onHeaderCheckboxToggle)="toggleHeaderSelection($event)">
+
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <ng-container *ngFor="let col of columns">
+                        <col [ngStyle]="{'width': col.width || 'auto', 'min-width': col.width || '100px'}" />
+                    </ng-container>
+                </colgroup>
+            </ng-template>
+
+            <ng-template pTemplate="header" let-columns>
+                <tr class="header-row p-treetable-thead-parent">
+                    <ng-container *ngFor="let col of cols;let i = index">
+                        <th *ngIf="i === 0" [attr.colspan]="col.colspan" ttResizableColumn class="parent-header"
+                            [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                        </th>
+                        <ng-container *ngIf="i !== 0 &&col.isChildren && col.isParentVisible">
+                            <th [attr.data-parent-id]="col.parent" [attr.colspan]="col.colspan" ttResizableColumn
+                                class="parent-header"
+                                [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                                <span>{{ col.header }}</span>
+                                <i class='pi pi-fw pi-chevron-right icon-contracted'
+                                    *ngIf="!innerLoading && col.isChildren && col.isicon == 1 && col.isToggle"
+                                    (click)="toggleColumn(col.parent , 'close')"></i>
+                                <i class='pi pi-fw pi-chevron-left icon-expanded'
+                                    *ngIf="!innerLoading && col.isChildren && col.isicon == 0 && col.isToggle"
+                                    (click)="toggleColumn(col.parent , 'open')"></i>
+                            </th>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+
+                <tr class="header-row p-treetable-thead-child">
+                    <ng-container *ngFor="let col of columns;let i = index">
+                        <th *ngIf="i === 0" ttResizableColumn ttReorderableColumn class="child-header"
+                            [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
+                            <!-- <p-treeTableHeaderCheckbox></p-treeTableHeaderCheckbox> -->
+                        </th>
+                        <ng-container *ngIf="i !== 0">
+                            <th ttResizableColumn ttReorderableColumn (click)="OrderBy(col.field  )"
+                                class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
+                                {{ col.childHeader }}
+                                <i class='pi pi-arrow-up' *ngIf="col.sorting === 'asc'"></i>
+                                <i class='pi pi-arrow-down' *ngIf="col.sorting === 'desc'"></i>
+                            </th>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+
+                <tr class="header-row p-treetable-thead-filter">
+                    <ng-container *ngFor="let col of columns">
+                        <ng-container>
+                            <th class="child-header" [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
+                                <input type="text" [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText
+                                    size="8" *ngIf="col.type === 'text'" (input)="filerOutSide($event, col)"
+                                    style="width: auto" />
+
+                                <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="col.valuesset"
+                                    [disabled]="col.isenable" pInputText size="8" *ngIf="col.type === 'numberFilter'"
+                                    (input)="filerOutSide($event, col)" style="width: auto" />
+
+                                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender-grid"
+                                    [disabled]="col.isenable" (ngModelChange)="filerOutSide($event, col)"
+                                    *ngIf="col.type === 'dateFilter' && !col.isenable" [(ngModel)]="col.valuesset"
+                                    placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
+                                </p-calendar>
+
+                                <input type="text" *ngIf="col.type === 'dateFilter' && col.isenable"
+                                    [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText size="8"
+                                    style="width: auto" />
+
+                                <button type="text" *ngIf="col.type !== ''" pButton
+                                    icon="pi pi-filter-icon pi-filter icon-filter"
+                                    (click)="openContextMenu($event,col )"></button>
+                            </th>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                <tr class="body-row" (dblclick)="onRowDoubleClick(rowData)">
+                    <ng-container *ngFor="let col of columns;  let i = index">
+                        <td *ngIf="i === 0 " class="cell"
+                            [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': 'left'}">
+                            <p-treeTableCheckbox *ngIf="rowData['Status'] === 'Unassigned' && 
+                            (rowData['ChargeCode'] != null && rowData['ChargeCode'] != '') " [value]="rowNode">
+                            </p-treeTableCheckbox>
+                        </td>
+                        <ng-container *ngIf="i !== 0">
+                            <td [(selection)]="selectedNode"
+                                (contextmenu)="showContextMenu($event, contextMenu , rowData[col.field])" class="cell"
+                                [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': col.field === 'TotalChargesDisplay' ? 'right' : 'left'}">
+                                <ng-container [ngSwitch]="col.type">
+                                    <span *ngSwitchCase="'dateFilter'">{{ rowData[col.field] | date:
+                                        'MM/dd/yyyy' }}</span>
+                                    <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+
+                <tr class="body-row"
+                    *ngIf="(innerLoading && expandedNode?.data.SBChargeDetailIdForCC === rowNode.node.data.SBChargeDetailIdForCC && expandedNode?.data.SBChargeDetailIdForCC === rowNode.node.data.SBChargeDetailIdForCC) || (isApiAlerdayCall && lastNode?.data.SBChargeDetailIdForCC === rowNode.node.data.SBChargeDetailIdForCC && lastNode?.data.SBChargeDetailIdForCC === rowNode.node.data.SBChargeDetailIdForCC)">
+                    <td class="cell" [attr.colspan]="columns.length">
+                        <span class="spinner-border spinner-border-sm" role="status"></span>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td class="cell" [attr.colspan]="columns.length">
+                        <span class="spinner-border spinner-border-sm" role="status" *ngIf="loading"></span>
+                        <span *ngIf="!loading && totalRecords === 0">
+                            No Record Found
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-treeTable>
+
+        <div class="custome-side-buttons">
+            <div class="custome-side-button" [ngClass]="{'active-border': sidebarVisible }">
+                <a class="custom-side-button-button ag-icon ag-icon-columns" (click)="openSidebar()">
+                    Columns</a>
+            </div>
+        </div>
+        <div class="sidebar" *ngIf="sidebarVisible">
+            <div class="sidebar-content">
+                <p-tree [value]="filesColumns" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
+                    (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles"> </p-tree>
+            </div>
+        </div>
+        <p-contextMenu
+            [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}"
+            #contextMenu [model]="items">
+        </p-contextMenu>
+
+
+    </mat-expansion-panel>
+</mat-accordion>
+
+<div class="text-right mt-2 mr-3">
+    <span style="font-weight: 700;">{{TotalUnassignedChargeCode ? TotalUnassignedChargeCode : 0}} of
+        {{TotalCount ? TotalCount : 0}} to Assign</span>
+</div>
+
+<p-dialog [(visible)]="displayModal" modal="true" [closable]="true" [draggable]="false" [resizable]="false"
+    [dismissableMask]="true" [header]="''" #treeTable
+    [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 mb-2">
+
+                <p-dropdown [(ngModel)]="selectedOption1" class="rounded-inputs20 select-select col-md-12"
+                    [options]="countries" optionValue="name" optionLabel="display" appendTo="body">
+                </p-dropdown>
+
+            </div>
+        </div>
+
+        <div class="row" *ngIf="fieldsName?.type === 'text' ">
+            <div class="col-md-12">
+                <input type="text" [(ngModel)]="textboxValue1"
+                    placeholder="{{selectedOption1 === 'inrange' ? 'From' : 'Filter...'}}"
+                    (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+            </div>
+        </div>
+        <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+            <div class="col-md-12">
+                <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="textboxValue1"
+                    placeholder="{{selectedOption1 === 'inrange' ? 'From' : 'Filter...'}}"
+                    (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+            </div>
+        </div>
+        <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+            <div class="col-md-12">
+                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                    (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1" placeholder="mm-dd-yyyy"
+                    appendTo="body" [showIcon]="true"></p-calendar>
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption1 == 'inrange'">
+            <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                <div class="col-md-12">
+                    <input type="text" [(ngModel)]="textboxValue1_1" placeholder="To"
+                        (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                </div>
+            </div>
+            <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                <div class="col-md-12">
+                    <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="textboxValue1_1" placeholder="To"
+                        (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                </div>
+            </div>
+            <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                <div class="col-md-12">
+                    <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                        (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1_1"
+                        placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-1" *ngIf="displayModal1">
+            <div class="col-md-12 d-flex justify-content-center condition-label">
+                <label *ngFor="let radiobutton of radioItems">
+                    <input type="radio" name="options" (click)="model.option = radiobutton"
+                        [checked]="radiobutton === model.option" />{{ radiobutton }}
+                </label>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="displayModal1">
+            <div class="col-md-12 mb-2">
+
+                <p-dropdown [(ngModel)]="selectedOption2" class="rounded-inputs20 select-select col-md-12"
+                    [options]="countries" optionValue="name" optionLabel="display" appendTo="body">
+                </p-dropdown>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'text' ">
+            <div class="col-md-12">
+                <input placeholder="{{selectedOption2 === 'inrange' ? 'From' : 'Filter...'}}" type="text"
+                    [(ngModel)]="textboxValue2" pInputText size="8" style="width: auto" />
+            </div>
+        </div>
+
+        <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'numberFilter' ">
+            <div class="col-md-12">
+                <input placeholder="{{selectedOption2 === 'inrange' ? 'From' : 'Filter...'}}" type="text" OnlyNumber
+                    [allowNegative]="true" [(ngModel)]="textboxValue2" pInputText size="8" style="width: auto" />
+            </div>
+        </div>
+
+        <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'dateFilter' ">
+            <div class="col-md-12">
+                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2"
+                    placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+            </div>
+        </div>
+
+        <div *ngIf="displayModal1 && selectedOption2 == 'inrange'">
+            <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                <div class="col-md-12">
+                    <input type="text" [(ngModel)]="textboxValue2_1" placeholder="To" pInputText size="8"
+                        style="width: auto" />
+                </div>
+            </div>
+
+            <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                <div class="col-md-12">
+                    <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="textboxValue2_1" placeholder="To"
+                        pInputText size="8" style="width: auto" />
+                </div>
+            </div>
+
+            <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                <div class="col-md-12">
+                    <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2_1"
+                        placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
+                    </p-calendar>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-md-12">
+                <button type="text" class="btn btn-primary btn-sm" pButton (click)="onFilterChangedValue()">
+                    Apply
+                </button>
+            </div>
+        </div>
+    </div>
+</p-dialog>

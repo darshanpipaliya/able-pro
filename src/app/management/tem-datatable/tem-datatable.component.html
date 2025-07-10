@@ -1,0 +1,128 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row header-btn-responsive">
+                    <ng-container *ngFor="let option of buttonOptions">
+                        <button ngDefaultControl class="bbtn  btn btn-outline-primary" type="button"
+                            [ngClass]="(option.value === 'tem') ? 'btn btn-primary active round bg' : 'btn round'"
+                            [value]="option.value" [(ngModel)]="selectedButton"
+                            (click)="goToPage(option.value);selected=0">
+                            <ng-container *ngIf="option.value === 'tem'"><i class="fas fa-gopuram"> </i>
+                            </ng-container>
+                            <ng-container *ngIf="option.value === 'users'"><i class="fas fa-users"> </i></ng-container>
+                            {{option.label}}
+                        </button>
+                    </ng-container>
+                </div>
+                <div class="row btn-group1" *ngIf="currentOpenEditPagevar == 'Table'">
+                    <button [ngClass]="{'disabled': isDisabledExport || rowData.length < 1}" title="Export"
+                        type="button" class=" btn btn-icon btn-outline-success m-r-8"
+                        (click)="!isDisabledExport ? onBtnExportDataAsExcel() : ''">
+                        <i class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                    </button>
+                    <button title="Add TEM" type="button" class="btn btn-icon btn-outline-primary"
+                        *ngIf="isSuperTEMUsers" (click)="addTem()"> <i class="fas fa-plus"></i></button>
+                </div>
+                <div class="row btn-group1" *ngIf="currentOpenEditPagevar == 'Edit'">
+
+                </div>
+
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)"
+                        id="tem-table-tab"
+                        [ngClass]="{'mat-tab-header-add' : currentOpenEditPagevar === 'Add', 'mat-tab-header-edit' : currentOpenEditPagevar === 'Edit'}">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <b>
+                                    <i class="fas fa-gopuram" style="color: #4680ff;"> </i>
+                                    TEM</b>
+                            </ng-template>
+                            <ng-container>
+
+                            </ng-container>
+                            <div class="col-sm-12 px-0">
+
+                                <ng-container>
+                                    <div class="mt-2">
+                                        <mat-accordion class="example-headers-align accordion-grid ">
+                                            <mat-expansion-panel style="width: 100%;" [expanded]="true"
+                                                [disabled]="true">
+                                                <button type="button" class="fas fa-check c-refresh-speed"
+                                                    title="Refresh"
+                                                    (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                                                <mat-expansion-panel-header class="math">
+                                                    <mat-panel-title class="matt font-weight-bold">
+                                                        <i class="fas fa-gopuram" style="color: #4680ff;"></i>&nbsp;TEM
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData"
+                                                    [sheetName]="'Tem'" [exportFilename]="'Tem.xlsx'"
+                                                    [rowSelection]="rowSelection" [gridOptions]="gridOptions" [defaultColDef]="defaultColDef"
+                                                    [sideBar]="sideBar" [singleClickEdit]="true"
+                                                    (onAgGridReady)="onAgGridReady($event)"
+                                                    (onCellClickedEvent)="onCellClicked($event)"
+                                                    (onCellDoubleClickedEvent)="onCellDoubleClicked($event)"
+                                                    (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                                    (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                                </app-ag-grid-table>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                        <div class="row">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                                                <div class="text-right mt-2 mr-3">
+                                                <span>
+                                                    {{girdDataCount}} {{girdDataCount > 1 ? 'records' : 'record'}}
+                                                </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </mat-tab>
+
+                        <ng-container *ngFor="let temData of editTemArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <!-- <i class="fas fa-gopuram" style="color: #4680ff;"></i>   -->
+                                    <i class="fas fa-edit" style="color: #4680ff ;"></i>&nbsp;
+                                    {{temData.AccountName}}&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-edit-tem [temData]="temData" (onTemEditEvent)="onTemEditEvent($event, i)"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)"></app-edit-tem>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let temData of addTemArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-gopuram" style="color: #4680ff;"></i>&nbsp;Add TEM&nbsp;
+                                    <mat-icon (click)="removeUser(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-tem (onTemAddEvent)="onTemAddEvent($event, i)"
+                                        (onComponetDestroy)="onComponetDestroy($event, i)" [temData]="temData.addData"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)"></app-add-tem>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let upload of uploadTemArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-cloud-upload-alt" style="color: #4680ff;"> </i>&nbsp;Upload&nbsp;
+                                    <mat-icon (click)="removeUploadPage(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-files-upload></app-files-upload>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

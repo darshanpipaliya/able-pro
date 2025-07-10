@@ -1,0 +1,316 @@
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+:host ::ng-deep .ag-header-cell-text{
+    font-size: 13px !important;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+.form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+.form-group label {
+    float: left !important;
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 0 !important;
+    height: unset !important;
+}
+
+:host ::ng-deep .sandbox-step-grid {
+
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+}
+
+.additional-bill-detail-main {
+    background: #ddd;
+    overflow-x: auto;
+
+    table {
+        margin-bottom: 0;
+
+        h3 {
+            font-size: 14px;
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+            letter-spacing: normal;
+            font-weight: 500;
+            margin-bottom: 0;
+            color: #181d1f;
+            // white-space: nowrap;
+        }
+
+        tr {
+
+            border-right: 1px solid #babfc7;
+            border-bottom: 1px solid #babfc7;
+            border-left: 1px solid #babfc7;
+
+            th {
+                vertical-align: middle;
+                border-top: none;
+                font-size: 18px;
+                padding: 10px 8px;
+                width: 150px;
+            }
+
+            td {
+                border-top: none;
+                padding: 10px 8px;
+                white-space: unset;
+                max-width: 130px;
+                text-wrap: wrap;
+                overflow-wrap: break-word;
+            }
+
+            p {
+
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                line-height: 1.2em;
+                padding-top: 2px;
+                margin-bottom: 0;
+            }
+        }
+
+        tr.tr-border-none {
+            border-bottom: none !important;
+        }
+    }
+}
+
+.parent-charge-code-wrapper .ag-root-wrapper {
+    border-radius: 4px !important;
+}
+
+:host ::ng-deep .search-CC-panel-body .mat-expansion-panel-body {
+    border: 1px solid #babfc7;
+    border-radius: 0 0 4px 4px;
+
+    ag-grid-angular {
+        .ag-root-wrapper {
+            border-radius: 4px !important;
+        }
+    }
+
+}
+
+.search-CC-panel-body .parent-charge-code-wrapper {
+    padding: 10px;
+}
+
+.search-charge-code-res .responsive-btn-position .btn.btn-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.parent-CCA-field-l {
+    padding-left: 0;
+    padding-right: 3px;
+}
+
+.parent-CCA-field-r {
+    padding-right: 0;
+    padding-left: 3px;
+    display: flex;
+    align-items: center;
+
+    .form-group {
+        width: calc(100% - 144px);
+    }
+}
+
+.search-container form {
+    display: flex;
+    height: 36px;
+
+    input {
+        width: 100%;
+        border: 1px solid #ced4da;
+        border-right: none;
+    }
+
+    button {
+        border: 1px solid #ced4da;
+        border-left: none;
+        background: transparent;
+    }
+}
+
+
+:host ::ng-deep .new-charge-code-assignment-main .mat-expansion-panel-body {
+    padding: 15px 5px !important;
+    border: 1px solid #babfc7;
+    border-radius: 0 0 4px 4px;
+}
+
+img.media-object {
+    max-width: 70px;
+    min-width: 40px;
+    height: 100%;
+    object-fit: contain;
+}
+
+textarea.charge-code-disc {
+    border: 1px solid #ced4da !important;
+}
+
+.parent-panel-body {
+    padding: 20px;
+    border: 1px solid #babfc7;
+    border-radius: 0 0 4px 4px;
+}
+
+.search-charge-code-res {
+    align-items: center;
+}
+
+:host ::ng-deep .ag-header-select-all .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input,
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    opacity: 1 !important;
+    border-radius: 0.25em !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper::after {
+    opacity: 0 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+.select-vendor-btn-group {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+
+    .select-action-button {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .refresh-btn {
+        padding: 4px 8px;
+    }
+}
+
+.acc-border-p-treetable .mat-expansion-panel{
+    border: 1px solid #cfcfcf !important;
+}
+
+@media only screen and (max-width: 991px) {
+    p {
+        font-size: 13px !important;
+    }
+
+    .parent-panel-body {
+        padding: 10px;
+    }
+
+    .additional-bill-detail-main th {
+        font-size: 16px !important;
+    }
+
+    .parent-CCA-field-r {
+        .btn.btn-icon {
+            width: 35px;
+            height: 35px;
+        }
+
+        .btn.btn-primary {
+            padding: 5px 10px !important;
+        }
+
+        .form-group {
+            width: calc(100% - 132px);
+        }
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+
+    .search-charge-code-res .responsive-btn-position {
+        position: absolute;
+        top: 5px;
+        text-align: right !important;
+        right: 10px;
+    }
+
+    .search-charge-code-res .responsive-btn-position .btn.btn-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .parent-CCA-field-l,
+    .parent-CCA-field-r {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .parent-CCA-field-r {
+        display: block;
+
+        .form-group {
+            width: 100%;
+        }
+
+        .btn.btn-icon {
+            margin-left: 0 !important;
+        }
+
+        .res-text-right {
+            text-align: right;
+        }
+
+    }
+
+    .search-charge-code-res {
+        align-items: unset;
+    }
+
+}

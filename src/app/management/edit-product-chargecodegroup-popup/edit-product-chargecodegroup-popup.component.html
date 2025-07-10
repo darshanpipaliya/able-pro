@@ -1,0 +1,28 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title" id="exampleModalLabel">Update Charge Code Group</h5>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="container-fluid">
+        <div class="card-body">
+            <form>
+                <div class=" row">
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+                        <div class="font-weight-bold f-14">
+                            Charge Code / Charge Type / Description
+                        </div>
+                        <dual-list [sort]="keepSorted" [source]="source" [key]="key" [display]="display"
+                            [filter]="filter" [(destination)]="confirmed" height="265px" [format]="format"
+                            [disabled]="disabled"></dual-list>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="py-3" align="end">
+    <button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>
+    <button mat-button class="btn btn-primary" (click)="updateChargeCodeGroup()" cdkFocusInitial>Update</button>
+</mat-dialog-actions>

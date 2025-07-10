@@ -1,0 +1,244 @@
+<div class="review-section">
+    <mat-accordion class="example-headers-align overview-accordian">
+        <mat-expansion-panel [expanded]="true">
+            <div class="publish-btn">
+                <button [ngClass]="{'disabled': recordPublishedOrCompleted}" [disabled]="!overviewData?.IsApproved || overviewData?.Differences !== 0"
+                    *ngIf="sandBoxGridRowData?.SandboxStatus !== 'PUBLISHED'" type="submit"
+                    class="btn btn-primary btn-raised" (click)="publish()">Publish</button>
+                <button *ngIf="sandBoxGridRowData?.SandboxStatus === 'PUBLISHED'" type="submit"
+                    class="btn btn-danger btn-raised" [disabled]="isShowspinner || !isAllowSuperTem || isPreviousInvoice"
+                    (click)="unPublish()">
+                    <span class="spinner-border spinner-border-sm mr-2" *ngIf="isShowspinner"></span>
+                    Unpublish</button>
+
+
+                <div class="things-within" *ngIf="finalReviewData && finalReviewData?.WithinSLADays">
+                    <i class="fas fa-thumbs-up"></i>
+                    <h5>Within SLA</h5>
+                </div>
+
+                <div class="things-within" *ngIf="finalReviewData && !finalReviewData?.WithinSLADays">
+                    <i class="fas fa-thumbs-up c-down"></i>
+                    <h5>Outside of SLA</h5>
+                </div>
+
+
+            </div>
+            <mat-expansion-panel-header class="math borderc">
+                <mat-panel-title>
+                    Overview
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="review-banner text-center">
+                <div class="row">
+                    <div class="review-box-res box-1">
+                        <div class="review-box">
+                            <div class="review-header">
+                                <!-- <div class="publish-btn">
+                                    <button [ngClass]="{'disabled': recordPublishedOrCompleted}"
+                                        *ngIf="sandBoxGridRowData?.SandboxStatus !== 'PUBLISHED'" type="submit"
+                                        class="btn btn-primary btn-raised" (click)="publish()">Publish</button>
+                                    <button *ngIf="sandBoxGridRowData?.SandboxStatus === 'PUBLISHED'" type="submit"
+                                        class="btn btn-danger btn-raised" [disabled]="isShowspinner || !isAllowSuperTem"
+                                        (click)="unPublish()">
+                                        <span class="spinner-border spinner-border-sm mr-2"
+                                            *ngIf="isShowspinner"></span>
+                                        Unpublish</button>
+                                </div> -->
+                                <h2>Spend & Corrections</h2>
+                            </div>
+                            <div class="review-body">
+                                <div class="body-list">
+                                    <h4>Amount to Pay</h4>
+                                    <p><a (click)="redirectTo('AmaountToPay')" class="hover-link">$
+                                            {{finalReviewData?.AmountToPay? finalReviewData?.AmountToPay :
+                                            0}}</a>&nbsp;<sup>{{finalReviewData?.RateFromPreviousMonth ?
+                                            Math.round(finalReviewData?.RateFromPreviousMonth) : 0 }}%
+                                            <i *ngIf="finalReviewData?.IsHigherThanPreviousMonth === true"
+                                                class="fas fa-arrow-up" style="color: red;"></i> <!--    -->
+                                            <i *ngIf="finalReviewData?.IsHigherThanPreviousMonth === false"
+                                                class="fas fa-arrow-down" style="color: green;"></i> <!--  -->
+                                        </sup></p>
+                                </div>
+                                <div class="body-list">
+                                    <h4>Pay Past Due</h4>
+                                    <p>{{finalReviewData?.PayPastDueDisplay }}</p>
+                                </div>
+                                <div class="body-list">
+                                    <h4>Charge Correction Total</h4>
+                                    <p><a (click)="redirectTo('ChargeCorrectionsTotal')" class="hover-link">$
+                                            {{finalReviewData?.ChargeCorrectionsTotal?
+                                            finalReviewData?.ChargeCorrectionsTotal :
+                                            0}}</a></p>
+                                </div>
+                                <div class="body-list">
+                                    <h4>Charge Corrections Added</h4>
+                                    <p>{{finalReviewData?.ChargeCorrectionsCount ?
+                                        finalReviewData?.ChargeCorrectionsCount : 0}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-box-res box-2">
+                        <div class="review-box">
+                            <div class="review-header">
+                                <h2>Distributions</h2>
+                            </div>
+                            <div class="review-body">
+                                <div class="body-list">
+                                    <h4>Distributed Charges</h4>
+                                    <p><a (click)="redirectTo('DistributedCharges')" class="hover-link">$
+                                            {{finalReviewData?.DistributedCharges ? finalReviewData?.DistributedCharges
+                                            :
+                                            0}}</a></p>
+                                </div>
+                                <div class="body-list">
+                                    <h4>Distribution Rules Run</h4>
+                                    <p>{{finalReviewData?.DistributionRuleCount ? finalReviewData?.DistributionRuleCount
+                                        : 0}}
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-box-res box-3">
+                        <div class="review-box">
+                            <div class="review-header">
+                                <h2>Things Added</h2>
+                            </div>
+                            <div class="review-body">
+                                <div class="body-list">
+                                    <h4>VBA(s) Added</h4>
+                                    <p><a class="hover-link"
+                                            (click)="redirectTo('VendorBillingAliasCount')">{{finalReviewData?.VendorBillingAliasCount
+                                            ? finalReviewData?.VendorBillingAliasCount : 0}}</a></p>
+                                </div>
+                                <div class="body-list">
+                                    <h4>Charge Codes Added</h4>
+                                    <p><a class="hover-link"
+                                            (click)="redirectTo('ChargeCodeCount')">{{finalReviewData?.ChargeCodeCount ?
+                                            finalReviewData?.ChargeCodeCount : 0}}</a></p>
+                                </div>
+                                <div class="body-list">
+                                    <h4>Vendor Products Added</h4>
+                                    <p><a class="hover-link"
+                                            (click)="redirectTo('VendorProductCount')">{{finalReviewData?.VendorProductCount
+                                            ?
+                                            finalReviewData?.VendorProductCount : 0}}</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-box-res box-4">
+                        <div class="review-box">
+                            <div class="review-header">
+                                <h2>Things to Note </h2>
+                            </div>
+                            <div class="review-body things-note-body">
+
+                                <div class="body-list">
+                                    <h4>Time in Sandbox Before Pending:</h4>
+                                    <p>{{finalReviewData?.NoOfDaysSecondsInSandboxBeforePending}}</p>
+                                </div>
+                                <div class="body-list">
+                                    <h4>Total Time in Sandbox:</h4>
+                                    <p>{{finalReviewData?.NoOfDaysSecondsInSandbox}}</p>
+                                </div>
+                                <div class="body-list">
+                                    <h4>Time in Data Issue:</h4>
+                                    <p>{{finalReviewData?.DataIssueSecondsInSandbox}}</p>
+                                </div>
+                                <div class="body-list">
+                                    <h4>Rep Name:</h4>
+                                    <p>{{finalReviewData?.RepName ? finalReviewData?.RepName : ''}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- <div class="note-section my-3">
+        <div class="col-sm-12 col-xl-12 px-0">
+            <mat-accordion class="example-headers-align review-accordian">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header class="math borderc">
+                        <mat-panel-title>
+                            <i class="ficon fas fa-tools"></i>&nbsp;Things to Note
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="things-note">
+                        <div class="row">
+                            <div class="things-note-data-left">
+                                <ul>
+                                    <li>Time in Sandbox Before Pending:
+                                        {{finalReviewData?.NoOfDaysSecondsInSandboxBeforePending}}</li>
+                                    <li>Total Time in Sandbox: {{finalReviewData?.NoOfDaysSecondsInSandbox}}</li>
+                                    <li>Time in Data Issue: {{finalReviewData?.DataIssueSecondsInSandbox}}</li>
+                                    <li>Rep Name: {{finalReviewData?.RepName ? finalReviewData?.RepName : ''}}</li>
+                                </ul>
+                            </div>
+
+                            <div class="c-justify-center-res things-note-data-right"
+                                *ngIf="finalReviewData?.WithinSLADays">
+                                <div class="things-within d-flex">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <h5>Within SLA</h5>
+                                </div>
+                            </div>
+
+                            <div class="c-justify-center-res things-note-data-right"
+                                *ngIf="!finalReviewData?.WithinSLADays">
+                                <div class="things-within d-flex">
+                                    <i class="fas fa-thumbs-up c-down"></i>
+                                    <h5>Outside of SLA</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div> -->
+
+    <!-- <div class="row">
+        <div class="col-12 px-0">
+            <mat-card class="accordion-grid pb-0 px-0">
+                <mat-card-content>
+
+                    <mat-accordion class="example-headers-align">
+                        <div>
+
+                            <app-invoice-summary-p-table [fromPage]="'step7'" [recordPublishedOrCompleted]="recordPublishedOrCompleted"
+                                [sandBoxGridRowData]="sandBoxGridRowData"></app-invoice-summary-p-table>
+
+                        </div>
+                    </mat-accordion>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div> -->
+
+
+    <!-- <div class="text-center">
+        <button [ngClass]="{'disabled': recordPublishedOrCompleted}"
+            *ngIf="sandBoxGridRowData?.SandboxStatus !== 'PUBLISHED'" type="submit" class="btn btn-primary btn-raised"
+            (click)="publish()">Publish</button>
+        <button *ngIf="sandBoxGridRowData?.SandboxStatus === 'PUBLISHED'" type="submit"
+            class="btn btn-danger btn-raised" [disabled]="isShowspinner || !isAllowSuperTem" (click)="unPublish()">
+            <span class="spinner-border spinner-border-sm mr-2" *ngIf="isShowspinner"></span>
+            Unpublish</button>
+    </div> -->
+</div>

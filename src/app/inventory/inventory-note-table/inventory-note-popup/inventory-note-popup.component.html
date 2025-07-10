@@ -1,0 +1,223 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Add Inventory Note</h5>
+    </div>
+
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="card-body py-0">
+        <div class="container px-0">
+            <form class="editForm px-0" [formGroup]="addInventoryForm">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0">
+                        <div class="col-sm-12 col-xl-12 text-right pr-0">
+                            <span class="text-c-red">*Required field</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                                <div class="form-group">
+                                    <label class="form-label">Note *</label>
+                                    <textarea class="form-control textarea-full-section" rows="4"
+                                            formControlName="noteText" maxlength="1000"
+                                            spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                            [ngClass]="{'invalid-error': f.noteText.invalid && (f.noteText.touched || isSubmit)}"></textarea>
+                                    <span class="textarea-error-span" style="position: relative;">
+                                        <mat-error style="font-size: 12px; position: absolute;" class="textarea-error-disc"
+                                            *ngIf="f.noteText.errors?.required && (f.noteText.touched || isSubmit) ">
+                                            Note is required</mat-error>
+                                        <span style="text-align: end;color: gray;">{{f.noteText.value.length ? f.noteText.value.length : 0 }}/1000</span>    
+                                    </span>        
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group" style="margin-bottom: 0 !important;">
+                                            <div>
+                                                <label class="form-label">Note Type</label>&nbsp;
+                                                <mat-radio-group class="m-l-8" formControlName="privateNote">
+                                                    <mat-radio-button [value]="false">Public
+                                                    </mat-radio-button>
+                                                    <mat-radio-button [value]="true" class="m-l-10">Private
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                            <mat-error style="font-size: 12px; position: relative; top: -10px;"
+                                                *ngIf="f.privateNote.errors?.required && (f.privateNote.touched || isSubmit) ">
+                                                Note Type is required</mat-error>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <div>
+                                                <label class="form-label">Note Status</label>&nbsp;
+                                                <mat-radio-group class="m-l-8" formControlName="active">
+                                                    <mat-radio-button [value]="true">Active
+                                                    </mat-radio-button>
+                                                    <mat-radio-button [value]="false" class="m-l-10">Inactive
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                            <mat-error style="font-size: 12px; position: relative; top: -10px;"
+                                                *ngIf="f.active.errors?.required && (f.active.touched || isSubmit) ">
+                                                Note Status is required</mat-error>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-xl-12 px-0  mb-3">
+                                <button class="btn btn-primary atc-btn mr-2" (click)="openFileUpload()">Add
+                                    Attachment</button>
+                                <span>{{selectedFileName}}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="row py-3">
+                            <div class="col-md-12 col-xl-12 px-0 text-center  mb-3">
+                                <button mat-button class="btn btn-primary" (click)="saveInventory()"
+                                    [disabled]="saveButtonDisabled">
+                                    <span class="spinner-border spinner-border-sm" role="status"
+                                        *ngIf="saveButtonDisabled"></span>Save</button>
+                            </div>
+                        </div>
+
+
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="true">
+                                <mat-expansion-panel-header class="math borderc">
+                                    <mat-panel-title>
+                                        Inventory
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Service Number</label>
+                                            <span><input class="form-control" formControlName="serviceNumber"
+                                                    disabled></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Parent Service Number</label>
+                                            <span class="pr-0"><input class="form-control"
+                                                    formControlName="parentServiceNumber" disabled></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Status</label>
+                                            <span><input class="form-control" formControlName="status" disabled></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Vendor Product</label>
+                                            <span><input class="form-control" formControlName="vendorProductName"
+                                                    disabled></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                                        <div class="form-group">
+                                            <label class="form-label">Vender Product Description</label>
+                                            <span><input class="form-control" formControlName="vendorProductDescription"
+                                                    readonly></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Service</label>
+                                            <span><input class="form-control" formControlName="serviceName"
+                                                    readonly></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Service Type</label>
+                                            <span class="pr-0"><input class="form-control" formControlName="serviceType"
+                                                    readonly></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Product</label>
+                                            <span><input class="form-control" formControlName="productName"
+                                                    disabled></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Product Type</label>
+                                            <span class="pr-0"><input class="form-control" formControlName="productType"
+                                                    disabled></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Charge Code Display Name</label>
+                                            <span><input class="form-control" formControlName="chargeCodeDisplayName"
+                                                    disabled></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Charge Code Type</label>
+                                            <span class="pr-0"><input class="form-control"
+                                                    formControlName="chargeTypeName" disabled></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Charge Type</label>
+                                            <span><input class="form-control" formControlName="chargeCodeTypeName"
+                                                    disabled></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Charge Code Occurrence</label>
+                                            <span class="pr-0"><input class="form-control"
+                                                    formControlName="chargeCodeOccurance" disabled></span>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

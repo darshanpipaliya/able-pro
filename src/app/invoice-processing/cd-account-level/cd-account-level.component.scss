@@ -1,0 +1,215 @@
+.math {
+    background: #80808061 !important;
+    min-height: 40px;
+    height: auto;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+    margin-left: 15px;
+}
+
+button.close {
+    position: relative;
+    top: -10px;
+    right: -6px;
+    color: unset;
+}
+.mat-expansion-panel {
+    box-shadow: none;   
+}
+
+.change-log-sec-multi .mat-expansion-panel{
+    border: 1px solid #cfcfcf;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+
+.inventory-sel-accordion-left-btn {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    content: '';
+    top: 4px;
+    left: 10px;
+    z-index: 1;
+    button.fas.fa-check.c-refresh {
+        border: 0;
+        background: transparent;
+        padding: 0;
+    }
+    
+    .fas.fa-check.c-refresh::before {
+        content: '\f021' !important;
+        font-size: 18px;
+        border: 1px solid #4680ff;
+        color: #4680ff;
+        border-radius: 50%;
+        padding: 5px;
+        display: flex;
+        width: 32px;
+        height: 32px;
+        align-items: center;
+        justify-content: center;
+    }
+  
+    .fas.fa-check.c-refresh::after {
+      display: none;
+    }
+
+}
+
+:host ::ng-deep .sandbox-step-grid {
+
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+}
+
+:host ::ng-deep .accordion-toggle-btn-right {
+
+    .inventory-sel-accordion-left-btn {
+        position: absolute;
+        top: 5px;
+        gap: 10px;
+        display: flex;
+        align-items: center;
+
+        button {
+            padding: 4px 12px;
+        }
+    }
+
+    .inventory-sel-accordion-left-btn.step4a {
+        position: absolute;
+        top: 7px;
+        left: 10px;
+        gap: 10px;
+        display: flex;
+        align-items: center;
+
+        button {
+            padding: 2px 6px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+    }
+
+    .toggle-btn {
+        position: absolute;
+        top: 9px;
+        right: 20px;
+
+        .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+            background-color: #6AA84F;
+        }
+
+        .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+            background-color: #fff;
+        }
+    }
+
+    .toggle-btn-5c {
+
+
+        .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+            background-color: #6AA84F;
+        }
+
+        .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+            background-color: #fff;
+        }
+    }
+
+}
+
+:host ::ng-deep .ag-header-select-all .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input,
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    opacity: 1 !important;
+    border-radius: 0.25em !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper::after {
+    opacity: 0 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.charge-detail-toolip{
+    p{
+        margin-bottom: 8px;
+    }
+    p:last-child{
+        margin-bottom: 0;
+    }
+}
+
+:host ::ng-deep .ag-header-cell-text{
+    font-size: 13px !important;
+}
+
+
+@media only screen and (max-width: 1366px) {
+    :host ::ng-deep .show.tooltip {
+        max-width: 770px !important;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    :host ::ng-deep .show.tooltip {
+        max-width: 600px !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+
+    :host ::ng-deep .show.tooltip {
+        max-width: 550px !important;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+
+    :host ::ng-deep .mat-content{
+        margin-top: 40px !important;
+    }
+}

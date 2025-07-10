@@ -1,0 +1,739 @@
+<div class="summary-total-main">
+    <app-invoice-overview-i [fromPage]="'rule-engine'" (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)" [gridRowData]="gridRowData"></app-invoice-overview-i>
+</div>
+<div class="row mx-0">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+        <div class="accordion-grid grid1">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <img src="../../../../../../assets/images/wand-magic-sparkles.svg"
+                                alt="Additional Bill Detail Image">&nbsp;Additional Bill Detail
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="row">
+                        <div class="col-md-12 px-0">
+                            <div class="additional-bill-detail-main">
+                                <table class="table">
+                                    <tr>
+                                        <th class="no">Vendor:</th>
+                                        
+                                        <td class="text-left">
+                                            <h3>Vendor Billing Alias</h3>
+                                            <p>{{additionalBillData?.VendorBillingAliasName}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Parent Vendor</h3>
+                                            <p>{{additionalBillData?.ParentVendorAccountName}}</p>
+                                        </td>
+                                        <!-- <td class="text-left">
+                                            <h3>Vendor</h3>
+                                            <p>{{additionalBillData?.VendorAccountName}}</p>
+                                        </td> -->
+                                        <td class="text-left">
+
+                                        </td>
+                                        
+                                        <td class="text-left">
+                                            <!-- <h3>Charge Code Billing Alias</h3>
+                                            <p>{{additionalBillData?.ChargeCodeVendorBillingAliasName}}</p> -->
+                                        </td>
+                                        <td class="text-left">
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="no">Account:</th>
+                                        <td class="text-left">
+                                            <h3>Payable Account Number</h3>
+                                            <p>{{additionalBillData?.PayableAccountNumber}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Main Account Number</h3>
+                                            <p>{{additionalBillData?.MainAccountNumber}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Sub Account Number</h3>
+                                            <p>{{additionalBillData?.SubAccountNumber}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Service Number</h3>
+                                            <p>{{additionalBillData?.BillingId}}</p>
+                                        </td>
+                                        <td class="text-left">
+
+                                        </td>
+                                    </tr>
+
+                                    <tr class="tr-border-none">
+                                        <th class="no" rowspan="5">Charge:</th>
+                                        <td class="text-left">
+                                            <h3>Charge Code</h3>
+                                            <p>{{additionalBillData?.ChargeCode}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Code Name</h3>
+                                            <p>{{additionalBillData?.ChargeCodeName}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Quantity</h3>
+                                            <p>{{additionalBillData?.Quantity}}</p>
+                                            </td>
+                                    </tr>
+
+                                    <tr class="tr-border-none">
+                                        <td class="text-left">
+                                            <h3>Charge</h3>
+                                            <p>$ {{additionalBillData?.Charges}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Origin</h3>
+                                            <p>{{additionalBillData?.Origin}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Unit of Measure</h3>
+                                            <p>{{additionalBillData?.UnitOfMesurement}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Prorated</h3>
+                                            <p>{{additionalBillData?.Prorated == true ? 'Yes' :'No' }}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Date Range</h3>
+                                            <p>{{additionalBillData?.DateRange}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="tr-border-none">
+                                        <td class="text-left">
+                                            <h3>Charge Code Type </h3>
+                                            <p>{{additionalBillData?.ChargeCodeTypeName}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Type</h3>
+                                            <p>{{additionalBillData?.ChargeTypeName}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Code Occurrence </h3>
+                                            <p>{{additionalBillData?.ChargeCodeOccurrenceName}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="tr-border-none">
+                                        <td class="text-left">
+                                            <h3>Charge Description1</h3>
+                                            <p>{{additionalBillData?.ChargeDescription1}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Description2</h3>
+                                            <p>{{additionalBillData?.ChargeDescription2}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Description3</h3>
+                                            <p>{{additionalBillData?.ChargeDescription4}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Description4</h3>
+                                            <p>{{additionalBillData?.ChargeDescription4}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Description5</h3>
+                                            <p>{{additionalBillData?.ChargeDescription5}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-left">
+                                            <h3>Charge Description6</h3>
+                                            <p>{{additionalBillData?.ChargeDescription6}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Description7</h3>
+                                            <p>{{additionalBillData?.ChargeDescription7}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Description8</h3>
+                                            <p>{{additionalBillData?.ChargeDescription8}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Description9</h3>
+                                            <p>{{additionalBillData?.ChargeDescription9}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Charge Description10</h3>
+                                            <p>{{additionalBillData?.ChargeDescription10}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Distribution:</th>
+                                        <td class="text-left">
+                                            <h3>Charge Location</h3>
+                                            <p>{{additionalBillData?.ChargeLocationType}}</p>
+                                        </td>
+                                        <td class="text-left">
+                                            <h3>Distribution Rule Applied</h3>
+                                            <p>{{additionalBillData?.DistributionRuleName}}</p>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+
+        <div class="d-flex align-items-center add-new-rule-main mt-3" *ngIf="this.clickedRecord.DistributionRuleId !== null">
+            
+            <ng-container *ngIf="distributionForm.get('distributionAccountLocationTypeId').value == 'Vendor Global'; else notVendorGlobal">
+                <h2 class="mb-0 mr-2">This is a Global Rule used by All. You can replace it with a Customer-Specific Rule if it doesn't meet your needs</h2>
+            </ng-container>
+            <ng-template #notVendorGlobal>
+                <h2 class="mb-0 mr-2">This is a Rule specific to your organization. You can replace it with a new Customer-Specific Rule to meet your needs</h2>
+            </ng-template>
+          
+            <i class="fas fa-info-circle mr-2" (click)="openRuleInfoTooltip()" tooltipClass="tooltip-bg"></i>
+            <ng-template #RuleInfo>
+                <div class="mat-dialog-header">
+                    <button type="button" class="close" mat-dialog-close>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="text-left dialog-data">
+                    <p class="mb-2">Replacing this rule will only impact this invoice and future invoices for your organization for this Vendor and Charge Code. The rule will run either once or every time the application encounters the charge code, depending on the rule configuration.</p>
+                    <p class="mb-0">If there are additional published invoices that are still open that require this rule, update those invoices manually. For more information about rules, please contact your Customer Success Manager.</p>
+                </div>
+            </ng-template>
+            <button class="btn btn-primary ml-4" (click)="replaceRule()">Replace Rule</button>
+        </div>
+       
+        <form [formGroup]="distributionForm">
+            <div class="add-new-rule-main mb-2" style="margin-top: 36px;" >
+                <div class="row">
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-12">
+                        <div class="d-flex justify-content-between">
+                            <h2>Rule Conditions</h2>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-12">
+                        <div>
+                            <div class="w-100 add-new-rule-right rule-conditions-wrapper">
+                                <div class="form-group d-flex">
+                                    <div class="tooltip-relative">
+                                        <i class="fas fa-info-circle" (click)="openDialog()"></i>
+                                        <ng-template #DistributionLevel>
+                                            <div class="mat-dialog-header">
+                                                <button type="button" class="close" mat-dialog-close>
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="text-left dialog-data">
+                                                <p class="mb-0"><strong>Distribution Level</strong> is how the rule will
+                                                    be applied AND where the rules are applied in the sequence listed
+                                                    below.  Multiple rules cannot run on a single charge record, the
+                                                    system will only process 1 rule per charge record.</p>
+
+                                                <ol style="list-style-type: lower-alpha;" class="mb-0">
+                                                    <li><strong>Customer Specific</strong> - Rules that are applied to a
+                                                        Specific Customer anywhere when choosing a specific set of
+                                                        value(s) either in Distribution Level or Distribution Method to
+                                                        distribute charges. These value(s) are only present for a
+                                                        particular customer.
+                                                    </li>
+                                                    <li><strong>Customer Global</strong> - Rules that are applied to a
+                                                        Specific Customer but not hold specific value(s) for either
+                                                        Distribution Level or Distribution Method. These rules ONLY
+                                                        affect specific customers that have the specific charge code
+                                                        that the rule applies to.</li>
+                                                    <li><strong>Vendor Global</strong>- Rules that are applied only to
+                                                        Vendor Billing Alias, but we do not hold specific value(s) for
+                                                        either Distribution Level or Distribution Method. These rules
+                                                        affect ALL customers that have the specific charge code from a
+                                                        Vendor Billing Alias that the rule applies to.</li>
+                                                </ol>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+
+                                    <div class="conditions-data-flex">
+                                        <label class="form-label">Distribution Level *</label>
+                                        <mat-radio-group formControlName="distributionAccountLocationTypeId">
+                                            <mat-radio-button [ngClass]="{'m-l-10': i !== 0}"
+                                                *ngFor="let item of distributionLevels; let i = index"
+                                                [value]="item.Type" 
+                                                [disabled]="isVendorGlobalDisabled && item.Type === 'Vendor Global'"
+                                                (change)="changeType(item.Type)">{{item.Type}}
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.distributionAccountLocationTypeId.errors?.required && (f.distributionAccountLocationTypeId.touched || submitted) ">
+                                            Distribution Level is required</mat-error>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group d-flex">
+                                    <div class="tooltip-relative">
+                                        <i class="fas fa-info-circle" tooltipClass="tooltip-bg" (click)="openDisTypeTooltip()"></i>
+                                        <ng-template #DistributionType>
+                                            <div class="mat-dialog-header">
+                                                <button type="button" class="close" mat-dialog-close>
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="text-left dialog-data">
+                                                <p class="mb-1"><strong>Distribution Type</strong> refers to the method used in our formula to allocate costs to Billing ID(s) and/or Vendor Product(s). Some Charge Codes—specifically those with a Charge Code Type of Product, Feature, Usage, or Equipment—must be distributed before assigning a Vendor Product, using <strong>Billing ID Count</strong> or <strong>Billing ID Totals</strong>. Other distribution rules can be applied after a Vendor Product is assigned, using <strong>Vendor Product Totals</strong> as the Distribution Type.</p>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+
+                                    <div class="conditions-data-flex">
+                                        <label class="form-label">Distribution Type *</label>
+                                        <mat-radio-group formControlName="distributionRulesTypeId">
+                                            <mat-radio-button *ngFor="let item of distributionType; let i = index"
+                                                (change)="getDisType()" [ngClass]="{'m-l-10': i !== 0}"
+                                                [value]="item.Type" 
+                                                [disabled]="item.disabled">{{item.label}} {{item.label == '% of Vendor Product' ? ' *' : ''}}
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.distributionRulesTypeId.errors?.required && (f.distributionRulesTypeId.touched || submitted) ">
+                                            Distribution Type is required</mat-error>
+                                        <!-- <mat-radio-group formControlName="distributionRulesTypeId">
+                                            <mat-radio-button></mat-radio-button>
+                                        </mat-radio-group> -->
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group d-flex">
+                                    <div class="tooltip-relative">
+                                        <i class="fas fa-info-circle" tooltipClass="tooltip-bg"
+                                            (click)="openDisOriginTooltip()"></i>
+                                        <ng-template #DistributionOrigin>
+                                            <div class="mat-dialog-header">
+                                                <button type="button" class="close" mat-dialog-close>
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="text-left dialog-data">
+                                                <p class="mb-1"><strong>Distribution Origin</strong> tells the system
+                                                    where to look, in this case the origin account, for the particular
+                                                    charge code that the rule is built against. Basically, where is this
+                                                    charge code showing up on the invoice.</p>
+
+                                                <ol style="list-style-type: decimal;" class="mb-0">
+                                                    <li><strong>Any Account</strong> - Rules with this will look for a
+                                                        specific Charge Code.
+                                                    </li>
+                                                    <li><strong>Any Payable Account</strong> - Rules with this will look
+                                                        for a specific Charge Code that came in on any Payable Account
+                                                        to distribute. This can be used in Distribution Types that are
+                                                        Global. Payable is defined as the account we sent the check for
+                                                        which could be a Main or Sub Account depending on the vendor.
+                                                    </li>
+                                                    <li><strong>Specific Payable Account</strong> - Rules with this will
+                                                        look for a specific Charge Code that came in on a specific
+                                                        Payable Account to distribute. This can only be used with the
+                                                        Distribution Type that is Customer Specific.</li>
+                                                    <li><strong>Any Sub Account</strong> - Rules with this will look for
+                                                        a specific Charge Code that came in on any Sub Account to
+                                                        distribute. This can be used in Distribution Types that are
+                                                        Global.</li>
+                                                    <li><strong>Specific Sub Account</strong> - Rules with this will
+                                                        look for a specific Charge Code that came in on a specific
+                                                        Billing Sub Account to distribute. This can only be used with
+                                                        Distribution Types that are Customer Specific.</li>
+                                                    <li><strong>Any Service Number</strong> - Rules with this will look
+                                                        for a specific Charge Code that came in on any Service Number to
+                                                        distribute. This can be used in Distribution Types that are
+                                                        Global.</li>
+                                                    <li><strong>Specific Service Number</strong> - Rules with this will
+                                                        look for a specific Charge Code that came in on a specific
+                                                        Service Number to distribute. This can only be used with the
+                                                        Distribution Type that is Customer Specific.</li>
+                                                </ol>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                    <div class="conditions-data-flex" style="width: 100%; max-width: 600px;">
+                                        <label class="form-label">Distribution Origin *</label>
+                                        <span><span><p-dropdown formControlName="distributionOriginLevelTypeId"
+                                            appendTo="body" optionLabel="label" [filter]="true"
+                                            placeholder="Select Distribution Origin..." optionValue="Type"
+                                            [options]="matchRecord" (onChange)="changeOrigin($event)"
+                                            [showClear]="false"
+                                            [ngClass]="{'invalid-error': !f.distributionOriginLevelTypeId.valid && (f.distributionOriginLevelTypeId.dirty || f.distributionOriginLevelTypeId.touched || submitted)}">
+                                        </p-dropdown></span></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.distributionOriginLevelTypeId.errors?.required && (f.distributionOriginLevelTypeId.touched || submitted) ">
+                                            Distribution Origin is required</mat-error>
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex">
+                                    <div class="tooltip-relative">
+                                        <i class="fas fa-info-circle" tooltipClass="tooltip-bg"
+                                            (click)="openDisMethodTooltip()"></i>
+                                        <ng-template #DistributionMethod>
+                                            <div class="mat-dialog-header">
+                                                <button type="button" class="close" mat-dialog-close>
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="text-left dialog-data">
+                                                <p class="mb-1"><strong>Distribution Method</strong> tells the system
+                                                    where to distribute the Charge Code for the rule.</p>
+
+                                                <ol style="list-style-type: decimal;" class="mb-0">
+                                                    <li><strong>Payable Account (all inventory/accounts)</strong> - This will distribute the
+                                                        specific Charge Code to all Service Number(s) or Vendor Products
+                                                        in the Payable Account, based on Distribution Type, on a
+                                                        particular invoice. This can be used in Distribution Types that
+                                                        are Global.</li>
+                                                    <li><strong>Origin Account</strong> - This will distribute the
+                                                        specific Charge Code to all Service Number(s) or Vendor
+                                                        Products, based on Distribution Type, that is tied to the
+                                                        account that the charge originated on. This can be used in
+                                                        Distribution Types that are Global.</li>
+                                                    <li><strong>Specific Sub Account</strong> - This will distribute the
+                                                        specific Charge Code to all Service Number(s) or Vendor
+                                                        Products, based on Distribution Type, which are tied to that
+                                                        specific Sub Account This can only be used with Distribution
+                                                        Types that are Customer Specific.</li>
+                                                    <li><strong>Specific Service Number</strong> - This will distribute
+                                                        the specific Charge Code to the specific Service Number(s) or
+                                                        Vendor Products tied to that Service Number based on the
+                                                        Distribution Type selected. This can only be used with
+                                                        Distribution Types that are Customer Specific.</li>
+                                                </ol>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                    <div class="conditions-data-flex" style="width: 100%; max-width: 600px;">
+                                        <label class="form-label">Distribution Method *</label>
+                                        <span><p-dropdown formControlName="distributionMethodTypeId" appendTo="body"
+                                            [options]="matchMethod" optionLabel="label" [filter]="true"
+                                            [ngClass]="{'invalid-error': !f.distributionMethodTypeId.valid && (f.distributionMethodTypeId.dirty || f.distributionMethodTypeId.touched || submitted)}"
+                                            placeholder="Select Distribution Method..." optionValue="Type"
+                                            [showClear]="false" (onChange)="changeMethod($event)">
+                                        </p-dropdown></span>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.distributionMethodTypeId.errors?.required && (f.distributionMethodTypeId.touched || submitted) ">
+                                            Distribution Method is required</mat-error>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row" style="margin-bottom: 30px;" *ngIf="f?.distributionMethodTypeId?.value == 'Specific Billing ID(s)' && f?.distributionAccountLocationTypeId?.value == 'Customer Specific' && f.distributionRulesTypeId.value == 'Vendor Product Totals'">
+                <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12">
+                </div>
+                <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12">
+                    <div class="main-banner-section mb-2">
+                        <div class="table-responsive">
+                            <div class="demo2 main">
+                                <nav mat-tab-nav-bar>
+                                    <span style="display: table-cell !important;">
+                                        <span style="display: table-cell !important;">
+                                            <span mat-tab-link [active]="selected === 0" (click)="clickMainTab(0)">
+                                                <i class="fas fa-network-wired" style="color: #4680ff;"></i>&nbsp;
+                                                Select Service Numbers on Invoice
+                                            </span>
+                                            <span mat-tab-link [active]="selected === 1" (click)="clickMainTab(1)">
+                                                <i class="fas fa-network-wired" style="color: #4680ff;"></i>&nbsp;
+                                                Select Vendor Products from Vendor
+                                            </span>
+                                        </span>
+                                    </span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="validate-summary-total-right accordion-grid" >
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel style="width: 100%;" [expanded]="true" *ngIf="selected === 0">
+                                <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" 
+                                (click)="changeMethod({ value: distributionDetail.DistributionRule.DistributionRulesXOptions.DistributionMethodType.Type }, true)"></button>
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title class="matt">
+                                        <i class="ficon fas fa-tools"></i>&nbsp;Select Service Numbers on Invoice
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <i class="fas fa-info-circle grid-tooltip" (click)="BillingIDInvoiceTooltip()"
+                                tooltipClass="tooltip-bg"></i>
+                            <ng-template #BillingIDInvoice>
+                                <div class="mat-dialog-header">
+                                    <button type="button" class="close" mat-dialog-close>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="text-left dialog-data">
+                                    <p class="mb-2">Select Service Number from both the "Select from Invoice" tab and the "Select from Inventory" tabs for your rule.</p>
+
+                                    <p class="mb-0">By opting to include Service Numbers from the inventory that aren't listed on the invoice for a distribution rule, those Service Numbers will be appended to the invoice. Subsequently, they will be allocated a distribution from either the account or another Service Number in accordance with the Distribution Rule. This allows the customer to see the charges on the Service Number's they represent vs the Vendors lump sum bill.</p>
+                                </div>
+                            </ng-template>
+                                <div class="row">
+                                    <div class="col-md-12 px-0">
+                                        <ng-container style="height: max-content;">
+                                            <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs"
+                                                [treeData]="true" [rowData]="rowData" [rowSelection]="rowSelection"
+                                                [getDataPath]="getDataPath" [pageName]="'billingid'"
+                                                [autoGroupColumnDef]="autoGroupColumnDef"
+                                                (onSelectionChangedEvent)="onSelectionChangedBillingid($event)"
+                                                [sheetName]="'Select Sub Account'"
+                                                [exportFilename]="'Select Sub Account.xlsx'"
+                                                [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                                                [singleClickEdit]="true">
+                                            </app-ag-grid-table>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel >
+                        </mat-accordion>
+
+                        <app-inventory-service-number [selectedNodes]="selectedInventoryData" *ngIf="selected === 1" [gridRowData]="gridRowData" (selectedRowsEmit)="onSelectionChanged2($event)" (gridRecords)="onGridRecords($event)">
+                        </app-inventory-service-number>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grid Section Start second -->
+            <div *ngIf="f?.distributionMethodTypeId?.value == 'Specific Subaccount' && f?.distributionAccountLocationTypeId?.value == 'Customer Specific'" class="row mx-0" style="margin-bottom: 30px;">
+                <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12">
+                </div>
+                <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 px-0">
+                    <div class="accordion-grid">
+                        <div>
+                            <mat-accordion class="example-headers-align">
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                    <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" 
+                                    (click)="changeMethod({ value: distributionDetail.DistributionRule.DistributionRulesXOptions.DistributionMethodType.Type }, true)"></button>
+                                    <mat-expansion-panel-header class="math">
+                                        <mat-panel-title class="matt">
+                                            <i class="ficon fas fa-tools"></i>&nbsp;Select Sub Account(s)
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="row">
+                                        <div class="col-md-12 px-0">
+                                            <ng-container style="height: max-content;">
+                                                <app-ag-grid-table [excelBtnEnable]="true"
+                                                    [columnDefs]="columnSubAccount" [rowData]="rowData2"
+                                                    [rowSelection]="rowSelection" [pageName]="'distribution'"
+                                                    (onSelectionChangedEvent)="onSelectionChanged($event)"
+                                                    [sheetName]="'Select Sub Account'"
+                                                    [exportFilename]="'Select Sub Account.xlsx'"
+                                                    [defaultColDef]="defaultColDef"
+                                                    [gridOptions]="gridOptions"
+                                                    [sideBar]="sideBar" [singleClickEdit]="true">
+                                                </app-ag-grid-table>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Grid Section End second -->
+
+
+            <div class="add-new-rule-main">
+                <div class="row">
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-12">
+                        <div class="d-flex justify-content-between">
+                            <h2>Save Rule</h2>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-12">
+                        <div>
+                            <div class="w-100 add-new-rule-right">
+
+                                <div class="save-rule-flex">
+                                    <label class="form-label">Vendor</label>
+                                    <h6 style="font-weight: 400;">{{additionalBillData?.ParentVendorAccountName}}</h6>
+                                </div>
+                                <div class="save-rule-flex">
+                                    <label class="form-label">VBA</label>
+                                    <h6 style="font-weight: 400;">{{additionalBillData?.VendorBillingAliasName}}</h6>
+                                </div>
+                                <div class="save-rule-flex mb-2">
+                                    <label class="form-label">Charge Code</label>
+                                    <h6 style="font-weight: 400;">{{additionalBillData?.ChargeCode}}</h6>
+                                </div>
+
+
+                                <div class="form-group d-flex">
+                                    <!-- <div class="tooltip-relative">
+                                        <i class="fas fa-info-circle" [placement]="'right'" tooltipClass="tooltip-bg"
+                                            [ngbTooltip]="DistributionRuleName"></i>
+                                        <ng-template #DistributionRuleName>
+                                            <div class="text-left">
+                                                <p class="mb-1">Distribution Rule Name Tooltip</p>
+                                            </div>
+                                        </ng-template>
+                                    </div> -->
+
+                                    <div class="conditions-data-flex">
+                                        <label class="form-label" style="margin-left: 15px;">Distribution Rule Name *</label>
+                                        <div class="save-rule-flex">
+                                            <h6 style="font-weight: 400;" *ngIf="displayRule">
+                                                {{displayRule}}
+                                            </h6>
+                                            <h6 style="font-weight: 400;" *ngIf="!displayRule">
+                                                {{disType}}{{this.f?.distributionAccountLocationTypeId?.value ? '/'+
+                                                this.f?.distributionAccountLocationTypeId?.value :
+                                                ''}}{{ selectedOrigin ? '/'+ selectedOrigin:''}}{{selectedMethod ? '/' + selectedMethod :
+                                                ''}}{{'/' + additionalBillData?.ChargeCodeName}}{{
+                                                additionalBillData?.VendorAccountName ?
+                                                '/'+additionalBillData?.VendorAccountName : ''}}{{
+                                                f?.distributionAccountLocationTypeId?.value == "Customer Specific" ||
+                                                f?.distributionAccountLocationTypeId?.value == "Customer Global" ? '/' +
+                                                additionalBillData?.CustomerAccountName : '' }}
+                                                </h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="add-new-rule-right save-rule-wrapper">
+                                    <div class="form-group">
+                                        <label class="form-label">Rule Status *</label>
+                                        <mat-radio-group formControlName="ruleStatus">
+                                            <mat-radio-button [value]="true">Active
+                                            </mat-radio-button>
+                                            <mat-radio-button [value]="false" class="m-l-10">Inactive
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.ruleStatus.errors?.required && (f.ruleStatus.touched || submitted) ">
+                                            Rule Status is required</mat-error>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Rule Option *</label>
+                                        <mat-radio-group formControlName="ruleOption">
+                                            <mat-radio-button [value]="'monthly'">Monthly
+                                            </mat-radio-button>
+                                            <mat-radio-button [value]="'one-time'" class="m-l-10">One-time
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                        <mat-error style="font-size: 12px;"
+                                            *ngIf="f.ruleOption.errors?.required && (f.ruleOption.touched || submitted) ">
+                                            Rule Option is required</mat-error>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary btn-raised" [disabled]="saveButtonLoadder || isDisableSave || isDisableRule" (click)="formSubmit()">
+                    <span class="spinner-border spinner-border-sm mr-2" *ngIf="saveButtonLoadder"></span>
+                    Save</button>
+            </div>
+
+             <!-- Change Log Section Start -->
+         <mat-accordion class="example-headers-align change-log-sec-multi">
+            <mat-expansion-panel style="width: 100%; margin: 10px 0 0 !important;" [expanded]="true" [disabled]="true"
+              class="padding-none">
+              <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getDistributionChangelog()"></button>
+              <mat-expansion-panel-header class="math">
+                <mat-panel-title class="matt">
+                  <img src="../../../../../../assets/images/fa-sharp-fas-fa-swap.svg"
+                    alt="Change Log Image">&nbsp;Distribution Rule Change Log
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <ng-container *ngIf="loadChangelog">
+                <div class="col-md-12 col-sm-12 col-xl-12 padding-1-3 padding-1-3-wireline shimmer-res">
+                  <div class="line shimmer"></div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xl-12 padding-3-3 padding-3-1-wireline shimmer-res">
+                  <div class="line shimmer"></div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xl-12 padding-1-3 padding-1-3-wireline shimmer-res">
+                  <div class="line shimmer"></div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xl-12 padding-3-3 padding-3-1-wireline shimmer-res">
+                  <div class="line shimmer"></div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xl-12 padding-1-3 padding-1-3-wireline shimmer-res">
+                  <div class="line shimmer"></div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xl-12 padding-3-3 padding-3-1-wireline shimmer-res">
+                  <div class="line shimmer"></div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!loadChangelog">
+                <div class="tbData">
+                    <p-table [columns]="columns" [tableStyle]="{ 'width': '100%' }" [value]="tableData">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                            <th *ngFor="let col of columns">
+                                {{ col.header }}
+                            </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-data let-columns="columns">
+                            <tr>
+                                <td>
+                                    {{ data.Status }}
+                                </td>
+                                <td>
+                                    {{ data.DistrubationLevel }}
+                                </td>
+                                <td>
+                                    {{ data.DistributionRulesType }}
+                                </td>
+                                <td>
+                                    {{ data.DistributionOrigin }}
+                                </td>
+                                <td>
+                                    {{ data.DistributionMethodType }}
+                                </td>
+                                <td>
+                                    {{ data.DistributionRulesOption }}
+                                </td>
+                                <td>
+                                    {{ data.mainAccount }}
+                                </td>
+                                <td>
+                                    {{ data.SubAccount }}
+                                </td>
+                                <td>
+                                    {{ data.BillingId }}
+                                </td>
+                                <td>
+                                    {{ convertToDateTime(data.datetime) }}
+                                </td>
+                                <td>
+                                    {{ data.Who }}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <!-- Change Log Section End -->
+        </form>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="container-fluid">
+        <div class="card-body">
+            <form [formGroup]="addProductForm">
+                <div class="col-md-12 col-sm-12 col-xl-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Industry</label>
+
+                                <span><p-dropdown [options]="industries" optionLabel="Name"
+                                    [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select industry..."
+                                    formControlName="industryId" optionValue="Id" [showClear]="false" appendTo="body"
+                                    [ngClass]="{'invalid-error': !f.industryId.valid && (f.industryId.dirty || f.industryId.touched || isProductFormSubmit)}"
+                                    >
+                                </p-dropdown></span>
+    
+                                <ng-container
+                                    *ngIf="f.industryId.invalid && (f.industryId.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.industryId.errors.required">Industry is required
+                                    </mat-error>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Service</label>
+
+                                <span><p-dropdown [options]="services" optionLabel="Name"
+                                    [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select Service..."
+                                    formControlName="serviceId" optionValue="Id" [showClear]="false" appendTo="body"
+                                    [ngClass]="{'invalid-error': !f.serviceId.valid && (f.serviceId.dirty || f.serviceId.touched || isProductFormSubmit)}"
+                                    >
+                                </p-dropdown></span>
+    
+                                <ng-container
+                                    *ngIf="f.serviceId.invalid && (f.serviceId.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.serviceId.errors.required">Service is required
+                                    </mat-error>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Service Type</label>
+                                <span><p-dropdown [options]="serviceTypes" optionLabel="Name"
+                                    [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select Service..."
+                                    formControlName="serviceTypeId" optionValue="Id" [showClear]="false" appendTo="body"
+                                    [ngClass]="{'invalid-error': !f.serviceTypeId.valid && (f.serviceTypeId.dirty || f.serviceTypeId.touched || isProductFormSubmit)}"
+                                    >
+                                </p-dropdown></span>
+    
+                                <ng-container
+                                    *ngIf="f.serviceTypeId.invalid && (f.serviceTypeId.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.serviceTypeId.errors.required">Service Type is required
+                                    </mat-error>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Product</label>
+
+                                <span><p-dropdown [options]="products" optionLabel="Name"
+                                    [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select Product..."
+                                    formControlName="productId" optionValue="Id" [showClear]="false" appendTo="body"
+                                    [ngClass]="{'invalid-error': !f.productId.valid && (f.productId.dirty || f.productId.touched || isProductFormSubmit)}"
+                                    >
+                                </p-dropdown></span>
+    
+                                <ng-container
+                                    *ngIf="f.productId.invalid && (f.productId.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.productId.errors.required">Product is required
+                                    </mat-error>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Product Type</label>
+
+                                <span><p-dropdown [options]="productTypes" optionLabel="Name"
+                                    [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select Product Type..."
+                                    formControlName="productTypeId" optionValue="Id" [showClear]="false" appendTo="body"
+                                    [ngClass]="{'invalid-error': !f.productTypeId.valid && (f.productTypeId.dirty || f.productTypeId.touched || isProductFormSubmit)}"
+                                    >
+                                </p-dropdown></span>
+    
+                                <ng-container
+                                    *ngIf="f.productTypeId.invalid && (f.productTypeId.touched || isProductFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.productTypeId.errors.required">Product Type is required
+                                    </mat-error>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="py-3" align="end">
+    <button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>
+    <button mat-button (click)="saveProduct()" class="btn btn-primary" cdkFocusInitial>Save</button>
+</mat-dialog-actions>

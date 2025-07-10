@@ -1,0 +1,100 @@
+* {
+    box-sizing: border-box;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+button.close {
+    position: relative;
+    top: -10px;
+    right: -6px;
+    color: unset;
+}
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+.btn.btn-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.summary-total-main {
+    padding: 20px 0 0;
+}
+
+.fa.fa-thumb-tack.c-sparkles-icon:before {
+    content: '\f890' !important;
+    font-family: "Font Awesome 6 Sharp";
+    display: block;
+    font-weight: 400;
+    font-size: 30px;
+    right: 0;
+    top: 10px;
+    color: #4680ff;
+}
+
+:host ::ng-deep .accordion-grid {
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            // height: 400px !important;
+            height: calc(100vh - 470px) !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .ag-center-cols-viewport .ag-center-cols-container .ag-row .ag-cell {
+    font-size: 12px !important;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+    margin-left: 15px;
+}
+
+@media only screen and (max-width: 991px) {
+    .btn.btn-icon {
+        width: 35px;
+        height: 35px;
+    }
+}

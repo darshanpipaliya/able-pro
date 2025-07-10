@@ -1,0 +1,31 @@
+<div class="mat-dialog-header pb-3">
+    <!-- <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button> -->
+    <h5 class="modal-title text-c-blue">Upload Invoice</h5>
+    <i class="fas fa-times" type="button" [mat-dialog-close]="close"></i>
+</div>
+<div class="row mt-1">
+    <div class="col-sm-12 px-0">
+        <div>
+            <p class="text-c-blue">
+                Use this page to upload the invoice for this retrieval record. Select "Browse" to locate and select the
+                invoice file. Click the "Upload" button to
+                initiate the upload.
+            </p>
+        </div>
+        <div class="mt-2">
+           
+            <p-fileUpload #uploader name="upload-invoice" [showCancelButton]="false" [chooseLabel]="'Browse'"
+            (onSelect)="onUpload($event)" [multiple]="false" [showUploadButton]="false" (onRemove)="onRemove()">
+        </p-fileUpload>
+            <ng-container>
+                <div class="text-center m-t-20">
+                    <button class="btn btn-primary" (click)="uploadInvoice()" [disabled]="saveButtonDisabled || selectedFiles.length == 0">
+                        <span *ngIf="saveButtonDisabled" class="spinner-border spinner-border-sm mr-2" role="status"></span>
+                        Upload</button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

@@ -367,7 +367,7 @@
                         
                         <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefsDataRe"
                           [frameworkComponents]="frameworkComponents" [rowData]="gridData" [rowSelection]="rowSelection"
-                          [suppressRowClickSelection]="true" [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                          [defaultColDef]="defaultColDef" [sideBar]="sideBar" [gridOptions]="gridOptions"
                           [singleClickEdit]="true" (onCellDoubleClickedEvent)="EditRetrievalFile($event.data)">
                         </app-ag-grid-table>
                       </div>

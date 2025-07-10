@@ -32,10 +32,6 @@ const routes: Routes = [
     path: 'cost-center-structure',
     component: CostCenterStructureModuleComponent
   },
-  {
-    path: 'invoice',
-    component: CostCenterStructureModuleComponent
-  },
 ];
 
 @NgModule({

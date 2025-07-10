@@ -1,0 +1,135 @@
+:host ::ng-deep .sandbox-step-grid.first {
+    .mat-expansion-panel-body {
+        ag-grid-angular {
+            max-height: 151px;
+        }
+    }
+}
+
+:host ::ng-deep .sandbox-step-grid {
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.font-large {
+    font-size: larger;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+// :host ::ng-deep .ag-center-cols-viewport .ag-center-cols-container .ag-row .ag-cell {
+//     font-size: 12px !important;
+// }
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    z-index: 100;
+    right: 40px;
+    top: 13px;
+    font-size: 14px;
+}
+
+.grid-save-section {
+    position: relative;
+}
+
+.record-count-text {
+    position: absolute;
+    top: -8px;
+    right: 24px;
+}
+
+:host ::ng-deep .ag-header-cell-text {
+    font-size: 13px !important;
+}
+
+.btn.btn-icon.service-tab-btn {
+    position: absolute;
+    content: '';
+    width: 32px;
+    height: 32px;
+    top: 4px;
+    left: 10px;
+    z-index: 1;
+}
+
+@media only screen and (max-width: 600px) {
+    .record-count-text {
+        right: 0;
+    }
+}
+
+:host ::ng-deep span.ag-overlay-no-rows-center {
+    position: absolute !important;
+    top: 50% !important;
+    margin-top: 35px !important;
+}
+
+button.fas.fa-check.c-refresh {
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  .fas.fa-check.c-refresh::before {
+    content: '\f021' !important;
+    font-size: 16px;
+    border: 1px solid #4680ff;
+    color: #4680ff;
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fas.fa-check.c-refresh-speed.disabled {
+    pointer-events: unset !important;
+
+    &:hover::before {
+        color: #4680ff !important;
+        background-color: transparent !important;
+    }
+}

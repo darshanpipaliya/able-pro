@@ -1,0 +1,298 @@
+<app-card cardTitle="">
+
+    <form class="editForm">
+        <div class="">
+            <div class="col-sm-12">
+                <mat-accordion class="example-headers-align">
+                    <div class="row fb fb2 ">
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="ficon fas fa-box-open"></i>&nbsp;Vendor Product Charge Code Group
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+
+                            <div class="row m-t-20">
+                                <div class="col-md-12">
+                           
+                                    <ng-container *ngIf="rowData && rowData.length === 0 && !stopSpinner">
+                                        <div class="spinner-border text-primary c-table-spinner" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="rowData && rowData.length > 0 || stopSpinner">
+                                        
+                                        <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData"
+                                            [sheetName]="'ChargeCode list'" [exportFilename]="'ChargeCode list.xlsx'"
+                                            [rowSelection]="rowSelection" [suppressRowClickSelection]="true"
+                                            [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true"
+                                            (onCellClickedEvent)="onCellClicked($event)"
+                                            (onCellDoubleClickedEvent)="onChargeCodeCellDoubleClicked($event)"
+                                            (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                        </app-ag-grid-table>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+            </div>
+
+            <div class="col-sm-12 col-xl-12 col-md-12 ">
+
+                <mat-accordion class="example-headers-align">
+                    <div class="row fb fb2">
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="ficon fas fa-box-open"></i>&nbsp;Vendor Product
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+
+                            <div class="row m-t-20">
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor</label>
+                                        <p-dropdown [(ngModel)]="productData.VendorAccountId" [options]="vendors"
+                                            placeholder="Select Vendor..." [disabled]="!isSuperTEMAdmin && !isSuperTEMManager"
+                                            appendTo="body" optionValue="Id" optionLabel="AccountName"
+                                            [filter]="true" filterBy="AccountName" [showClear]="false">
+                                        </p-dropdown>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor Product Name</label>
+                                        <input type="text" [ngModel]="productData.Name" name="Name" class="form-control"
+                                            placeholder="Enter Vendor Product Name" readonly
+                                            spaceTrimStartEndInput [allowStartWithSpace]="false">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Status</label>
+
+                                        <p-dropdown [(ngModel)]="productData.Status" [options]="statusList"
+                                            placeholder="Select Status..." [disabled]="!isSuperTEMAdmin && !isSuperTEMManager"
+                                            appendTo="body" optionValue="Id" optionLabel="Name"
+                                            [filter]="true" filterBy="Name" [showClear]="false">
+                                        </p-dropdown>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xl-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor Product Description</label>
+                                        <input type="text" [ngModel]="productData.Description" name="Description" class="form-control"
+                                            placeholder="Enter Vendor Product Description"
+                                            spaceTrimStartEndInput [allowStartWithSpace]="false">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Industry</label>
+
+                                        <p-dropdown [(ngModel)]="productData.VendorProductData.IndustryID" [options]="industries"
+                                            placeholder="Select industry..." [disabled]="!isSuperTEMAdmin && !isSuperTEMManager"
+                                            appendTo="body" optionValue="Id" optionLabel="Name"
+                                            [filter]="true" filterBy="Name" [showClear]="false">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Service </label>
+
+                                        <p-dropdown [(ngModel)]="productData.VendorProductData.ServiceID" [options]="services"
+                                            placeholder="Select Service..." [disabled]="!isSuperTEMAdmin && !isSuperTEMManager"
+                                            appendTo="body" optionValue="Id" optionLabel="Name"
+                                            [filter]="true" filterBy="Name" [showClear]="false">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Product </label>
+
+                                        <p-dropdown [(ngModel)]="productData.VendorProductData.ProductId" [options]="products"
+                                            placeholder="Select Product..." [disabled]="!isSuperTEMAdmin && !isSuperTEMManager"
+                                            appendTo="body" optionValue="Id" optionLabel="Name"
+                                            [filter]="true" filterBy="Name" [showClear]="false">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Service Type</label>
+                                        <p-dropdown [(ngModel)]="productData.VendorProductData.ServiceTypeId" [options]="serviceTypes"
+                                            placeholder="Select Service Type..." [disabled]="!isSuperTEMAdmin && !isSuperTEMManager"
+                                            appendTo="body" optionValue="Id" optionLabel="Name"
+                                            [filter]="true" filterBy="Name" [showClear]="false">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xl-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Product Type</label>
+                                        <p-dropdown [(ngModel)]="productData.ProductType.ProductTypeID" [options]="productTypes"
+                                            placeholder="Select product Type Id..." [disabled]="!isSuperTEMAdmin && !isSuperTEMManager"
+                                            appendTo="body" optionValue="Id" optionLabel="Name"
+                                            [filter]="true" filterBy="Name" [showClear]="false">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+
+            </div>
+            <div class="col-sm-12 col-xl-12 col-md-12">
+
+                <mat-accordion class="example-headers-align">
+                    <div class="row fb fb2">
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="ficon fas fa-box-open"></i>&nbsp;Create/Edit Vendor Product Charge Code Group
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+
+                            <div class="col-xl-12 col-md-12 mt-3">
+                                <div class="font-weight-bold f-14">
+                                    Charge Code / Charge Type / Description
+                                </div>
+                                <dual-list [sort]="keepSorted" [source]="source" [key]="key" [display]="display"
+                                    [filter]="filter" [(destination)]="confirmed" height="265px" [format]="format"
+                                    [disabled]="disabled"></dual-list>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+
+            </div>
+            <div class="col-sm-12 col-xl-12 col-md-12">
+
+                <mat-accordion class="example-headers-align">
+                    <div class="row fb fb2">
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="ficon fas fa-box-open"></i>&nbsp;Vendor Product Charge Code Groups
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+
+
+                            <div class="chargecode-group">
+                                <div class="row d-block my-2">
+                                    <div class="col-md-6 col-xl-4 mx-2"
+                                        *ngFor="let ChargeCodeGroup of productData?.VendorProductData?.ChargeCodeGroupVendorProducts.$values">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xl-12 m-t-10 pl-0 text-right">
+                                                <button type="button" (click)="editChargecodegroup(ChargeCodeGroup)"
+                                                    class="btn btn-icon btn-outline-primary" style="height: 30px; width:30px;">
+                                                    <i class="fas fa-edit" style="font-size: 12px;"></i></button>
+                                            </div>
+
+                                            <div class="col-md-12 col-sm-12 col-xl-12 m-t-10">
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-3 text-wrap">
+                                                        <label class="col-form-label">Created By</label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" matInput readonly
+                                                            value="{{ChargeCodeGroup.CreatedByUser.FirstName+' '+ChargeCodeGroup.CreatedByUser.LastName}}"
+                                                            spaceTrimStartEndInput [allowStartWithSpace]="false">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-3 text-wrap">
+                                                        <label class="col-form-label">Created Date</label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" matInput readonly
+                                                            value="{{dateConverter(ChargeCodeGroup.CreationDate)}}"
+                                                            spaceTrimStartEndInput [allowStartWithSpace]="false">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-3 text-wrap">
+                                                        <label class="col-form-label"> Modified By</label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" matInput readonly
+                                                            value="{{(ChargeCodeGroup.ModifiedByUser?.FirstName)?ChargeCodeGroup.ModifiedByUser?.FirstName:''+' '+(ChargeCodeGroup.ModifiedByUser?.LastName)?ChargeCodeGroup.ModifiedByUser?.LastName:''}}"
+                                                            spaceTrimStartEndInput [allowStartWithSpace]="false">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-3 text-wrap">
+                                                        <label class="col-form-label"> Modified Date</label>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" matInput readonly
+                                                            value="{{dateConverter(ChargeCodeGroup.ModificationDate)}}"
+                                                            spaceTrimStartEndInput [allowStartWithSpace]="false">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Status</label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" matInput readonly value=""
+                                                        spaceTrimStartEndInput [allowStartWithSpace]="false">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div class="col-md-12 col-sm-12 col-xl-12 m-t-20">
+                                                <div class="table-responsive chargecode-table">
+                                                    <table class="table table-bordered ">
+                                                        <tr>
+                                                            <th>Charge Code</th>
+                                                            <th>Description</th>
+                                                            <th>Charge Type</th>
+                                                        </tr>
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let ChargeCode of ChargeCodeGroup?.ChargeCodeGroupChargeCodes?.$values">
+                                                                <td>{{ChargeCode.ChargeCode}}</td>
+                                                                <td>{{ChargeCode.Description}}</td>
+                                                                <td>{{ChargeCode.ChargeCodeType}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+
+            </div>
+            <div class="col-sm-12 col-xl-12 col-md-12">
+                <div class="form-group text-center">
+                    <button type="submit" uiSref="work" class="btn sbubtn btn-primary btn-raised"
+                        (click)="addChargeCodeGroup()">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</app-card>

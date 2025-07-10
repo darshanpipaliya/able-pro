@@ -7,6 +7,9 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class ReconService {
     baseUrl = environment.base_url;
+    reconciliationFilter: any;
+    sortModel: any;
+    
     constructor(private http: HttpClient, private urlTools: UrlToolsService) { }
 
     getReconGrid(data: any) {

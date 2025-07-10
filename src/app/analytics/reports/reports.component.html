@@ -1,0 +1,86 @@
+
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12 d-flex px-0 report-header pb-4 header-btn-responsive"
+                        style="flex-wrap: wrap;">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fa fa-chart-bar"></i>&nbsp;Reports
+                        </button>
+                        <select *ngIf="!temRoles" class="custom-select select-width" [(ngModel)]="selectedTem" [ngModelOptions]="{standalone: true}" (change)="onValueChange()">
+                            <option value="all" [disabled]="this.locationService.isDisableTemDD()">All</option>
+                            <option *ngFor="let tem of tems" [value]="tem.Id" [disabled]="this.locationService.isDisableTemDD()">{{tem.AccountName}}</option>
+                        </select>
+                        <button *ngIf="!temRoles" title="Search" class="btn btn-primary" 
+                        (click)="filterCustomerByTEMId()">Search</button>
+                    </div>
+                </div>
+                <div class="main-banner-section">
+                    <div class="row my-3">
+                        <div class="col-12 px-0">
+                            <div class="report-button-group">
+                                <button class="btn" 
+                                [ngClass]="{'btn-primary' : clickTofilterBtn === 'Spend', 'btn-outline-primary' : clickTofilterBtn !== 'Spend' }" 
+                                type="button" (click)="clickTofilter('Spend')">
+                                    <i class="fa fa-dollar-sign" ></i>&nbsp;Spend
+                                </button>
+                                <button class="btn btn-outline-primary" type="button" 
+                                [ngClass]="{'btn-primary' : clickTofilterBtn === 'Inventory', 'btn-outline-primary' : clickTofilterBtn !== 'Inventory' }" 
+                                (click)="clickTofilter('Inventory')">
+                                    <i class="fa fa-tools"></i>&nbsp;Inventory
+                                </button>
+                                <button class="btn btn-outline-primary" type="button" 
+                                [ngClass]="{'btn-primary' : clickTofilterBtn === 'Allocation', 'btn-outline-primary' : clickTofilterBtn !== 'Allocation' }" 
+                                (click)="clickTofilter('Allocation')">
+                                    <i class="fas fa-file-invoice-dollar"></i>&nbsp;Allocation
+                                </button>
+                                <button class="btn btn-outline-primary" type="button" 
+                                [ngClass]="{'btn-primary' : clickTofilterBtn === 'Audit', 'btn-outline-primary' : clickTofilterBtn !== 'Audit' }" 
+                                (click)="clickTofilter('Audit')">
+                                    <i class="fa fa-check-square"></i>&nbsp;Audit
+                                </button>
+                                <button class="btn btn-outline-primary" type="button" 
+                                [ngClass]="{'btn-primary' : clickTofilterBtn === 'Contract', 'btn-outline-primary' : clickTofilterBtn !== 'Contract' }" 
+                                (click)="clickTofilter('Contract')">
+                                    <i class="fas fa-file-lock"></i>&nbsp;Contract
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 px-0">
+                            <mat-accordion class="example-headers-align accordion-grid">
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                    <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getReportFn()"></button>
+                                    <mat-expansion-panel-header class="math">
+                                        <mat-panel-title class="matt font-weight-bold">
+                                            <i class="fa fa-chart-bar"></i>&nbsp;Reports
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="">
+                                        <div class="col-sm-12 mb-15 px-0 ">
+                                            <app-ag-grid-table [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" [rowData]="rowData" [gridOptions]="gridOptions" (onCellDoubleClickedEvent)="onCellDoubleClickedEvent($event)" (filterChanged)="onFilterChanged($event)" (onAgGridReadyEmit)="onGridReady($event)">
+                                            </app-ag-grid-table>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <!-- <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                                    <div class="text-right mt-2 mr-3">
+                                    <span>
+                                        {{girdDataCount}} {{girdDataCount > 1 ? 'records' : 'record'}}
+                                    </span>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

@@ -116,6 +116,12 @@ export class EditInvoiceDataRetrievalComponent implements OnInit {
     { Id: 50, Type: 'CLOUD', DisplayName: 'Cloud (Dropbox, Google Drive, etc.)' }
   ];
 
+  gridOptions = {
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
+  };
   constructor(private fb: FormBuilder,
     public dialog: MatDialog,
     private locationService: LocationService) {
@@ -255,7 +261,7 @@ export class EditInvoiceDataRetrievalComponent implements OnInit {
         filter: 'agTextColumnFilter',
         minWidth: 145,
         flex: 0,
-        cellRenderer: 'NoteRendererComponent',
+        cellRenderer: NoteRendererComponent,
         cellRendererParams: {
           onClick: this.openNote.bind(this)
         }

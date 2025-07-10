@@ -1,0 +1,44 @@
+<div class="summary-total-main">
+    <app-invoice-overview-i [gridRowData]="gridRowData"></app-invoice-overview-i>
+</div>
+<div class="row mx-0">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+        <div class="accordion-grid">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true" class="accordion-header-tooltip-right-arrow">
+                    <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getChargeCodeRules()"></button>
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <img src="../../../../../../../assets/images/Invoices-B-acco-icon.svg" alt="New Charge Codes without a Distribution Rule Image">&nbsp;New Charge Codes without a Distribution Rule
+                        </mat-panel-title>
+                        <i class="fas fa-info-circle" (click)="openDialog()"></i>
+                            <ng-template #tooltipText>
+                                <div class="mat-dialog-header">
+                                    <button type="button" class="close" mat-dialog-close>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                <div class="text-left">
+                                    <p class="mb-0">
+                                        You can distribute certain Charge Codes on the invoice that currently do not have a distribution rule. To add a new rule to Charge Codes eligible for a rule simply select the charge code you want to add a rule to from the grid and the rule engine will allow a add a new rule to this invoice.
+                                    </p>
+                                </div>
+                            </ng-template>
+                    </mat-expansion-panel-header>
+                    
+                    <div class="row">
+                        <div class="col-md-12 px-0">
+                            <ng-container style="height: max-content;">
+                                <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs" [rowData]="rowData" 
+                                   (onCellDoubleClickedEvent)="onCellDoubleClicked($event)" [gridOptions]="gridOptions"
+                                    [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true">
+                                </app-ag-grid-table>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

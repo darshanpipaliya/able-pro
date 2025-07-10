@@ -1,0 +1,193 @@
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+.form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+.form-group label {
+    float: left !important;
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 0 !important;
+    height: unset !important;
+}
+:host ::ng-deep .sandbox-step-grid {
+
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+}
+
+
+.additional-bill-detail-main {
+    background: #ddd;
+    overflow-x: auto;
+
+    table {
+        margin-bottom: 0;
+        h3 {
+            font-size: 14px;
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+            letter-spacing: normal;
+            font-weight: 500;
+            margin-bottom: 0;
+            color: #181d1f;
+            white-space: nowrap;
+        }
+        tr {
+
+            border-right: 1px solid #babfc7;
+            border-bottom: 1px solid #babfc7;
+            border-left: 1px solid #babfc7;
+
+            th {
+                vertical-align: middle;
+                border-top: none;
+                font-size: 18px;
+                padding: 10px 8px;
+            }
+
+            td {
+                border-top: none;
+                padding: 10px 8px;
+            }
+
+            p {
+
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                line-height: 1.2em;
+                padding-top: 2px;
+                margin-bottom: 0;
+            }
+        }
+
+        tr.tr-border-none {
+            border-bottom: none !important;
+        }
+    }
+}
+
+.add-new-rule-main {
+    h2 {
+        font-size: 18px;
+        color: #373a3c;
+        font-weight: 500;
+    }
+
+    .add-new-rule-right .form-label {
+        width: 200px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}
+
+.rule-con-tooltip-position {
+    position: absolute;
+    right: 15px;
+    top: 63px;
+}
+
+.search-charge-code-res .responsive-btn-position .btn.btn-icon {
+    width: 36px;
+    height: 36px;
+}
+
+
+.distribution-method-radio {
+    display: grid;
+    position: relative;
+
+    i.fa-info-circle {
+        position: absolute;
+        bottom: 5px;
+        left: 165px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    p {
+        font-size: 13px !important;
+    }
+
+    .parent-panel-body {
+        padding: 10px;
+    }
+
+    .add-new-rule-main h2,
+    .additional-bill-detail-main th {
+        font-size: 16px !important;
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+    .search-charge-code-res {
+        padding-top: 26px;
+    }
+
+    .search-charge-code-res .responsive-btn-position {
+        position: absolute;
+        top: 5px;
+        text-align: right !important;
+        right: 10px;
+    }
+
+    .search-charge-code-res .responsive-btn-position .btn.btn-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .rule-con-tooltip-position {
+        position: unset;
+    }
+
+    /* Sandbox Step 4 sub 4A CSS Start */
+    .accordion-toggle-btn-right.step4a .mat-expansion-panel-header {
+        align-items: end;
+        padding-bottom: 8px !important;
+    }
+
+
+
+    /* Sandbox Step 4 sub 4A CSS End */
+
+}

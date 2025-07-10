@@ -1,0 +1,25 @@
+.tab-wrapper-section {
+    padding: 20px 0 0;
+}
+
+.fa.fa-eye.c-refresh::before {
+    content: '\f021' !important;
+    font-size: 18px; 
+    border: 1px solid #212121;
+    border-radius: 50%; 
+    padding: 5px; 
+    height: 30px;
+    width: 30px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.fa.fa-eye.c-refresh:hover::before{
+    color: #fff !important;
+    background: #4680ff !important;
+}
+
+.fa.fa-eye.c-refresh::before{
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

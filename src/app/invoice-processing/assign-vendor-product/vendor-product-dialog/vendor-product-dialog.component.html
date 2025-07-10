@@ -1,0 +1,121 @@
+<div class="">
+    <div class="mat-dialog-header pb-3">
+      <h5 class="modal-title text-c-blue">Attention</h5>
+      <i class="fas fa-times" mat-dialog-close></i>
+    </div>
+    <div mat-dialog-content class="pt-3">
+      <div class="container">
+        <div class="row mx-0 px-2 align-items-center">
+          <div class="col-md-12 popup-main-section px-0">
+            <div class="popup-left-icon">
+              <i class="fas fa-question-circle text-c-blue f-70"></i>
+            </div>
+            <div class="popup-right-desc">
+              <ul class="mb-0 p-0 list-unstyled">
+                <li>
+                  <span>{{popupMessage !== '' ? this.popupMessage : 'The Charge Code Group you have created matches a different Vendor Product which is listed below.'}} </span>
+ 
+                 
+                </li>
+              </ul>
+  
+            
+              <div class="vender-pro-title">
+                <span class="text-c-blue" style="font-weight: 500;cursor: pointer;" (click)="redirectVendor()">{{vendorData[0]?.VendorProductName}}</span>
+              </div>
+
+              <mat-accordion
+                    class="example-headers-align ccg-build build-charge-code-group-accordian">
+                    <!-- {{this.userData.GroupName ?  ': ' + this.userData.GroupName : ''}} -->
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true"
+                            class="margin-bottom-none">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="fa fa-layer-group"></i>&nbsp;Charge Code Group {{this.vendorData[0]?.GroupId ?  ': ' + this.vendorData[0]?.GroupId : ''}}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <i class="fas fa-info-circle" (click)="openTooltip()"></i>
+                            <div
+                                class="col-xl-12 col-md-12 build-charge-code-group check-box-size p-table-c">
+                                
+                                <p-table #dtt [value]="rightSideTableArr" [columns]="columnTwo" [resizableColumns]="true" 
+                                selectionMode="multiple" [metaKeySelection]="true" dataKey="ChargeCodeId" tableStyleClass="tableBorder" [(selection)]="selectedCCVRight"
+                                    [styleClass]="'build-charge-code-group-k, tableBorder'">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <!-- <th class="font-p-table-header">
+                                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                            </th> -->
+                                            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" pResizableColumn>
+                                                {{ col.header }} 
+                                                <p-sortIcon *ngIf="col.field !== 'Parent' && col.field !== 'Required' " field="{{col.field}}" > </p-sortIcon> <!-- " -->
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                        <tr >
+                                           
+                                            <td *ngFor="let col of columns">
+                                                <ng-container [ngSwitch]="col.field">
+                                                    <div *ngSwitchCase="'Parent'" >
+                                                        <input type="radio" [checked]="rowData.parent" name="group1" disabled (change)="radioClick(rowIndex)" >
+                                                    </div>
+                                                    <div *ngSwitchCase="'Required'" >
+                                                        <input type="checkbox" [checked]="rowData.selected" (change)="CheckClick(rowIndex)" disabled>
+
+                                                    </div>
+                                                    <div *ngSwitchDefault>{{rowData[col.field]}}</div>
+                                                </ng-container>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="9" class="text-center">No Row To Show</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+    <mat-dialog-actions class="py-3" align="end">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 attention-popup-btn">
+            <button mat-button class="btn px-2 text-c-blue" style="text-decoration: underline;" *ngIf="!isChargeCode"
+                 (click)="onClose()"
+              >{{this.ValidationKey == 'SameGroupWithSameVP' ? 'Please use this' : 'Use Existing Vendor Product'}}</button>
+  
+            <button mat-button class="btn btn-primary" style="color: #fff !important;" [mat-dialog-close]="false"
+              cdkFocusInitial>Close & Review </button>
+          </div>
+          <!-- <div class="col-md-5">
+  
+        </div> -->
+        </div>
+      </div>
+  
+    </mat-dialog-actions>
+  </div>
+
+  <ng-template #htmlContent2>
+    <div class="mat-dialog-header sub-tooltip">
+        <button type="button" class="close" (click)="closeTooltip2()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="text-left cost-center-info-data">
+        <p>
+          Every Charge Code Group must have a designated <b>Parent Charge Code</b>, which is always required to form the Vendor Product. Required Charge Codes within a group indicate that those codes must be included for the system to identify and create the Vendor Product. Other Charge Codes in the group are optional and do not need to be present to identify and create the Vendor Product, though they may be included in some form of the Vendor Product. 
+        </p>
+        <p>
+          If this group is incorrect for the listed Vendor Product, update it by selecting the Vendor Product Name and then selecting the group within the Vendor Product.  After correcting the Charge Code Group on the listed Vendor Product by adding or removing Charge Codes or Deactivating the Group you assign your current invoice.
+        </p>
+    </div>
+</ng-template>

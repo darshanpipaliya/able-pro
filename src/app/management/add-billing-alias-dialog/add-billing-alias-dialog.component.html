@@ -1,0 +1,80 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title" id="exampleModalLabel">Add Vendor Billing Alias</h5>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+    <div class="container-fluid">
+        <div class="card-body">
+            <form [formGroup]="addVendorBillingAliasForm">
+                <div class=" row">
+
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+
+                        <div class="form-group">
+                            <label class="form-label">Vendor </label>
+
+                            <span><p-dropdown [options]="vendorsList" optionLabel="AccountName" [filter]="true"
+                                    filterBy="AccountName" [showClear]="true" placeholder="Select Vendor..."
+                                    formControlName="vendorAccountId" appendTo="body" optionValue="Id"
+                                    [showClear]="false"
+                                    [ngClass]="{'invalid-error': f.vendorAccountId.invalid && (f.vendorAccountId.touched || isFormSubmit)}">
+                                </p-dropdown></span>
+                        </div>
+                        <ng-container *ngIf="f.vendorAccountId.invalid && (f.vendorAccountId.touched || isFormSubmit)">
+                            <mat-error style="font-size: 12px;" *ngIf="f.vendorAccountId.errors.required">Vendor is
+                                required.
+                            </mat-error>
+                        </ng-container>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+                        <div class="form-group">
+                            <label class="form-label">Vendor Billing Alias </label>
+                            <input type="text" class="form-control" formControlName="name" spaceTrimStartEndInput
+                                [allowStartWithSpace]="false">
+                        </div>
+                        <ng-container *ngIf="f.name.invalid && (f.name.touched || isFormSubmit)">
+                            <mat-error style="font-size: 12px;" *ngIf="f.name.errors.required">Vendor Billing Alias
+                                is
+                                required.
+                            </mat-error>
+                        </ng-container>
+                    </div>
+
+
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+
+                        <div class="form-group">
+                            <label class="form-label">Description </label>
+                            <textarea class="form-control" formControlName="description"></textarea>
+                        </div>
+                        <ng-container *ngIf="f.description.invalid && (f.description.touched || isFormSubmit)">
+                            <mat-error style="font-size: 12px;" *ngIf="f.description.errors.required">description is
+                                required.
+                            </mat-error>
+                        </ng-container>
+                    </div>
+                    <div class="col-sm-12 col-xl-12">
+                        <label class="form-label"> Vendor Billing Alias Type </label>
+
+                        <ng-select [items]="aliasType" [multiple]="true" bindLabel="title"
+                            [ngModelOptions]="{standalone: true}" [closeOnSelect]="false" bindValue="value"
+                            [(ngModel)]="selectedAliasType">
+                        </ng-select>
+                        <ng-container *ngIf="selectedAliasType.length<1 &&  isFormSubmit">
+                            <mat-error style="font-size: 12px;">Vendor Billing Alias Type is required
+                            </mat-error>
+                        </ng-container>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="py-3" align="end">
+    <button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>
+    <button mat-button class="btn btn-primary" cdkFocusInitial (click)="saveBillingAlias()">Add Vendor Billing
+        Alias</button>
+</mat-dialog-actions>

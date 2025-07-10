@@ -1,0 +1,57 @@
+.fa-times {
+  float: right;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+  transition: all 0.3s;
+
+  &:hover {
+      opacity: .75;
+  }
+}
+
+.popup-main-section {
+  display: flex;
+  align-items: center;
+}
+
+.popup-left-icon i{
+  font-size: 45px;
+}
+
+.popup-left-icon, .popup-success-icon {
+  width: 60px;
+}
+
+.popup-right-desc {
+  width: calc(100% - 60px);
+}
+
+.mat-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e5e8;
+}
+
+.mat-dialog-content {
+  max-height: calc(85vh - 160px) !important;
+}
+
+.mat-dialog-actions{
+  margin-bottom: 0;
+  min-height: unset;
+}
+
+.attention-popup-btn {
+  text-align: end !important;
+}
+
+.popup-success-icon i{
+  font-size: 40px;
+  color: #4680ff;
+  position: relative;
+  top: -16px;
+}

@@ -1,4 +1,4 @@
-@import '../../../@theme/styles/theme-palette-colors.scss';
+@use '../../../@theme/styles/theme-palette-colors.scss' as *;
 
 .mat-drawer-container {
   .mat-drawer-side {

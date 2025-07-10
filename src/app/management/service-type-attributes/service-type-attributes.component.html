@@ -1,0 +1,92 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row header-btn-responsive">
+                    <ng-container *ngFor="let option of buttonOptions">
+                        <button ngDefaultControl class="bbtn btn btn-outline-primary" type="button"
+                            [ngClass]="(option.value === 'serviceTypeAttributes') ? 'btn btn-primary active round bg' : 'btn round'"
+                            [value]="option.value" (click)="goToPage(option.value)">
+                            <ng-container><i class="fas {{option.icon}}"> </i>
+                            </ng-container>
+                            {{option.label}}
+                        </button>
+                    </ng-container>
+                </div>
+                <div class="col-sm-12 col-xl-12 px-0" id="FixedDiv">
+                    <!-- <div class="container-fluid"> -->
+                    <div class="row p-3">
+
+                        <div class="col-xl-12 col-md-12 py-2 px-0">
+                            <div class="extra-action-button cost-center-btn-justify">
+                                <button title="Add Service Type Attribute" type="button"
+                                    *ngIf="isSuperTEMAdmin"
+                                    class="btnaddl btn btn-icon btn-outline-primary" (click)="serviceTypeAttriPopup()">
+                                    <i class="fas fa-plus"></i></button>
+                                <!-- <button title="Reload" type="button" (click)="getAttributesData()"
+                                            class="btnup btn btn-icon btn-outline-danger m-l-5"><i
+                                                class="fas fa-sync-alt"></i></button> -->
+                            </div>
+                        </div>
+
+
+                        <div class="row row-1 mt-3">
+                            <!-- style="margin-left:5px; margin-right:5px" -->
+
+                            <div class="col-xl-6 col-md-12 all-tab-space"
+                                *ngFor="let serviceTypeAttr of serviceTypeAttriData;let i=index;">
+                                <!-- <app-card cardTitle={{serviceTypeAttr.ServiceType}} [options]="false" [hidHeader]="true"> -->
+                                <mat-accordion class="example-headers-align" multi>
+                                    <div>
+                                        <mat-expansion-panel style="width: 100%;" [expanded]="hidHeader">
+                                            <mat-expansion-panel-header class="math">
+                                                <mat-panel-title
+                                                    style="  font-weight: bold;  margin-left: 33%; margin-right: 0px !important;">&nbsp;{{serviceTypeAttr.ServiceType}}
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="row m-t-20">
+                                                <div class="col-md-12 px-0">
+                                                    <ng-container>
+                                                        <!-- <dual-list [sort]="keepSorted"
+                                                                    [source]="serviceTypeAttr.UnmappedAttributes.$values"
+                                                                    [key]="key" (destinationChange)="destinationChange(i)"
+                                                                    [display]="display" [filter]="filter" [sort]="sort"
+                                                                    [(destination)]="serviceTypeAttr.MappedAttributes.$values"
+                                                                    height="265px" [format]="format" [disabled]="disabled">
+                                                                </dual-list> -->
+
+
+                                                        <app-custom-dual-list [sort]="sort"
+                                                            [source]="serviceTypeAttr.UnmappedAttributes.$values"
+                                                            [key]="key" (destinationChange)="destinationChange(i)"
+                                                            [display]="display" [filter]="filter"
+                                                            [(destination)]="serviceTypeAttr.MappedAttributes.$values"
+                                                            height="265px" [format]="format"
+                                                            [disabled]="disabled"></app-custom-dual-list>
+
+                                                    </ng-container>
+
+                                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                                <!-- </app-card> -->
+                            </div>
+
+
+                            <!-- <div class="col-xl-12 col-md-12 mt-3 text-center">
+                                    <button class="bbtn  btn btn-outline-primary" (click)="saveData()">Save</button>
+                                </div> -->
+                        </div>
+                    </div>
+                    <!-- </div> -->
+                </div>
+
+
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

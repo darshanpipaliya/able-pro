@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="sandbox-step-grid">
+      <mat-accordion class="example-headers-align accordion-header-tooltip-right-arrow">
+        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+          <div class="inventory-sel-accordion-left-btn">
+            <button type="submit" class="btn btn-primary btn-raised" (click)="refresh('click')">Refresh</button>
+            <button type="submit" class="btn btn-primary btn-raised" *ngIf="showNext" (click)="next()">Next</button>
+          </div>
+          <mat-expansion-panel-header class="math">
+            <mat-panel-title class="matt">
+              <!-- <i class="ficon fas fa-puzzle-piece"></i> &nbsp; -->
+              <i class="ficon fas fa-tools"></i>&nbsp;Charges for Distribution
+            </mat-panel-title>
+            <i class="fas fa-info-circle" [placement]="'left'" container="body"
+              ngbTooltip="Invoice Summary to Detail Charge Validation - Payable Account Tooltip"
+              tooltipClass="tooltip-bg" [ngbTooltip]="htmlContent4"></i>
+            <ng-template #htmlContent4>
+              <div class="text-left sandbox-step-1-tooltip-data">
+                <p>In order to publish an invoice to the customer all charges must be balanced to the Amount to Pay.
+                  This means the detailed charges we found in the invoice matches the Amount to Pay. This step will help
+                  you identify any differences in the invoice and add any credits or debits with a charge code in order
+                  to balance the detail with the Amount to Pay.
+                </p>
+                <p class="mb-0">
+                  An after the Amount to Pay means the Past Due Balance has been selected to pay. The difference in the
+                  invoice is based on itemized charges found in the invoice and not the Past Due Balance included.
+                </p>
+              </div>
+            </ng-template>
+
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col-md-12 px-0">
+              <ng-container style="height: max-content;">
+                <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs" [rowData]="rowData"
+                  [sheetName]="'Payable Account'" [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                  [singleClickEdit]="true">
+                </app-ag-grid-table>
+              </ng-container>
+            </div>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

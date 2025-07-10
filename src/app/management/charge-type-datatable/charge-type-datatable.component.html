@@ -1,0 +1,269 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row">
+                    <ng-container *ngFor="let option of buttonOptions">
+                        <button ngDefaultControl class="bbtn  btn btn-outline-primary" type="button"
+                            [ngClass]="(option.value === 'charge') ? 'btn btn-primary active round bg' : 'btn round'"
+                            [value]="option.value" (click)="goToPage(option.value)">
+                            <!---- <ng-container *ngIf="option.value === 'vendors'"><i class="fas fa-gopuram"> </i>
+                            </ng-container>
+                            <ng-container *ngIf="option.value === 'users'"><i class="fas fa-gopuram"> </i>
+                            </ng-container>-->
+                            <ng-container><i class="fas {{option.icon}}"> </i>
+                            </ng-container>
+                            {{option.label}}
+                        </button>
+                    </ng-container>
+                </div>
+
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="selected = $event"
+                        id="charge-type-table-tab">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <b>
+                                    <i class="fas fa-box-open" style="color: #4680ff;"> </i>
+                                    Charge Type</b>
+                            </ng-template>
+
+
+                            <app-ui-modal #gridSystemModal>
+                                <div class="app-modal-header">
+                                    <h5 class="modal-title">Add Product</h5>
+                                    <button type="button" class="close basic-close" data-dismiss="modal"
+                                        aria-label="Close" (click)="gridSystemModal.hide()"><span
+                                            aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="app-modal-body">
+                                    <div class="container-fluid bd-example-row">
+                                        <div class="row">
+                                            <div class="col-md-4">.col-md-4</div>
+                                            <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3 ml-auto">.col-md-3 .ml-auto</div>
+                                            <div class="col-md-2 ml-auto">.col-md-2 .ml-auto</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 ml-auto">.col-md-6 .ml-auto</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                Level 1: .col-sm-9
+                                                <div class="row">
+                                                    <div class="col-8 col-sm-6">
+                                                        Level 2: .col-8 .col-sm-6
+                                                    </div>
+                                                    <div class="col-4 col-sm-6">
+                                                        Level 2: .col-4 .col-sm-6
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="app-modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        (click)="gridSystemModal.hide()">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </app-ui-modal>
+
+                            <div class="col-sm-12 px-0">
+                                <ng-container *ngIf="rowData && rowData.length === 0 && !stopSpinner">
+                                    <div class="spinner-border text-primary c-table-spinner" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </ng-container>
+                                <div class="col-sm-12 col-xl-12 px-0" id="FixedDiv">
+                                    <div class="row">
+                                        <!-- <div class="row"> -->
+                                        <div class=" col-sm-12 col-md-6 padding-left-none ">
+                                            <mat-accordion class="example-headers-align">
+                                                <div>
+                                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                                        <mat-expansion-panel-header class="math">
+                                                            <mat-panel-title class="matt">
+                                                                <!-- <i class="ficon fas fa-puzzle-piece"></i> -->
+                                                                <i class="fas fa-box-open"></i>&nbsp;Charge Code Type
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="row m-t-10">
+                                                            <div class="col-md-12 px-0 main-grid-height">
+                                                                <ng-container>
+                                                                    <div class="header-btn-group">
+                                                                        <button type="button"
+                                                                            class="fas fa-check c-refresh-speed extra-style"
+                                                                            title="Refresh"
+                                                                            (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+
+                                                                        <button
+                                                                            [ngClass]="{'disabled': isDisabledExport || rowData.length < 1}"
+                                                                            title="Export" type="button"
+                                                                            class=" btn btn-icon btn-outline-success m-r-8"
+                                                                            [disabled]="rowData.length < 1"
+                                                                            (click)="!isDisabledExport ? onBtnExportDataAsExcel() : ''">
+                                                                            <i
+                                                                                class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                                                                        </button>
+
+
+                                                                        <button title="Add Charge Code Type"
+                                                                            type="button"
+                                                                            class="btnaddl btn btn-icon btn-outline-primary"
+                                                                            *ngIf="isSuperTEMAdmin"
+                                                                            [ngClass]="{'mt-18':isSuperTEMUser,'mt-0':!isSuperTEMUser}"
+                                                                            (click)="addProduct('Charge Code Type','','true')">
+                                                                            <i class="fas fa-plus"></i></button>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container>
+                                                                    <app-ag-grid-table [excelBtnEnable]="true"
+                                                                        [columnDefs]="columnDefs"
+                                                                        [gridOptions]="gridOptions" [rowData]="rowData"
+                                                                        (onAgGridReady)="onAgGridReady($event)"
+                                                                        [rowSelection]="rowSelection"
+                                                                        [sheetName]="'Charge Code Type'"
+                                                                        [exportFilename]="'Charge Code Type.xlsx'"
+                                                                        [defaultColDef]="defaultColDef"
+                                                                        [sideBar]="sideBar" [singleClickEdit]="true"
+                                                                        (onCellClickedEvent)="onCellClicked($event)"
+                                                                        (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                                                        (onCellDoubleClickedEvent)="onCellDoubleClicked($event,'Charge Code Type')"
+                                                                        (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                                                    </app-ag-grid-table>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+
+                                                    </mat-expansion-panel>
+                                                </div>
+                                            </mat-accordion>
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                                                    <div class="text-right mt-2 mr-3 pb-1">
+                                                    <span>
+                                                        {{girdDataCount}} {{girdDataCount > 1 ? 'records' : 'record'}}
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" col-sm-12 col-md-6 padding-right-none">
+                                            <mat-accordion class="example-headers-align">
+                                                <div>
+                                                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                                        <mat-expansion-panel-header class="math">
+                                                            <mat-panel-title class="matt">
+                                                                <!-- <i class="ficon fas fa-puzzle-piece"></i> -->
+                                                                <i class="fas fa-box-open"></i>&nbsp;Charge Type
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="row m-t-10">
+                                                            <div class="col-md-12 px-0 main-grid-height">
+                                                                <ng-container>
+                                                                    <div class="header-btn-group">
+                                                                        <button type="button"
+                                                                            class="fas fa-check c-refresh-speed extra-style"
+                                                                            title="Refresh"
+                                                                            (click)="onAgGridReady2(this.gridApiChargeType.api ? this.gridApiChargeType.api : this.gridApiChargeType)"></button>
+
+                                                                        <button
+                                                                            [ngClass]="{'disabled': isDisabledCharge || rowData1.length < 1}"
+                                                                            title="Export" type="button"
+                                                                            class=" btn btn-icon btn-outline-success m-r-8"
+                                                                            [disabled]="rowData.length < 1"
+                                                                            (click)="!isDisabledCharge ? onBtnExportDataAsExcelChargeType() : ''">
+                                                                            <i class="{{isDisabledCharge ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                                                                        </button>
+
+                                                                        <button title="Add Charge Type" type="button"
+                                                                            class="btnaddl btn btn-icon btn-outline-primary"
+                                                                            *ngIf="isSuperTEMAdmin"
+                                                                            [ngClass]="{'mt-18':isSuperTEMUser,'mt-0':!isSuperTEMUser}"
+                                                                            (click)="addProduct('Charge Type','','true')">
+                                                                            <i class="fas fa-plus"></i></button>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container>
+                                                                    <app-ag-grid-table [excelBtnEnable]="true"
+                                                                        [gridOptions]="gridOptions"
+                                                                        [columnDefs]="columnDefs1" [rowData]="rowData1"
+                                                                        [rowSelection]="rowSelection"
+                                                                        [sheetName]="'Charge Type'"
+                                                                        [exportFilename]="'Charge Type.xlsx'"
+                                                                        (onAgGridReady)="onAgGridReady2($event)"
+                                                                        [defaultColDef]="defaultColDef"
+                                                                        [sideBar]="sideBar" [singleClickEdit]="true"
+                                                                        (onCellClickedEvent)="onCellClicked($event)"
+                                                                        (onAgGridReadyEmit)="onAgGridReadyEmitChargeType($event)"
+                                                                        (onCellDoubleClickedEvent)="onCellDoubleClicked($event,'Charge Type')"
+                                                                        (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                                                    </app-ag-grid-table>
+                                                                </ng-container>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </div>
+                                            </mat-accordion>
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                                                    <div class="text-right mt-2 mr-3 pb-1">
+                                                    <span>
+                                                        {{girdDataCount2}} {{girdDataCount2 > 1 ? 'records' : 'record'}}
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+
+                        <ng-container *ngFor="let productData of editProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-user-edit" style="color: #4680ff;"></i>&nbsp;
+                                    {{productData.Name}}&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-edit-product [productData]="productData"></app-edit-product>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let user of addProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-user-plus" style="color: #4680ff;"></i>&nbsp;New User&nbsp;
+                                    <mat-icon (click)="removeUser(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-tem-user (onUserAddEvent)="onUserAddEvent($event)"></app-add-tem-user>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let upload of uploadProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-cloud-upload-alt" style="color: #4680ff;"> </i>&nbsp;Upload&nbsp;
+                                    <mat-icon (click)="removeUploadPage(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-files-upload></app-files-upload>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

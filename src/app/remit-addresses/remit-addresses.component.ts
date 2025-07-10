@@ -264,6 +264,10 @@ export class RemitAddressesComponent implements OnInit {
   }
 
   gridOptions = {
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
     rowModelType: 'serverSide',
     serverSideInfiniteScrollOptions: {
       storeType: 'partial',

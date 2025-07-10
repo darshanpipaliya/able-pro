@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="validate-summary-total-right sandbox-step-grid">
+            <mat-accordion class="example-headers-align vba-accordion">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <i class="ficon fas fa-tools"></i>&nbsp;All Distribution Rules
+                        </mat-panel-title>
+                        <i class="fas fa-info-circle" container="body"
+                            ngbTooltip="All Distribution Rules Tooltip" tooltipClass="tooltip-bg"></i>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-md-12 px-0">
+                            <ng-container style="height: max-content;">
+                                <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs1"
+                                    [rowData]="rowData.ChargeCodeTypes.$values"
+                                    [rowSelection]="rowSelection" [sheetName]="'Charge Code Type'"
+                                    [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                                    [singleClickEdit]="true">
+                                </app-ag-grid-table>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

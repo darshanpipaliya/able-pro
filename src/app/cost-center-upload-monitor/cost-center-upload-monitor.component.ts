@@ -420,7 +420,11 @@ export class CostCenterUploadMonitorComponent implements OnInit {
                 floatingFiltersHeight: 35,
                 isRowSelectable: (rowNode: any) => {
                     return rowNode?.data?.AllowCCManualEdits == 'Yes';
-                }
+                },
+                rowSelection: {
+                    type: 'multiple',
+                    enableClickSelection: true
+                },
             }
         } else {
             this.gridOptions = {
@@ -428,7 +432,11 @@ export class CostCenterUploadMonitorComponent implements OnInit {
                 serverSideInfiniteScroll: true,
                 headerHeight: 35,
                 groupHeaderHeight: 37,
-                floatingFiltersHeight: 35
+                floatingFiltersHeight: 35,
+                rowSelection: {
+                    type: 'multiple',
+                    enableClickSelection: true
+                },
             };
         }
         this.getCustomerForUser();
@@ -579,188 +587,188 @@ export class CostCenterUploadMonitorComponent implements OnInit {
 
     openContextMenu(event: MouseEvent, value: any) {
         event.preventDefault();
-    
-    
+
+
         this.fieldsName = value;
         this.contextMenuPosition.x = event.clientX;
         this.contextMenuPosition.y = event.clientY;
-    
-    
+
+
         let selectedOption1 = this.countries[0].name;
         let selectedOption2 = this.countries[0].name;
         let textboxValue1: any = '';
         let textboxValue2: any = '';
         let model = { option: 'AND' };
-    
+
         if (this.fieldsName.type === 'text') {
-          const index = this.filterArray.findIndex(
-            (user) => user.filterKey === this.fieldsName.field
-          );
-          if (index !== -1) {
-            textboxValue1 = this.filterArray[index].filterOptionValue1;
-            textboxValue2 = this.filterArray[index].filterOptionValue2;
-    
-    
-            selectedOption1 = this.filterArray[index].filterOptionType1;
-            selectedOption2 = this.filterArray[index].filterOptionType2;
-            model = { option: this.model.option };
-          }
-    
-          this.countries = filterOptionsText();
-    
+            const index = this.filterArray.findIndex(
+                (user) => user.filterKey === this.fieldsName.field
+            );
+            if (index !== -1) {
+                textboxValue1 = this.filterArray[index].filterOptionValue1;
+                textboxValue2 = this.filterArray[index].filterOptionValue2;
+
+
+                selectedOption1 = this.filterArray[index].filterOptionType1;
+                selectedOption2 = this.filterArray[index].filterOptionType2;
+                model = { option: this.model.option };
+            }
+
+            this.countries = filterOptionsText();
+
         } else if (this.fieldsName.type === 'numberFilter') {
-          const index = this.filterArrayNumber.findIndex(
-            (user) => user.filterKey === this.fieldsName.field
-          );
-          if (index !== -1) {
-            textboxValue1 = this.filterArrayNumber[index].filterOptionValue1;
-            textboxValue2 = this.filterArrayNumber[index].filterOptionValue2;
-    
-            selectedOption1 = this.filterArrayNumber[index].filterOptionType1;
-            selectedOption2 = this.filterArrayNumber[index].filterOptionType2;
-    
-            if (selectedOption1 === 'inrange') {
-              this.textboxValue1_1 = this.filterArrayNumber[index].filterOptionValue1_2;
+            const index = this.filterArrayNumber.findIndex(
+                (user) => user.filterKey === this.fieldsName.field
+            );
+            if (index !== -1) {
+                textboxValue1 = this.filterArrayNumber[index].filterOptionValue1;
+                textboxValue2 = this.filterArrayNumber[index].filterOptionValue2;
+
+                selectedOption1 = this.filterArrayNumber[index].filterOptionType1;
+                selectedOption2 = this.filterArrayNumber[index].filterOptionType2;
+
+                if (selectedOption1 === 'inrange') {
+                    this.textboxValue1_1 = this.filterArrayNumber[index].filterOptionValue1_2;
+                }
+
+                if (selectedOption2 === 'inrange') {
+                    this.textboxValue2_1 = this.filterArrayNumber[index].filterOptionValue2_2;
+                }
+                model = { option: this.model.option };
+
             }
-    
-            if (selectedOption2 === 'inrange') {
-              this.textboxValue2_1 = this.filterArrayNumber[index].filterOptionValue2_2;
-            }
-            model = { option: this.model.option };
-    
-          }
-    
-          this.countries = filterOptionsNumber();
-    
+
+            this.countries = filterOptionsNumber();
+
         } else {
-          const index = this.filterArrayDate.findIndex(
-            (user) => user.filterKey === this.fieldsName.field
-          );
-          if (index !== -1) {
-    
-            textboxValue1 = this.filterArrayDate[index].filterOptionValue1;
-            textboxValue2 = this.filterArrayDate[index].filterOptionValue2;
-    
-            textboxValue1 = onChangeEndDate(textboxValue1, false);
-            textboxValue2 = textboxValue2 ? onChangeEndDate(textboxValue2, false) : null;
-    
-            selectedOption1 = this.filterArrayDate[index].filterOptionType1;
-            selectedOption2 = this.filterArrayDate[index].filterOptionType2;
-    
-            model = { option: this.model.option };
-    
-            if (selectedOption1 === 'inrange') {
-              this.textboxValue1_1 = onChangeEndDate(this.filterArrayDate[index].filterOptionValue1_2, false);
+            const index = this.filterArrayDate.findIndex(
+                (user) => user.filterKey === this.fieldsName.field
+            );
+            if (index !== -1) {
+
+                textboxValue1 = this.filterArrayDate[index].filterOptionValue1;
+                textboxValue2 = this.filterArrayDate[index].filterOptionValue2;
+
+                textboxValue1 = onChangeEndDate(textboxValue1, false);
+                textboxValue2 = textboxValue2 ? onChangeEndDate(textboxValue2, false) : null;
+
+                selectedOption1 = this.filterArrayDate[index].filterOptionType1;
+                selectedOption2 = this.filterArrayDate[index].filterOptionType2;
+
+                model = { option: this.model.option };
+
+                if (selectedOption1 === 'inrange') {
+                    this.textboxValue1_1 = onChangeEndDate(this.filterArrayDate[index].filterOptionValue1_2, false);
+                }
+
+                if (selectedOption2 === 'inrange') {
+                    this.textboxValue2_1 = onChangeEndDate(this.filterArrayDate[index].filterOptionValue2_2, false);
+                }
             }
-    
-            if (selectedOption2 === 'inrange') {
-              this.textboxValue2_1 = onChangeEndDate(this.filterArrayDate[index].filterOptionValue2_2, false);
-            }
-          }
-    
-          this.countries = filterOptionsDate();
+
+            this.countries = filterOptionsDate();
         }
-    
+
         this.textboxValue1 = textboxValue1;
         this.textboxValue2 = textboxValue2;
-    
+
         this.selectedOption1 = selectedOption1;
         this.selectedOption2 = selectedOption2;
         this.model = model;
-    
+
         this.displayModal = true;
         this.displayModal1 = textboxValue1 ? true : false;
-    
+
         if ((event.clientX + 240) > window.innerWidth) {
-          this.contextMenuPosition.x = event.clientX - 240;
+            this.contextMenuPosition.x = event.clientX - 240;
         }
         event.stopPropagation();
     }
 
     onFilterChangedValue() {
         const filterKey = this.fieldsName.field;
-      
+
         const filterEntry: any = {
-          filterKey,
-          filterOptionType1: this.selectedOption1,
-          filterOptionValue1: this.textboxValue1,
-          filterOptionType2: this.selectedOption2,
-          filterOptionValue2: this.textboxValue2,
-          filterOptionValue1_2: this.textboxValue1_1 || null,
-          filterOptionValue2_2: this.textboxValue2_1 || null,
-          condition: this.model.option
+            filterKey,
+            filterOptionType1: this.selectedOption1,
+            filterOptionValue1: this.textboxValue1,
+            filterOptionType2: this.selectedOption2,
+            filterOptionValue2: this.textboxValue2,
+            filterOptionValue1_2: this.textboxValue1_1 || null,
+            filterOptionValue2_2: this.textboxValue2_1 || null,
+            condition: this.model.option
         };
-      
+
         // Update the appropriate filter array
         let targetFilterArray = this.filterArray;
-      
+
         if (this.fieldsName.type === 'numberFilter') {
-          targetFilterArray = this.filterArrayNumber;
+            targetFilterArray = this.filterArrayNumber;
         } else if (this.fieldsName.type === 'dateFilter') {
-          targetFilterArray = this.filterArrayDate;
-      
-          // Format dates if needed
-          filterEntry.filterOptionValue1 = onChangeEndDate(this.textboxValue1, true);
-          filterEntry.filterOptionValue2 = onChangeEndDate(this.textboxValue2, true);
-          filterEntry.filterOptionValue1_2 = this.textboxValue1_1 ? onChangeEndDate(this.textboxValue1_1, true) : null;
-          filterEntry.filterOptionValue2_2 = this.textboxValue2_1 ? onChangeEndDate(this.textboxValue2_1, true) : null;
+            targetFilterArray = this.filterArrayDate;
+
+            // Format dates if needed
+            filterEntry.filterOptionValue1 = onChangeEndDate(this.textboxValue1, true);
+            filterEntry.filterOptionValue2 = onChangeEndDate(this.textboxValue2, true);
+            filterEntry.filterOptionValue1_2 = this.textboxValue1_1 ? onChangeEndDate(this.textboxValue1_1, true) : null;
+            filterEntry.filterOptionValue2_2 = this.textboxValue2_1 ? onChangeEndDate(this.textboxValue2_1, true) : null;
         }
-      
+
         const index = targetFilterArray.findIndex(item => item.filterKey === filterKey);
         if (index !== -1) {
-          targetFilterArray[index] = filterEntry;
+            targetFilterArray[index] = filterEntry;
         } else {
-          targetFilterArray.push(filterEntry);
+            targetFilterArray.push(filterEntry);
         }
-      
+
         this.displayModal = false;
-      
+
         // Now apply all filters to the data
         this.applyAllFilters();
-      }
-      
+    }
 
-      applyAllFilters() {
+
+    applyAllFilters() {
         let result = [...this.files]; // original unfiltered data
-      
+
         const allFilters = [
-          ...this.filterArray,
-          ...this.filterArrayNumber,
-          ...this.filterArrayDate
+            ...this.filterArray,
+            ...this.filterArrayNumber,
+            ...this.filterArrayDate
         ];
         allFilters.forEach(filter => {
-          const { filterKey, filterOptionType1, filterOptionValue1 } = filter;
-      
-          result = result.filter(item => {
-            const value = item['data'][filterKey];
-            if (value == null) return false;
-      
-            switch (filterOptionType1) {
-              case 'equals':
-                return onChangeEndDate(value) === filterOptionValue1;
-              case 'contains':
-                return value.toString().toLowerCase().includes(filterOptionValue1.toString().toLowerCase());
-              case 'startsWith':
-                return value.toString().toLowerCase().startsWith(filterOptionValue1.toString().toLowerCase());
-              case 'endsWith':
-                return value.toString().toLowerCase().endsWith(filterOptionValue1.toString().toLowerCase());
-              case 'greaterThan':
-                return +value > +filterOptionValue1;
-              case 'lessThan':
-                return +value < +filterOptionValue1;
-              case 'between':
-                const lower = +filter.filterOptionValue1_2;
-                const upper = +filter.filterOptionValue2_2;
-                return +value >= lower && +value <= upper;
-              default:
-                return true;
-            }
-          });
+            const { filterKey, filterOptionType1, filterOptionValue1 } = filter;
+
+            result = result.filter(item => {
+                const value = item['data'][filterKey];
+                if (value == null) return false;
+
+                switch (filterOptionType1) {
+                    case 'equals':
+                        return onChangeEndDate(value) === filterOptionValue1;
+                    case 'contains':
+                        return value.toString().toLowerCase().includes(filterOptionValue1.toString().toLowerCase());
+                    case 'startsWith':
+                        return value.toString().toLowerCase().startsWith(filterOptionValue1.toString().toLowerCase());
+                    case 'endsWith':
+                        return value.toString().toLowerCase().endsWith(filterOptionValue1.toString().toLowerCase());
+                    case 'greaterThan':
+                        return +value > +filterOptionValue1;
+                    case 'lessThan':
+                        return +value < +filterOptionValue1;
+                    case 'between':
+                        const lower = +filter.filterOptionValue1_2;
+                        const upper = +filter.filterOptionValue2_2;
+                        return +value >= lower && +value <= upper;
+                    default:
+                        return true;
+                }
+            });
         });
-      
+
         this.filteredData = result;
-      }
-      
+    }
+
 
     openPopup() {
         this.dialog.open(this.ccText, {
@@ -1053,33 +1061,33 @@ export class CostCenterUploadMonitorComponent implements OnInit {
             const activeFilters = this.displaycols.filter(col => col.valuesset);
 
             this.filteredData = this.files.filter((node: any) => {
-            return activeFilters.every((col: any) => {
-                const fieldValue = node.data?.[col.field];
-                const filterValue = col.valuesset;
-                if (col.type === 'dateFilter') {
-                    if (!fieldValue || !filterValue) return false;
+                return activeFilters.every((col: any) => {
+                    const fieldValue = node.data?.[col.field];
+                    const filterValue = col.valuesset;
+                    if (col.type === 'dateFilter') {
+                        if (!fieldValue || !filterValue) return false;
 
-                    // Convert both values to MM-dd-yyyy strings
-                    const nodeDate = 
-                    formatDate(fieldValue, 'MM-dd-yyyy', 'en-US');
-                    
-                    const filterDate = 
-                    formatDate(filterValue, 'MM-dd-yyyy', 'en-US');
-            
-                    return nodeDate === filterDate;
-                }
-        
-                if (col.type === 'numberFilter') {
-                    return fieldValue == filterValue;
-                }
-        
-                // Default: text filter
-                const nodeText = (fieldValue ?? '').toString().toLowerCase();
-                const filterText = (filterValue ?? '').toString().toLowerCase();
-                return nodeText.includes(filterText);
+                        // Convert both values to MM-dd-yyyy strings
+                        const nodeDate =
+                            formatDate(fieldValue, 'MM-dd-yyyy', 'en-US');
+
+                        const filterDate =
+                            formatDate(filterValue, 'MM-dd-yyyy', 'en-US');
+
+                        return nodeDate === filterDate;
+                    }
+
+                    if (col.type === 'numberFilter') {
+                        return fieldValue == filterValue;
+                    }
+
+                    // Default: text filter
+                    const nodeText = (fieldValue ?? '').toString().toLowerCase();
+                    const filterText = (filterValue ?? '').toString().toLowerCase();
+                    return nodeText.includes(filterText);
                 });
             });
-        
+
             this.totalRecords = this.filteredData.length;
         }, 0);
     }

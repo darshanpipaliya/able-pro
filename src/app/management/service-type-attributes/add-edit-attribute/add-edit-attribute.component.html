@@ -1,0 +1,53 @@
+<div class="app-add-edit-attribute-c">
+    <div class="mat-dialog-header pb-3">
+        <h5 class="modal-title" id="exampleModalLabel">Add Attribute</h5>
+        <button type="button" class="close" mat-dialog-close>
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class=" text-right rfield">
+        <span class="text-c-red">*Required field</span>
+    </div>
+    <div mat-dialog-content>
+        <div class="container-fluid px-4">
+            <div class="card-body">
+                <form [formGroup]="attributeForm">
+                    <div class=" row">
+                        <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 500;">Attribute Name *</label>
+                                <!-- <span><input type="text" required formControlName="name" class="form-control"
+                                    placeholder="Enter Name" spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                    [ngClass]="{'invalid-error': !attributeForm.controls.name.valid && (attributeForm.controls.name.dirty || attributeForm.controls.name.touched || isSubmit)}"></span> -->
+
+                                    <span class="pr-0"><input type="text" required formControlName="name" class="form-control"
+                                        [ngClass]="{'invalid-error': !attributeForm.controls['name'].valid && (attributeForm.controls['name'].dirty || attributeForm.controls['name'].touched || isSubmit)}"></span>
+                                <ng-container
+                                    *ngIf="attributeForm.controls['name'].invalid && (attributeForm.controls['name'].touched || isSubmit)">
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="attributeForm.controls.name.errors?.required && isSubmit">Attribute Name
+                                        is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12 mb-2 pl-0">
+                            <div class="form-check pl-0 d-flex">
+                                <label class="form-check-label pr-1 same-location-lable" for="defaultCheck2"
+                                    style="font-weight: 500;">
+                                    Keep for Production :
+                                </label>
+                                <input class="form-check-inner" type="checkbox" id="defaultCheck2" formControlName="keepForProduction">
+                            </div>
+                        </div> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-actions class="pt-0" align="end">
+        <!--<button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>-->
+        <button mat-button class="btn btn-primary" (click)="saveAttribute()" cdkFocusInitial
+            [disabled]="saveButtonLoadder">Save</button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,95 @@
+<div class="mat-dialog-header">
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="text-left validate-tooltip-dialog">
+    <div>
+        <div class="tooltip-desc pb-2">
+            <p>The totals on the page were identified from the invoice data files and some values are calculated by the system. When an invoice is out of balance and the Difference in the invoice overview is not $0.00, please review the PDF invoice to see if you can identify the difference by verifying the values found on this page. Invoice totals can be edited from this page using the Edit button and editable fields are outlined. Discrepancies in the detail charges that are missing or incorrect can be managed in the Charge Validation step 4 in Sandbox.</p>
+        </div>
+        <div>
+            <table class="table mt-1">
+                <tr>
+                    <th class="no">Pay Past Due</th>
+                    <td>
+                        
+                        <p>This defaults to No unless the Past Due/Balance Forward is a
+                            negative and then this is Yes. If changed to Yes, the amount of
+                            the Past Due will be included in the Amount to Pay. </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th class="no">Previous Bill Amount</th>
+                    <td>
+                        <p>Total Amount to Pay from previous bill as reported by the Vendor.
+                            If not available, the system uses the amount from last month’s
+                            bill. </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th class="no">Total Payment Applied</th>
+                    <td class="text-left">
+                        <p>The Sum of Payments the Vendor received and applied from the
+                            previous invoices as reported by the Vendor.</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th class="no">Adjustments</th>
+                    <td class="text-left">
+                        <p>Account level charges applied to the account and are not a
+                            payment. The system uses this as Current Charges. These may or
+                            may not reference a Billing ID.</p>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <th class="no">Past Due/Balance Forward</th>
+                    <td class="text-left">
+                        <p>Past Due Charges or Balance Forward as reported by the Vendor. If
+                            not provided by the Vendor this is a calculated field: Total
+                            Current Charges - Total Amount Due.</p>
+                    </td>
+                </tr> -->
+                <tr>
+                    <th class="no">Total Amount Due</th>
+                    <td class="text-left">
+                        <p>The Total Amount Due as reported by the Vendor. The Total Amount
+                            of all items Current and Previous.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="no">Total Current Charges</th>
+                    <td class="text-left">
+                        <p>The Total Current Charges as reported by the Vendor unless the
+                            Vendor includes Adjustments applied before the Past Due
+                            Amount/Balance Forward, and in that case, it is Added to the
+                            Total Current Charges. If the Vendor does not provide Total
+                            Current Charges this is system calculated field: Previous Bill -
+                            Payments (put in as positive number) + Adjustments - Total
+                            Amount Due.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="no">Amount to Pay</th>
+                    <td class="text-left">
+                        <p>
+                            This is system selected field: Total Current Charges or Total
+                            Amount Due whichever is less. If the lesser amount is negative,
+                            then the Amount to Pay is 0. This may also include Past Due
+                            Amount, if selected to pay.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="no">Green Check</th>
+                    <td class="text-left">
+                        <p>This value was edited by the Admin.</p>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>

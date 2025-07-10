@@ -1,0 +1,40 @@
+<div class="mat-dialog-header">
+    <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="text-left dialog-data">
+    <p class="mb-2">
+        All Billing IDs must be assigned to either a Person or a Location. If multiple Billing IDs are selected from the
+        Reconciliation grid, all Billing IDs displayed on this page will be assigned to the same Person or Location
+        chosen.</p>
+    <p class="mb-2">
+        To exclude a Billing ID from the assignment, simply uncheck the checkbox next to it in the grid. Any unselected
+        Billing IDs will return to the main Reconciliation grid and will still require assignment.</p>
+
+    <p class="mb-0">
+        <strong>Assignment Guidelines</strong><br/>
+        Billing ID assignments are typically determined by the type of service:</p>
+
+    <ul class="mb-2">
+        <li><strong>Person-based services</strong> (e.g., Mobile Services, Conferencing) are usually assigned to the
+            individual responsible for them.
+        </li>
+        <li><strong>Location-based services</strong> (e.g., Internet Circuits, PBX Voice Services) are generally
+            assigned to a physical location.
+        </li>
+    </ul>
+
+    <p class="mb-2">
+        However, the system allows flexibility for assignments that deviate from these conventions. If a different
+        assignment is required, simply switch to the appropriate tab and proceed with the assignment.</p>
+
+    <p class="mb-0">
+        <strong>Bulk Assignment with "Assign All"</strong><br/>
+        The <strong>Assign All</strong> option enables efficient bulk assignment by applying the selected Person or
+        Location to all
+        records in view, eliminating the need for individual updates.
+    </p>
+
+</div>

@@ -1,0 +1,218 @@
+<div class="mat-dialog-header pb-2">
+    <div class="row">
+        <div class="col-12 px-0">
+            <h5 class="modal-title" id="exampleModalLabel">Promote from Child Inventory</h5>
+        </div>
+    </div>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+
+    <div class="card-body py-0 mt-2">
+        <div class="container px-0">
+            <form class="editForm px-0" [formGroup]="inventoryForm">
+
+                <div class="row">
+                    <div class="col-12 px-0">
+                        <h5 class="modal-title mt-2 mb-2">Add Vendor Product <i class="fas fa-info-circle"
+                                container="body"
+                                ngbTooltip="Add a Vendor Product to the Child inventory and promote it from the Parent to a regular inventory item"
+                                tooltipClass="tooltip-bg"></i></h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Vendor Product</label>
+                            <span><p-dropdown [options]="vendorProductNames" optionLabel="Name"
+                                    (onChange)="vendorProductTypesDetails();" [filter]="true" filterBy="Name"
+                                    [showClear]="true" placeholder="Select Vendor Product..."
+                                    formControlName="productName" appendTo="body" optionValue="Id" [showClear]="false">
+                                </p-dropdown></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Service</label>
+                            <span><p-dropdown [options]="services" optionLabel="Name"
+                                    placeholder="{{loadingServiceDetail ? 'Loading' :'Select Service'}}..."
+                                    [filter]="true" filterBy="Name" [showClear]="true" formControlName="serviceId"
+                                    appendTo="body" optionValue="Id" [showClear]="false">
+                                </p-dropdown></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Service Type</label>
+                            <span><p-dropdown [options]="serviceTypes" optionLabel="Name" [filter]="true"
+                                    filterBy="Name" [showClear]="true"
+                                    placeholder="{{loadingServiceDetail ? 'Loading' :'Select Service Type'}}..."
+                                    formControlName="serviceTypeId" appendTo="body" optionValue="Id"
+                                    [showClear]="false">
+                                </p-dropdown></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Product</label>
+                            <span><p-dropdown [options]="products" optionLabel="Name" [filter]="true" filterBy="Name"
+                                    [showClear]="true"
+                                    placeholder="{{loadingServiceDetail ? 'Loading' :'Select Product'}}..."
+                                    formControlName="productId" appendTo="body" optionValue="Id" [showClear]="false">
+                                </p-dropdown></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+                        <div class="form-group">
+                            <label class="form-label">Product Type</label>
+                            <span><p-dropdown [options]="productTypes" optionLabel="Name" [filter]="true"
+                                    filterBy="Name" [showClear]="true"
+                                    placeholder="{{loadingServiceDetail ? 'Loading' :'Select Product Type'}}..."
+                                    formControlName="productTypeId" appendTo="body" optionValue="Id"
+                                    [showClear]="false">
+                                </p-dropdown></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                        <div class="form-group">
+                            <label class="form-label">Vendor Product Description</label>
+                            <span><input type="text" class="form-control" formControlName="description"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xl-12 text-center px-0 mb-3">
+                        <button mat-button class="btn btn-primary" cdkFocusInitial
+                        [disabled]="!isRowSelected || saveButtonDisabled" (click)="saveIndividual()">
+                        <span class="spinner-border spinner-border-sm" role="status" *ngIf="saveButtonDisabled"></span>
+                        Save</button>
+                    </div>
+                </div>
+                
+
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header class="math borderc">
+                            <mat-panel-title>
+                              Child Inventory
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+
+                          <div class="row m-t-10">
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Customer</label>
+                                    <span><p-dropdown placeholder="{{loadingDetails ? 'Loading' :'Select Customer'}}..."
+                                            [options]="customers" optionValue="Id" optionLabel="AccountName"
+                                            formControlName="customerId" appendTo="body" [showClear]="false">
+                                        </p-dropdown></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group"> <label class="form-label">Vendor</label>
+                                    <span class="pr-0"><p-dropdown
+                                            placeholder="{{loadingDetails ? 'Loading' :'Select Vendor'}}..."
+                                            optionLabel="AccountName" optionValue="Id" [options]="vendorsList" appendTo="body"
+                                            formControlName="VendorId" [showClear]="false">
+                                        </p-dropdown></span>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Main Account Number</label>
+                                    <span><input class="form-control" formControlName="MainAccountNumber"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Sub Account Number</label>
+                                    <span class="pr-0"><input class="form-control" formControlName="subAccountNumber" /></span>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Payable Account Number</label>
+                                    <span><input class="form-control" formControlName="payableAccountNumber" /></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group"> <label class="form-label">Service Custom 1</label>
+                                    <span><input class="form-control" formControlName="inventoryCustomField1"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group"> <label class="form-label">Service Custom 2</label>
+                                    <span class="pr-0"><input class="form-control"
+                                            formControlName="inventoryCustomField2"></span>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group"> <label class="form-label">Service Custom 3</label>
+                                    <span><input class="form-control" formControlName="inventoryCustomField3"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group"> <label class="form-label">Service Custom 4</label>
+                                    <span class="pr-0"><input class="form-control"
+                                            formControlName="inventoryCustomField4"></span>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Service Number</label>
+                                    <span><input class="form-control" formControlName="serviceNumber"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xl-6">
+                                <div class="form-group">
+                                    <label class="form-label">Billing ID</label>
+                                    <span class="pr-0"><input class="form-control" formControlName="billingId"></span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+
+                
+                <!-- ======================= -->
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- <mat-dialog-actions class="py-3" align="center">
+    
+</mat-dialog-actions> -->

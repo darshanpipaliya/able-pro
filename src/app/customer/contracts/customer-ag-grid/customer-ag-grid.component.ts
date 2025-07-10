@@ -35,10 +35,12 @@ export class CustomerAgGridComponent {
   public columnDefs: any;
   public rowData: any;
   public rowSelection: any
-  public gridOptions: GridOptions = {
-    // Server-side settings
+  public gridOptions: any = {
     rowModelType: 'serverSide',
-    
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
     // Header settings
     headerHeight: 35,
     groupHeaderHeight: 37,
@@ -321,7 +323,6 @@ export class CustomerAgGridComponent {
   }
 
   onAgGridReady(params: any) {
-    console.log('onAgGridReady', params);
     const datasource = {
       getRows: (params: any) => {
         let paramsRequest = params['request'];

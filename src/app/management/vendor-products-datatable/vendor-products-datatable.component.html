@@ -1,0 +1,258 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card class="vendor-product-tab">
+            <mat-card-content>
+                <div class="row header-btn-responsive">
+                    <ng-container *ngFor="let option of buttonOptions">
+                        <button ngDefaultControl class="bbtn  btn btn-outline-primary" type="button"
+                            [ngClass]="(option.value === 'products') ? 'btn btn-primary active round bg' : 'btn round'"
+                            [value]="option.value" (click)="goToPage(option.value);selected=0">
+                            <i class="fas {{option.icon}}"> </i>
+                            {{option.label}}
+                        </button>
+                    </ng-container>
+                </div>
+
+                <div class="row btn-group-list">
+
+                    <!-- <button [ngClass]="{'disabled':rowData.length < 1 || isDisabledExport}" title="Export" type="button"
+                        class=" btn btn-icon btn-outline-success m-r-8"
+                        (click)="!isDisabledExport ? onBtnExportDataAsExcel() : ''">
+                        <i class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                    </button> -->
+
+                    <button *ngIf="currentOpenEditPagevar == 'Table' && isSuperTEMAdmin" [ngClass]="{'disabled':rowData.length < 1 || isDisabledExport}" title="Export" type="button"
+                        class=" btn btn-icon btn-outline-success m-r-8"
+                        (click)="!isDisabledExport ? onBtnExportDataAsExcel() : ''">
+                        <i class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                    </button>
+
+                    <button *ngIf="currentOpenEditPagevar == 'Table' && isSuperTEMAdmin" type="button"
+                        class=" btn btn-icon btn-outline-primary right-btn-position" [placement]="'left'"
+                        [popoverTitle]="'Select an Action'" [ngbPopover]="htmlContent"
+                        popoverClass="cost-center-tooltip custom-tooltip right-btn-position">
+                        <i class="fas fa-plus"></i></button>
+                    <!-- title="Add Products" -->
+                    <button *ngIf="currentOpenEditPagevar == 'Edit' && isSuperTEMAdmin" type="button"
+                        class="btn btn-icon btn-outline-primary" [placement]="'left'"
+                        [popoverTitle]="'Select an Action'" [ngbPopover]="htmlContent2"
+                        popoverClass="cost-center-tooltip right-btn-position-edit-page">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <!-- <ng-container >
+
+                        <button type="button" class="btn btn-icon btn-outline-primary" [placement]="'left'"
+                            [popoverTitle]="'Select an Action'" [ngbPopover]="htmlContent2"
+                            popoverClass="cost-center-tooltip right-btn-position-edit-page">
+                            <i class="fas fa-plus"></i>
+                        </button>
+
+                    </ng-container> -->
+
+                    <ng-template #htmlContent2>
+                        <div class="text-left ">
+                            <div>
+                                <ul style="padding-left: 15px;">
+                                    <span class="inner-option" (click)="addOption(1, i)"><a><i
+                                                class="fas fa-angle-right"></i> Add New Charge Code</a> </span> <br>
+                                    <span class="inner-option" (click)="addOption(2, i)"><a><i
+                                                class="fas fa-angle-right"></i> Add Charge Code Group</a> </span>
+                                </ul>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+
+
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)"
+                        id="vendor-products-table-tab"
+                        [ngClass]="{'mat-tab-header-add' : currentOpenEditPagevar === 'Add', 'mat-tab-header-edit' : currentOpenEditPagevar === 'Edit'}">
+                        <mat-tab>
+                            <div class="col-sm-12 px-0">
+                                <ng-template mat-tab-label>
+                                    <b> <i class="fas fa-box-open" style="color: #4680ff;"> </i> Products</b>
+                                </ng-template>
+                                <ng-container>
+
+                                </ng-container>
+
+                                <ng-container>
+                                    <div class="row">
+                                        <ng-template #htmlContent>
+                                            <div class="text-left ">
+                                                <div>
+                                                    <ul style="padding-left: 15px;">
+                                                        <span class="inner-option" (click)="addVendorProduct()"> <a> <i
+                                                                    class="fas fa-angle-right"></i> Add Vendor
+                                                                Product</a> </span><br>
+                                                        <span class="inner-option" (click)="addProduct()"> <a> <i
+                                                                    class="fas fa-angle-right"></i> Add Product</a>
+                                                        </span>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                            <div class="col-sm-12 px-0">
+                                <div class="mt-2">
+                                    <mat-accordion class="example-headers-align accordion-grid ">
+                                        <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                                            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                                                (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                                            <mat-expansion-panel-header class="math">
+                                                <mat-panel-title class="matt font-weight-bold">
+                                                    <i class="fas fa-box-open"
+                                                        style="color: #4680ff;"></i>&nbsp;Products
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData"
+                                                [gridOptions]="gridOptions" [sheetName]="'Vendor Products'"
+                                                [exportFilename]="'Vendor Products.xlsx'" [rowSelection]="rowSelection"
+                                                [defaultColDef]="defaultColDef"
+                                                [sideBar]="sideBar" [singleClickEdit]="true"
+                                                (onCellClickedEvent)="onCellClicked($event)"
+                                                (onAgGridReady)="onAgGridReady($event)"
+                                                (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                                (onCellDoubleClickedEvent)="onCellDoubleClicked($event)"
+                                                (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                            </app-ag-grid-table>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                                            <div class="text-right mt-2 mr-3">
+                                            <span>
+                                                {{girdDataCount}} {{girdDataCount > 1 ? 'records' : 'record'}}
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <ng-container *ngFor="let productData of editProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;
+                                    {{productData.VendorProductTypeName ? productData.VendorProductTypeName :
+                                    productData.Name}}&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-edit-vendor-product [productData]="productData"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)"
+                                        (onUserAddEvent)="onUserAddEvent($event, i,'edit')"
+                                        (onVendorProductById)="onVendorProductById($event)"
+                                        (onChargeCodeCellDoubleClickedEmit)="onChargeCodeCellDoubleClickedEmit($event)">
+                                    </app-edit-vendor-product>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                        <ng-container>
+                            <mat-tab *ngIf="isShowCCG">
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;
+                                    Charge Code Group&nbsp;({{userData?.GroupId}})&nbsp;<mat-icon
+                                        (click)="removeChargeCodeTab1()">cancel
+                                    </mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-charge-codes-group-datatable [action]="userData?.GroupId ? 'Edit' : 'Add'"
+                                        [userData]="userData" (addEditSaveEvent)="editSaveEvent($event)"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)">
+                                    </app-charge-codes-group-datatable>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                        <ng-container *ngFor="let user of addProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-box-open" style="color: #4680ff;"></i>&nbsp;Add Product&nbsp;
+                                    <mat-icon (click)="removeUser(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-product (onUserAddEvent)="onUserAddEvent($event, i)" [removeClose]="true"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)"></app-add-product>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let upload of uploadProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-cloud-upload-alt" style="color: #4680ff;"> </i>&nbsp;Upload&nbsp;
+                                    <mat-icon (click)="removeUploadPage(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-files-upload></app-files-upload>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let charge of chargeCodeGroupArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-cloud-upload-alt" style="color: #4680ff;"> </i>&nbsp;
+                                    {{!currentPageGroupID ? 'Add' : ''}} Charge Code Group&nbsp;{{currentPageGroupID
+                                    ?'(' + currentPageGroupID + ')': ''}}&nbsp;
+                                    <mat-icon (click)="removeChargePage(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-charge-codes-group-datatable [action]="!currentPageGroupID ? 'Add' : 'Edit'"
+                                        (addEditSaveEvent)="removeChargePage(i)" [productData]="charge.ProductData"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)">
+                                    </app-charge-codes-group-datatable>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                        <ng-container *ngFor="let user of addVendorProductsArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-box-open" style="color: #4680ff;"></i>&nbsp;Add Vendor
+                                    Product&nbsp;
+                                    <mat-icon (click)="removeVendorProduct(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-vendor-product [vendorProductData]="user.vendorProductData" (onUserAddEvent)="onUserAddEvent($event, i)" (onAddVendorProductDestroy)="onAddVendorProductDestroy($event, i)"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)" [removeClose]="true" 
+                                        [disableStatus]="true" (emitRecordData)="emitRecordData($event)">
+                                    </app-add-vendor-product>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                        <ng-container *ngFor="let chargeCode of addChargeCodeArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i _ngcontent-tbo-c431="" class="fas fa-copyright"
+                                        style="color: #4680ff;"></i>&nbsp;Add Charge Code&nbsp;<mat-icon
+                                        (click)="removeAddChargeCodeTab(i)">cancel
+                                    </mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-charge-code [fromTab]="'add-charge'"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)"
+                                        (onAddChargeCodeComponentDestroy)="onAddChargeCodeComponentDestroy($event,i)"
+                                        (afterChargeCodeAdd)="removeAddChargeCodeTab(i)"
+                                        [chargeCodeData]='chargeCode.chargeCodeData'>
+                                    </app-add-charge-code>
+
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

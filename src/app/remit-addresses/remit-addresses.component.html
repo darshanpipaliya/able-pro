@@ -10,7 +10,7 @@
             </mat-expansion-panel-header>
             <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData" [rowSelection]="rowSelection"
                 [sheetName]="'Remit Addresses'" [exportFilename]="'Remit Addresses.xlsx'"
-                [suppressRowClickSelection]="true" [defaultColDef]="defaultColDef" [gridOptions]="gridOptions"
+                [defaultColDef]="defaultColDef" [gridOptions]="gridOptions"
                 (onCellValueChangedEvent)="onCellValueChangedEventFor($event)"
                 (onAgGridReadyEmit)="onAgGridReadyEmit($event)" (onAgGridReady)="onAgGridReady($event)"
                 (onCellDoubleClickedEvent)="onCellDoubleClicked($event)" [sideBar]="sideBar" [singleClickEdit]="true">

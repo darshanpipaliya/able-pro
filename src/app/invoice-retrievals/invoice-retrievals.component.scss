@@ -1,0 +1,659 @@
+button.fas.fa-check.c-refresh {
+    border: 0;
+    background: transparent;
+    padding: 0;
+}
+
+.fas.fa-check.c-refresh::before {
+    content: '\f021' !important;
+    font-size: 18px;
+    border: 1px solid #4680ff;
+    color: #4680ff;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button.close {
+    position: relative;
+    top: -10px;
+    right: -6px;
+    color: unset;
+}
+
+/* End Milestone */
+
+
+
+
+/* invoices tab space start */
+
+:host ::ng-deep .form-group {
+    margin-bottom: 10px !important;
+}
+
+:host ::ng-deep label.form-label,
+:host ::ng-deep label {
+    margin-bottom: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body,
+.mat-expansion-panel-body {
+    padding: 20px 20px 5px !important;
+}
+
+.mat-expansion-panel-content .form-control:disabled,
+.mat-expansion-panel-content .form-control[readonly] {
+    opacity: 0.6;
+    pointer-events: none !important;
+    cursor: default !important;
+    background-color: transparent;
+    padding: 8px 0 !important;
+    height: auto !important;
+}
+
+.mat-expansion-panel-content .form-control {
+    padding: 8px 0 !important;
+    height: auto !important;
+}
+
+
+/* invoices tab space end */
+
+.extra-action-button {
+    position: relative;
+    left: 65px;
+    top: 4px;
+}
+
+.cost-center-repository-btn-res {
+    gap: 10px;
+}
+
+::ng-deep {
+
+    .cost-centers-tab-group .grid-header-wrapper {
+        margin: -111px 0px 64px 0px !important;
+    }
+
+    .cost-center-repository-tab-group .grid-header-wrapper {
+        margin: 4px 0px 4px 0px !important;
+    }
+
+    .ccrepo-select-search-row {
+        margin: 5px 0px 0 63px;
+    }
+}
+
+.tooltip-custom-position {
+    .tooltip-icon {
+        display: block;
+    }
+
+    ::ng-deep .cost-center-tooltip {
+        transform: translateX(-100%) !important;
+        right: unset !important;
+        left: unset !important;
+        width: 600px;
+        margin-top: -15px;
+
+        &.bs-tooltip-left .arrow,
+        &.bs-tooltip-right .arrow {
+            top: 15px !important;
+        }
+
+        .tooltip-inner {
+            max-width: 100% !important;
+            background-color: #bbb;
+            color: #000;
+            background: #bbb;
+            // box-shadow: 0px 0px 4px rgb(0, 0, 0);
+            opacity: 1 !important;
+
+        }
+
+        .tooltip.in {
+            opacity: 1 !important;
+        }
+    }
+}
+
+// }
+.search-button {
+    border-radius: 3px;
+}
+
+.cost-center-info-data {
+    color: #000000 !important;
+
+    h6 {
+        color: #000000 !important;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+
+    div {
+        margin-top: 1rem;
+        font-weight: 500;
+    }
+
+    span {
+        font-weight: 700;
+    }
+}
+
+.cost-center-info-circle {
+    color: #4680ff !important;
+    cursor: pointer;
+}
+
+.cost-center-search-bar {
+    margin-top: 1.0rem;
+}
+
+.cost-center-repository-search-bar {
+    margin-top: .67rem;
+}
+
+.btn-color-gray {
+    background-color: #dfdfdf;
+    border-color: #bbbfc7;
+    // color: #fff;
+}
+
+:host ::ng-deep mat-tab-body {
+    margin-bottom: 0 !important;
+}
+
+::ng-deep .tooltip-opacity.tooltip.show {
+    opacity: 1;
+}
+
+.tem-select {
+    // position: absolute;
+    left: 150px;
+    z-index: 99;
+    top: 3px;
+    // width: 25%;
+    width: 250px !important;
+    border: 1px solid #babfc7;
+}
+
+.search-button {
+    position: absolute;
+    // left: calc(150px + 26%);
+    z-index: 99;
+    top: 3px;
+    width: auto;
+    border-radius: 3px;
+}
+
+.invoice-cost-centers-btn-group .custom-select {
+    width: 250px !important;
+}
+
+::ng-deep .invoice-billing-account-btn-group .grid-header-wrapper {
+    margin: -42px 0 10px 0 !important;
+}
+
+.invoice-billing-account-btn-all {
+    margin-left: 160px;
+    margin-right: 15px;
+    margin-top: 3px;
+}
+
+
+.tem-search-set {
+    margin-left: 51px;
+}
+
+.active-cost-center-btn {
+    margin-bottom: 50px;
+}
+
+.month-width {
+    width: 150px;
+}
+
+:host ::ng-deep .mat-tab-body-content {
+    transform: unset !important;
+    overflow: hidden;
+}
+
+:host ::ng-deep #cost-center-table-tab .mat-tab-body.mat-tab-body-active {
+    top: 0 !important;
+}
+
+.btn-group-list1 {
+    padding: 0 15px;
+    margin-top: 2px !important;
+    position: absolute;
+    right: 23px;
+    top: auto;
+    z-index: 2 !important;
+}
+
+.btn.btn-icon {
+    width: 40px;
+    height: 40px;
+}
+
+:host ::ng-deep #billing-account-table-tab .mat-tab-body.mat-tab-body-active,
+#billing-account-table-tab .mat-tab-body.mat-tab-body-active {
+    top: 0 !important;
+}
+
+:host ::ng-deep #billing-account-table-tab .mat-tab-body.mat-tab-body-active {
+    top: 0 !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 12px !important;
+}
+
+:host ::ng-deep #invoice-retrieval-table-tab .mat-tab-body.mat-tab-body-active {
+    top: 0 !important;
+}
+
+
+.table-responsive {
+    position: relative;
+    overflow-x: visible;
+}
+
+.table-responsive::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 519px;
+    background-color: #e0e0e0;
+    top: 48px;
+    right: 0;
+}
+
+:host ::ng-deep #invoice-retrieval-table-tab .mat-tab-header {
+    // width: calc(100% - 48px) !important;
+    width: calc(100% - 96px) !important;
+    // width: calc(100% - 497px) !important;
+    position: relative;
+}
+
+:host ::ng-deep #invoice-retrieval-table-tab.mat-tab-header-edit .mat-tab-header,
+:host ::ng-deep #invoice-retrieval-table-tab.mat-tab-header-add .mat-tab-header,
+:host ::ng-deep #cost-center-table-tab.mat-tab-header-edit .mat-tab-header,
+:host ::ng-deep #cost-center-table-tab.mat-tab-header-add .mat-tab-header {
+    width: 100% !important;
+    position: relative;
+}
+
+:host ::ng-deep #cost-center-table-tab .mat-tab-header {
+    width: calc(100% - 497px) !important;
+}
+
+
+:host ::ng-deep #invoice-retrieval-table-tab.account-note-header>mat-tab-header.mat-tab-header {
+    width: calc(100% - 290px) !important;
+}
+
+.invoice-processing-btn button {
+    white-space: nowrap;
+    padding: 10px 19px;
+    height: fit-content;
+}
+
+/* header step start */
+
+:host ::ng-deep .p-steps-main {
+    width: 100%;
+
+    ::-webkit-scrollbar {
+        height: 3px;
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        -webkit-border-radius: 1ex;
+    }
+
+    ul {
+        overflow-x: auto;
+
+        li.p-steps-item {
+
+            &:nth-of-type(1):before {
+                width: 50%;
+                right: 0;
+                left: auto;
+            }
+
+            &:last-child:before {
+                width: 50%;
+
+            }
+
+            a:focus {
+                outline: none;
+                box-shadow: none !important;
+            }
+
+            .p-steps-title {
+                font-size: 14px;
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                letter-spacing: normal;
+                font-weight: 500;
+                margin-top: 4px !important;
+                margin-bottom: 0;
+                color: #181d1f !important;
+                // white-space: nowrap;
+                padding-inline: 5px;
+                text-align: center;
+            }
+
+            .p-menuitem-link {
+                width: 187px !important;
+            }
+
+            .p-menuitem-link .p-steps-number {
+                background: #bababa;
+                min-width: 1.5em;
+                // height: 1.5em;
+                // line-height: 1.5em;
+                font-size: 16px;
+                position: relative;
+            }
+        }
+
+        .p-steps-item:before {
+           top: 32px;
+        }
+    }
+
+    .success-step {
+        .p-menuitem-link .p-steps-number::before {
+            content: '\f058' !important;
+            position: absolute !important;
+            font-family: "Font Awesome 5 Free" !important;
+            font-weight: 900 !important;
+            background: #fff !important;
+            font-size: 24px;
+            color: #93C47D;
+        }
+    }
+
+    .danger-step {
+        .p-menuitem-link .p-steps-number::after {
+            content: '\f057' !important;
+            position: absolute !important;
+            font-family: "Font Awesome 5 Free" !important;
+            font-weight: 900 !important;
+            background: #fff !important;
+            font-size: 24px;
+            color: #CF2A27;
+        }
+    }
+}
+
+svg.sandbox-step-1-tab-icon {
+    height: 16px;
+}
+
+/* Sandbox Start */
+
+span.step-num-circle {
+    display: flex;
+    align-items: center;
+
+    h5 {
+        margin-bottom: 0;
+        background: #bababa;
+        min-width: 1.5em;
+        height: 1.5em;
+        line-height: 1.5em;
+        font-size: 14px;
+        color: #495057;
+        border: 1px solid #e9ecef;
+        border-radius: 50%;
+        font-weight: 400;
+        margin-left: 5px;
+    }
+}
+
+.fas.fa-check.c-check-circle {
+    display: block;
+}
+
+.fas.fa-check.c-check-circle::before {
+    content: '\f058' !important;
+    position: absolute;
+    display: block;
+    font-weight: 300;
+    font-size: 30px;
+    right: 0;
+    top: 10px;
+    color: #4680ff;
+    cursor: pointer;
+}
+
+.btn.btn-outline-primary.active .fa-calendar-plus.ir-c-icon,
+.btn.btn-outline-primary:hover .fa-calendar-plus.ir-c-icon,
+.btn.btn-outline-primary .fa-calendar-plus.ir-c-icon {
+    color: transparent;
+    transition: all 0.3s;
+        position: relative;
+    top: 2px;
+    font-size: 24px;
+    margin-right: 22px;
+}
+
+.btn.btn-outline-primary.active .fa-calendar-plus.ir-c-icon::before,
+.btn.btn-outline-primary:hover .fa-calendar-plus.ir-c-icon::before {
+    background-image: url('../../assets/images/Invoice-Retrieval-white.png') !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: -18px;
+}
+
+.btn.btn-outline-primary .fa-calendar-plus.ir-c-icon::before {
+    // font-size: 22px;
+    background-image: url('../../assets/images/Invoice-Retrieval-blue.png') !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: -18px;
+}
+
+.bbtn.btn.btn-outline-primary.active .fa-calendar-plus.ip-c-icon,
+.bbtn.btn.btn-outline-primary:hover .fa-calendar-plus.ip-c-icon,
+.bbtn.btn.btn-outline-primary .fa-calendar-plus.ip-c-icon,
+.bbtn.btn.btn-outline-primary.active .fa-calendar-plus.ccs-c-icon,
+.bbtn.btn.btn-outline-primary:hover .fa-calendar-plus.ccs-c-icon,
+.bbtn.btn.btn-outline-primary .fa-calendar-plus.ccs-c-icon {
+    color: transparent;
+    transition: all 0.3s;
+    position: relative;
+    top: 2px;
+    font-size: 24px;
+    margin-right: 22px;
+}
+
+.bbtn.btn.btn-outline-primary.active .fa-calendar-plus.ip-c-icon::before,
+.bbtn.btn.btn-outline-primary:hover .fa-calendar-plus.ip-c-icon::before {
+    background-image: url('../../assets/images/ip-img-white.png') !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: -18px;
+}
+
+.bbtn.btn.btn-outline-primary .fa-calendar-plus.ip-c-icon::before {
+    // font-size: 22px;
+    background-image: url('../../assets/images/ip-img-blue.png') !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: -18px;
+}
+
+
+.bbtn.btn.btn-outline-primary.active .fa-calendar-plus.ccs-c-icon::before,
+.bbtn.btn.btn-outline-primary:hover .fa-calendar-plus.ccs-c-icon::before {
+    background-image: url('../../assets/images/cost-center-structures-white.svg') !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: -18px;
+}
+
+.bbtn.btn.btn-outline-primary .fa-calendar-plus.ccs-c-icon::before {
+    // font-size: 22px;
+    background-image: url('../../assets/images/cost-center-structures.svg') !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: -18px;
+    // color: transparent;
+}
+
+
+.bbtn.btn.btn-outline-primary.active .fa-camera.fas::before,
+.bbtn.btn.btn-outline-primary:hover .fa-camera.fas::before {
+    background-image: url('../../assets/fonts/webcam.svg') !important;
+    color: transparent;
+    transition: all 0.3s;
+}
+
+.bbtn.btn.btn-outline-primary .fa-camera.fas::before {
+    background-image: url('../../assets/fonts/webcam-normal.svg') !important;
+    color: transparent;
+    transition: all 0.3s;
+}
+
+button.cost-center-res-btn {
+    padding: 10px !important;
+    margin-top: 5px;
+    font-size: 13px;
+    line-height: 0;
+    font-family: "Poppins", sans-serif !important;
+}
+
+button.cc-upload-file-btn {
+    color: #fff;
+    position: absolute;
+    right: 0;
+    top: 6px;
+    align-items: center;
+    z-index: 10;
+}
+
+.sb-header-milestone-sec{
+    margin: 8px auto 5px; 
+}
+
+@media only screen and (max-width: 1810px) {
+    :host ::ng-deep ul li.p-steps-item {
+        .p-steps-title {
+            font-size: 12px !important;
+        }
+    }
+
+    :host ::ng-deep .p-steps-main ul li.p-steps-item .p-menuitem-link {
+        width: 151px !important;
+    }
+}
+
+@media only screen and (max-width: 1740px) {
+    .invoice-processing-btn {
+        flex-wrap: wrap;
+    }
+}
+
+/* headet step End */
+
+@media only screen and (max-width: 1600px) {
+    .invoice-processing-btn {
+
+        button,
+        select {
+            font-size: 13px !important
+        }
+    }
+
+    .sb-header-milestone-sec{
+        width: 100%; 
+        overflow: auto;
+    }
+    
+}
+
+@media only screen and (max-width: 1510px) {
+    :host ::ng-deep .p-steps-main ul li.p-steps-item .p-menuitem-link{
+        width: auto !important;
+    }
+
+    :host ::ng-deep .p-steps-main ul li.p-steps-item .p-steps-title{
+        padding-inline: 10px !important;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .btn.btn-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .header-btn-responsive button,
+    .header-btn-responsive .custom-select,
+    .active-cost-center-btn button {
+        padding: 8px 12px;
+        height: fit-content;
+    }
+
+    button.cost-center-res-btn {
+        padding: 6px !important;
+        height: fit-content;
+        margin-top: 2px;
+    }
+
+
+    :host ::ng-deep .mat-tab-label {
+        height: 40px !important;
+    }
+
+    .table-responsive::after {
+        top: 40px;
+    }
+
+    button.cc-upload-file-btn {
+        top: 0
+    }
+
+
+    :host ::ng-deep #cost-center-table-tab .mat-tab-header {
+        width: calc(100% - 459px) !important;
+        position: relative;
+    }
+
+    :host ::ng-deep ul li.p-steps-item {
+        .p-steps-title {
+            font-size: 12px;
+        }
+    }
+
+    .fas.fa-check.c-check-circle::before {
+        top: 5px;
+    }
+}

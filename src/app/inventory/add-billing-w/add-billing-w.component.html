@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="accordian-section">
+            <div class="mt-2">
+                <mat-accordion class="example-headers-align">
+                    <app-billing-l-p-table [rowData]="rowData" [pageName]="'inventory-tab'" [fromTab]="pagename">
+                    </app-billing-l-p-table>
+                </mat-accordion>
+            </div>
+            <div class="mt-2">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                        <div class="accordian-btn-group">
+                            <button title="Edit Cost Center Structures" type="button" *ngIf="!temRoles" (click)="redirectToCCS()"
+                                [disabled]="!stopSpinner1 || rowDataCCS?.length < 1"
+                                class="btn btn-icon btn-outline-warning service-tab-btn"><i
+                                    class="fas fa-edit fs-14"></i></button>
+                            <button type="button" class="fas fa-check c-refresh" title="Refresh" (click)="getCostCenterStructure()"></button>
+                        </div>
+                        <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="23px"
+                                    viewBox="0 0 211.000000 175.000000" preserveAspectRatio="xMidYMid meet">
+
+                                    <g transform="translate(0.000000,175.000000) scale(0.100000,-0.100000)"
+                                        fill="#4680ff" stroke="none">
+                                        <path d="M190 1669 c-52 -16 -95 -53 -119 -103 -21 -42 -22 -56 -19 -299 l3
+                                   -255 30 -43 c57 -80 74 -84 360 -84 286 0 303 4 360 84 l30 43 0 268 0 268
+                                   -30 43 c-56 79 -76 84 -345 86 -138 1 -250 -2 -270 -8z m529 -59 c27 -13 46
+                                   -33 60 -63 19 -40 21 -60 21 -267 0 -207 -2 -227 -21 -267 -38 -78 -59 -83
+                                   -334 -83 -275 0 -296 5 -334 83 -19 40 -21 60 -21 267 0 207 2 227 21 267 37
+                                   77 56 82 332 83 217 0 241 -2 276 -20z" />
+                                        <path d="M324 1471 c-11 -5 -33 -23 -47 -41 -26 -30 -27 -36 -27 -151 l0 -119
+                                   34 -38 34 -37 127 0 127 0 34 37 34 38 0 120 0 120 -34 38 -34 37 -114 2 c-62
+                                   2 -122 -1 -134 -6z m251 -66 c23 -22 25 -31 25 -125 0 -94 -2 -103 -25 -125
+                                   -23 -23 -31 -25 -130 -25 -99 0 -107 2 -130 25 -23 22 -25 31 -25 125 0 94 2
+                                   103 25 125 23 23 31 25 130 25 99 0 107 -2 130 -25z" />
+                                        <path d="M950 1356 l0 -26 215 0 c195 0 220 -2 254 -20 62 -31 81 -82 81 -218
+                                   0 -107 1 -112 21 -112 20 0 20 4 17 134 -3 131 -4 135 -33 177 -55 77 -78 84
+                                   -332 87 l-223 3 0 -25z" />
+                                        <path d="M1390 869 c-52 -16 -95 -53 -119 -103 -21 -42 -22 -56 -19 -299 l3
+                                   -255 30 -43 c57 -80 74 -84 360 -84 286 0 303 4 360 84 l30 43 0 268 0 268
+                                   -30 43 c-56 79 -76 84 -345 86 -138 1 -250 -2 -270 -8z m529 -59 c27 -13 46
+                                   -33 60 -63 19 -40 21 -60 21 -267 0 -207 -2 -227 -21 -267 -38 -78 -59 -83
+                                   -334 -83 -275 0 -296 5 -334 83 -19 40 -21 60 -21 267 0 207 2 227 21 267 37
+                                   77 56 82 332 83 217 0 241 -2 276 -20z" />
+                                        <path d="M1524 671 c-11 -5 -33 -23 -47 -41 -26 -30 -27 -36 -27 -151 l0 -119
+                                   34 -38 34 -37 127 0 127 0 34 37 34 38 0 120 0 120 -34 38 -34 37 -114 2 c-62
+                                   2 -122 -1 -134 -6z m251 -66 c23 -22 25 -31 25 -125 0 -94 -2 -103 -25 -125
+                                   -23 -23 -31 -25 -130 -25 -99 0 -107 2 -130 25 -23 22 -25 31 -25 125 0 94 2
+                                   103 25 125 23 23 31 25 130 25 99 0 107 -2 130 -25z" />
+                                        <path d="M552 646 c3 -131 4 -135 33 -177 55 -77 78 -84 333 -87 l222 -3 0 25
+                                   0 26 -215 0 c-195 0 -220 2 -254 20 -62 31 -81 82 -81 218 0 107 -1 112 -21
+                                   112 -20 0 -20 -4 -17 -134z" />
+                                    </g>
+                                </svg>&nbsp;Cost Center Structures
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <i tooltipclass="tooltip-bg" (click)="openTooltip()"
+                            class="fas fa-info-circle ml-1 position-header"></i>
+                        <ng-template #ccStructure>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                                <p class="mb-0">This shows the structure applied to the most recent invoice, as
+                                    displayed in the Invoice Summary above.
+                                </p>
+                            </div>
+                        </ng-template>
+                        <div class="row">
+                            <div class="col-md-12 px-0">
+
+                                <ng-container *ngIf="!stopSpinner1">
+                                    <div class="spinner-border text-primary"
+                                        style="margin-top:10px; margin-bottom: 10px; margin-left: calc(50% - 28px); width: 3.5rem !important;height: 3.5rem !important;"
+                                        role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container style="height: max-content;" *ngIf="stopSpinner1">
+                                    <app-ag-grid-table [excelBtnEnable]="true" [pageName]="'cost center structure'"
+                                        [columnDefs]="columnDefs2" [rowMultiSelectWithClick]="true"
+                                        [rowData]="rowDataCCS" [rowSelection]="'single'"
+                                        [sheetName]="'Charge Code Type'" [defaultColDef]="defaultColDef"
+                                        [sideBar]="sideBar" [singleClickEdit]="true">
+                                    </app-ag-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+</div>

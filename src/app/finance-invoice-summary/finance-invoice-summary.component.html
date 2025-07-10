@@ -1,0 +1,135 @@
+<div class="row">
+    <div class="col-12">
+
+        <div class="summary-total-main">
+            <app-invoice-overview-i [gridRowData]="gridRowData"
+                (invoiceOverviewDataOutput)="overviewDetail($event)"></app-invoice-overview-i>
+        </div>
+
+        <div class="invoice-overview-main">
+            <div class="row mx-0">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                    <div class="io-main">
+                        <div class="invoice-overview-wrapper">
+                            <div class="invoice-overview-left">
+                                <div class="invoice-overview-label">
+                                    <h2>Cost Overview</h2>
+                                </div>
+                            </div>
+                            <div class="invoice-overview-right">
+                                <div class="billing-detail-group">
+                                    <ul class="list-group">
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Total Current Charges </h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.TotalCurrentCharges}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Invoice Amount To Pay</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.AmountToPay}}</p>
+                                            </div>
+                                        </li>
+
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Previous Charges</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.PrevBillBalance}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Past Due</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.PastDueAmount}}</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Difference %</h3>
+                                                <p>{{invoiceOvervewData?.DifferencePerSantage}} %</p>
+                                            </div>
+                                            <div>
+                                                <h3>Pay Past Due?</h3>
+                                                <p>{{invoiceOvervewData?.PayPastdueDisplay}}</p>
+                                            </div>
+                                        </li>
+
+                                        <!-- <li class="list-group-item">
+                                        <div>
+                                            <h3>Difference $</h3>
+                                            <p style="position: relative; bottom: 1px;">{{invoiceOvervewData?.CurrencySymbol}} {{invoiceOvervewData?.Difference}}</p>
+                                        </div>
+                                        <div>
+                                            <h3>Last Payment</h3>
+                                            <p>{{invoiceOvervewData?.CurrencySymbol}} {{invoiceOvervewData?.PaymentAmount}}</p>
+                                        </div>
+                                    </li> -->
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Difference $</h3>
+                                                <p style="position: relative; bottom: 1px;">
+                                                    {{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.Difference}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Last Payment</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}}
+                                                    {{invoiceOvervewData?.PaymentAmount}}</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="list-group-item">
+                                            <div>
+                                                <h3>Average Last 3 Months</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}} {{costOverviewData &&
+                                                    costOverviewData[0]?.AvgTotalCurrentCharges}}</p>
+                                            </div>
+                                            <div>
+                                                <h3>Highest Last 3 Months</h3>
+                                                <p>{{invoiceOvervewData?.CurrencySymbol}} {{costOverviewData &&
+                                                    costOverviewData[0]?.HighestTotalCurrentCharges}}</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="graph-main">
+                            <div class="card mb-0">
+                                <!-- <p-chart type="bar" [data]="basicData" [options]="basicOptions" [width]="180"
+                                    [responsive]="true"></p-chart> -->
+
+                                    <div id="charge_overview_chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 px-0">
+                <mat-card class="accordion-grid pb-0">
+                    <mat-card-content>
+
+                        <mat-accordion class="example-headers-align">
+                            <div>
+
+                                <app-invoice-summary-p-table [rowData]="gridRowData"
+                                    (redirectTab)="redirectTab1($event)" (onRowDataLength)="onRowDataLength1($event)"
+                                    (stopSpinnerEvent)="stopSpinnerEvent1($event)"></app-invoice-summary-p-table>
+
+                            </div>
+                        </mat-accordion>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,307 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card>
+            <mat-card-content class="f-child">
+                    <div class="col-sm-12 col-xl-12 text-right pt-2" style="margin-bottom: -20px;">
+                        <span class="text-c-red">*Required field</span>
+                    </div>
+                    <div class="col-sm-12 col-xl-12 col-md-12 ">
+                        <mat-accordion class="example-headers-align">
+                            <div class="row m-t-20 vendor-product-main-section">
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true" class="border-none">
+
+                                    <div class="vp-overview-main">
+
+                                        <div class="row mx-0">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                                                <div class="vp-overview-wrapper">
+                                                    <div class="vp-overview-left">
+                                                        <div class="vp-overview-label">
+                                                            <h2>Vendor Product Overview </h2>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="vp-overview-right">
+                                                        <ul class="list-group">
+
+                                                            <li class="list-group-item">
+                                                                <div>
+                                                                    <h3>Vendor Product Name </h3>
+                                                                    <p>{{vendorProductDetails?.Name}}</p>
+                                                                </div>
+
+                                                                <div>
+                                                                    <h3>Vendor </h3>
+                                                                    <p>{{vendorProductDetails?.VendorAccount?.AccountName}}
+                                                                    </p>
+                                                                </div>
+                                                            </li>
+
+                                                            <li class="list-group-item">
+                                                                <div>
+                                                                    <h3>Industry</h3>
+                                                                    <p>{{vendorProductDetails?.IndustryName}}</p>
+                                                                </div>
+
+                                                                <div>
+                                                                    <h3>Vendor Product Description</h3>
+                                                                    <p>{{vendorProductDetails?.Description}}</p>
+                                                                </div>
+                                                            </li>
+
+                                                            <li class="list-group-item">
+                                                                <div>
+                                                                    <h3>Service</h3>
+                                                                    <p>{{vendorProductDetails?.ServiceName}}</p>
+                                                                </div>
+
+                                                                <div>
+                                                                    <h3>Product</h3>
+                                                                    <p>{{vendorProductDetails?.ProductName}}</p>
+                                                                </div>
+                                                            </li>
+
+                                                            <li class="list-group-item">
+                                                                <div>
+                                                                    <h3>Service Type</h3>
+                                                                    <p>{{vendorProductDetails?.ServiceTypeName}}</p>
+                                                                </div>
+
+                                                                <div>
+                                                                    <h3>Product Type</h3>
+                                                                    <p>{{vendorProductDetails?.ProductTypeName}}</p>
+                                                                </div>
+                                                            </li>
+
+                                                            <li class="list-group-item">
+                                                                <div>
+                                                                    <h3>Inventory Assignment </h3>
+                                                                    <p>{{vendorProductDetails?.ReconAssigmentsName}}</p>
+                                                                </div>
+
+                                                                <div>
+                                                                    <h3>Status</h3>
+                                                                    <p>{{vendorProductDetails?.StatusValue}}</p>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+
+
+
+                    <div class="row mx-0 select-ccb-box">
+                        <div class="col-xl-6 col-md-12 col-sm-12 px-0 padding-left-none">
+                            <div class="accordion-grid">
+                                <mat-accordion
+                                    class="example-headers-align ccg-build build-charge-code-group-accordian">
+                                    <mat-expansion-panel style="width: 100%;" [expanded]="true"
+                                        class="select-charge-table-bottom-space">
+                                        <mat-expansion-panel-header class="math">
+                                            <mat-panel-title class="matt">
+                                                <i class="fa fa-layer-group"></i>&nbsp;Select Charge Codes for Group
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <i class="fas fa-info-circle" (click)="openDialog()"></i>
+                                        <div class="col-xl-12 col-md-12 build-charge-code-group p-table-c"
+                                            style="margin: 0px;">
+                                            <p-table #dt style="border-radius: 4px !important;" [columns]="columnOne"
+                                            [metaKeySelection]="true" dataKey="ChargeCodeId" 
+                                            selectionMode="multiple" [resizableColumns]="true"
+                                                [value]="chargeCodeDataArr" [(selection)]="selectedCCVLeft">
+                                                <ng-template pTemplate="header" let-columns>
+                                                    <tr>
+                                                        <th class="font-p-table-header">
+                                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                        </th>
+                                                        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" pResizableColumn>
+                                                            {{ col.header }} <p-sortIcon field="{{col.field}}" > </p-sortIcon>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th *ngFor="let col of columns">
+                                                            <p-columnFilter (input)="dt.filter($event.srcElement.value,col.field,'contains');" type="text" field="{{col.field}}"></p-columnFilter>
+                                                        </th>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                                    <tr>
+                                                        <td>
+                                                            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                                        </td>
+                                                        <td *ngFor="let col of columns">
+                                                            <div [ngSwitch]="col.field">
+                                                                <div *ngSwitchDefault>{{rowData[col.field]}}</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="emptymessage">
+                                                    <tr>
+                                                        <td colspan="7" class="text-center no-row-to-show"><span>No Row To Show</span></td>
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
+
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                            <div class="" style="text-align: center;">
+                                <button ngDefaultControl class="bbtn btn btn-primary btn-raised btn-sm w-100"
+                                    type="button"
+                                    [disabled]="!selectedCCVLeft.length"
+                                    (click)="leftToRightDataMove()">
+                                    Add
+                                    
+                                </button>
+
+                            </div>
+
+                        </div>
+                        <div class="col-xl-6 col-md-12 col-sm-12 px-0 padding-right-none">
+                            <div class="accordion-grid mt-10">
+                                <mat-accordion
+                                    class="example-headers-align ccg-build build-charge-code-group-accordian">
+                                    
+                                        <mat-expansion-panel style="width: 100%;" [expanded]="true"
+                                            class="margin-bottom-none">
+                                            <mat-expansion-panel-header class="math">
+                                                <mat-panel-title class="matt">
+                                                    <i class="fa fa-layer-group"></i>&nbsp;Charge Code Group{{this.userData.GroupName ?  ': ' + this.userData.GroupName : ''}}
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="toggle-btn" *ngIf="action !== 'Add'">
+                                                <mat-slide-toggle (change)="toggle($event)" ngDefaultControl [(ngModel)]="isFilterData">{{isFilterData ? 'Active' :
+                                                  'Inactive'}}</mat-slide-toggle>
+                                            </div>
+                                            <i class="fas fa-info-circle" (click)="openTooltip()"></i>
+                                            <div
+                                                class="col-xl-12 col-md-12 build-charge-code-group check-box-size p-table-c">
+                                                
+                                                <p-table #dtt [value]="rightSideTableArr" [columns]="columnTwo" [resizableColumns]="true" 
+                                                selectionMode="multiple" [metaKeySelection]="true" dataKey="ChargeCodeId" tableStyleClass="tableBorder" [(selection)]="selectedCCVRight"
+                                                    [styleClass]="'build-charge-code-group-k, tableBorder'">
+                                                    <ng-template pTemplate="header" let-columns>
+                                                        <tr>
+                                                            <th class="font-p-table-header">
+                                                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                            </th>
+                                                            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" pResizableColumn>
+                                                                {{ col.header }} 
+                                                                <p-sortIcon *ngIf="col.field !== 'Parent' && col.field !== 'Required' " field="{{col.field}}" > </p-sortIcon> <!-- " -->
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th *ngFor="let col of columns">
+                                                                <p-columnFilter *ngIf="col.field !== 'Parent' && col.field !== 'Required' " (input)="dtt.filter($event.srcElement.value,col.field,'contains');" type="text" field="{{col.field}}"></p-columnFilter>
+                                                            </th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                                        <tr >
+                                                            <td>
+                                                                <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                                            </td>
+                                                            <td *ngFor="let col of columns">
+                                                                <ng-container [ngSwitch]="col.field">
+                                                                    <div *ngSwitchCase="'Parent'" style="display: flex; align-items: center;">
+                                                                        <input type="radio" [checked]="rowData.parent" name="group1" (change)="radioClick(rowIndex)" >
+                                                                    </div>
+                                                                    <div *ngSwitchCase="'Required'" style="display: flex; align-items: center;">
+                                                                        <input type="checkbox" [checked]="rowData.selected" (change)="CheckClick(rowIndex)" >
+
+                                                                    </div>
+                                                                    <div *ngSwitchDefault>{{rowData[col.field]}}</div>
+                                                                </ng-container>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="emptymessage">
+                                                        <tr>
+                                                            <td colspan="9" class="text-center">No Row To Show</td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                            </div>
+                                        </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                            <div class="" style="text-align: center;">
+
+                                <button ngDefaultControl class="bbtn btn btn-primary btn-raised btn-sm w-100"
+                                    type="button"
+                                    [disabled]="!selectedCCVRight.length"
+                                    (click)="rightToLeftDataMove()">
+                                    Remove
+                    
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12 col-xl-12 mb-0 mt-2 pb-1">
+                        <div class="text-center">
+                            <button type="submit" uiSref="work" class="btn btn-primary btn-raised" (click)="save()"
+                                [disabled]="saveButtonLoader">Save </button>
+                        </div>
+                    
+                    </div>
+
+                <!-- Change Log Section Start -->
+                <app-change-log *ngIf="action === 'Edit'" [title]="'Charge Code Group'" [chargeCodeGroupId]="userData.GroupXVendorProductTypeId" [changelogData]="changelogData" [logLoader]="logLoader" [column]="columns"
+                    [className]="'change-log-sec-multi2'"></app-change-log>
+
+                <!-- Change Log Section End -->
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+
+<ng-template #htmlContent>
+    <div class="mat-dialog-header">
+        <button type="button" class="close" (click)="closeTooltip()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="text-left cost-center-info-data">
+        <p>
+            To <b>Create or Edit</b> a Charge Code Group, select at least one Charge Code, then move it to the Charge
+            Code Group section by clicking the <b>Add</b> button.
+        </p>
+    </div>
+</ng-template>
+<ng-template #htmlContent2>
+    <div class="mat-dialog-header">
+        <button type="button" class="close" (click)="closeTooltip2()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="text-left cost-center-info-data">
+        <p>
+            Every Charge Code Group must have a designated <b>Parent Charge Code</b>, which is always required to form
+            the Vendor Product. Required Charge Codes within a group indicate that those codes must be included for the
+            system to identify and create the Vendor Product. Other Charge Codes in the group are optional and do not
+            need to be present to identify and create the Vendor Product, though they may be included in some form of
+            the Vendor Product. Ensure that the correct Charge Codes are marked as <b>Parent</b> or <b>Required</b> by
+            checking or unchecking the relevant options.
+        </p>
+        <p>
+            <b>Remove Charge Codes:</b> You can remove existing Charge Codes from the Group by selecting at least 1 and
+            selecting the <b>Remove</b> button.
+        </p>
+    </div>
+</ng-template>

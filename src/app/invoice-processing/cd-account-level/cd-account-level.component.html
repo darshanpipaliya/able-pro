@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="validate-summary-total-right sandbox-step-grid">
+      <mat-accordion class="example-headers-align accordion-toggle-btn-right">
+        <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+          <div class="inventory-sel-accordion-left-btn">
+            <!-- <button type="submit" class="btn btn-primary btn-raised">Add Correction</button> -->
+            <button type="submit" class="btn btn-primary btn-raised" (click)="AddCorrection()"
+              [disabled]="recordPublishedOrCompleted">Add
+              Correction</button>
+
+              <button type="button" class="fas fa-check c-refresh" title="Refresh" [ngClass]="{'disabled': recordPublishedOrCompleted}" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+          </div>
+
+          <mat-expansion-panel-header class="math">
+            <mat-panel-title class="matt">
+              <!-- <i class="ficon fas fa-puzzle-piece"></i> &nbsp; -->
+              <i class="ficon fas fa-tools"></i>&nbsp;Charge Detail by Billing ID and Account Level
+            </mat-panel-title>
+
+            <i class="fas fa-info-circle" (click)="openTooltipDialog()"></i>
+            <ng-template #tooltipText>
+              <div class="mat-dialog-header">
+                <button type="button" class="close" mat-dialog-close>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="text-left charge-detail-toolip">
+                <p class="mb-2"><b>Instructions for Adding Corrections </b></p>
+                <p class="mb-2">Charge corrections are necessary when there are missing credits, debits, or partial charges in the invoice details. To address these discrepancies, add the required credits or debits to resolve missing items or balance partial charges. All corrections will be recorded in the system and flagged accordingly. </p>
+                <ol style="list-style-type: decimal; font-size: 13px;" class="mb-2 pl-4">
+                  <li class="mb-2"><strong>Compare Charges</strong>
+                    <ol style="list-style-type: disc; font-size: 13px;" class="mb-2 pl-4"><li>Review the itemized charges by Billing ID listed in the invoice system and compare them with the PDF or data files.</li>
+                    <li>When possible, the system will indicate the amount of discrepancy for each Billing ID, helping you identify any missing charges or credits. </li></ol>
+                  </li>
+                  <li class="mb-2"><strong>Add Missing Charges or Credits</strong>
+                    <ol style="list-style-type: disc; font-size: 13px;" class="mb-2 pl-4"><li>Enter the missing charges or credits on the correction page, along with the appropriate charge code and distribution method.</li>
+                    <li>These entries will be saved in the system, and the difference will be recalculated.</li></ol>
+                  </li>
+                  <li class="mb-2"><strong>Select Billing IDs for Corrections</strong>
+                      <ol style="list-style-type: disc; font-size: 13px;" class="mb-2 pl-4"><li>Use the checkboxes to select the Billing ID(s) requiring a correction.</li>
+                      <li>For multiple Billing IDs needing the same correction, select one record for each Billing ID. The system will process the correction for each selected Billing ID individually.</li></ol>
+                  </li>
+
+                  <li class="mb-2"><strong>Account-Level Charges or Adjustments</strong>
+                    <ol style="list-style-type: disc; font-size: 13px;" class="mb-2 pl-4"><li>To add Account Level Charges or Adjustments, click the <b>Add Correction</b> button.</li>
+                    <li>Enter the charges on the correction page, select the <b>Account Charge Type</b>, assign a charge code, and create a distribution rule for the Account Charge being added.</li></ol>
+                </li>
+
+                  <li><strong>Limitations</strong>
+                      <ol style="list-style-type: disc; font-size: 13px;" class="mb-2 pl-4"><li>In some cases, the Vendor may not provide totals by Billing ID, making it impossible to display discrepancy information for certain sections. When this occurs, a comprehensive review of all charges will be required. If totals from the Vendor are unavailable, the <b>Difference</b> field will display --. </li>
+                      </ol>
+                  </li>
+              </ol>
+              </div>
+            </ng-template>
+          </mat-expansion-panel-header>
+
+          <div class="row">
+            <div class="col-md-12 px-0">
+              <ng-container style="height: max-content;">
+
+                <app-ag-grid-table  [excelBtnEnable]="true" [gridOptions]="gridOptions"
+                [rowData]="rowData" [rowSelection]="rowSelection" (onSelectionChangedEvent)="onSelectionChanged($event)"
+                [sheetName]="'Charge Code Type'" [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                [columnDefs]="columnDefs"
+                (onAgGridReady)="onAgGridReady($event)" (onAgGridReadyEmit)="onAgGridReadyEmit($event)">
+                </app-ag-grid-table>
+
+              </ng-container>
+            </div>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <!-- Change Log Section Start -->
+    <mat-accordion class="example-headers-align change-log-sec-multi">
+      <mat-expansion-panel style="width: 100%; margin: 10px 0 0 !important;" [expanded]="true" [disabled]="true"
+        class="padding-none">
+        <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getChargeValidationLog()" [ngClass]="{'disabled': recordPublishedOrCompleted}"></button>
+        <mat-expansion-panel-header class="math">
+          <mat-panel-title class="matt">
+            <img src="../../../../../../assets/images/fa-sharp-fas-fa-swap.svg" alt="Change Log Image">&nbsp;Charge
+            Validation Change Log
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="tbData">
+          <p-table [columns]="cols" [value]="tableData">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of cols">
+                  {{ col.header }}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-columns="columns">
+              <tr>
+                <td>
+                  {{ data.BillingId }}
+                </td>
+                <td>
+                  {{ data.MainAccountNumber }}
+                </td>
+                <td>
+                  {{ data.SubAccountNumber }}
+                </td>
+                <td>
+                  {{ currencyFormatter(data.ItemizedDetail, overviewData?.CurrencySymbol) }}
+                </td>
+                <td>
+                  {{ data.ChargeCodeType }}
+                </td>
+                <td>
+                  {{ data.ChargeCodeName }}
+                </td>
+                <td>
+                  {{ data.ChargeCode }}
+                </td>
+                <td>
+                  {{ convertToDateTime(data.CreationDate) }}
+                </td>
+                <td>
+                  {{ data.CreatedBy }}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <!-- Change Log Section End -->
+  </div>
+</div>

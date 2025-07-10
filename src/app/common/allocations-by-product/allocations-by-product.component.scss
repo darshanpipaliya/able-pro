@@ -1,0 +1,106 @@
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+.inventory-sel-accordion-left-btn {
+    position: absolute;
+    top: 3px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+
+    button {
+        padding: 4px 12px;
+    }
+}
+
+:host ::ng-deep .cost-center-accordian {
+
+    .mat-expansion-panel-body {
+        padding: 0 !important;
+
+        ag-grid-angular {
+            // height: 400px !important;
+            height: calc(100vh - 470px) !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+.m-b-8{
+    margin-bottom: 8px;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+    margin-left: 15px;
+}
+
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+button.fas.fa-check.c-refresh {
+    border: 0;
+    background: transparent;
+}
+
+.fas.fa-check.c-refresh::before {
+    content: '\f021' !important;
+    font-size: 18px;
+    border: 1px solid #212121;
+    border-radius: 50%;
+    padding: 5px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn.btn-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+:host ::ng-deep span.ag-cell-value {
+    white-space: pre !important;
+}
+  
+@media only screen and (max-width: 991px) {
+    .btn.btn-icon {
+      width: 35px;
+      height: 35px;
+    }
+}

@@ -1,0 +1,108 @@
+.math {
+    background: #80808061 !important;
+    height: 40px;
+    border-radius: 0;
+}
+
+.btn.btn-icon {
+    width: 35px !important;
+    height: 35px !important;
+}
+
+.btn-group-list{
+    position: absolute;
+    z-index: 10;
+    top: 3px;
+    left: 10px;
+}
+.assignment-grids{
+    position: relative;
+}
+
+
+mat-panel-title {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-right: 0px;
+}
+
+mat-expansion-panel {
+    border: solid;
+    border-radius: 8px;
+    margin-bottom: 12px !important;
+    border-color: #80808061;
+}
+
+mat-expansion-panel-header {
+    border-radius: 1px;
+}
+
+:host ::ng-deep .padding-t-none .mat-expansion-panel-body {
+    padding-top: 0 !important;
+}
+
+:host ::ng-deep .mat-accordion .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+/* Ag grid all check and check box  design start*/
+:host ::ng-deep .ag-header-select-all .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input,
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    opacity: 1 !important;
+    border-radius: 0.25em !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper::after {
+    opacity: 0 !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep.ag-theme-alpine .ag-checkbox-input-wrapper {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Ag grid all check and check box  design end*/
+
+:host ::ng-deep .mat-expansion-panel {
+    margin-bottom: 0 !important;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .grid-header-wrapper {
+    margin: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine {
+    padding-bottom: 0 !important;
+}
+
+:host ::ng-deep ag-grid-angular {
+    padding: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel .ag-root-wrapper {
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+  }

@@ -1,0 +1,45 @@
+<div class="row mx-0 mt-2">
+    <div class="col-sm-12 mb-15 px-0">
+        <ng-container style="height: max-content;">
+            <div class="row">
+                <div class="col-12 px-0">
+                    <mat-card class="accordion-grid py-0 ">
+                        <mat-card-content>
+                            <mat-accordion class="example-headers-align accordion-grid">
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                                    <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                                    <mat-expansion-panel-header class="math">
+                                        <mat-panel-title class="matt font-weight-bold">
+                                            <i class="fa fa-smile" style="color: #4680ff;"></i>&nbsp;Invoices to Reconcile
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="toggle-btn" *ngIf="isSuperTem || isTemUser">
+                                        <mat-slide-toggle (change)="toggle()" ngDefaultControl [(ngModel)]="isFilterData">{{isFilterData ? 'All Records' : 'My Records'}}</mat-slide-toggle>
+                                    </div>
+                                    <app-ag-grid-table [columnDefs]="columnDefs" [rowSelection]="rowSelection"
+                                        (onAgGridReady)="onAgGridReady($event)" [gridOptions]="gridOptions"
+                                        (onCellDoubleClickedEvent)="onCellDoubleClicked($event)"
+                                        (filterChanged)="onFilterChanged($event)"
+                                        (sortChanged)="onSortChanged($event)" [defaultColDef]="defaultColDef"
+                                        [isRelodButtonVisible]="false" [sheetName]="'Cost Center Structure'"
+                                        [exportFilename]="'Cost Center Structure.xlsx'" [sideBar]="sideBar"
+                                        [singleClickEdit]="true">
+                                    </app-ag-grid-table>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <div class="text-right mt-2 mr-3">
+                                            <span>
+                                                {{reconData}} {{reconData > 1 ? 'records' : 'record'}}
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

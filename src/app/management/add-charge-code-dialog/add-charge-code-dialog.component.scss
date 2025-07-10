@@ -1,0 +1,9 @@
+.mat-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e2e5e8;
+}
+.mat-dialog-content {
+    max-height: calc(100vh - 160px) !important;
+    padding: 0;
+}

@@ -1,0 +1,258 @@
+.row {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.fb2 {
+    border: solid;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border-color: #80808061;
+}
+
+.had {
+    margin-bottom: 10px;
+    margin-top: -1px;
+    border-top-right-radius: 11px;
+    border-top-left-radius: 11px;
+    height: 22px;
+}
+
+.hdec {
+    background: #80808061;
+}
+
+.sacc2 {
+    border-radius: 7px;
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+.mat-radio-group .mat-radio-button,
+.sacc2 .form-group.form-check {
+    margin-bottom: 2px !important;
+}
+
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+.ficon {
+    margin-top: 2px;
+}
+
+::ng-deep :host scroll-bar-css-selector {
+    background-color: green;
+}
+
+::ng-deep div.card {
+    margin-bottom: 0px !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    opacity: 0.5 !important;
+    background-color: transparent !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #4680ff !important;
+}
+
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #4680ff !important;
+}
+
+mat-radio-group mat-radio-button {
+    margin-bottom: 3px;
+}
+
+
+:host ::ng-deep.card .card-body {
+    padding: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body .row .col-md-6 {
+    padding-left: 1px !important;
+    padding-right: 3px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body .row .col-md-6:nth-child(2n + 2) {
+    padding-left: 3px !important;
+    padding-right: 1px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+    padding: 15px 5px 5px !important;
+}
+
+:host ::ng-deep .mat-accordion .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .form-group label {
+    float: left !important;
+}
+
+:host ::ng-deep .form-group label.float-right {
+    float: unset !important;
+}
+
+:host ::ng-deep .form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+:host ::ng-deep .row .role-padding {
+    padding: 0 3px 0 1px !important;
+}
+
+:host ::ng-deep .row .role-padding:last-child {
+    padding: 0 1px 0 3px !important;
+}
+
+:host ::ng-deep .row .role-padding:nth-of-type(1) .mat-radio-button{
+    display: unset !important;
+}
+
+:host ::ng-deep .row .role-padding:nth-of-type(1) .mat-radio-button:nth-of-type(1){
+    margin-left: 2px !important;
+}
+
+:host ::ng-deep .card-bottom-none .card,
+:host ::ng-deep .margin-b-none {
+    margin-bottom: 0 !important;
+}
+
+:host ::ng-deep .margin-top-10 {
+    margin-top: 10px !important;
+}
+
+:host ::ng-deep .mat-accordion>*:last-child:not(.mat-expansion-panel) .mat-expansion-panel-spacing {
+    margin-bottom: 10px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+    margin-bottom: 10px !important;
+}
+
+:host ::ng-deep #user-table-tab .mat-tab-body.mat-tab-body-active {
+    top: 0 !important;
+}
+
+:host ::ng-deep .fa-info-circle:before {
+    color: #4680ff !important;
+    cursor: pointer;
+}
+
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+  }
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep.was-validated .form-control:invalid,
+:host ::ng-deep.form-control.is-invalid {
+    background-image: none !important;
+}
+
+:host ::ng-deep .row .role-padding {
+    padding: 0 3px 0 1px !important;
+}
+
+:host ::ng-deep .row .role-padding:last-child {
+    padding: 0 1px 0 3px !important;
+}
+
+@media only screen and (max-width: 1199px) {
+    :host ::ng-deep .row .role-padding:nth-of-type(1) {
+        margin-bottom: 10px !important;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .margin-b-none button {
+        padding: 8px 12px;
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+
+    :host ::ng-deep .mat-expansion-panel-body .row .col-md-6 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    :host ::ng-deep .mat-expansion-panel-body .row .col-md-6:nth-child(2n + 2) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+}
+
+
+:host ::ng-deep .system-access-accordian .mat-expansion-panel-body {
+    padding: 10px 5px 10px !important;
+}
+
+.system-access-accordian  {
+
+    .sa-box-main {
+        display: flex;
+        gap: 8px;
+
+        .sa-box {
+            flex: auto;
+
+            .sa-box-header {
+                padding: 2px 10px;
+                background: #80808061;
+                border-top-right-radius: 6px;
+                border-top-left-radius: 6px;
+                text-align: center;
+            }
+
+            .sa-box-body {
+                padding: 5px 6px 3px;
+
+                mat-radio-button {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 567px) {
+    .system-access-accordian .sa-box-main {
+        flex-wrap: wrap;
+    }
+}

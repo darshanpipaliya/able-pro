@@ -1,0 +1,216 @@
+
+.summary-total-main {
+    padding: 20px 0 0;
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .invoice-overview-main {
+        margin-bottom: 25px;
+        background-color: #EAEAEA;
+        padding: 12px 10px 10px;
+        border-radius: 12px;
+        // border: 1px solid #181D1F;
+
+        li.list-group-item {
+            background-color: transparent;
+        }
+
+    }
+
+
+    .invoice-overview-label h2,
+    .validate-summary-total-label h2 {
+        font-size: 22px;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        letter-spacing: normal;
+        font-weight: 500;
+        margin-bottom: 0;
+        color: #181d1f;
+    }
+
+    .invoice-overview-right {
+
+        ul {
+            flex-direction: row;
+            display: flex;
+            justify-content: space-between;
+            overflow: auto;
+
+            li {
+                padding: 0 15px 0 0;
+                border: none;
+
+                h3 {
+                    font-size: 14px;
+                    font-family: Roboto, "Helvetica Neue", sans-serif;
+                    letter-spacing: normal;
+                    font-weight: 500;
+                    margin-bottom: 0;
+                    color: #181d1f;
+                    white-space: nowrap;
+                }
+
+                p {
+                    white-space: nowrap;
+                }
+
+                div:nth-of-type(1) {
+                    margin-bottom: 16px;
+                }
+
+                i {
+                    font-size: 24px;
+                }
+
+                img {
+                    width: 18px;
+                }
+            }
+        }
+    }
+
+    .validate-summary-total-main {
+
+        h3 {
+            font-size: 14px;
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+            letter-spacing: normal;
+            font-weight: 500;
+            margin-bottom: 0;
+            color: #181d1f;
+        }
+
+        .validate-summary-total-label,
+        .validate-summary-total-desc {
+            max-width: 600px;
+        }
+
+        .validate-summary-total-desc p {
+            font-size: 14px;
+        }
+
+        .pay-totals-details table {
+            max-width: 400px;
+            margin-bottom: 0;
+
+            thead {
+                tr {
+                    th {
+                        border: none;
+                        size: 14px;
+                        color: #181d1f;
+                        background: none;
+                        text-transform: none;
+                        text-align: end;
+                        padding: 0 0 15px 0;
+
+                    }
+
+                    :nth-child(2) {
+                        display: none;
+                    }
+                }
+            }
+
+            tr {
+                i {
+                    color: #059f11;
+                    font-size: 16px;
+                }
+
+                td {
+                    padding: 0 0 12px 0;
+                    border: none;
+                }
+
+                td.check-icon {
+                    width: 50px;
+                }
+
+                td:not(:first-child) {
+                    text-align: end;
+                }
+
+                &.total-amount td {
+                    padding: 0 0 40px 0;
+                }
+
+                &:not(:first-child) td.check-icon:last-child {
+                    display: none;
+                }
+            }
+        }
+
+        .edit-table {
+
+            thead {
+                tr {
+                    th {
+                        border: none;
+                        size: 14px;
+                        color: #181d1f;
+                        background: none;
+                        text-transform: none;
+                        text-align: end;
+                        padding: 0 0 15px 0;
+
+                    }
+
+                    :nth-child(2) {
+                        display: block !important;
+                    }
+                }
+            }
+
+            tr {
+                td:nth-child(2) {
+                    text-decoration: underline;
+                }
+
+                &:last-child td,
+                &:nth-last-child(3) td {
+                    text-decoration: none;
+                }
+
+                &:not(:first-child) td:last-child {
+                    display: block !important;
+                }
+            }
+        }
+
+        .mat-expansion-panel {
+            box-shadow: none;
+        }
+
+        .mat-expansion-panel-header {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 1199px) {
+
+    :host ::ng-deep .padding-1-3,
+    :host ::ng-deep .padding-1-1,
+    :host ::ng-deep .padding-3-1 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .summary-total-main {
+        // padding: 20px 0 0;
+
+        .invoice-overview-label h2,
+        .validate-summary-total-label h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .pay-totals-details table {
+            margin-right: auto;
+        }
+
+    }
+}

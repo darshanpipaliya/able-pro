@@ -1,0 +1,299 @@
+<div class="row m-0">
+    <div class="col-sm-12 col-xl-12 col-md-12 select-charge-code-build-charge-box sandbox-step-grid">
+        <mat-accordion style="width: 100%;" class="example-headers-align build-charge-code-group-accordian">
+
+            <mat-expansion-panel [expanded]="true" style="width: 100%;">
+                <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" [ngClass]="{'disabled': recordPublishedOrCompleted}" (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt">
+                        Select Inventory
+                    </mat-panel-title>
+
+                    <ng-template #tooltipText>
+                        <div class="mat-dialog-header">
+                            <button type="button" class="close" mat-dialog-close>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="text-left">
+                            <p class="mb-2">
+                                When a vendor bills a single product across two separate accounts, it can be
+                                complicated. For example, access for a circuit might be billed on one invoice and
+                                account, while the ports are billed on another invoice and account. This page will help
+                                you consolidate these into a single vendor product.</p>
+
+                            <p class="mb-0">Select a vendor product in inventory that is being billed on another account
+                                to add the additional charge codes from the current invoice. The vendor product must be
+                                associated with the same vendor and VBA to create a unified product. Use the grid below
+                                to add the new charge codes to the existing vendor product in inventory </p>
+                        </div>
+                    </ng-template>
+                </mat-expansion-panel-header>
+                <i class="fas fa-info-circle inventory-tooltip" (click)="openDialog()"></i>
+                <div class="row">
+                    <div class="col-md-12 px-0">
+
+                        <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefsn"
+                            [gridOptions]="gridOptions" (onAgGridReady)="onAgGridReady($event)"
+                            (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                            (onSelectionChangedEvent)="onSelectionChangedLeft($event)" [rowSelection]="rowSelection"
+                            [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                            [singleClickEdit]="true">
+                        </app-ag-grid-table>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <div class="col-sm-12 col-xl-12 col-md-12 my-2" style="text-align: center;">
+            <button class="btn btn-primary btn-raised btn-sm" type="button"
+                [disabled]="!selectedCCVLeft.length || recordPublishedOrCompleted || disabledAddBtn"
+                (click)="leftToRightDataMove()">
+                Add
+                <i class="fas fa-angle-down"> </i>
+            </button>
+            <button class="btn btn-primary btn-raised btn-sm ml-2" type="button"
+                [disabled]="!selectedCCVRight.length || disable || recordPublishedOrCompleted"
+                (click)="rightToLeftDataMove()">
+                Remove
+                <i class="fas fa-angle-up"> </i>
+            </button>
+        </div>
+
+        <mat-accordion style="width: 100%;" class="example-headers-align ccg-build build-charge-code-group-accordian">
+            <mat-expansion-panel [expanded]="true" class="margin-bottom-none border-none-table assign-parent-acc"
+                style="margin-bottom: 0 !important;">
+                <mat-expansion-panel-header class="math">
+                    <mat-panel-title class="matt">
+                        Assignment
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <i class="fas fa-info-circle inventory-tooltip" (click)="openDialog2()"></i>
+                <ng-template #tooltipText2>
+                    <div class="mat-dialog-header">
+                        <button type="button" class="close" mat-dialog-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="text-left dialog-data-fontSize-13">
+                        <p class="mb-0">This grid is here to allows us to do 2 things.  First it allows the ability to select a vendor product to be assigned to charge records when the charge records on a billing id are not the correct charge records to identify a vendor product.  Second it allows us to build parent child relationships with inventory when we have billing ids on 2 separate payable account numbers that make up a single vendor product.  </p>
+                    </div>
+                </ng-template>
+
+             
+                <!-- *ngIf="!assignParentLoader && this.files.length > 0" -->
+                 
+            
+                    <!-- <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs1" [rowData]="rowData1"
+                        [pageName]="'assignVendorProduct'" [frameworkComponents]="frameworkComponents"
+                        (onSelectionChangedEvent)="onSelectionChangedRight($event)" [rowSelection]="rowSelection1"
+                        [suppressRowClickSelection]="true" [defaultColDef]="defaultColDef" [sideBar]="sideBar"
+                        [singleClickEdit]="true">
+                    </app-ag-grid-table>
+                    <div *ngIf="showMessage">
+                        <mat-error style="font-size: 12px;">Parent is required
+                        </mat-error>
+                    </div> -->
+                  
+
+                    <!-- <p-progressSpinner *ngIf="isLoading" styleClass="custom-spinner"></p-progressSpinner>  [loading]="isLoading" -->
+
+                    <p-treeTable #treeTable [value]="originalFiles" columnResizeMode="expand" [columns]="displaycols" sortMode="multiple" 
+                    [rows]="10" [lazy]="false" (onLazyLoad)="loadNodes($event, true)" [totalRecords]="totalRecords"
+                    [scrollable]="true" [resizableColumns]="true" selectionMode="checkbox" selectionMode="single"
+                    [reorderableColumns]="true" (onColResize)="handleColumnResize($event)" [loading]="leftToRightLoading">
+                    <!-- style="overflow-x: scroll;" -->
+
+                    <ng-template pTemplate="colgroup" let-columns>
+                        <colgroup>
+                            <ng-container *ngFor="let col of columns">
+                                <col
+                                    [ngStyle]="{'width': col.width || 'auto', 'min-width': col.width || '100px'}" />
+                            </ng-container>
+                        </colgroup>
+                    </ng-template>
+
+                    <ng-template pTemplate="header" let-columns>
+                        <tr class="header-row p-treetable-thead-parent">
+                            <ng-container *ngFor="let col of cols">
+                                <ng-container *ngIf="col.isChildren && col.isParentVisible">
+                                    <th [attr.data-parent-id]="col.parent" [attr.colspan]="col.colspan"
+                                        ttResizableColumn class="parent-header"
+                                        [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                                        <span>{{ col.header }}</span>
+                                        <i class='pi pi-fw pi-chevron-right icon-contracted'
+                                            *ngIf="!innerLoading && col.isChildren && col.isicon == 1 && col.isToggle"
+                                            (click)="toggleColumn(col.parent , 'close')"></i>
+                                        <i class='pi pi-fw pi-chevron-left icon-expanded'
+                                            *ngIf="!innerLoading && col.isChildren && col.isicon == 0 && col.isToggle"
+                                            (click)="toggleColumn(col.parent , 'open')"></i>
+                                    </th>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+
+                        <tr class="header-row p-treetable-thead-child">
+                            <ng-container *ngFor="let col of columns">
+                                <ng-container>
+                                    <th ttResizableColumn ttReorderableColumn [ttSortableColumn]="col.field"
+                                    class="child-header"
+                                    [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
+                                    {{ col.childHeader }}
+                                    <!-- <i class='pi pi-arrow-up' *ngIf="col.sorting === 'asc'"></i>
+                                    <i class='pi pi-arrow-down' *ngIf="col.sorting === 'desc'"></i> -->
+                                    <p-treetable-sort-icon [field]="col.field"></p-treetable-sort-icon>
+                                </th>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+
+                        
+                        <tr class="header-row p-treetable-thead-filter">
+                            <ng-container *ngFor="let col of columns">
+                                <ng-container>
+                                    <th class="child-header"
+                                        [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
+                                        <input type="text" [(ngModel)]="col.valuesset" [disabled]="col.isenable"
+                                        pInputText size="8" *ngIf="col.type === 'text'"
+                                        (input)="filterOutSide($event, col)" style="width: auto" />
+
+                                        <input type="text" [(ngModel)]="col.valuesset" pattern="[0-9]*[.]?[0-9]*"
+                                            [disabled]="col.isenable" pInputText size="8"
+                                            *ngIf="col.type === 'numberFilter'" (ngModelChange)="filterOutSide($event, col)"
+                                            style="width: auto" />
+
+                                        <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender-grid"
+                                            [disabled]="col.isenable" (ngModelChange)="filterOutSide($event, col)"
+                                            *ngIf="col.type === 'dateFilter' && !col.isenable"
+                                            [(ngModel)]="col.valuesset" placeholder="mm-dd-yyyy" appendTo="body"
+                                            [showIcon]="true">
+                                        </p-calendar>
+
+                                        <input type="text" *ngIf="col.type === 'dateFilter' && col.isenable"
+                                            [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText
+                                            size="8" style="width: auto" />
+
+                                        <!-- <button *ngIf="col.type !== '' " type="text" pButton
+                                            icon="pi pi-filter-icon pi-filter icon-filter"
+                                            (click)="openContextMenu($event,col )"></button> -->
+                                    </th>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                        <tr *ngIf="leftToRightLoading && rowNode.node.data.rowIndex === 0" class="body-row loading-row">
+                            <td [attr.colspan]="columns.length" class="text-center">
+                                <span class="spinner-border spinner-border-sm" role="status"></span>
+                                <span class="ml-2">Moving data...</span>
+                            </td>
+                        </tr>
+
+                        <tr class="body-row" (dblclick)="onRowDoubleClick(rowData)" [ngClass]="{ 'disabled-row': isRowDisabled(rowData) }"
+                        [ngStyle]="isRowDisabled(rowData) ? { 'pointer-events': 'none', 'opacity': '0.5' } : {}">
+                            <ng-container *ngFor="let col of columns;  let i = index">
+                                <ng-container>
+                                    <td [(selection)]="selectedNode"
+                                        (contextmenu)="showContextMenu($event, contextMenu , rowData[col.field])"
+                                        class="cell"
+                                        [ngStyle]="{'width': col.width || 'auto', 'height': '40px',  'text-align': (col.field === 'charge' || col.field == 'DistributionAmountDistributed') ? 'right' : 'left'}">
+                                       
+                                        <ng-container [ngSwitch]="col.field">
+                                            <span *ngSwitchCase="'Parent'">
+                                                <input type="radio" [checked]="rowData.parent" name="group1"
+                                                    (change)="radioSelect(rowData)">
+                                            </span>
+                                            <span *ngSwitchCase="'Required'">
+                                                <input type="checkbox" [checked]="rowData.isChecked"
+                                                    (change)="onSelectionChanged(rowData)">
+                                            </span>
+                                            <span *ngSwitchCase="'Remove'">
+                                                <i class="fa fa-trash text-danger"
+                                                    (click)="onBtnClick1(rowData)"></i>
+                                            </span>
+                                            <span *ngSwitchCase="'BillingId'">
+                                                <span *ngIf="rowData.AccrossInventory; else elseBlock">
+                                                    {{ rowData[col.field] }}
+                                                    <span>
+                                                        <button class="btn btn-primary grid-cell-btn" style="padding: 2px 8px; font-size: 10px; position: relative; top: -1px; margin-left: 5px;">Added</button>
+                                                    </span>
+                                                </span>
+                                                <ng-template #elseBlock>
+                                                    <span>
+                                                        {{ rowData[col.field] }}
+                                                    </span>
+                                                </ng-template>
+                                            </span>
+                                            <span *ngSwitchCase="'charge'"> 
+                                                {{ rowData['ChargeDisplay'] }}
+
+                                            </span>
+                                            <span *ngSwitchCase="'DistributionAmountDistributed'">
+                                                        {{ rowData['DistributionAmountDistributedDisplay'] }}
+                                                </span>
+                                            <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+                                        </ng-container>
+
+                                    </td>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+
+                        <tr class="body-row"
+                            *ngIf="(innerLoading && expandedNode?.data.VendorProductInventoryId === rowNode.node.data.VendorProductInventoryId && expandedNode?.data.InventoryId === rowNode.node.data.InventoryId) || (isApiAlerdayCall && lastNode?.data.VendorProductInventoryId === rowNode.node.data.VendorProductInventoryId && lastNode?.data.InventoryId === rowNode.node.data.InventoryId)">
+                            <td class="cell">
+                                <span class="spinner-border spinner-border-sm" role="status"></span>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="emptymessage" let-columns>
+                        <tr>
+                            <td class="cell" [attr.colspan]="columns.length">
+                                <span class="spinner-border spinner-border-sm" role="status" *ngIf="loading"></span>
+                                <span *ngIf="!loading && totalRecords === 0">
+                                    No Record Found
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-treeTable>
+                <div class="custome-side-buttons">
+                    <div class="custome-side-button" [ngClass]="{'active-border': sidebarVisible }">
+                        <!-- vericaltext -->
+                        <a class="custom-side-button-button ag-icon ag-icon-columns" (click)="openSidebar()">
+                            <!-- <i class="fa fa-check"></i>  -->
+                            Columns</a>
+                    </div>
+                </div>
+
+                <div class="sidebar" *ngIf="sidebarVisible">
+                    <div class="sidebar-content">
+                        <p-tree [value]="filesColumns" selectionMode="checkbox" (onNodeSelect)="nodeSelect($event)"
+                            (onNodeUnselect)="nodeUnselect($event)" [(selection)]="selectedFiles"> </p-tree>
+                    </div>
+                </div>
+                <p-contextMenu
+                    [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}"
+                    #contextMenu [model]="items"></p-contextMenu>
+
+
+            </mat-expansion-panel>
+        </mat-accordion>
+        <div *ngIf="showMessage">
+            <mat-error style="font-size: 12px;">Parent is required
+            </mat-error>
+        </div>
+    </div>
+    <div class="col-sm-12 col-xl-12 col-md-12">
+        <div class="text-center margin-b-none mt-3">
+            <button type="submit" class="btn btn-primary btn-raised"
+                [disabled]="saveButtonDisabled || !originalFiles.length || disable || recordPublishedOrCompleted || !selectedCCVRight.length"
+                (click)="saveChargeCodeGroupAndVendorProduct()">
+                <span *ngIf="saveButtonDisabled" class="spinner-border spinner-border-sm mr-2" role="status"></span>
+                Save</button>
+
+        </div>
+    </div>
+</div>

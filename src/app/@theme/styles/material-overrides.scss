@@ -1,4 +1,4 @@
-@import './theme-palette-colors.scss';
+@use './theme-palette-colors.scss' as *;
 
 body {
   &.mat-typography {

@@ -1,0 +1,284 @@
+<div class="mat-dialog-header pb-2">
+    <div class="d-flex justify-content-between">
+        <div class="text-center" style="width: calc(100% - 40px);">
+            <h5 class="modal-title" id="exampleModalLabel">Add Correction</h5>
+        </div>
+
+        <div class="d-flex">
+            <i class="fas fa-info-circle main-tooltip" (click)="openDialog()"></i>
+
+            <button type="button" class="close ml-2" (click)="closeDialog()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+            <ng-template #tooltipText>
+                <div class="mat-dialog-header tooltip-header">
+                    <button type="button" class="close" (click)="closeDialogTooltip()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                <div class="text-left">
+                    <p> Add Charge Corrections (credits or debits) to 1 or more Billing IDs with this action if Billing IDs were selected on the Grid.  If no Billing ID(s) were selected then add Account Level Charge or Account Level Adjustments to the invoice to be distributed.
+                        </p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
+<div mat-dialog-content>
+
+    <div class="card-body p-0">
+        <div class="container px-0">
+            <form class="px-0" [formGroup]="chargecodeForm">
+
+                <!-- <div class="col-md-6 col-sm-12 col-xl-6">
+
+                    <div class="form-group">
+                        <label class="form-label">Vendor *</label>
+
+                        <span><p-dropdown (onChange)="onVendorChange();" [options]="vendors"
+                                optionLabel="AccountName" [filter]="true" filterBy="AccountName" [showClear]="true"
+                                placeholder="Select Vendor..." formControlName="vendorAccountId" appendTo="body"
+                                optionValue="Id" [showClear]="false"
+                                [ngClass]="{'invalid-error': f.vendorAccountId.invalid && (f.vendorAccountId.touched || isChargeCodeFormSubmit)}">
+                            </p-dropdown></span>
+
+                        <ng-container
+                            *ngIf="f.vendorAccountId.invalid && (f.vendorAccountId.touched || isChargeCodeFormSubmit)">
+                            <mat-error style="font-size: 12px;" *ngIf="f.vendorAccountId.errors.required">Vendor is
+                                required
+                            </mat-error>
+                        </ng-container>
+                    </div>
+                </div> -->
+                <!-- <div class="col-md-6 col-sm-12 col-xl-6">
+
+                    <div class="form-group">
+                        <label class="form-label">Vendor Billing Alias *</label> <span><p-dropdown
+                                [options]="billingAlias" optionLabel="Name" [filter]="false" filterBy="Name"
+                                [showClear]="true" placeholder="Select Vendor Billing Alias..."
+                                formControlName="vendorBillingAliasId" appendTo="body" optionValue="Id"
+                                [showClear]="false"
+                                [ngClass]="{'invalid-error': f.vendorBillingAliasId.invalid && (f.vendorBillingAliasId.touched || f.vendorBillingAliasId.dirty || isChargeCodeFormSubmit)}">
+                            </p-dropdown></span>
+
+                        <ng-container
+                            *ngIf="f.vendorBillingAliasId.invalid && (f.vendorBillingAliasId.touched || isChargeCodeFormSubmit)">
+                            <mat-error style="font-size: 12px;"
+                                *ngIf="f.vendorBillingAliasId.errors.required">Billing Alias is required
+                            </mat-error>
+                        </ng-container>
+                    </div>
+                </div> -->
+                <div class="row my-2 pt-1">
+                    <div class="col-md-5 col-sm-5 col-xl-5 padding-1-3">
+                        <div class="form-group">
+                            <label class="form-label">Correction Amount $</label>
+                            <span><input type="number" formControlName="charge" class="form-control"
+                                    [ngClass]="{'invalid-error': f.charge.invalid && (f.charge.dirty || f.charge.touched || isChargeCodeFormSubmit)}"></span>
+                            <ng-container *ngIf="f.charge.invalid && (f.charge.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.charge.errors.required">
+                                    Charge is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group">
+                            <div>
+                                <label class="form-label">Distribution Origin</label>&nbsp;
+                                <mat-radio-group formControlName="origin" style="display: inline-grid;" (change)="radioChangeOrigin($event)">
+                                    <!-- style="display: inline-grid;" -->
+                                    <mat-radio-button value="billingId"  [disabled]="!selectedRecord[0]?.BillingId">Billing ID
+                                    </mat-radio-button>
+                                    <mat-radio-button value="payableAccount" *ngIf="!isAllowTab">Payable Account
+                                    </mat-radio-button>
+                                    <mat-radio-button value="subAccount" *ngIf="!isAllowTab">Sub Account
+                                    </mat-radio-button>
+
+                                </mat-radio-group>
+                            </div>
+                        </div>
+
+                        <!-- *ngIf="f.value.origin !== 'billingId'" -->
+                        <div class="form-group" style="padding-left: 116px;" *ngIf="f.origin.value == 'subAccount'">
+                            <span><p-dropdown optionLabel="SubAccountNumber" [filter]="true" filterBy="SubaccountNumber1"
+                                    formControlName="subaccountNumber1" [showClear]="true" [options]="subAccounts"
+                                    placeholder="Select Sub Account" optionValue="SubAccountNumber"
+                                    [ngClass]="{'invalid-error': f.subaccountNumber1.invalid && ( f.subaccountNumber1.dirty || f.subaccountNumber1.touched || isChargeCodeFormSubmit)}"
+                                    appendTo="body">
+                                </p-dropdown></span>
+                            <ng-container
+                                *ngIf="f.subaccountNumber1.invalid && (f.subaccountNumber1.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.subaccountNumber1.errors.required">
+                                    Sub Account Number is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7 col-sm-7 col-xl-7 padding-3-1">
+                        <div class="form-group">
+                            <label class="form-label">Adjustment Note *</label>
+                            <textarea class="form-control textarea-border" rows="5"
+                                formControlName="chargeAdjustmentNote"
+                                [ngClass]="{'invalid-error': f.chargeAdjustmentNote.invalid && ( f.chargeAdjustmentNote.dirty || f.chargeAdjustmentNote.touched || isChargeCodeFormSubmit)}"
+                                placeholder="Add Missing Combo Plan Charge, proration not in data files"></textarea>
+
+                            <ng-container
+                                *ngIf="f.chargeAdjustmentNote.invalid && (f.chargeAdjustmentNote.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.chargeAdjustmentNote.errors.required">
+                                    Adjustment Note is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                        <mat-accordion class="example-headers-align new-charge-code-assignment-main first-grid">
+                            <!-- [disabled]="true" -->
+                            <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                <mat-expansion-panel-header class="math">
+                                  
+                                    <mat-panel-title class="matt">
+                                        <i class="ficon fas fa-tools"></i>&nbsp;Search for Charge Code
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <button type="button" class="btn btn-icon btn-outline-primary select-action-button"
+                                (click)="AddNewChargeCode()">
+                                <i class="fas fa-plus"></i></button>
+                               <app-ag-grid-table [excelBtnEnable]="true" [gridOptions]="gridOptions"
+                                    [columnDefs]="columnDefs" [rowData]="rowData"
+                                    (onSelectionChangedEvent)="parentChargeCodeChange($event)"
+                                    [sheetName]="'Charge Code Assignment'" [defaultColDef]="defaultColDef"
+                                    [sideBar]="sideBar" [singleClickEdit]="true">
+                                </app-ag-grid-table>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 px-0 add-correction-grid">
+
+                    </div>
+                </div>
+
+                <div class="row my-3">
+                    <div class="col-md-12 col-sm-12 col-xl-12 padding-1-1">
+
+                        <div class="form-group" style="margin-bottom: 15px !important;"
+                            *ngIf="chargeCodeType">
+                            <label style="width: 150px;" class="form-label">Quantity</label>
+                            <span><input type="number" formControlName="quantity" min="0" class="form-control"
+                                    (input)="checkValue($event)" style="width: 300px;"
+                                    [ngClass]="{'invalid-error': f.quantity.invalid && ( f.quantity.dirty || f.quantity.touched || isChargeCodeFormSubmit)}"></span>
+                            <ng-container *ngIf="f.quantity.invalid && (f.quantity.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.quantity.errors.required">
+                                    Quantity is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 15px !important;"
+                            *ngIf="chargeCodeType">
+                            <label style="width: 150px;" class="form-label">Unit of Measure *</label>
+                            <span style="width: 310px;"><p-dropdown optionLabel="Abbreviation" [filter]="true"
+                                    [options]="measureList" filterBy="Abbreviation" [showClear]="true"
+                                    formControlName="unitOfMeasureId" placeholder="Select Unit" optionValue="Id"
+                                    [ngClass]="{'invalid-error': f.unitOfMeasureId.invalid && ( f.unitOfMeasureId.dirty || f.unitOfMeasureId.touched || isChargeCodeFormSubmit)}"
+                                    [showClear]="false" appendTo="body">
+                                </p-dropdown></span>
+                            <ng-container
+                                *ngIf="f.unitOfMeasureId.invalid && (f.unitOfMeasureId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.unitOfMeasureId.errors.required">
+                                    Unit Of Measure is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label mr-2 d-flex">Charge Location *
+                                <i class="fas fa-info-circle ml-1" (click)="openDialogCL()"></i>
+
+                                <ng-template #chargeLocationtooltip>
+                                    <div class="mat-dialog-header tooltip-header">
+                                        <button type="button" class="close" (click)="closeDialogTooltip()">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="text-left dialog-data">
+                                        <p class="mb-2">
+                                            The Charge Location is the location the charge is on the invoice as Billing by the Vendor. This may not correspond to the distribution level in our system.</p>
+                                        <ol class="mb-0">
+                                            <li><b>Service Level Charge:</b> Records that are added to charge detail when the charges show up under the account section within the Invoice.</li>
+                                            <li><b>Account Level Charge:</b> Records that are added to charge detail when the charges show up under the Account section within the Invoice. These may reference a Billing ID or they may not.</li>
+                                            <li><b>Account Level Adjustment:</b> Charge Records that are added to charge detail when the charges show up as adjustment to the previous balance. These may reference a Billing ID or they may not.</li>
+                                        </ol>
+                                    </div>
+                                </ng-template> </label>
+                            <mat-radio-group formControlName="chargeLocationTypeId" class="distribution-method-radio">
+                                <ng-container *ngFor="let item of locations | slice: 0:3">
+                                    <mat-radio-button [value]="item.Id" [disabled]="item.disabled">{{item.Type}} 
+                                    </mat-radio-button>
+                                </ng-container>
+                            </mat-radio-group>
+                            <ng-container
+                                *ngIf="f.chargeLocationTypeId.invalid && (f.chargeLocationTypeId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.chargeLocationTypeId.errors.required">
+                                    Charge Location is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <button type="submit" [disabled]="saveButtonLoadder || saveButtonLoadder2" class="btn btn-primary btn-raised" (click)="submitForm()">
+                            <span class="spinner-border spinner-border-sm mr-1" role="status" *ngIf="saveButtonLoadder"></span>
+                            Save</button>
+
+                        <!-- <button type="submit" class="btn btn-primary btn-raised"
+                        style="margin-left: 15px;" [disabled]="saveButtonLoadder || saveButtonLoadder2"
+                        (click)="saveAndAddDistribution()"><span class="spinner-border spinner-border-sm mr-1" role="status" *ngIf="saveButtonLoadder2"></span>Save & Add
+                            Distribution</button> -->
+                    </div>
+                </div>
+                <mat-accordion class="example-headers-align new-charge-code-assignment-main second-grid">
+                    <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                        <mat-expansion-panel-header class="math">
+                            <mat-panel-title class="matt">
+                                <i class="ficon fas fa-tools"></i>&nbsp;Vendor Billing Alias and Vendor by Charge Codes Recorded on Invoice
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <i class="fas fa-info-circle vendor-tooltip"
+                                container="body" (click)="openDialogVBA()"></i>
+                                <ng-template #vendorText>
+                                    <div class="mat-dialog-header tooltip-header">
+                                        <button type="button" class="close" (click)="closeDialogTooltip()">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                    <div class="text-left">
+                                        <p> Reference for the invoice of all Vendors and VBAs found on the invoice in Step 2 of the sandbox. This should be helpful when reviewing the invoice to match missing charges to the correct Vendor and VBA.  A Vendor and/or VBA may have to be added to the invoice via correction when something has changed on the invoice and mapping failed to pick it up.</p>
+                                    </div>
+                                </ng-template>
+                        <div class="row">
+                            <div class="col-md-12 px-0">
+                                <ng-container style="height: max-content;">
+                                    <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs1" 
+                                        [rowData]="rowData1" [rowSelection]="rowSelection"
+                                        [sheetName]="'Charge Code Type'" [exportFilename]="'Charge Code Type.xlsx'"
+                                        [defaultColDef]="defaultColDef"
+                                        [sideBar]="sideBar" [singleClickEdit]="true">
+                                    </app-ag-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </form>
+        </div>
+    </div>
+</div>

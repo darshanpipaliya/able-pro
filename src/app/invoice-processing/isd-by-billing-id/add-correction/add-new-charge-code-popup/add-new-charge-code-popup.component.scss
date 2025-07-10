@@ -1,0 +1,160 @@
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+:host ::ng-deep .form-group.margin-b-none {
+    margin-bottom: 0 !important;
+}
+
+:host ::ng-deep .new-charge-code-assignment-main {
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+    .mat-content {
+        align-items: center;
+    }
+}
+
+:host ::ng-deep .add-correction-grid ag-grid-angular {
+    height: 150px !important;
+    padding-bottom: 0 !important;
+
+    .ag-root-wrapper {
+        border-radius: 0 0 4px 4px !important;
+    }
+}
+
+:host ::ng-deep .new-charge-code-assignment-main .mat-expansion-panel-body {
+    padding: 15px 5px !important;
+    border: 1px solid #babfc7;
+    border-radius: 0 0 4px 4px;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .form-control {
+    height: unset !important;
+    padding: 0px 0;
+}
+
+:host ::ng-deep .form-group label {
+    float: left !important;
+    font-weight: 500;
+}
+
+:host ::ng-deep .form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+:host ::ng-deep .form-control:disabled,
+:host ::ng-deep .form-control[readonly] {
+    opacity: 0.6 !important;
+    background-color: transparent;
+}
+
+textarea {
+    border: 1px solid #ced4da !important;
+    padding: 5px !important;
+}
+
+.mat-dialog-content {
+    padding: 0 15px;
+}
+
+
+:host ::ng-deep .new-charge-code-assignment-main .mat-expansion-panel-body {
+    padding: 15px 5px !important;
+    border: 1px solid #babfc7;
+    border-radius: 0 0 4px 4px;
+}
+
+
+:host ::ng-deep .new-charge-code-assignment-main .mat-expansion-panel-header .mat-expansion-indicator {
+    display: none !important;
+}
+
+.select-vendor-btn-group {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+
+    .select-action-button {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .refresh-btn {
+        padding: 4px 8px;
+    }
+}
+
+
+
+img.media-object {
+    width: 50px;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+:host ::ng-deep .cost-center-tooltip {
+    position: absolute;
+    top: 49px !important;
+    left: 196px !important;
+    will-change: transform;
+    transform: translate(117px, -22px);
+    margin-top: 5px;
+
+    &.bs-popover-left .arrow,
+    &.bs-popover-right .arrow {
+        top: 25% !important;
+    }
+
+    .popover-body {
+        background-color: #f7f7f7 !important;
+        border-top: 1px solid #ebebeb;
+        border-bottom-left-radius: calc(0.3rem - 1px);
+        border-bottom-right-radius: calc(0.3rem - 1px);
+    }
+}
+
+:host ::ng-deep .cost-center-tooltip.right-btn-position {
+    width: 200px !important;
+    transform: translate(-145px, -53px) !important;
+}
+
+
+.inner-option {
+    cursor: pointer;
+    font-weight: 600;
+    // border-bottom: solid 0.5px black;
+    margin-bottom: 5px;
+
+    :hover {
+        color: #4680ff;
+    }
+}
+
+
+.fas.fa-check.c-refresh-speed{
+    position: unset;
+}

@@ -1,0 +1,309 @@
+.mat-dialog-header {
+    border-bottom: 1px solid #e2e5e8;
+}
+.mat-dialog-header.tooltip-header{
+    border-bottom: none !important;
+    position: relative;
+    button.close {
+        position: absolute;
+        top: -15px;
+        right: -10px;
+      }
+}
+.row {
+    margin: 0;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+i.fas.fa-info-circle.main-tooltip{
+    position: relative;
+    top: 2px;
+}
+
+i.fas.fa-info-circle.vendor-tooltip {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    z-index: 100;
+    right: 45px;
+    top: 13px;
+}
+
+:host ::ng-deep .form-group.margin-b-none {
+    margin-bottom: 0 !important;
+}
+
+:host ::ng-deep .new-charge-code-assignment-main {
+    .mat-expansion-panel-body {
+        padding: 0 !important;
+
+        .ag-root-wrapper {
+            border-radius: 0 0 4px 4px !important;
+        }
+    }
+
+    .grid-header-wrapper {
+        margin: 0 !important;
+    }
+
+    &.first-grid{
+        ag-grid-angular {
+            height: 331px !important;
+        } 
+    }
+
+    &.second-grid{
+        ag-grid-angular {
+            height: 368px !important;
+        } 
+    }
+
+}
+
+:host ::ng-deep .add-correction-grid ag-grid-angular {
+    height: 150px !important;
+    padding-bottom: 0 !important;
+
+    .ag-root-wrapper {
+        border-radius: 0 0 4px 4px !important;
+    }
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+.padding-1-3 {
+    padding-left: 1px !important;
+    padding-right: 3px !important;
+}
+
+.padding-3-1 {
+    padding-left: 3px !important;
+    padding-right: 1px !important;
+}
+
+.padding-1-1 {
+    padding-left: 1px !important;
+    padding-right: 1px !important;
+}
+
+:host ::ng-deep .mat-dialog-container {
+    padding: 15px !important;
+}
+
+// .form-control {
+//     border: 1px solid #ced4da;
+// }
+:host ::ng-deep .form-group label {
+    float: left !important;
+    font-weight: 500;
+}
+
+:host ::ng-deep .form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+:host ::ng-deep .form-control {
+    height: unset !important;
+    padding: 0px 0;
+}
+
+.browse-btn-group {
+    width: 50%;
+}
+
+.btn.browse-btn {
+    border-radius: 0 !important;
+}
+
+button.cancel-btn {
+    padding: 0;
+    background: transparent;
+    color: #4680ff;
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+button.cancel-btn:hover {
+    background-color: transparent !important;
+}
+
+:host ::ng-deep button.cancel-btn:hover .mat-button-focus-overlay {
+    opacity: 0;
+}
+
+textarea.textarea-border {
+    border: 1px solid #ced4da !important;
+    padding: 5px !important;
+}
+
+.form-control.search-text {
+    height: 34px;
+    padding: 5px 8px;
+}
+
+.add-data-file-disc {
+    margin: 10px 0 0 10px;
+}
+
+:host ::ng-deep .ag-header-select-all .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input,
+:host ::ng-deep .ag-center-cols-container .ag-checkbox-input-wrapper .ag-input-field-input.ag-checkbox-input {
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    opacity: 1 !important;
+    border-radius: 0.25em !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper::after {
+    opacity: 0 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    opacity: 1 !important;
+}
+
+:host ::ng-deep .ag-theme-alpine .ag-checkbox-input-wrapper {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-header[aria-disabled=true] {
+    color: rgb(0, 0, 0) !important;
+}
+
+.download-link {
+    margin: 25px 0 0 25px;
+}
+
+.browse-btn {
+    padding: 5px 8px;
+}
+
+button.download-template-btn {
+    padding: 0;
+    background: transparent;
+    color: #4680ff;
+    text-decoration: underline;
+    border: none;
+    margin-bottom: 15px;
+}
+
+.download-template-btn.btn-primary:not(:disabled):not(.disabled):active {
+    background: transparent;
+    color: #4680ff;
+}
+
+.select-action-button {
+    width: 32px !important;
+    height: 32px !important;
+    position: absolute;
+    left: 10px;
+    top: 4px;
+}
+
+.distribution-method-radio {
+    display: grid;
+    position: relative;
+
+    // i.fa-info-circle {
+    //     position: absolute;
+    //     bottom: 4px;
+    //     left: 160px;
+    // }
+
+    .mat-radio-button:last-child {
+        margin-bottom: 0 !important;
+    }
+
+}
+
+:host ::ng-deep .mat-radio-label-content {
+    font-weight: 400 !important;
+}
+
+.right-btn-manage {
+    padding-right: 0;
+    padding-left: 3px;
+    display: flex;
+    align-items: center;
+
+    .form-group {
+        width: calc(100% - 83px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-xl-7 {
+        flex: 0 0 53%;
+        max-width: 53%;
+    }
+
+    .col-xl-5 {
+        flex: 0 0 47%;
+        max-width: 47%;
+    }
+}
+
+@media only screen and (max-width: 1199px) {
+
+    .padding-1-3,
+    .padding-3-1,
+    .padding-1-1 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+
+    .browse-btn-group {
+        width: 100%;
+    }
+
+    .add-data-file-disc {
+        margin: 0;
+    }
+
+    .download-link {
+        margin: 0;
+    }
+}
+
+::ng-deep ngb-tooltip-window {
+    z-index: 100000 !important;
+}

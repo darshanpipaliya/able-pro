@@ -143,7 +143,11 @@ export class AddWirelineComponent implements OnInit, OnDestroy {
     enableFiltering: true,
     headerHeight: 35,
     groupHeaderHeight: 37,
-    floatingFiltersHeight: 35
+    floatingFiltersHeight: 35,
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
   };
   serviceIds: any = [];
   days: any = [];
@@ -795,7 +799,7 @@ export class AddWirelineComponent implements OnInit, OnDestroy {
         this.vendorProductDetails = data.Data.$values;
       } else {
         this.vendorProductDetails = [];
-        if(this.action !== 'New') {
+        if (this.action !== 'New') {
           data.Message = 'The selected Vendor Product is no longer active, only active Vendor Products can be saved to inventory not in an end state.  Please select an active Vendor Product';
           this.ErrorWarningPopupOpen(data.Message)
         }
@@ -843,7 +847,7 @@ export class AddWirelineComponent implements OnInit, OnDestroy {
         } else {
           this.vendorProductDetails = [];
           this.loadingVendorproducttypes = false;
-          if(this.action !== 'New') {
+          if (this.action !== 'New') {
             this.ErrorWarningPopupOpen(data.Message)
           }
           this.setValueInFormControl('vendorProductTypeId', '')
@@ -1048,7 +1052,7 @@ export class AddWirelineComponent implements OnInit, OnDestroy {
 
       let data: any = {}
       let contactIds: any = [];
-      this.companyPeoples.forEach((element: any)   => {
+      this.companyPeoples.forEach((element: any) => {
         contactIds.push(element.PeopleId)
       });
       data['contactIds'] = contactIds;
@@ -1158,7 +1162,7 @@ export class AddWirelineComponent implements OnInit, OnDestroy {
     this.form.get('vendorProductInventoryDescription')?.updateValueAndValidity();
   }
 
-    statusFieldDisabledFn(data: any) {
+  statusFieldDisabledFn(data: any) {
     return data === 60;
   }
   serviceDetailSet(data: any) {
@@ -1484,7 +1488,8 @@ export class AddWirelineComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (!isValuesUndefined(result)) {
         if (result === true) {
-          this.onLazyLoadInventoryTable('', true, true);
+          console.log('result', result);
+          this.onLazyLoadInventoryTable('', true, true, 2);
         }
         if (result.checkedData && result.checkedData.length > 0) {
           this.childInventoryData = [];
@@ -2274,8 +2279,9 @@ export class AddWirelineComponent implements OnInit, OnDestroy {
           this.onlyCustomerChange = result === 'undefined' ? sendStatus.close : result === true ? sendStatus.success : sendStatus.fail;
 
           if (this.dataFromEditApi && this.onlyCustomerChange === 0) {
+            console.log('this.dataFromEditApi');
             this.setValueInFormControl('customerId', this.dataFromEditApi.CustomerAccountId);
-            this.onLazyLoadInventoryTable('', true, true);
+            this.onLazyLoadInventoryTable('', true, true, 1);
 
             this.setValueInFormControl('VendorId', this.dataFromEditApi.VendorAccountId);
             this.getMainBillingAccountDD();
@@ -2367,144 +2373,103 @@ export class AddWirelineComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLazyLoadInventoryTable($event: any, update?: any, reset = false) {
 
-    if (!checkIsValueExists(this.rowData) || (this.rowData && !checkIsValueExists(this.rowData['VendorProductInventoryId']))) {
+  private lastLazyLoadEvent: any = null;
+
+  onLazyLoadInventoryTable(event: any, update?: any, reset = false, isClickHtml = 0) {
+    console.log('onLazyLoadInventoryTable', update, isClickHtml);
+
+    if (!this.rowData?.VendorProductInventoryId) return;
+
+    // Prevent redundant API calls for identical events
+    const eventChanged = !this.lastLazyLoadEvent ||
+      this.lastLazyLoadEvent.first !== event.first ||
+      this.lastLazyLoadEvent.rows !== event.rows ||
+      this.lastLazyLoadEvent.sortField !== event.sortField ||
+      this.lastLazyLoadEvent.sortOrder !== event.sortOrder ||
+      JSON.stringify(this.lastLazyLoadEvent.filters) !== JSON.stringify(event.filters);
+
+    if (!eventChanged && !reset) {
       return;
     }
 
-    let filterArray: any = [];
-    let findFilterValueOrNot = false;
-    if (checkIsValueExists($event.filters) && !reset) {
-      for (let key in $event.filters) {
-        let arr: any;
-        let data = $event.filters[key];
-        if (isValueExist(data[0]['value'])) {
-          findFilterValueOrNot = true;
-        }
-        arr = {
-          filterKey: key,
-          filterOperationType: data[0] && data[0]['operator'] === 'and' ? 'AND' : 'OR',
-          filterOptionType1: data[0] && data[0]['matchMode'] ? data[0]['matchMode'] : null,
-          filterOptionValue1: data[0] && data[0]['value'] ? data[0]['value'] : null,
-          filterOptionType2: data[1] && data[1]['matchMode'] ? data[1]['matchMode'] : null,
-          filterOptionValue2: data[1] && data[1]['value'] ? data[1]['value'] : null
-        }
-        filterArray.push(arr);
-      }
+    this.lastLazyLoadEvent = event;
 
-      filterArray = _.filter(filterArray, function (currentObject: any) {
-        return currentObject.filterOptionValue1 || currentObject.filterOptionValue1;
-      });
-      if (filterArray.length > 0 || (JSON.stringify(this.previousSearch) !== JSON.stringify(filterArray)) && (JSON.stringify(filterArray) === '[]' && JSON.stringify(this.previousSearch) !== '[]')) {
-        reset = true;
-      }
+    const startRowIndex = reset ? 1 : this.defaultRowNStartIndex.startRowIndex;
+    const maxRows = reset ? this.maxRows : this.defaultRowNStartIndex.maximumRows;
 
-      if (JSON.stringify(this.previousSearch) === JSON.stringify(filterArray)) {
-        reset = false;
-      }
-    }
+    const data: any = {
+      startRowIndex,
+      maximumRows: maxRows,
+      OrderBy: event.sortField,
+      SortOrder: event.sortOrder === 1 ? 'asc' : 'desc',
+      LinkAssVendorProductInventoryId: this.rowData.VendorProductInventoryId,
+      CustomerAccountId: update ? this.f['customerId'].value : this.rowData.CustomerAccountId,
+      advanceFilter: this.buildFilters(event.filters)
+    };
 
-    if (reset ||
-      ((this.previousState !== $event['sortOrder'] || this.previousSort !== $event['sortField']) ||
-        (JSON.stringify(this.previousSearch) !== JSON.stringify(filterArray)) &&
-        ((this.inventoryTableTotal !== this.childInventoryData.length && this.inventoryTableTotal > this.childInventoryData.length) || this.inventoryTableTotal === 0 || this.childInventoryData.length === 0))) {
-      let data: any = {
-        startRowIndex: this.defaultRowNStartIndex.startRowIndex,
-        maximumRows: this.defaultRowNStartIndex.maximumRows,
-      };
+    // Add required default filter (always applied)
+    data.advanceFilter.push({
+      filterKey: "InventoryLocationAtt",
+      filterOptionType1: "Equal",
+      filterOptionValue1: "Yes",
+      filterOperationType: "AND"
+    });
 
-      if (this.rowData) {
-        data['CustomerAccountId'] = this.rowData['CustomerAccountId'];
-      }
-      if (update) {
-        data['CustomerAccountId'] = this.f['customerId'].value;
-      } else {
-        data['CustomerAccountId'] = data['CustomerAccountId'];
-      }
+    this.loadingAssInventory = true;
+    this._unsubscribeChildInventory.next(null);
 
-      data['OrderBy'] = $event['sortField'];
-      if (data['OrderBy']) {
-        data['SortOrder'] = ($event['sortOrder'] === 1) ? 'asc' : 'desc';
-      }
+    this.wirelineService.getInventoryData(data)
+      .pipe(takeUntil(this._unsubscribeChildInventory))
+      .subscribe({
+        next: (res: any) => {
+          const values = res?.Data?.$values ?? [];
 
-      if ((this.previousState !== $event['sortOrder'] || this.previousSort !== $event['sortField']) && !reset) {
-        this.childInventoryData = [];
-        this.inventoryTableTotal = 0;
-        data['startRowIndex'] = 1;
-        data['maximumRows'] = this.maxRows;
-        this.defaultRowNStartIndex.startRowIndex = data['startRowIndex'];
-        this.defaultRowNStartIndex.maximumRows = data['maximumRows'];
-      }
-
-      if ((findFilterValueOrNot && (JSON.stringify(this.previousSearch) !== JSON.stringify(filterArray)) ||
-        (JSON.stringify(this.previousSearch) === JSON.stringify(filterArray) && this.previousState !== $event['sortOrder'] || this.previousSort !== $event['sortField']))
-        && reset
-      ) {
-        data['startRowIndex'] = 1;
-        data['maximumRows'] = this.maxRows;
-        this.defaultRowNStartIndex.startRowIndex = data['startRowIndex'];
-        this.defaultRowNStartIndex.maximumRows = data['maximumRows'];
-        this.childInventoryData = [];
-        this.inventoryTableTotal = 0;
-      }
-      filterArray.push({
-        "filterKey": "InventoryLocationAtt",
-        "filterOptionType1": "Equal",
-        "filterOptionValue1": "Yes",
-        "filterOperationType": "AND",
-        "filterOptionType2": null,
-        "filterOptionValue2": null
-      })
-      if (filterArray && filterArray.length > 0) {
-        data['advanceFilter'] = filterArray;
-      }
-
-      if (reset) {
-        data['startRowIndex'] = 1;
-      }
-      this._unsubscribeChildInventory.next(null);
-      this.loadingAssInventory = true;
-      data['LinkAssVendorProductInventoryId'] = this.rowData['VendorProductInventoryId'];
-      this.wirelineService.getInventoryData(data)
-        .pipe(takeUntil(this._unsubscribeChildInventory))
-        .subscribe(
-          async (data: any) => {
-            if (data && data.Data.$values.length > 0) {
-              if (reset) {
-                this.childInventoryData = [];
-                this.childInventoryData.push({ 'noValue': 1 });
-                this.inventoryTableTotal = 0;
-                this.childInventoryData = data.Data.$values;
-              } else {
-                this.childInventoryData = this.childInventoryData.concat(data.Data.$values);
-              }
-              this.inventoryTableTotal = data.TotalCount;
-              this.defaultRowNStartIndex.startRowIndex = this.childInventoryData.length + 1;
-              this.defaultRowNStartIndex.maximumRows = this.defaultRowNStartIndex.maximumRows;
-              this.loadingAssInventory = false;
-
-              this.previousSort = $event['sortField'];
-              this.previousState = $event['sortOrder'];
-              this.previousSearch = filterArray;
+          if (values.length) {
+            if (reset) {
+              this.childInventoryData = values;
             } else {
-              this.childInventoryData = [];
-              this.childInventoryData.push({ 'noValue': 1 });
-
-              this.inventoryTableTotal = 0;
-              this.emptymessage = "No Row To Show";
-              this.loadingAssInventory = false;
+              this.childInventoryData = [...this.childInventoryData, ...values];
             }
-          }, error => {
-            this.childInventoryData = [];
-            this.childInventoryData.push({ 'noValue': 1 });
 
+            this.inventoryTableTotal = res.TotalCount;
+            this.defaultRowNStartIndex.startRowIndex = this.childInventoryData.length + 1;
+            this.defaultRowNStartIndex.maximumRows = maxRows;
+          } else {
+            this.childInventoryData = [{ noValue: 1 }];
             this.inventoryTableTotal = 0;
             this.emptymessage = "No Row To Show";
-            this.loadingAssInventory = false;
-          });
-    }
+          }
 
+          this.previousSort = event.sortField;
+          this.previousState = event.sortOrder;
+          this.previousSearch = data.advanceFilter;
+          this.loadingAssInventory = false;
+        },
+        error: () => {
+          this.childInventoryData = [{ noValue: 1 }];
+          this.inventoryTableTotal = 0;
+          this.emptymessage = "No Row To Show";
+          this.loadingAssInventory = false;
+        }
+      });
+  }
+
+  buildFilters(filters: any): any[] {
+    if (!filters) return [];
+
+    return Object.keys(filters).map((key) => {
+      const f = filters[key];
+
+      return {
+        filterKey: key,
+        filterOperationType: f[0]?.operator === 'and' ? 'AND' : 'OR',
+        filterOptionType1: f[0]?.matchMode ?? null,
+        filterOptionValue1: f[0]?.value ?? null,
+        filterOptionType2: f[1]?.matchMode ?? null,
+        filterOptionValue2: f[1]?.value ?? null
+      };
+    }).filter(f => f.filterOptionValue1 || f.filterOptionValue2);
   }
 
   onLazyLoadAttribute($event: any, update?: any, reset = false) {

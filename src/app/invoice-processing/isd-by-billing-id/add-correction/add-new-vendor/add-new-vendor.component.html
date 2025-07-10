@@ -1,0 +1,182 @@
+<div class="mat-dialog-header pb-2">
+  <div class="d-flex justify-content-between">
+    <div class="text-center" style="width: calc(100% - 15px);">
+      <h5 class="modal-title" id="exampleModalLabel">Vendor</h5>
+    </div>
+    <button type="button" class="close ml-2" mat-dialog-close>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+<form class="addForm" [formGroup]="addVendorForm" (ngSubmit)="saveVendor()">
+  <div class="row">
+    <div class="col-sm-12 col-xl-12 text-right">
+      <span class="text-c-red">*Required field</span>
+    </div>
+    <div class="col-sm-12 col-xl-6 padding-left-none">
+      <div>
+        <mat-accordion class="example-headers-align">
+          <mat-expansion-panel style="width: 100%;" [expanded]="true">
+            <mat-expansion-panel-header class="math">
+              <mat-panel-title class="matt">
+                <i class="ficon fas fa-id-card-alt"></i>&nbsp;Vendor
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="row">
+
+              <div class="col-md-6 padding-1-3">
+                <div class="form-group">
+                  <label class="form-label">Vendor *</label>
+                  <span><input type="text" class="form-control" required formControlName="AccountName"
+                      spaceTrimStartEndInput [allowStartWithSpace]="false" spaceTrimStartEndInput
+                      [allowStartWithSpace]="false"
+                      [ngClass]="{'invalid-error': !f.AccountName.valid && (f.AccountName.dirty || f.AccountName.touched || isVendorFormSubmit)}"></span>
+                  <ng-container *ngIf="f.AccountName.invalid && (f.AccountName.touched || isVendorFormSubmit)">
+                    <mat-error style="font-size: 12px;" *ngIf="f.AccountName.errors.required">Vendor is
+                      required
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+
+              <div class="col-md-6 padding-3-1">
+                <div class="form-group">
+                  <label class="form-label">Parent Vendor</label>
+                  <span><p-dropdown [filter]="true"
+                      [ngClass]="{'invalid-error': !f.ParentId.valid && (f.ParentId.dirty || f.ParentId.touched || isVendorFormSubmit)}"
+                      appendTo="body" [options]="parentVendorsList" optionLabel="AccountName"
+                      placeholder="Select Parent Vendor..." formControlName="ParentId" optionValue="Id">
+                    </p-dropdown></span>
+                  <ng-container *ngIf="f.ParentId.invalid && (f.ParentId.touched || isVendorFormSubmit)">
+                    <mat-error style="font-size: 12px;" *ngIf="f.ParentId.errors.required">Parent Vendor is required
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+
+
+              <div class="col-md-6 padding-1-3">
+                <div class="form-group">
+                  <label for="exampleInputPassword1"> Website</label>
+                  <span><input type="text" class="form-control" spaceTrimStartEndInput [allowStartWithSpace]="false"
+                      id="exampleInputPassword1" formControlName="WebAddress" spaceTrimStartEndInput
+                      [allowStartWithSpace]="false"></span>
+                </div>
+              </div>
+
+              <div class="col-md-6 padding-3-1">
+                <div class="form-group">
+                  <label class="form-label">Retrieval Day *</label>
+                  <span><p-dropdown
+                      [ngClass]="{'invalid-error': !f.InvoiceReceiveDaysOption.valid && (f.InvoiceReceiveDaysOption.dirty || f.InvoiceReceiveDaysOption.touched || isVendorFormSubmit)}"
+                      appendTo="body" [options]="days" optionLabel="stringValue" placeholder="Select Retrieval Day..."
+                      formControlName="InvoiceReceiveDaysOption" optionValue="stringValue">
+                    </p-dropdown></span>
+                  <ng-container
+                    *ngIf="f.InvoiceReceiveDaysOption.invalid && (f.InvoiceReceiveDaysOption.touched || isVendorFormSubmit)">
+                    <mat-error style="font-size: 12px;" *ngIf="f.InvoiceReceiveDaysOption.errors.required">Retrieval
+                      Day
+                      is required
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="col-md-6 padding-1-3">
+                <div class="form-group">
+                  <label class="form-label">Missing Day *</label>
+                  <span><p-dropdown
+                      [ngClass]="{'invalid-error': !f.InvoiceMissingDaysOption.valid && (f.InvoiceMissingDaysOption.dirty || f.InvoiceMissingDaysOption.touched || isVendorFormSubmit)}"
+                      appendTo="body" [options]="days" optionLabel="stringValue" placeholder="Select Missing Day..."
+                      formControlName="InvoiceMissingDaysOption" optionValue="stringValue">
+                    </p-dropdown></span>
+                  <ng-container
+                    *ngIf="f.InvoiceMissingDaysOption.invalid && (f.InvoiceMissingDaysOption.touched || isVendorFormSubmit)">
+                    <mat-error style="font-size: 12px;" *ngIf="f.InvoiceMissingDaysOption.errors.required">Missing
+                      Day is required
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+
+              <div class="col-md-6 padding-3-1">
+                <div class="form-group">
+                  <label class="form-label">Pay By Day *</label>
+                  <span><p-dropdown
+                      [ngClass]="{'invalid-error': !f.PayByDaysOption.valid && (f.PayByDaysOption.dirty || f.PayByDaysOption.touched || isVendorFormSubmit)}"
+                      appendTo="body" [options]="days" optionLabel="stringValue" placeholder="Select Pay By Day..."
+                      formControlName="PayByDaysOption" optionValue="stringValue">
+                    </p-dropdown></span>
+                  <ng-container *ngIf="f.PayByDaysOption.invalid && (f.PayByDaysOption.touched || isVendorFormSubmit)">
+                    <mat-error style="font-size: 12px;" *ngIf="f.PayByDaysOption.errors.required">Pay By
+                      Day is
+                      required
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      <div class="mt-2">
+        <mat-accordion class="example-headers-align">
+          <mat-expansion-panel style="width: 100%;" [expanded]="true">
+            <mat-expansion-panel-header class="math">
+              <mat-panel-title class="matt">
+                <i class="fas fa-image" style="margin-top:3px;"></i>&nbsp;Logo
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row" #FixedDiv>
+              <div class="col-12 padding-1-1">
+                <div class="mb-2 d-flex">Upload Logo
+                  <i class="fas fa-info-circle ml-1" [placement]="'auto'" container="body"
+                    ngbTooltip="Image should be a PNG file and should not be blurry for best results "
+                    tooltipClass="tooltip-bg"></i>
+                </div>
+                <button type="button" class="btn sbubtn btn-primary btn-raised" (click)="fileUpload.click()">Upload
+                  Logo</button>
+                <input type="file" class="file-input" hidden (change)="onFileUploaded($event)" #fileUpload>
+              </div>
+              <ng-container *ngIf="logoImage">
+                <div class="col-md-12 text-center m-t-10">
+                  <div class="wrapper">
+                    <div class="content">
+                      <img class="logoimg" alt="test" width="200" height="100" [src]="logoImage">
+                      <a (click)="onFileUploaded()"><i class="fas fa-times"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+    <div class="col-sm-12 col-xl-6 padding-right-none res-margin-top">
+      <mat-accordion class="example-headers-align">
+        <div>
+          <mat-expansion-panel style="width: 100%;" [expanded]="true">
+            <mat-expansion-panel-header class="math">
+              <mat-panel-title class="matt">
+                <i class="ficon fas fa-id-card-alt"></i>&nbsp;Industry
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <dual-list [sort]="keepSorted" [source]="source" [key]="key" [display]="display" [filter]="filter"
+                [(destination)]="confirmed" height="158px" [format]="format" [disabled]="disabled"></dual-list>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      </mat-accordion>
+    </div>
+    <div class="col-md-12">
+
+      <div class="form-group text-center margin-b-none mt-3">
+        <button type="submit" uiSref="work" class="btn  btn-primary btn-raised"
+          [disabled]="saveButtonLoadder">Save
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

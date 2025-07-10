@@ -1,0 +1,504 @@
+<div class="row">
+    <!-- <div class="row col-sm-12 col-xl-12"> -->
+    <div class="col-sm-12 col-xl-12 px-0" id="FixedDiv">
+
+        <!-- <app-card cardTitle="addTem" [options]="false" [hidHeader]="true"> -->
+        <form [formGroup]="addTemForm" (ngSubmit)="saveTem()" class="editForm" novalidate>
+
+            <div class="container-fluid px-0">
+                <div>
+
+                    <div class="col-sm-12 col-xl-12 text-right">
+                        <span class="text-c-red">*Required field</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-xl-6 padding-left-none">
+                            <div class="col-sm-12 col-xl-12 px-0">
+                                <mat-accordion class="example-headers-align">
+                                    <div class="row">
+                                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                            <mat-expansion-panel-header class="math">
+                                                <mat-panel-title class="matt">
+                                                    <i class="ficon fas fa-building"></i>&nbsp;TEM
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+
+                                            <div class="row m-t-20">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">TEM Name *</label>
+                                                        <span><input type="text" class="form-control" required
+                                                                spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                                                formControlName="AccountName"
+                                                                [ngClass]="{'invalid-error': !f.AccountName.valid && (f.AccountName.dirty || f.AccountName.touched || isTemFormSubmit)}"></span>
+                                                        <ng-container
+                                                            *ngIf="f.AccountName.invalid && (f.AccountName.touched || isTemFormSubmit)">
+                                                            <mat-error style="font-size: 12px;"
+                                                                *ngIf="f.AccountName.errors.required">TEM Name is
+                                                                required
+                                                            </mat-error>
+                                                        </ng-container>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                            <div class="col-sm-12 col-xl-12 px-0">
+                                <mat-accordion class="example-headers-align">
+                                    <div class="row">
+                                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                            <mat-expansion-panel-header class="math">
+                                                <mat-panel-title class="matt font-weight-bold">
+                                                    <i class="fas fa-image" style="margin-top:3px;"></i>&nbsp;Logo
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+
+                                            <div class="row m-t-20">
+                                                <div class="col-md-12 px-0" style="padding-bottom: 10px !important;">
+                                                    <div class="mb-2">Upload Logo
+                                                        <i class="fas fa-info-circle"
+                                                            container="body"
+                                                            ngbTooltip="Image should be a PNG file and should not be blurry for best results "
+                                                            tooltipClass="tooltip-bg"></i>
+                                                    </div>
+                                                    <button type="button" class="btn sbubtn btn-primary btn-raised"
+                                                        (click)="fileUpload.click()">Upload
+                                                        Logo</button>
+                                                    <input type="file" class="file-input" hidden accept="image/*"
+                                                        (change)="onFileUploaded($event)" #fileUpload>
+                                                </div>
+                                                <ng-container *ngIf="logoImg">
+                                                    <div class="col-md-12 text-center m-t-10">
+                                                        <div class="wrapper">
+                                                            <div class="content profile-pic">
+                                                                <img class="logoimg" alt="test" width="200" height="100"
+                                                                    [src]="logoImg">
+                                                                <div class="edit" (click)="removeLogo()">
+                                                                    <a>
+                                                                        <i class="fa fa-times fa-lg"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                                <mat-accordion class="example-headers-align">
+                                    <div>
+                                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                            <mat-expansion-panel-header class="math">
+                                                <mat-panel-title class="matt font-weight-bold">
+                                                    <i class="fas fa-shield-alt"></i>&nbsp;Security
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="row">
+                                                <div class="col-12 px-0">
+                                                    <p class="mb-2" style="font-size: 14px;"> Two-factor authentication
+                                                        is an extra layer of security that requires users to enter a
+                                                        code from their email when logging into their account from an
+                                                        untrusted device. When active all users of the system will be
+                                                        required to use MFA.</p>
+                                                    <div class="mb-2">
+                                                        <mat-radio-group class="mt-2" formControlName="TwoFactorEnabled"
+                                                            (change)="changeMFAvalue($event)">
+                                                        <mat-radio-button [value]="true"> MFA Required
+                                                        </mat-radio-button>
+                                                        <mat-radio-button [value]="false" class="m-l-10"> MFA not
+                                                            required
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+                                                    </div>
+                                                    <p class="mb-2" style="font-size: 14px;">Contact information for
+                                                        MFA-related emails or issues with MFA</p>
+
+                                                    <div class="col-md-8 px-0">
+                                                        <div class="form-group">
+
+                                                            <label class="form-label">Contact Email
+                                                                {{f.TwoFactorEnabled.value ? '*' : ''}}</label>
+                                                            <span>
+                                                                <input type="text" class="form-control" formControlName="MFAContactEmail" 
+                                                                    [ngClass]="{'invalid-error': !f.MFAContactEmail.valid && (f.MFAContactEmail.dirty || f.MFAContactEmail.touched || isTemFormSubmit)}"
+                                                                    maxlength="60" [readOnly]="!isMFAon" />
+
+                                                                <!-- <mat-error *ngIf="f.MFAContactEmail.errors?.maxlength"
+                                                                    style="font-size: 12px;">Maximum length for the
+                                                                    Contact Email is 60 characters
+                                                                </mat-error> -->
+                                                            </span>
+                                                            <ng-container *ngIf="f.MFAContactEmail.invalid && (f.MFAContactEmail.touched || isTemFormSubmit)">
+                                                                <mat-error style="font-size: 12px;" *ngIf="f.MFAContactEmail.errors.required">Contact Email is required
+                                                                </mat-error>
+        
+                                                                <mat-error style="font-size: 12px;"
+                                                                *ngIf="f.MFAContactEmail.errors.pattern && !f.MFAContactEmail.errors.required">
+                                                                Contact Email is invalid.</mat-error>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-8 px-0">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Contact Name
+                                                                {{f.TwoFactorEnabled.value ? '*' : ''}}</label>
+                                                            <span>
+                                                                <input type="text" class="form-control" formControlName="MFAContactName" 
+                                                                    [ngClass]="{'invalid-error': !f.MFAContactName.valid && (f.MFAContactName.dirty || f.MFAContactName.touched || isTemFormSubmit)}"
+                                                                    maxlength="60" [readOnly]="!isMFAon" />
+
+                                                                <!-- <mat-error *ngIf="f.MFAContactEmail.errors?.maxlength"
+                                                                style="font-size: 12px;">Maximum length for the
+                                                                Contact Name is 60 characters
+                                                            </mat-error> -->
+                                                            </span>
+                                                            <ng-container *ngIf="f.MFAContactName.invalid && (f.MFAContactName.touched || isTemFormSubmit)">
+                                                                <mat-error style="font-size: 12px;" *ngIf="f.MFAContactName.errors.required">Contact Name is required
+                                                                </mat-error>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-xl-6 padding-right-none">
+                            <div class="col-sm-12 col-xl-12 px-0">
+                                <mat-accordion class="example-headers align">
+                                    <div class="row">
+                                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                            <mat-expansion-panel-header class="math">
+                                                <mat-panel-title class="matt">
+                                                    <i class="fas fa-map-marked-alt" style="margin-top:3px;"></i>&nbsp;Address
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <!-- <div class="col-md-12   btn  had hdec">Account</div> -->
+                                            <div>
+
+                                                <div class="col-md-12 px-0">
+                                                    <h5 class="mb-0"><b>Primary Address</b></h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 p-t-half-rem">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Address One *</label>
+                                                            <span> <input type="text" class="form-control" required
+                                                                    formControlName="PhysicalAddress"
+                                                                    (input)="isSameAsPhyAddress ? sameAsPhyAddress(true) : ''"
+                                                                    [ngClass]="{'invalid-error': !f.PhysicalAddress.valid && (f.PhysicalAddress.dirty || f.PhysicalAddress.touched || isTemFormSubmit)}"
+                                                                    spaceTrimStartEndInput
+                                                                    [allowStartWithSpace]="false"></span>
+                                                            <ng-container
+                                                                *ngIf="f.PhysicalAddress.invalid && (f.PhysicalAddress.touched || isTemFormSubmit)">
+                                                                <mat-error style="font-size: 12px;"
+                                                                    *ngIf="f.PhysicalAddress.errors.required">Address
+                                                                    One is
+                                                                    required
+                                                                </mat-error>
+                                                            </ng-container>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6 p-t-half-rem">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Address Two</label>
+                                                            <span><input type="text" class="form-control"
+                                                                    (input)="isSameAsPhyAddress ? sameAsPhyAddress(true) : ''"
+                                                                    formControlName="PhysicalAddress2"
+                                                                    spaceTrimStartEndInput
+                                                                    [allowStartWithSpace]="false"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">City *</label>
+                                                            <span> <input type="text" class="form-control" required
+                                                                    formControlName="City"
+                                                                    (input)="isSameAsPhyAddress ? sameAsPhyAddress(true) : ''"
+                                                                    [ngClass]="{'invalid-error': !f.City.valid && (f.City.dirty || f.City.touched || isTemFormSubmit)}"
+                                                                    spaceTrimStartEndInput
+                                                                    [allowStartWithSpace]="false"></span>
+                                                            <ng-container
+                                                                *ngIf="f.City.invalid && (f.City.touched || isTemFormSubmit)">
+                                                                <mat-error style="font-size: 12px;"
+                                                                    *ngIf="f.City.errors.required">City is required
+                                                                </mat-error>
+                                                            </ng-container>
+                                                        </div>
+
+                                                    </div>
+
+                                                
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Country *</label>
+                                                        <span> <p-dropdown [options]="countries" optionLabel="Name"
+                                                                [filter]="true" filterBy="Name" [showClear]="true"
+                                                                placeholder="Select Country..."
+                                                                (onChange)="onCountrySelect($event)" appendTo="body"
+                                                                formControlName="Country" optionValue="Id"
+                                                                [showClear]="false"
+                                                                [ngClass]="{'invalid-error': f.Country.invalid && (f.Country.touched || isTemFormSubmit)}">
+                                                            </p-dropdown></span>
+                                                        <ng-container
+                                                            *ngIf="f.Country.invalid && (f.Country.touched || isTemFormSubmit)">
+                                                            <mat-error style="font-size: 12px;"
+                                                                *ngIf="f.Country.errors.required">Country is required
+                                                            </mat-error>
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">State/Province/Region *</label>
+                                                            <span><p-dropdown [options]="states" optionLabel="Name"
+                                                                    (onChange)="onStateSelect()" [filter]="true"
+                                                                    filterBy="Name" [showClear]="true"
+                                                                    placeholder="Select State/Province/Region..."
+                                                                    formControlName="StateId" appendTo="body"
+                                                                    optionValue="Id" [showClear]="false"
+                                                                    [ngClass]="{'invalid-error': f.StateId.invalid && (f.StateId.dirty || f.StateId.touched || isTemFormSubmit)}">
+                                                                </p-dropdown></span>
+
+                                                            <ng-container
+                                                                *ngIf="f.StateId.invalid && (f.StateId.touched || isTemFormSubmit)">
+                                                                <mat-error style="font-size: 12px;"
+                                                                    *ngIf="f.StateId.errors.required">
+                                                                    State/Province/Region is required
+                                                                </mat-error>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Zip/Postal Code *</label>
+                                                            <span><input type="text" class="form-control" required
+                                                                    formControlName="PostalCode"
+                                                                    (input)="isSameAsPhyAddress ? sameAsPhyAddress(true) : ''"
+                                                                    [ngClass]="{'invalid-error': !f.PostalCode.valid && (f.PostalCode.dirty || f.PostalCode.touched || isTemFormSubmit)}"
+                                                                    spaceTrimStartEndInput
+                                                                    [allowStartWithSpace]="false"></span>
+                                                            <ng-container
+                                                                *ngIf="f.PostalCode.invalid && (f.PostalCode.touched || isTemFormSubmit)">
+                                                                <mat-error style="font-size: 12px;"
+                                                                    *ngIf="f.PostalCode.errors.required">Zip/Postal Code
+                                                                    is
+                                                                    required
+                                                                </mat-error>
+                                                            </ng-container>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 ">
+                                                    <h5></h5>
+                                                </div>
+                                                <div class="col-md-12 ">
+                                                    <h5></h5>
+                                                </div>
+                                                <div class="col-md-12 ">
+                                                    <h5></h5>
+                                                </div>
+                                                <div class="row col-sm-12 col-xl-12 ">
+                                                    <div class="col-md-12 px-0">
+                                                        <h5 class="mb-0"><b>Billing Address</b></h5>
+                                                    </div>
+                                                    <div class="col-md-12 ">
+                                                        <h5></h5>
+                                                    </div>
+                                                    <div class="col-md-12 ">
+                                                        <h5></h5>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col-md-12 p-t-custom px-0" style="margin-top: -6px">
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6 px-0"><label> Billing Address same as
+                                                                Primary
+                                                                Address </label></div>
+                                                        <div class="col-sm-6">
+                                                            <mat-radio-group formControlName="isSameAsPhyAddress"
+                                                                class="m-l-8 d-block">
+                                                                <mat-radio-button [value]="true"
+                                                                    (change)="sameAsPhyAddress(true)">Yes
+                                                                </mat-radio-button>
+                                                                <mat-radio-button [value]="false"
+                                                                    (change)="sameAsPhyAddress(false)" class="m-l-10">No
+                                                                </mat-radio-button>
+                                                            </mat-radio-group>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class='row'>
+                                                    <div class="col-md-6" style="margin-top: 5px;">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Address One <ng-container
+                                                                *ngIf="isShowAsterisk">*</ng-container></label>
+                                                            <span><input type="text" class="form-control"
+                                                                    formControlName="BillingAddress"
+                                                                    (keyup)="checkAddressValidation()"
+                                                                    [readonly]='isSameAsPhyAddress'
+                                                                    spaceTrimStartEndInput
+                                                                    [ngClass]="{'invalid-error': f.BillingAddress.invalid && (f.BillingAddress.dirty || f.BillingAddress.touched || isTemFormSubmit)}"
+                                                                    [allowStartWithSpace]="false"></span>
+
+                                                                    <ng-container
+                                                                    *ngIf="f.BillingAddress.invalid && (f.BillingAddress.touched || isTemFormSubmit)">
+                                                                    <mat-error style="font-size: 12px;"
+                                                                        *ngIf="f.BillingAddress.errors.required">
+                                                                        Address One is required
+                                                                    </mat-error>
+                                                                </ng-container>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6" style="margin-top: 5px;">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Address Two</label>
+                                                            <span> <input type="text" class="form-control" (keyup)="checkAddressValidation2()"
+                                                                    formControlName="BillingAddress2"
+                                                                    [readonly]='isSameAsPhyAddress'
+                                                                    spaceTrimStartEndInput
+                                                                    [allowStartWithSpace]="false" ></span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">City <ng-container
+                                                                *ngIf="isShowAsterisk">*</ng-container></label>
+                                                            <span> <input type="text" class="form-control"
+                                                                    formControlName="BillingCity"
+                                                                    [readonly]='isSameAsPhyAddress'
+                                                                    spaceTrimStartEndInput
+                                                                    (keyup)="checkAddressValidation()"
+                                                                    [ngClass]="{'invalid-error': f.BillingCity.invalid && (f.BillingCity.dirty || f.BillingCity.touched || isTemFormSubmit)}"
+                                                                    [allowStartWithSpace]="false"></span>
+
+                                                                <ng-container
+                                                                    *ngIf="f.BillingCity.invalid && (f.BillingCity.touched || isTemFormSubmit)">
+                                                                    <mat-error style="font-size: 12px;"
+                                                                        *ngIf="f.BillingCity.errors.required">
+                                                                        City is required
+                                                                    </mat-error>
+                                                                </ng-container>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Country <ng-container
+                                                                *ngIf="isShowAsterisk">*</ng-container></label>
+                                                            <span> <p-dropdown [options]="countries" optionLabel="Name"
+                                                                    [filter]="true" filterBy="Name" [showClear]="true"
+                                                                    placeholder="Select Country..."
+                                                                    [disabled]="(isSameAsPhyAddress)? true : null "
+                                                                    (onChange)="onBillingCountrySelect($event.value); checkAddressValidation()"
+                                                                    appendTo="body" formControlName="BillingCountryId"
+                                                                    optionValue="Id" [showClear]="false"
+                                                                    [ngClass]="{'invalid-error': f.BillingCountryId.invalid && (f.BillingCountryId.dirty || f.BillingCountryId.touched || isTemFormSubmit)}"
+                                                                    >
+                                                                </p-dropdown></span>
+                                                                <ng-container
+                                                                *ngIf="f.BillingCountryId.invalid && (f.BillingCountryId.touched || isTemFormSubmit)">
+                                                                <mat-error style="font-size: 12px;"
+                                                                    *ngIf="f.BillingCountryId.errors.required">
+                                                                    Country is required
+                                                                </mat-error>
+                                                            </ng-container>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">State/Province/Region <ng-container
+                                                                *ngIf="isShowAsterisk">*</ng-container></label>
+                                                            <span> <p-dropdown [options]="Billingstates"
+                                                                    optionLabel="Name" [filter]="true"
+                                                                    [disabled]="(isSameAsPhyAddress)? true : null "
+                                                                    filterBy="Name"
+                                                                    (onChange)="checkAddressValidation()"
+                                                                    placeholder="Select State/Province/Region..."
+                                                                    formControlName="BillingStateId" appendTo="body"
+                                                                    [ngClass]="{'invalid-error': f.BillingStateId.invalid && (f.BillingStateId.dirty || f.BillingStateId.touched || isTemFormSubmit)}"
+                                                                    optionValue="Id" [showClear]="false">
+                                                                </p-dropdown></span>
+                                                                <ng-container
+                                                                *ngIf="f.BillingStateId.invalid && (f.BillingStateId.touched || isTemFormSubmit)">
+                                                                <mat-error style="font-size: 12px;"
+                                                                    *ngIf="f.BillingStateId.errors.required">
+                                                                    State/Province/Region is required
+                                                                </mat-error>
+                                                            </ng-container>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Zip/Postal Code <ng-container
+                                                                *ngIf="isShowAsterisk">*</ng-container></label>
+                                                            <span><input type="text" class="form-control"
+                                                                    formControlName="BillingPostalCode"
+                                                                    [readonly]='isSameAsPhyAddress'
+                                                                    spaceTrimStartEndInput
+                                                                    (keyup)="checkAddressValidation()"
+                                                                    [ngClass]="{'invalid-error': f.BillingPostalCode.invalid && (f.BillingPostalCode.dirty || f.BillingPostalCode.touched || isTemFormSubmit)}"
+                                                                    [allowStartWithSpace]="false"></span>
+                                                                    <ng-container
+                                                                    *ngIf="f.BillingPostalCode.invalid && (f.BillingPostalCode.touched || isTemFormSubmit)">
+                                                                    <mat-error style="font-size: 12px;"
+                                                                        *ngIf="f.BillingPostalCode.errors.required">
+                                                                        Zip/Postal Code is required
+                                                                    </mat-error>
+                                                                </ng-container>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </div>
+                                </mat-accordion>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="form-group text-center margin-b-none">
+                            <button type="submit" [disabled]="saveButtonLoadder" class="btn btn-primary btn-raised">Save
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+        <!-- </app-card> -->
+
+    </div>
+    <!-- </div> -->
+</div>

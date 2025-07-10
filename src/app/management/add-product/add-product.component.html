@@ -1,0 +1,172 @@
+<button *ngIf="!isShowColseButton" type="button" class="close" mat-dialog-close>
+    <span aria-hidden="true">&times;</span>
+</button>
+
+<div class="row">
+    <div class="col-12 px-0">
+        <app-card cardTitle="">
+            <form class="editForm" [formGroup]="addProductForm" (ngSubmit)="saveProduct()">
+                <div class="row">
+
+                    <div class="col-sm-12 col-xl-12 text-right">
+                        <span class="text-c-red">*Required field</span>
+                    </div>
+
+                    <!-- <div class="col-sm-12 col-xl-12"> -->
+                    <div class="col-sm-12 col-xl-12 px-0">
+                        <mat-accordion class="example-headers-align">
+                            <div>
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                    <mat-expansion-panel-header class="math">
+                                        <mat-panel-title class="matt">
+                                            <i class="ficon fas fa-box-open"></i>&nbsp;Product
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="row m-t-20">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Industry *</label>
+
+                                                <span><p-dropdown [options]="industries" optionLabel="Name"
+                                                        [filter]="true" filterBy="Name" [showClear]="true"
+                                                        placeholder="Select Industry..." formControlName="industryId"
+                                                        appendTo="body" optionValue="Id" [showClear]="false"
+                                                        [ngClass]="{'invalid-error': !f.industryId.valid && (f.industryId.dirty || f.industryId.touched || isProductFormSubmit)}">
+                                                    </p-dropdown></span>
+
+                                                <ng-container
+                                                    *ngIf="f.industryId.invalid && (f.industryId.touched || isProductFormSubmit)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f.industryId.errors.required">
+                                                        Industry is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Service *</label>
+
+                                                <span><p-dropdown [options]="services" optionLabel="Name"
+                                                        [filter]="true" filterBy="Name" [showClear]="true"
+                                                        placeholder="Select Service..." formControlName="serviceId"
+                                                        appendTo="body" optionValue="Id" [showClear]="false"
+                                                        [ngClass]="{'invalid-error': !f.serviceId.valid && (f.serviceId.dirty || f.serviceId.touched || isProductFormSubmit)}">
+                                                    </p-dropdown></span>
+
+                                                <ng-container
+                                                    *ngIf="f.serviceId.invalid && (f.serviceId.touched || isProductFormSubmit)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f.serviceId.errors.required">
+                                                        Service is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Service Type *</label>
+                                                <span><p-dropdown [options]="serviceTypes" optionLabel="Name"
+                                                        [filter]="true" filterBy="Name" [showClear]="true"
+                                                        placeholder="Select Service Type..."
+                                                        formControlName="serviceTypeId" appendTo="body" optionValue="Id"
+                                                        [showClear]="false"
+                                                        [ngClass]="{'invalid-error': !f.serviceTypeId.valid && (f.serviceTypeId.dirty || f.serviceTypeId.touched || isProductFormSubmit)}">
+                                                    </p-dropdown></span>
+
+                                                <ng-container
+                                                    *ngIf="f.serviceTypeId.invalid && (f.serviceTypeId.touched || isProductFormSubmit)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f.serviceTypeId.errors.required">
+                                                        Service Type is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Product *</label>
+
+                                                <span><p-dropdown [options]="products" optionLabel="Name"
+                                                        [filter]="true" filterBy="Name" [showClear]="true"
+                                                        placeholder="Select Product..." formControlName="productId"
+                                                        appendTo="body" optionValue="Id" [showClear]="false"
+                                                        [ngClass]="{'invalid-error': !f.productId.valid && (f.productId.dirty || f.productId.touched || isProductFormSubmit)}">
+                                                    </p-dropdown></span>
+
+                                                <ng-container
+                                                    *ngIf="f.productId.invalid && (f.productId.touched || isProductFormSubmit)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f.productId.errors.required">
+                                                        Product is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Product Type *</label>
+
+                                                <span><p-dropdown [options]="productTypes" optionLabel="Name"
+                                                        [filter]="true" filterBy="Name" [showClear]="true"
+                                                        placeholder="Select Product Type..."
+                                                        formControlName="productTypeId" appendTo="body" optionValue="Id"
+                                                        [showClear]="false"
+                                                        [ngClass]="{'invalid-error': !f.productTypeId.valid && (f.productTypeId.dirty || f.productTypeId.touched || isProductFormSubmit)}">
+                                                    </p-dropdown></span>
+
+                                                <ng-container
+                                                    *ngIf="f.productTypeId.invalid && (f.productTypeId.touched || isProductFormSubmit)">
+                                                    <mat-error style="font-size: 12px;"
+                                                        *ngIf="f.productTypeId.errors.required">
+                                                        Product Type is required
+                                                    </mat-error>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="w-100">
+                                            <div class="form-group" style="margin-bottom: 0 !important;">
+                                                <label class="form-label mr-3">Default Reconciliation Option *</label>
+                                                <mat-radio-group formControlName="reconAssigmentId">
+                                                    <mat-radio-button [ngClass]="{'m-l-10': i !== 0}" class="" *ngFor="let item of reconList; let i = index" [value]="item.Assignment">{{item.Assignment}}
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-12 mb-2 pl-0">
+                                            <div class="form-check pl-0 d-flex">
+                                                <label class="form-check-label pr-1 same-location-lable"
+                                                    for="defaultCheck2" style="font-weight: 500;">
+                                                    Keep for Production :
+                                                </label>
+                                                <input class="form-check-inner" type="checkbox" id="defaultCheck2"
+                                                    formControlName="keepForProduction">
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-raised" [disabled]="saveButtonLoadder || isSuperTEMManager">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- </div> -->
+
+
+                </div>
+            </form>
+        </app-card>
+    </div>
+</div>

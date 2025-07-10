@@ -1,0 +1,45 @@
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+.validate-tooltip-dialog {
+    font-family: "Open Sans", sans-serif;
+    max-width: 100%;
+
+    .table {
+        border: 1px solid #E2E5E8;
+        margin-bottom: 0;
+
+        tr {
+
+            th {
+                padding: 8px;
+                font-size: 14px;
+                font-weight: 700;
+                color: #181d1f;
+                border-right: 1px solid #E2E5E8;
+            }
+
+            td {
+                font-size: 13px;
+                color: #181d1f;
+                font-weight: 400;
+                padding: 8px;
+                line-height: 1.2em;
+                white-space: unset !important;
+
+                p {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .tooltip-desc p {
+        font-size: 13px;
+        margin-bottom: 0;
+        line-height: 1.4em;
+    }
+}

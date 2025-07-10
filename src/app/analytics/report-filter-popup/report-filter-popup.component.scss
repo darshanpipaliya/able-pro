@@ -1,0 +1,85 @@
+.row {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mat-dialog-header {
+  display: flex !important;
+  // justify-content: center !important;
+  border-bottom: 1px solid #e2e5e8;
+  position: relative;
+}
+
+.mat-dialog-header.dailog-tooltip{
+  border-bottom: none !important;
+}
+
+
+.mat-dialog-content {
+  padding: 0;
+  overflow: unset;
+}
+
+.form-label {
+  font-weight: 500 !important;
+}
+
+:host ::ng-deep .form-control {
+  height: unset !important;
+  padding: 0px 0;
+}
+
+:host ::ng-deep .form-group {
+  margin-bottom: 10px !important;
+}
+
+.mat-dialog-header button.close {
+  position: absolute !important;
+  top: -10px;
+  right: -10px;
+}
+
+:host ::ng-deep .mat-dialog-actions {
+  padding: 0px 0 !important;
+}
+
+:host ::ng-deep .form-group label {
+  float: left !important;
+}
+
+:host ::ng-deep .form-group span {
+  display: block;
+  overflow: hidden;
+  padding: 0 4px 0 6px;
+}
+
+:host ::ng-deep .form-control:disabled,
+:host ::ng-deep .form-control[readonly] {
+  opacity: 0.6 !important;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+:host ::ng-deep.card .card-body {
+  padding: 0 !important;
+}
+
+:host ::ng-deep .form-group span {
+  display: block;
+  overflow: hidden;
+  padding: 0 4px 0 6px;
+}
+
+
+.mat-button.mat-button-disabled.mat-button-disabled {
+  color: #fff !important;
+}
+
+
+.radio-minWidth .form-label {
+  min-width: 220px;
+}
+
+.form-group .form-label {
+  min-width: 110px;
+}

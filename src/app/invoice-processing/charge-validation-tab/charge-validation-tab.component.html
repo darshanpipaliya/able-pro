@@ -1,0 +1,232 @@
+<ng-container>
+    <mat-tab-group *ngIf="selectedTab == 4" [selectedIndex]="selectedIndex" (selectedIndexChange)="changedTab($event)">
+        <mat-tab>
+            <div class="col-sm-12">
+                <ng-template mat-tab-label>
+                    <b> <svg version="1.0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="15px" viewBox="0 0 214.000000 221.000000"
+                        preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,221.000000) scale(0.100000,-0.100000)"
+                            fill="#4680ff" stroke="none">
+                            <path
+                                d="M970 2100 l0 -110 90 0 90 0 0 110 0 110 -90 0 -90 0 0 -110z" />
+                            <path d="M100 1825 l0 -65 86 0 c84 0 85 0 78 -22 -4 -13 -62 -196 -130 -407
+               -69 -214 -124 -401 -124 -422 0 -102 91 -233 198 -286 50 -25 68 -28 152 -28
+               82 0 103 4 152 27 104 48 185 155 203 264 5 36 -12 99 -125 454 -73 226 -130
+               413 -128 416 3 2 277 3 609 2 l605 -3 -134 -415 -134 -415 16 -65 c31 -121
+               108 -207 224 -251 80 -30 197 -24 275 15 108 52 197 184 197 289 0 26 -50 194
+               -130 442 l-129 400 97 5 97 5 3 63 3 62 -981 0 -980 0 0 -65z m374 -536 c58
+               -179 106 -331 106 -337 0 -14 -426 -18 -433 -4 -4 8 212 676 218 670 2 -1 51
+               -150 109 -329z m1404 6 c55 -170 103 -320 106 -332 l7 -23 -220 0 c-122 0
+               -221 3 -221 8 0 22 215 670 221 664 4 -4 52 -146 107 -317z" />
+                            <path
+                                d="M980 1120 l0 -540 90 0 90 0 0 540 0 540 -90 0 -90 0 0 -540z" />
+                            <path
+                                d="M850 390 l0 -90 220 0 220 0 0 90 0 90 -220 0 -220 0 0 -90z" />
+                            <path
+                                d="M430 100 l0 -90 640 0 640 0 0 90 0 90 -640 0 -640 0 0 -90z" />
+                        </g>
+                    </svg>&nbsp;Charge Validation</b>
+
+                </ng-template>
+            </div>
+            <ng-container *ngIf="selectedIndex == 0">
+                <div class="summary-total-main">
+                    <div class="banner">
+                        <app-invoice-overview [shoDayRemained]="true" [selectedTab]="selectedTab" (reloadGrid)="reloadGrid($event)" [sandBoxGridRowData]="sandBoxGridRowData" (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)"></app-invoice-overview>
+                        <div class="validate-summary-total-main">
+                            <app-payable-account  *ngIf="overViewData" [reloadGrid]="refreshGrid"
+                            [recordPublishedOrCompleted]="recordPublishedOrCompleted"
+                            [sandBoxGridRowData]="sandBoxGridRowData" [overViewData]="overViewData" (onCellClicked)="redirectTab($event)" (mainTabRedirect)="mainTabRedirect1($event)"></app-payable-account>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </mat-tab>
+        <mat-tab>
+            <div class="col-sm-12">
+                <ng-template mat-tab-label>
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="16px"
+                        viewBox="0 0 232.000000 218.000000" preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,218.000000) scale(0.100000,-0.100000)" fill="#4680ff"
+                            stroke="none">
+                            <path d="M894 2141 c-49 -8 -94 -36 -101 -61 -3 -11 -28 -26 -66 -40 -82 -30
+-224 -100 -282 -140 -228 -157 -397 -463 -420 -761 -25 -305 157 -660 448
+-880 354 -266 856 -309 1262 -106 241 120 431 322 512 545 108 294 47 648
+-158 929 -104 143 -309 309 -475 384 -229 105 -536 160 -720 130z m456 -172
+c371 -94 680 -382 786 -735 23 -76 27 -108 28 -219 1 -156 -15 -228 -80 -360
+-178 -363 -615 -571 -1050 -500 -627 102 -1042 728 -825 1246 41 98 95 174
+195 275 164 165 367 271 605 315 72 13 247 2 341 -22z" />
+                            <path d="M1426 1654 c-45 -15 -92 -24 -131 -24 -47 0 -66 -4 -78 -18 -23 -25
+-21 -65 4 -88 29 -26 143 -24 223 5 33 11 77 21 99 21 35 0 46 -6 83 -45 50
+-54 93 -61 120 -20 21 32 13 60 -32 113 -73 85 -158 102 -288 56z" />
+                            <path d="M603 1516 c-56 -26 -71 -53 -59 -101 9 -34 47 -42 98 -19 60 27 109
+21 199 -26 89 -45 120 -49 149 -20 41 41 24 73 -64 117 -155 78 -234 90 -323
+49z" />
+                            <path d="M1457 1312 c-22 -24 -47 -97 -47 -138 0 -44 28 -112 51 -124 37 -20
+76 -11 107 25 57 64 55 150 -5 216 -39 44 -79 51 -106 21z" />
+                            <path d="M726 1301 c-53 -59 -45 -229 12 -260 71 -38 152 17 152 102 0 38 -39
+126 -69 156 -26 26 -72 27 -95 2z" />
+                            <path d="M577 852 c-23 -25 -21 -65 3 -87 18 -16 70 -19 567 -35 612 -20 593
+-21 593 45 0 63 9 62 -555 79 -629 20 -588 20 -608 -2z" />
+                        </g>
+                    </svg>
+                    <b>&nbsp; By Account 4A</b>
+
+                </ng-template>
+            </div>
+            <ng-container *ngIf="selectedIndex == 1">
+                <div class="summary-total-main">
+                    <div class="banner">
+                        <app-invoice-overview [shoDayRemained]="true" [sandBoxGridRowData]="sandBoxGridRowData" (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)"></app-invoice-overview>
+                        <div class="validate-summary-total-main" *ngIf="overViewData">
+                            <app-isd-by-account  [overviewData]="overViewData" (onCellClicked)="redirectTab($event)" [sandBoxGridRowData]="sandBoxGridRowData" [recordPublishedOrCompleted]="recordPublishedOrCompleted"></app-isd-by-account>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </mat-tab>
+
+        <mat-tab>
+            <div class="col-sm-12">
+                <ng-template mat-tab-label>
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="16px"
+                        viewBox="0 0 232.000000 218.000000" preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,218.000000) scale(0.100000,-0.100000)" fill="#4680ff"
+                            stroke="none">
+                            <path d="M894 2141 c-49 -8 -94 -36 -101 -61 -3 -11 -28 -26 -66 -40 -82 -30
+-224 -100 -282 -140 -228 -157 -397 -463 -420 -761 -25 -305 157 -660 448
+-880 354 -266 856 -309 1262 -106 241 120 431 322 512 545 108 294 47 648
+-158 929 -104 143 -309 309 -475 384 -229 105 -536 160 -720 130z m456 -172
+c371 -94 680 -382 786 -735 23 -76 27 -108 28 -219 1 -156 -15 -228 -80 -360
+-178 -363 -615 -571 -1050 -500 -627 102 -1042 728 -825 1246 41 98 95 174
+195 275 164 165 367 271 605 315 72 13 247 2 341 -22z" />
+                            <path d="M1426 1654 c-45 -15 -92 -24 -131 -24 -47 0 -66 -4 -78 -18 -23 -25
+-21 -65 4 -88 29 -26 143 -24 223 5 33 11 77 21 99 21 35 0 46 -6 83 -45 50
+-54 93 -61 120 -20 21 32 13 60 -32 113 -73 85 -158 102 -288 56z" />
+                            <path d="M603 1516 c-56 -26 -71 -53 -59 -101 9 -34 47 -42 98 -19 60 27 109
+21 199 -26 89 -45 120 -49 149 -20 41 41 24 73 -64 117 -155 78 -234 90 -323
+49z" />
+                            <path d="M1457 1312 c-22 -24 -47 -97 -47 -138 0 -44 28 -112 51 -124 37 -20
+76 -11 107 25 57 64 55 150 -5 216 -39 44 -79 51 -106 21z" />
+                            <path d="M726 1301 c-53 -59 -45 -229 12 -260 71 -38 152 17 152 102 0 38 -39
+126 -69 156 -26 26 -72 27 -95 2z" />
+                            <path d="M577 852 c-23 -25 -21 -65 3 -87 18 -16 70 -19 567 -35 612 -20 593
+-21 593 45 0 63 9 62 -555 79 -629 20 -588 20 -608 -2z" />
+                        </g>
+                    </svg>
+                    <b>&nbsp; By Charge Location 4B</b>
+
+                </ng-template>
+            </div>
+            <ng-container  *ngIf="selectedIndex == 2">
+                <div class="summary-total-main">
+                    <div class="banner">
+                        <app-invoice-overview  [shoDayRemained]="true"  [sandBoxGridRowData]="sandBoxGridRowData" (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)"></app-invoice-overview>
+                        <div class="validate-summary-total-main" *ngIf="overViewData">
+                            <app-isd-by-charge-location (onCellClicked)="redirectTab($event)" [sandBoxGridRowData]="sandBoxGridRowData" [overviewData]="overViewData" [recordPublishedOrCompleted]="recordPublishedOrCompleted"></app-isd-by-charge-location>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </mat-tab>
+
+        <mat-tab>
+            <div class="col-sm-12">
+                <ng-template mat-tab-label>
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="15px"
+                        viewBox="0 0 163.000000 163.000000" preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,163.000000) scale(0.100000,-0.100000)" fill="#4680ff"
+                            stroke="none">
+                            <path d="M680 1609 c-81 -14 -213 -62 -276 -100 -76 -46 -185 -148 -240 -224
+-160 -225 -190 -536 -75 -789 93 -204 277 -367 496 -436 106 -34 292 -39 407
+-11 291 69 506 276 590 568 32 111 32 304 0 417 -77 269 -287 481 -552 556
+-87 24 -265 34 -350 19z m-21 -311 c13 -34 3 -55 -58 -121 -62 -67 -154 -131
+-213 -149 -33 -10 -41 -9 -58 7 -30 27 -22 66 15 85 71 36 147 94 192 145 40
+45 54 55 81 55 25 0 35 -5 41 -22z m468 -167 c68 -99 45 -303 -39 -350 -37
+-21 -71 -1 -99 57 -86 177 38 439 138 293z m-415 -186 c9 -19 8 -29 -5 -48
+-13 -20 -37 -30 -130 -53 -63 -15 -121 -24 -131 -21 -24 10 -42 55 -30 75 12
+19 188 70 247 71 30 1 39 -4 49 -24z m591 -343 c9 -8 17 -22 17 -30 0 -23
+-159 -180 -205 -202 -27 -13 -62 -20 -101 -20 -50 0 -72 7 -148 45 -48 25
+-101 45 -117 45 -16 0 -63 -10 -106 -21 -95 -26 -154 -21 -239 21 -80 39 -101
+62 -88 98 14 39 51 40 126 3 70 -35 110 -38 189 -14 30 9 82 16 116 16 54 1
+74 -5 158 -47 127 -64 141 -61 250 44 99 96 105 98 148 62z" />
+                        </g>
+                    </svg>
+
+                    <b>&nbsp;By Billing ID 4C</b>
+
+                </ng-template>
+            </div>
+            <ng-container  *ngIf="selectedIndex == 3">
+                <div class="summary-total-main">
+                    <div class="banner">
+                        <app-invoice-overview [refreshDatas]="dataRefresh" [shoDayRemained]="true"  [sandBoxGridRowData]="sandBoxGridRowData" (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)"></app-invoice-overview>
+                        <div class="validate-summary-total-main" *ngIf="overViewData">
+                            <app-isd-by-billing-id [recordPublishedOrCompleted]="recordPublishedOrCompleted" (refreshOverview)="refreshData($event)" [sandBoxGridRowData]="sandBoxGridRowData" [overviewData]="overViewData"></app-isd-by-billing-id>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </mat-tab>
+
+        <mat-tab>
+            <div class="col-sm-12">
+                <ng-template mat-tab-label>
+                    <b> <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                        height="15px" viewBox="0 0 487.000000 490.000000"
+                        preserveAspectRatio="xMidYMid meet">
+                       
+                       <g transform="translate(0.000000,490.000000) scale(0.100000,-0.100000)"
+                       fill="#4680ff" stroke="none">
+                       <path d="M2250 4864 c-472 -43 -892 -205 -1269 -487 -123 -92 -356 -325 -448
+                       -448 -201 -268 -341 -557 -418 -864 -55 -221 -70 -342 -69 -595 0 -255 13
+                       -369 69 -593 213 -849 885 -1520 1734 -1732 359 -89 709 -98 1071 -25 877 176
+                       1587 835 1828 1695 161 575 107 1172 -153 1700 -124 252 -242 420 -435 619
+                       -211 217 -411 363 -675 492 -227 110 -448 180 -700 219 -97 15 -443 27 -535
+                       19z m391 -324 c487 -49 927 -258 1269 -600 343 -343 549 -781 599 -1269 45
+                       -437 -66 -916 -296 -1283 -257 -409 -622 -708 -1063 -871 -753 -278 -1615 -86
+                       -2185 488 -174 175 -294 346 -403 575 -378 792 -214 1740 408 2360 317 317
+                       715 518 1155 585 176 26 351 31 516 15z"/>
+                       <path d="M1016 3587 c-3 -12 -7 -84 -11 -159 -5 -137 -5 -138 17 -142 13 -2
+                       70 -12 128 -21 205 -33 444 -121 625 -229 l90 -53 92 123 c51 68 93 127 93
+                       131 0 13 -162 108 -275 163 -227 109 -462 176 -713 203 -37 5 -43 3 -46 -16z"/>
+                       <path d="M3625 3598 c-117 -13 -290 -54 -423 -99 -204 -70 -532 -244 -515
+                       -272 25 -41 157 -244 163 -250 4 -5 39 10 76 33 204 123 459 214 707 250 l87
+                       13 0 169 c0 92 -3 167 -7 167 -5 -1 -44 -6 -88 -11z"/>
+                       <path d="M1645 2931 c-54 -25 -98 -74 -132 -146 -25 -53 -28 -71 -28 -161 0
+                       -96 2 -105 35 -170 101 -198 311 -189 406 19 25 54 29 74 29 157 0 83 -4 103
+                       -28 155 -48 102 -126 165 -207 165 -19 0 -53 -9 -75 -19z"/>
+                       <path d="M3085 2931 c-54 -25 -98 -74 -132 -146 -24 -52 -28 -72 -28 -155 0
+                       -83 4 -103 28 -155 34 -72 78 -121 132 -146 107 -49 218 8 282 146 24 52 28
+                       72 28 155 0 83 -4 103 -28 155 -48 102 -126 165 -207 165 -19 0 -53 -9 -75
+                       -19z"/>
+                       <path d="M2285 1976 c-207 -40 -388 -141 -574 -321 -90 -87 -191 -204 -191
+                       -221 0 -8 226 -159 254 -170 7 -3 38 26 72 66 112 135 278 258 416 308 63 23
+                       89 26 183 26 101 0 117 -3 200 -35 50 -19 123 -56 163 -83 81 -54 221 -182
+                       267 -245 17 -22 34 -41 38 -41 11 0 266 164 267 171 1 17 -263 277 -337 333
+                       -110 83 -255 158 -368 191 -111 33 -283 42 -390 21z"/>
+                       </g>
+                       </svg> All Detail 4D</b>
+
+                </ng-template>
+            </div>
+            <ng-container  *ngIf="selectedIndex == 4">
+                <div class="summary-total-main">
+                    <div class="banner">
+                        <app-invoice-overview [refreshDatas]="dataRefresh" [shoDayRemained]="true" [sandBoxGridRowData]="sandBoxGridRowData" (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)"></app-invoice-overview>
+                        <div class="validate-summary-total-main" *ngIf="overViewData">
+                            <app-cd-account-level [recordPublishedOrCompleted]="recordPublishedOrCompleted" (refreshOverview)="refreshData($event)" [sandBoxGridRowData]="sandBoxGridRowData" [from4A]="from4A" [from4AData]="from4AData" [overviewData]="overViewData"></app-cd-account-level>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </mat-tab>
+    </mat-tab-group>
+
+</ng-container>

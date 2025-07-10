@@ -1,0 +1,163 @@
+.mat-dialog-header {
+    display: flex !important;
+    justify-content: center !important;
+    border-bottom: 1px solid #e2e5e8;
+    position: relative;
+}
+
+// .mat-dialog-content {
+//     max-height: calc(85vh - 160px) !important;
+//     padding: 0;
+// }
+
+.mat-dialog-header button.close {
+    position: absolute !important;
+    right: 0 !important;
+}
+
+textarea.textarea-full-section {
+    border: 1px solid #ced4da !important;
+    padding: 5px !important;
+}
+
+.form-label {
+    font-weight: 500;
+    min-width: 85px;
+}
+
+input[type=text].form-control {
+    border-radius: 0;
+    padding: 0 !important;
+    height: auto;
+}
+
+:host ::ng-deep {
+    .mat-checkbox {
+        .mat-checkbox-layout {
+            margin-right: 15px;
+        }
+
+        .mat-checkbox-inner-container {
+            width: 14px;
+            height: 14px;
+            margin-right: 0;
+        }
+    }
+
+    .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+        opacity: 0.03 !important;
+        background-color: #4680ff !important;
+    }
+
+    .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+    .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+        background-color: #4680ff !important;
+    }
+}
+
+:host ::ng-deep button.close span {
+    position: absolute;
+    margin-top: -12px;
+}
+
+.row {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+:host ::ng-deep.card .card-body {
+    padding: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body .row .col-md-6 {
+    padding-left: 1px !important;
+    padding-right: 3px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body .row .col-md-6:nth-child(2n + 2) {
+    padding-left: 3px !important;
+    padding-right: 1px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+    padding: 10px 5px 0px !important;
+}
+
+:host ::ng-deep .mat-accordion .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+
+    .form-label {
+        min-width: 140px;
+    }
+
+}
+
+:host ::ng-deep .form-group label {
+    float: left !important;
+    line-height: 1.2em;
+}
+
+.form-group h6 {
+    font-weight: 400;
+    line-height: 1.2em;
+    margin-bottom: 0;
+}
+
+:host ::ng-deep .form-group label.float-right {
+    float: unset !important;
+}
+
+:host ::ng-deep .form-group span {
+    display: block;
+    overflow: hidden;
+    padding: 0 4px 0 6px;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+.tags-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 18px;
+    max-width: 550px;
+
+    .form-group{
+        margin-bottom: 0 !important;
+    }
+
+    .form-check{
+        padding-left: 18px !important;
+    }
+
+    .form-check-input{
+        margin-left: -18px !important;
+        cursor: pointer;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+
+    :host ::ng-deep .mat-expansion-panel-body .row .col-md-6 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    :host ::ng-deep .mat-expansion-panel-body .row .col-md-6:nth-child(2n + 2) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+}

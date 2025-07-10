@@ -1,0 +1,96 @@
+.mat-tab-label .mat-tab-label-content b {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.table-responsive {
+    overflow-x: unset !important;
+}
+
+.btn.btn-icon {
+    width: 40px;
+    height: 40px;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 12px !important;
+}
+
+:host ::ng-deep ag-grid-angular {
+    padding: 0 !important;
+}
+
+:host ::ng-deep #customer-table-tab .mat-tab-body.mat-tab-body-active,
+#customer-table-tab .mat-tab-body.mat-tab-body-active {
+    top: 0 !important;
+}
+
+:host ::ng-deep #inventory-detail-sub-tab .mat-tab-header {
+    width: 100% !important;
+}
+
+.mat-button.mat-button-disabled.mat-button-disabled {
+    color: #fff !important;
+}
+
+/* Header Label Start */
+
+:host ::ng-deep .mat-tab-link {
+    padding: 0 15px !important;
+    min-width: unset !important;
+}
+
+/* Header Label End */
+
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+:host ::ng-deep .accordion-grid {
+    .mat-expansion-panel-body {
+        padding: 0 !important;
+
+        ag-grid-angular {
+            height: 700px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+
+@media only screen and (max-width: 991px) {
+    .btn.btn-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+:host ::ng-deep .mat-tab-body-content {
+    overflow: hidden !important;
+}

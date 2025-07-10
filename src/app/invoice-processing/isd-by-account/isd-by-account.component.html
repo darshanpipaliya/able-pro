@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="validate-summary-total-right sandbox-step-grid">
+            <mat-accordion class="example-headers-align accordion-header-tooltip-right-arrow">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                    <button type="button" class="fas fa-check c-refresh-speed" [ngClass]="{'disabled': recordPublishedOrCompleted}" title="Refresh" (click)="getChargeValidationByAccount()"></button>
+                
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <!-- <i class="ficon fas fa-puzzle-piece"></i> &nbsp; -->
+                            <i class="ficon fas fa-tools"></i>&nbsp;Invoice Summary to Detail Charge
+                            Validation - By Account
+                        </mat-panel-title>
+                        <i class="fas fa-info-circle" (click)="openDialog()"></i>
+                        <ng-template #tooltipText>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="text-left">
+                                <p class="mb-2">To publish an invoice to the customer, the detail charges must match the
+                                    <b>Amount to Pay</b>, meaning the detailed charges listed in the invoice must align
+                                    exactly with the payment amount. Step 4 helps identify discrepancies by calculating
+                                    the difference between the <b>Amount to Pay</b> and the detailed charges collected
+                                    from the data files. This allows you to add any necessary credits or debits, along
+                                    with a charge code, to reconcile the details with the <b>Amount to Pay</b>.
+                                </p>
+
+                                <p class="mb-2">
+                                    Use the following pages to identify missing charges by <b>Account</b>, <b>Charge
+                                        Location</b>, and <b>Billing ID</b>. When possible, the system will highlight
+                                    specific data points that are out of balance. However, if the Vendor does not
+                                    provide totals by Billing ID, discrepancy information may not be available for
+                                    certain sections. In such cases, a thorough review of all charges will be necessary.
+                                    If totals are unavailable, the <b>Difference</b> field will display --.</p>
+
+                                <p class="mb-0"><b>Special Note:</b> If the <b>Amount to Pay</b> includes the <b>Past Due
+                                        Balance</b>, it indicates that the Past Due Balance has been selected for
+                                    payment. In this scenario, discrepancies will be calculated based on the itemized
+                                    charges in the invoice, excluding the Past Due Balance.
+                                </p>
+                            </div>
+                        </ng-template>
+                    </mat-expansion-panel-header>
+
+                    <div class="row">
+                        <div class="col-md-12 px-0">
+                            <ng-container style="height: max-content;">
+                                <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs1"
+                                    [rowData]="rowData" [rowSelection]="rowSelection" [sheetName]="'Charge Code Type'"
+                                    [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true"
+                                    (onCellDoubleClickedEvent)="onCellDoubleClicked($event)">
+                                </app-ag-grid-table>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

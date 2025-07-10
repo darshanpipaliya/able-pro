@@ -420,7 +420,11 @@ export class CostCenterRepositoryComponent implements OnInit {
                 floatingFiltersHeight: 35,
                 isRowSelectable: (rowNode: any) => {
                     return rowNode?.data?.AllowCCManualEdits == 'Yes';
-                }
+                },
+                rowSelection: {
+                    type: 'multiple',   
+                    enableClickSelection: true
+                },
             }
         } else {
             this.gridOptions = {
@@ -428,7 +432,11 @@ export class CostCenterRepositoryComponent implements OnInit {
                 serverSideInfiniteScroll: true,
                 headerHeight: 35,
                 groupHeaderHeight: 37,
-                floatingFiltersHeight: 35
+                floatingFiltersHeight: 35,
+                rowSelection: {
+                    type: 'multiple',   
+                    enableClickSelection: true
+                },
             };
         }
         this.getCustomerForUser();

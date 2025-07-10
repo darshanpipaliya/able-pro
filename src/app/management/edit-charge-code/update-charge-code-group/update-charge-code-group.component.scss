@@ -1,0 +1,44 @@
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+.dialog-header-c {
+    line-height: 1.2em;
+    position: relative;
+    top: -20px;
+    left: -15px;
+    color: #37474f;
+    font-weight: 600;
+}
+
+.link-text {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #4680ff;
+}
+
+h5.icon-text-h5{
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5em;
+    margin-bottom: 0;
+}
+
+a.linkTag{
+    text-decoration: underline;
+    cursor: pointer;
+    color: #4680ff;
+}
+
+.mat-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e2e5e8;
+ }

@@ -1,0 +1,141 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title" id="exampleModalLabel">{{dialogData.data ?'Update' : 'Add'}} {{from}}</h5>
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class=" text-right rfield">
+    <span class="text-c-red">*Required field</span>
+</div>
+<div mat-dialog-content>
+    <div class="container-fluid px-4">
+        <div class="card-body">
+            <ng-container *ngIf="from === 'Charge Type';else other;">
+                <form style="text-align: left;" [formGroup]="addChargeTypeForm">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xl-6">
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 500;">Charge Code Type *</label>
+
+
+                                <span class="pr-0"><p-dropdown [options]="chargeCodeTypes" optionLabel="Name" [filter]="true"
+                                        filterBy="Name" [showClear]="true" placeholder="Select charge code type..."
+                                        formControlName="chargeCodeTypeId" optionValue="Id" [showClear]="false"
+                                        appendTo="body"
+                                        [ngClass]="{'invalid-error': !f.chargeCodeTypeId.valid && (f.chargeCodeTypeId.dirty || f.chargeCodeTypeId.touched || isChargeTypeFormSubmit)}">
+                                    </p-dropdown></span>
+
+                                <ng-container
+                                    *ngIf="f.chargeCodeTypeId.invalid && (f.chargeCodeTypeId.touched || isChargeTypeFormSubmit)">
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.chargeCodeTypeId.errors.required">Charge Code Type is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 500;">{{from}} *</label>
+                                <!-- <span><input type="text" class="form-control" required formControlName="name"
+                                    [ngClass]="{'invalid-error': !f.name.valid && (f.name.dirty || f.name.touched || isChargeTypeFormSubmit)}"
+                                    placeholder="Enter Name" spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+                                     -->
+                                <span><input type="text" class="form-control" required formControlName="name"
+                                        [ngClass]="{'invalid-error': !f.name.valid && (f.name.dirty || f.name.touched || isChargeTypeFormSubmit)}"></span>
+                                <ng-container *ngIf="f.name.invalid && (f.name.touched || isChargeTypeFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.name.errors.required">{{from}} is
+                                        required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xl-6">
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 500;">Status *</label>
+
+                                <span><p-dropdown [options]="statusList" optionLabel="Name" [filter]="true"
+                                        filterBy="Name" [showClear]="true" placeholder="Select Status..."
+                                        formControlName="status" optionValue="Id" [showClear]="false" appendTo="body"
+                                        [disabled]="disableStatus"
+                                        [ngClass]="{'invalid-error': !f.status.valid && (f.status.dirty || f.status.touched || isChargeTypeFormSubmit)}">
+                                    </p-dropdown></span>
+
+                                <ng-container *ngIf="f.status.invalid && (f.status.touched || isChargeTypeFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.status.errors.required">Status is
+                                        required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-12 mb-2 pl-0">
+                            <div class="form-check pl-0 d-flex">
+                                <label class="form-check-label pr-1 same-location-lable" for="defaultCheck2"
+                                    style="font-weight: 500;">
+                                    Keep for Production :
+                                </label>
+                                <input class="form-check-inner" type="checkbox" id="defaultCheck2" formControlName="keepForProduction">
+                            </div>
+                        </div>
+                    </div> -->
+
+                </form>
+            </ng-container>
+            <ng-template #other>
+                <form style="text-align: left;" [formGroup]="addChargeCodeTypeForm">
+                    <div class=" row">
+                        <div class="col-md-6 col-sm-6 col-xl-6">
+
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 500;">{{from}} *</label>
+                                <span><input type="text" class="form-control" required formControlName="name"
+                                        [ngClass]="{'invalid-error': !f.name.valid && (f.name.dirty || f.name.touched || isChargeTypeFormSubmit)}"
+                                        spaceTrimStartEndInput [allowStartWithSpace]="false"></span>
+
+                                <ng-container *ngIf="f.name.invalid && (f.name.touched || isChargeTypeFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.name.errors.required">{{from}} is
+                                        required
+                                    </mat-error>
+                                </ng-container> 
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xl-6">
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 500;">Status *</label>
+
+                                <span class="pr-0"><p-dropdown [options]="statusList" optionLabel="Name" [filter]="false"
+                                        filterBy="Name" [showClear]="true" placeholder="Select Status..."
+                                        formControlName="active" appendTo="body" optionValue="Id" [showClear]="false"
+                                        [disabled]="disableStatus"
+                                        [ngClass]="{'invalid-error': f.active.invalid && (f.active.touched || isCustomerFormSubmit)}">
+                                    </p-dropdown></span>
+
+                                <ng-container *ngIf="f.active.invalid && (f.active.touched || isChargeTypeFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.active.errors.required">
+                                        Status is required
+                                    </mat-error>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-12 mb-2 pl-0">
+                            <div class="form-check pl-0">
+                                <label class="form-check-label pr-1 same-location-lable" for="defaultCheck1"
+                                    style="font-weight: 500;">
+                                    Keep for Production :
+                                </label>
+                                <input class="form-check-inner" type="checkbox" id="defaultCheck1" formControlName="keepForProduction">
+                            </div>
+                        </div>
+                    </div> -->
+                </form>
+            </ng-template>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="pt-0" align="end">
+    <!----<button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>-->
+    <button mat-button (click)="saveProduct()" class="btn btn-primary"
+        [disabled]="(dialogData.data && !isSuperTEMAdmin) || saveButtonLoadder">Save</button>
+</mat-dialog-actions>

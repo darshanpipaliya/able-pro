@@ -1,0 +1,220 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Add Retrieval Note</h5>
+    </div>
+
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div mat-dialog-content>
+    <div class="card-body p-0">
+        <div class="container px-0">
+            <form class="editForm" [formGroup]="noteForm">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 text-right">
+                        <span class="text-c-red">*Required field</span>
+                      </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                        <div class="form-group">
+                            <label class="form-label">Note *</label>
+                            <textarea class="form-control textarea-full-section" formControlName="Note"
+                            maxlength="1000" rows="4" spaceTrimStartEndInput
+                            [allowStartWithSpace]="false"></textarea>
+                            <mat-error style="font-size: 12px; position: absolute;"
+                            class="textarea-error-disc"
+                            *ngIf="noteForm.controls['Note'].errors?.['required'] && (noteForm.controls['Note'].touched || isSubmit) ">
+                            Note is required</mat-error>
+                            <span style="text-align: end;color: gray;">{{noteForm.controls['Note'].value.length ?
+                                            noteForm.controls['Note'].value.length : 0 }}/1000</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="text-center my-3">
+                <button mat-button class="btn btn-primary mat-spinner-btn" (click)="saveNotes()" [disabled]="saveButtonDisabled || viewOnly">
+                    <span class="spinner-border spinner-border-sm mr-2" role="status"
+                                        *ngIf="saveButtonDisabled"></span>Save</button>
+            </div>
+
+            <form [formGroup]="addInvoiceRetrivalFormNew">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 padding-left-none">
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title class="matt font-weight-bold">
+                                        <i class="ficon fas fa-building"></i>&nbsp;Record Detail
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <div class="p-steps-main invoice-ret-edit">
+                                            <p-steps [model]="items" [readonly]="false"></p-steps>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Record
+                                                Status</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="RecordStatus"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Billing
+                                                Period</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="BillingPeriod"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Invoice
+                                                Status</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="InvoiceStatus"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Data
+                                                Status</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="DataStatus"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Invoice
+                                                Retrieval
+                                                Date</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="InvoiceRetrievalDate"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Data
+                                                Retrieval
+                                                Date</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="DataRetrievalDate"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Invoice
+                                                Received</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="InvoiceReceived"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Data
+                                                Received</label>
+                                            <span><input type="text" class="form-control"
+                                                    formControlName="DataReceived"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Invoice
+                                                Processed</label>
+                                            <span><input type="text" class="form-control"
+                                                    formControlName="InvoiceProcessed"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Data
+                                                Processed</label>
+                                            <span><input type="text" class="form-control"
+                                                    formControlName="DataProcessed"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                              
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group" *ngIf="invoiceRetrievalData.InvoiceRetrievalDate !== invoiceRetrievalData.DataRetrievalDate">
+                                            <i class="fas fa-exclamation-triangle" style="color: #E58900;"></i><a
+                                                href="javascript:void(0);" class="mx-1"
+                                                style="font-weight: 500;">Retrieval
+                                                Dates
+                                                Differ</a><i class="fas fa-info-circle" container="body"
+                                                ngbTooltip="The Invoice Retrieval Date and the Data Retrieval Dates do not match, indicating we should not expect both sets of files on the same day"
+                                                tooltipClass="tooltip-bg"></i>
+                                        </div>
+
+                                        <div class="form-group" *ngIf="invoiceRetrievalData.MainAccountNumber !== invoiceRetrievalData.PayableAccountNumber">
+                                            <i class="fas fa-exclamation-triangle" style="color: #E58900;"></i><a
+                                                href="javascript:void(0);" class="mx-1"
+                                                style="font-weight: 500;">Payable
+                                                Account is not Main Account</a><i class="fas fa-info-circle"
+                                                container="body"
+                                                ngbTooltip="The Payable Account and Main Account are different, indicating that the invoice and/or data files might be a subset of the Main Account’s file(s)."
+                                                tooltipClass="tooltip-bg"></i>
+                                        </div>
+                                        <div class="form-group" *ngIf="invoiceRetrievalData.DataRetrievalProcessingMethodDisplay == 'Automated Process'">
+                                            <i class="fas fa-exclamation-triangle" style="color: #E58900;"></i><a
+                                                href="javascript:void(0);" class="mx-1"
+                                                style="font-weight: 500;">Automated
+                                                Processing</a><i class="fas fa-info-circle" container="body"
+                                                ngbTooltip="The system will retrieve and process the data files automatically"
+                                                tooltipClass="tooltip-bg"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group" *ngIf="invoiceRetrievalData.DataRetrievalProcessingMethodDisplay == 'Manual Upload (Mapped)'">
+                                            <label for="exampleInputPassword1" class="form-label">#
+                                                Required Files</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="RequiredFiles"></span>
+                                        </div>
+                           
+                                        <div class="form-group" *ngIf="invoiceRetrievalData.DataRetrievalProcessingMethodDisplay == 'Manual Upload (Mapped)'">
+                                            <label for="exampleInputPassword1" class="form-label">#
+                                                Optional Files</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="OptionalFiles"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1" class="form-label">Multiple
+                                                Retrieval
+                                                Methods</label>
+                                            <span><input type="text" class="form-control" placeholder=""
+                                                    formControlName="MultipleRetrievalMethods"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

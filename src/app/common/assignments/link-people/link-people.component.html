@@ -1,0 +1,30 @@
+<div class="px-0 mt-2">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="pb-2 float-right">
+                <button mat-button class="btn btn-primary" cdkFocusInitial (click)="savePeople()" [disabled]="saveButtonDisabled">
+                    <span class="spinner-border spinner-border-sm" role="status" *ngIf="saveButtonDisabled"></span>
+                    Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="link-people">
+        <div class="fb fb2 example-headers-align">
+            <mat-expansion-panel style="width: 100%;" [expanded]="true" class="table-border-none">
+                <mat-expansion-panel-header class="math borderc">
+                    <mat-panel-title style="margin-left: 33%; margin-right: 0px !important;">
+                        <i class="ficon fas fa-user-edit"></i>&nbsp;People
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="">
+                    <ng-container>
+                        <app-ag-grid-table [rowSelection]="'multiple'" [gridOptions]="gridOptions"
+                            (onAgGridReadyEmit)="onAgGridReadyEmit($event)" (onAgGridReady)="onAgGridReady($event)"
+                            [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" [rowData]="peopleRowData" (onSelectionChangedEvent)="onSelectionChanged($event)"></app-ag-grid-table>
+                    </ng-container>
+                </div>
+            </mat-expansion-panel>
+        </div>
+    </div>
+</div>

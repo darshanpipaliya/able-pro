@@ -38,7 +38,7 @@
             <app-ag-grid-table [rowSelection]="'multiple'" [gridOptions]="gridOptions" [rowHeight]="24"
                 [tableHeight]="'400px'" (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
                 (onAgGridReady)="onAgGridReady($event)" [defaultColDef]="defaultColDef" [columnDefs]="columnDefs"
-                [suppressRowClickSelection]="true" [rowMultiSelectWithClick]="true" [rowModelType]="'serverSide'"
+                [rowModelType]="'serverSide'"
                 (onSelectionChangedEvent)="onSelectionChanged($event)" [sideBar]="sideBar"></app-ag-grid-table>
                 <ng-template #primaryCell let-row>
                     {{row.CustomerAccountName}}<span class="badge m-r-5 badge-success h-100 ml-2"

@@ -1,0 +1,96 @@
+<form class="editForm col-xl-12 px-0" [formGroup]="addInvoiceRetrivalForm">
+  <div class="row-2 px-0">
+    <div class="row">
+      <div class="col-sm-12 col-xl-12 text-right">
+        <span class="text-c-red">*Required field</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-xl-6 col-md-12 px-0">
+        <mat-accordion class="example-headers-align">
+          <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header class="math borderc">
+              <mat-panel-title>
+                <i class="ficon fas fa-calendar-plus"></i>&nbsp;Add Retrieval Record
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="row">
+            
+              <div class="col-md-6 col-sm-12 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Customer *</label>
+                  <span><p-dropdown (onChange)="onCutomerChange($event.value);setTemDDId();getVendorList(false,addInvoiceRetrivalForm.value.customerAccountId, false)" [options]="customerList"
+                      optionLabel="AccountName" [filter]="true" filterBy="AccountName" [showClear]="true"
+                      placeholder="Select Customer..." formControlName="customerAccountId" appendTo="body"
+                      optionValue="Id" [showClear]="false"
+                      [ngClass]="{'invalid-error': addInvoiceRetrivalForm.controls['customerAccountId'].invalid && (addInvoiceRetrivalForm.controls['customerAccountId'].touched || submitted)}">
+                    </p-dropdown></span>
+
+                  <ng-container *ngIf="addInvoiceRetrivalForm.controls['customerAccountId'].invalid && (addInvoiceRetrivalForm.controls['customerAccountId'].touched || submitted)">
+                    <mat-error style="font-size: 12px;" *ngIf="addInvoiceRetrivalForm.controls['customerAccountId'].errors.required">Customer is
+                      required</mat-error>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Vendor *</label>
+                  <span><p-dropdown (onChange)="onVendorChange($event.value);" [options]="vendorsList" 
+                      optionLabel="AccountName" [filter]="true" filterBy="AccountName" [showClear]="true"
+                      placeholder="{{loadingVendorsList ? 'Loading' : 'Select Vendor'}}..." formControlName="vendorAccountId" appendTo="body" optionValue="Id"
+                      [showClear]="false"
+                      [ngClass]="{'invalid-error': addInvoiceRetrivalForm.controls['vendorAccountId'].invalid && (addInvoiceRetrivalForm.controls['vendorAccountId'].touched || submitted)}">
+                    </p-dropdown></span>
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="addInvoiceRetrivalForm.controls['vendorAccountId'].errors?.['required'] && (addInvoiceRetrivalForm.controls['vendorAccountId'].touched || submitted) ">
+                    Vendor is required</mat-error>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12 col-xl-6">
+                <div class="form-group">
+                  <label class="form-label">Payable Account #*</label>
+                  <span><p-dropdown (onChange)="fetchDates();" [options]="billingAccount" optionLabel="AccountNumber"
+                      [filter]="true" filterBy="AccountNumber,AcctNumberUnformatted" [showClear]="true"
+                      placeholder="Select Payable Account..." formControlName="billingAccountId" appendTo="body"
+                      optionValue="value" [showClear]="false"
+                      [ngClass]="{'invalid-error': addInvoiceRetrivalForm.controls['billingAccountId'].invalid && (addInvoiceRetrivalForm.controls['billingAccountId'].touched || submitted)}">
+                    </p-dropdown></span>
+
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="addInvoiceRetrivalForm.controls['billingAccountId'].errors?.['required'] && (addInvoiceRetrivalForm.controls['billingAccountId'].touched || submitted) ">
+                    Payable Account is required</mat-error>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12 col-xl-6">
+                <div class=" datepicker-c-main">
+                  <label class="form-label" style="font-weight: 500;">Bill Date *</label>
+                 
+                      <p-calendar dateFormat="mm/dd/yy" formControlName="invoiceBillDate"
+                      placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true" 
+                       [ngClass]="{'invalid-error': addInvoiceRetrivalForm.controls['invoiceBillDate'].invalid && (addInvoiceRetrivalForm.controls['invoiceBillDate'].touched || submitted)}"></p-calendar>
+                
+                  <mat-error style="font-size: 12px;"
+                    *ngIf="addInvoiceRetrivalForm.controls['invoiceBillDate'].errors?.['required'] && (addInvoiceRetrivalForm.controls['invoiceBillDate'].touched || submitted) ">
+                    Bill Date is required</mat-error>
+                </div>
+              </div>
+             
+
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <div class="save-btn-align">
+        <button type="submit" [disabled]="saveButtonLoadder" (click)="saveInvoiceForcastData()"
+          class="btn sbubtn btn-primary btn-raised">Save
+        </button>
+        <button *ngIf="!patchValue" [disabled]="saveButtonLoadder" (click)="saveInvoiceForcastData(true)"
+          class="btn sbubtn btn-primary btn-raised ml-2">Save & Add Another
+        </button>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</form>

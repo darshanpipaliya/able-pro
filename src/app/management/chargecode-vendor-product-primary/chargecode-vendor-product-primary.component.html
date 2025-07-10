@@ -1,0 +1,75 @@
+<div class="mat-dialog-header pb-3">
+    <h5 class="modal-title" id="exampleModalLabel">Update Vendor Product Charge Code Group</h5>
+    <button type="button" class="close" mat-dialog-close [disabled]="saveButtonLoader">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+<div mat-dialog-content>
+    <div class="container-fluid">
+        <div class="card-body">
+            <form>
+                <div class=" row">
+                    <div class="col-md-12 col-sm-12 col-xl-12">
+                        <mat-accordion class="example-headers-align">
+                            <div class="row fb fb2">
+                                <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                    <!-- <mat-expansion-panel-header class="math">
+                                        <mat-panel-title class="matt">
+                                            
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header> -->
+
+                                    <div class="row m-t-20">
+                                        <div class="col-md-12 pb-3">
+                                            <p-table dataKey="Id" [value]="source" selectionMode="multiple"
+                                                [(selection)]="selectedCCV">
+                                                <ng-template pTemplate="header">
+                                                    <tr>
+                                                        <th 
+                                                        style="width: 3.25em; text-align: center;">
+                                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                        </th>
+                                                        <th style="width: 7em; text-align: center;">
+                                                        Primary
+                                                        </th>
+                                                        <!-- <th>Group ID - Group Name</th> -->
+                                                        <th>[Group Id] Charge Code / Charge Type / Description</th>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="body" let-car let-rowIndex="rowIndex">
+                                                    <tr>
+                                                        <td style="text-align:center">
+                                                            <p-tableCheckbox [value]="car"></p-tableCheckbox>
+                                                        </td>
+                                                        <td style="text-align:center">
+                                                            <!-- <p-tableRadioButton [value]="car"></p-tableRadioButton> -->
+                                                            <input class="radio-button" type="radio" name="radiobutton" value="{{car.Id}}" [(ngModel)]="radioCCV">
+                                                        </td>
+                                                        <!-- <td></td> -->
+                                                        <td>
+                                                            <span *ngIf="car.GroupId" class="m-b-25 badge-light-dark lbl-card group-section
+                                                            "  >
+                                                                {{car.GroupId ? car.GroupId : ''}}{{car.GroupName ? '-' + car.GroupName : ''}}
+                                                            </span>
+                                                            {{car.chargeCodeFormate}}
+                                                        </td>
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="py-3" align="end">
+    <button mat-button mat-dialog-close class="btn btn-primary" [disabled]="saveButtonLoader">Cancel</button>
+    <button mat-button class="btn btn-primary" (click)="updateData()" [disabled]="saveButtonLoader">Update</button>
+</mat-dialog-actions>

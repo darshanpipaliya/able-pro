@@ -1,0 +1,475 @@
+<div class="row">
+    <div class="col-xl-12 px-0">
+        <!-- <div class="row"> -->
+        <div class="col-sm-12 col-xl-12 text-right">
+            <span class="text-c-red">*Required field</span>
+        </div>
+        <div class="col-xl-12 px-0">
+            <form class="editForm" [formGroup]="editProductForm" (ngSubmit)="updateProduct()">
+                <!-- <app-card cardTitle="" [options]="false" [hidHeader]="true"> -->
+
+                <mat-accordion class="example-headers-align">
+                    <div>
+
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="ficon fas fa-box-open"></i>&nbsp;Vendor Product
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <div class="row m-t-20">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor *</label>
+
+                                        <span><p-dropdown [options]="vendors" appendTo="body" optionLabel="AccountName"
+                                                [filter]="true" [disabled]="setDisableVendor" filterBy="AccountName"
+                                                formControlName="vendorAccountId" placeholder="Select Vendor..."
+                                                optionValue="Id" [showClear]="false"
+                                                [ngClass]="{'invalid-error':!f.vendorAccountId.valid && (f.vendorAccountId.dirty || f.vendorAccountId.touched || isProductFormSubmit)}">
+                                            </p-dropdown></span>
+
+                                        <ng-container
+                                            *ngIf="f.vendorAccountId.invalid && (f.vendorAccountId.touched || isProductFormSubmit)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.vendorAccountId.errors.required">Vendor is
+                                                required</mat-error>
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor Product Name *</label>
+                                        <span><input type="text" class="form-control" required formControlName="name"
+                                                [ngClass]="{'invalid-error': !f.name.valid && (f.name.dirty || f.name.touched || isProductFormSubmit)}"
+                                                [maxlength]="maxChars" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"></span>
+                                        <ng-container *ngIf="f.name.invalid && (f.name.touched || isProductFormSubmit)">
+                                            <mat-error style="font-size: 12px;" *ngIf="f.name.errors.required">Name
+                                                is required
+                                            </mat-error>
+                                            <mat-error style="font-size: 12px;" *ngIf="f.name.errors?.maxlength">
+                                                <div> Maximum length for the Vendor Product name is 100 characters
+                                                </div>
+                                            </mat-error>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12 px-0">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor Product Description </label>
+                                        <!-- <span> <input type="text" class="form-control" formControlName="description"
+                                                spaceTrimStartEndInput [allowStartWithSpace]="false"></span> -->
+
+                                        <textarea class="form-control parent-charge-code-table" rows="3"formControlName="description"
+                                                spaceTrimStartEndInput [allowStartWithSpace]="false"></textarea>
+                                        <!-- <ng-container
+                                            *ngIf="f.description.invalid && (f.description.touched || isChargeCodeFormSubmit)">
+                                            <mat-error style="font-size: 12px;" *ngIf="f.description.errors.required"> Description
+                                                is required
+                                            </mat-error>
+                                        </ng-container> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Industry *</label>
+
+                                        <span><p-dropdown [options]="industries"
+                                                (onChange)="callIndustry(editProductForm.value.industryId, true)"
+                                                appendTo="body" optionLabel="Name" [filter]="true" filterBy="Name"
+                                                formControlName="industryId" placeholder="Select industry..."
+                                                optionValue="Id" [showClear]="false"
+                                                [ngClass]="{'invalid-error': !f.industryId.valid && (f.industryId.dirty || f.industryId.touched || isProductFormSubmit)}">
+                                            </p-dropdown></span>
+
+                                        <ng-container
+                                            *ngIf="f.industryId.invalid && (f.industryId.touched || isProductFormSubmit)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.industryId.errors.required">Industry is
+                                                required</mat-error>
+                                        </ng-container>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Service *</label>
+
+                                        <span><p-dropdown [options]="services" [disabled]="!isSuperTEMAdmin"
+                                                (onChange)="callService(editProductForm.value.serviceId, true)"
+                                                appendTo="body" optionLabel="Name" [filter]="true" filterBy="Name"
+                                                formControlName="serviceId" placeholder="Select Service..."
+                                                optionValue="Id" [showClear]="false"
+                                                [ngClass]="{'invalid-error': !f.serviceId.valid && (f.serviceId.dirty || f.serviceId.touched || isProductFormSubmit)}">
+                                            </p-dropdown></span>
+
+                                        <ng-container
+                                            *ngIf="f.serviceId.invalid && (f.serviceId.touched || isProductFormSubmit)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.serviceId.errors.required">Service is
+                                                required</mat-error>
+                                        </ng-container>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Service Type *</label>
+
+                                        <span><p-dropdown [options]="serviceTypes"
+                                                (onChange)="callServiceType(editProductForm.value.serviceTypeId, true)"
+                                                appendTo="body" optionLabel="Name" [filter]="true" filterBy="Name"
+                                                formControlName="serviceTypeId" placeholder="Select Service Type..."
+                                                optionValue="Id" [showClear]="false"
+                                                [ngClass]="{'invalid-error': !f.serviceTypeId.valid && (f.serviceTypeId.dirty || f.serviceTypeId.touched || isProductFormSubmit)}">
+                                            </p-dropdown></span>
+
+                                        <ng-container
+                                            *ngIf="f.serviceTypeId.invalid && (f.serviceTypeId.touched || isProductFormSubmit)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.serviceTypeId.errors.required">Service Type is
+                                                required</mat-error>
+                                        </ng-container>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Product *</label>
+                                        <span><p-dropdown [options]="products"
+                                                (onChange)="callProduct(editProductForm.value.productId)"
+                                                [disabled]="!isSuperTEMAdmin && !isSuperTEMManager" appendTo="body"
+                                                optionLabel="Name" [filter]="true" filterBy="Name"
+                                                formControlName="productId" placeholder="Select Product..."
+                                                optionValue="Id" [showClear]="false"
+                                                [ngClass]="{'invalid-error': !f.productId.valid && (f.productId.dirty || f.productId.touched || isProductFormSubmit)}">
+                                            </p-dropdown></span>
+
+                                        <ng-container
+                                            *ngIf="f.productId.invalid && (f.productId.touched || isProductFormSubmit)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.productId.errors.required">Product is
+                                                required</mat-error>
+                                        </ng-container>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group ">
+                                        <label class="form-label">Product Type *</label>
+
+                                        <span><p-dropdown [options]="productTypes" appendTo="body" optionLabel="Name"
+                                                [filter]="true" filterBy="Name" formControlName="productTypeId"
+                                                placeholder="Select Product Type..." optionValue="Id"
+                                                [showClear]="false" (onChange)="callProductType()"
+                                                [ngClass]="{'invalid-error': !f.productTypeId.valid && (f.productTypeId.dirty || f.productTypeId.touched || isProductFormSubmit)}">
+                                            </p-dropdown></span>
+
+                                        <ng-container
+                                            *ngIf="f.productTypeId.invalid && (f.productTypeId.touched || isProductFormSubmit)">
+                                            <mat-error style="font-size: 12px;"
+                                                *ngIf="f.productTypeId.errors.required">Product Type is
+                                                required</mat-error>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="form-label mr-3">Default Inventory Assignment *</label>
+                                        <mat-radio-group formControlName="reconAssigmentId" [disabled]="true">
+                                            <mat-radio-button [ngClass]="{'m-l-10': i !== 0}" class=""
+                                                *ngFor="let item of reconList; let i = index"
+                                                [value]="item.Assignment">{{item.Assignment}}
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+
+                                    </div>
+                                    <mat-error style="font-size: 12px;"
+                                        *ngIf="f.reconAssigmentId.errors?.required && (f.reconAssigmentId.touched || isProductFormSubmit) ">
+                                        Default Inventory Assignment is required</mat-error>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Status *</label>
+
+                                        <span><p-dropdown [options]="statusList" optionLabel="Name" [filter]="false"
+                                                filterBy="Name" placeholder="Select Status..." formControlName="status"
+                                                appendTo="body" optionValue="Id" [showClear]="false"
+                                                [ngClass]="{'invalid-error': !f.status.valid && (f.status.dirty || f.status.touched || isProductFormSubmit)}">
+                                            </p-dropdown></span>
+                                        <ng-container
+                                            *ngIf="f.status.invalid && (f.status.touched || isProductFormSubmit)">
+                                            <mat-error style="font-size: 12px;" *ngIf="f.status.errors.required">
+                                                Status selection is required
+                                            </mat-error>
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group" style="margin-bottom: 0 !important;">
+                                        <label class="form-label mr-3">Default Inventory Type</label>
+                                        <span> <input type="text" class="form-control" disabled
+                                                formControlName="InventoryType" spaceTrimStartEndInput
+                                                [allowStartWithSpace]="false"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-md-12 mb-2 pl-0">
+                                    <div class="form-check pl-0 d-flex">
+                                        <label class="form-check-label pr-1 same-location-lable" for="defaultCheck2"
+                                            style="font-weight: 500;">
+                                            Keep for Production :
+                                        </label>
+                                        <input class="form-check-inner" type="checkbox" id="defaultCheck2"
+                                            formControlName="keepForProduction">
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+
+                <div class="mb-3 text-center btnSave">
+                    <button type="submit" uiSref="work" [disabled]="(!isSuperTEMAdmin) || saveButtonLoadder"
+                        class="btn btn-primary btn-raised">
+                        <span class="spinner-border spinner-border-sm mr-1" role="status"
+                            *ngIf="saveButtonLoadder"></span>
+                        Save
+                    </button>
+                </div>
+
+                <mat-accordion class="example-headers-align vendorproduct-log user-activity-log charge-code-group-table"
+                    multi>
+                    <div>
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true" class="padding-t-none">
+                            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                                (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title style="margin-left: 50%; margin-right: 0px !important;">
+                                    &nbsp;Vendor Product Charge Code Groups
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row">
+                                <div class="col-md-12 px-0">
+                                    <ng-container>
+                                        <app-ag-grid-table [defaultColDef]="defaultColDef" [columnDefs]="columnDefs"
+                                            [rowData]="rowData" [tableHeight]="'480px'" [gridOptions]="gridOptions"
+                                            (onAgGridReady)="onAgGridReady($event)"
+                                            (onCellDoubleClickedEvent)="onCellDoubleClickedEvent($event)"
+                                            (onAgGridReadyEmit)="onAgGridReadyEmit($event)">
+                                        </app-ag-grid-table>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+
+                <mat-accordion class="example-headers-align vendorproduct-log user-activity-log" multi>
+                    <div>
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true" class="padding-t-none">
+                            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                                (click)="getVendorproducttypesChangeLogs(this.productData?.VendorProductTypeId ? this.productData?.VendorProductTypeId : this.productData?.Id)"></button>
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title style="margin-left: 50%; margin-right: 0px !important;">
+                                    <img src="../../../../../../assets/images/fa-sharp-fas-fa-swap.svg"
+                                        alt="Change Log Image">&nbsp;Vender Product Change Log
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row">
+                                <div class="col-md-12 px-0" [ngClass]="chargeLogsData.length > 0 ? 'tbData': ''">
+                                    <ng-container>
+                                        <table mat-table [dataSource]="chargeLogsData">
+
+                                            <ng-container matColumnDef="Tab">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Tab
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{element?.TabModuleDisplayName}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Section">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Section
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{element?.TabSectionModuleDisplayName}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Action">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Action
+                                                </th>
+                                                <td mat-cell *matCellDef="let element"> {{element?.Action}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Field Name">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Field Name
+                                                </th>
+                                                <td mat-cell *matCellDef="let element"> {{element?.DisplayColumnName}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Previous Value">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Previous Value
+                                                </th>
+                                                <td mat-cell *matCellDef="let element"> {{element?.OldValue}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="New Value">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> New Value
+                                                </th>
+                                                <td mat-cell *matCellDef="let element"> {{element?.NewValue}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Time & Date">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Time & Date
+                                                </th>
+                                                <td mat-cell *matCellDef="let element"> {{element?.ModificationDate}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="Who">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Who
+                                                </th>
+                                                <td mat-cell *matCellDef="let element"> {{element?.ModifiedBy}}
+                                                </td>
+                                            </ng-container>
+                                            <!-- <ng-container matColumnDef="vn">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700">Vendor
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{element.VendorAccount.AccountName
+                                                    }} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="VPro">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700">Vendor Product Name
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">{{element.Name}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="status">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Status </th>
+                                                <td mat-cell *matCellDef="let element">{{element.StatusValue}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Protyp">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Product Type </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ProductTypeName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Pro">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Products </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ProductName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="ServiceTyp">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Service Type </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ServiceTypeName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Service">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Service </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ServiceName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="ind">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Industry </th>
+                                                <td mat-cell *matCellDef="let element">{{element.IndustryName}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="crtby">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Created By </th>
+                                                <td mat-cell *matCellDef="let element">{{element.CreatedByUser.FirstName
+                                                    +'
+                                                    '+element.CreatedByUser.LastName}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="crtdt">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Created date </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{convertToDateTime(element.CreationDate)}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="modfby">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700">Modified By </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ModifiedByUser &&
+                                                    element.ModifiedByUser.FirstName ? element.ModifiedByUser.FirstName
+                                                    : ''}} {{element.ModifiedByUser && element.ModifiedByUser.LastName ?
+                                                    element.ModifiedByUser.LastName : '' }} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="moddt">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Modified Date
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{convertToDateTime(element.ModificationDate)}} </td>
+                                            </ng-container> -->
+
+                                            <!---- <ng-container matColumnDef="Action">
+                                                    <th mat-header-cell *matHeaderCellDef> Action</th>
+                                                    <td mat-cell *matCellDef="let element"> {{element.Action}} </td>
+                                                </ng-container>-->
+
+
+
+                                            <tr mat-header-row
+                                                *matHeaderRowDef="activityDisplayedColumns; sticky: true">
+                                            </tr>
+                                            <tr mat-row *matRowDef="let row; columns: activityDisplayedColumns;"
+                                                (click)="openModel('Associations')"></tr>
+                                        </table>
+                                    </ng-container>
+                                    <ng-container *ngIf="!chargeLogsData.length">
+                                        <div class="text-center">No Record found</div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+                <!-- </app-card> -->
+            </form>
+
+
+
+        </div>
+        <!-- </div> -->
+
+        <!-- <div class="row mrg col-lg-12 col-xl-12"> -->
+        <!-- <div class="col-xl-12">
+        <app-card cardTitle="User Activity Log" [options]="false" [hidHeader]="true">
+
+
+
+        </app-card>
+    </div> -->
+    </div>
+</div>

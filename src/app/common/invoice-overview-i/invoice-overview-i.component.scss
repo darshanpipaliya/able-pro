@@ -1,0 +1,132 @@
+/* Responsive Scrollbar Start */
+::-webkit-scrollbar {
+    height: 3px;
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    -webkit-border-radius: 1ex;
+}
+
+
+p {
+    margin-bottom: 0;
+}
+
+.invoice-overview-label h2 {
+    font-size: 22px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #181d1f;
+}
+
+.invoice-overview-left {
+    width: 200px;
+}
+
+.invoice-overview-right {
+    width: calc(100% - 200px);
+    // width: auto;
+
+    ul {
+        flex-direction: row;
+        display: flex;
+        // justify-content: space-between;
+        overflow: auto;
+        gap: 7px 15px;
+        flex-wrap: wrap;
+
+        li {
+            padding: 0;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            // justify-content: space-between;
+
+            h3 {
+                font-size: 14px;
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                letter-spacing: normal;
+                font-weight: 500;
+                margin-bottom: 0;
+                color: #181d1f;
+                white-space: nowrap;
+            }
+
+            p {
+                white-space: wrap;
+            }
+
+            div:nth-of-type(2) {
+                margin-top: 12px;
+                margin-bottom: 8px;
+            }
+
+            div.attachments-wrapper {
+                margin-bottom: 0px !important;
+            }
+
+            i {
+                font-size: 24px;
+            }
+
+            img {
+                width: 16px;
+            }
+        }
+    }
+}
+
+.invoice-overview-main {
+    margin-bottom: 18px;
+    background-color: #EAEAEA;
+    padding: 12px 10px 10px;
+    border-radius: 12px;
+
+    li.list-group-item {
+        background-color: transparent;
+    }
+
+}
+
+.io-cus-btn-group .fas.fa-file-invoice-dollar::before {
+    content: '';
+    display: block;
+    background: url('/assets/images/icn-file-invoice.png') no-repeat center center;
+    z-index: 10;
+    background-size: 100%;
+    width: 20px;
+    height: 28px;
+}
+
+.differences-red {
+    color: #f44336;
+}
+
+.invoice-overview-wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px 0;
+}
+
+
+@media only screen and (max-width: 1199px) {
+
+    .invoice-overview-label h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .invoice-overview-wrapper {
+        display: block;
+    }
+
+    .invoice-overview-left,
+    .invoice-overview-right {
+        width: 100%;
+    }
+}

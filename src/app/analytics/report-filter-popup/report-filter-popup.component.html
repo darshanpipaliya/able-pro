@@ -1,0 +1,155 @@
+<div class="mat-dialog-header pb-2">
+    <div class="d-flex align-items-center">
+        <h5 class="modal-title" id="exampleModalLabel"> Report: {{rowData.data['Name']}} </h5>
+        <i *ngIf="rowData.data.Key === 'ImportReport'" class="fas fa-info-circle ml-2" style="color: #4680ff;cursor:pointer" tooltipClass="tooltip-bg"
+            (click)="openDialog()"></i>
+        <ng-template #ReplaceContractooltip>
+            <div class="mat-dialog-header dailog-tooltip">
+                <button type="button" class="close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="text-left dialog-data" *ngIf="rowData.data.Key === 'ImportReport'">
+                <p class="mb-0">
+                    This report is specifically designed for wireline Vendors with inventory assigned to primary
+                    Locations. Please refrain from running it for Vendors with inventory assigned to primary People.</p>
+
+            </div>
+        </ng-template>
+    </div>
+
+    <button type="button" class="close" mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content>
+
+    <div class="card-body py-0">
+        <div class="container px-0">
+            <form class="editForm px-0" [formGroup]="form">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 col-md-12 px-0 pt-2">
+                        <div class="row m-t-15">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Customer</label>
+                                    <span><p-dropdown [options]="customerList" [filter]="true"
+                                            (onChange)="getCompanyByCustomerId($event); getCustomerVendorBillingAccounts();getVendorList();reportsInvoiceMonths();setTemId()"
+                                            [disabled]="loadingCustomer"
+                                            placeholder="{{loadingCustomer ? 'Loading...' : 'Select Customer'}}"
+                                            optionValue="Id" optionLabel="AccountName" formControlName="customerId"
+                                            filterBy="AccountName" appendTo="body">
+                                        </p-dropdown></span>
+                                </div>
+
+                                <div class="form-group" *ngIf="rowData.data.Key !== 'InvoiceWithNotes'">
+                                    <label class="form-label">Company</label>
+                                    <span><p-dropdown [filter]="true" [options]="companies"
+                                            (onChange)="reportsInvoiceMonths()" [disabled]="loadingCompanyList"
+                                            placeholder="{{loadingCompanyList ? 'Loading...' : 'Select Company'}}"
+                                            filterBy="CompanyName" formControlName="CompanyId" optionValue="CompanyID"
+                                            optionLabel="CompanyName" appendTo="body">
+                                        </p-dropdown></span>
+                                </div>
+
+                                <div class="form-group"
+                                    *ngIf="rowData.data.Key !== 'VendorProductsWithNoOrExpiredContract'">
+                                    <label class="form-label">Vendor</label>
+                                    <span><p-dropdown
+                                            (onChange)="getCustomerVendorBillingAccounts();reportsInvoiceMonths();getVendorProductType()"
+                                            [disabled]="loadingVendorsList" [options]="vendorsList"
+                                            optionLabel="AccountName" formControlName="VendorId" [filter]="true"
+                                            filterBy="AccountName"
+                                            placeholder="{{loadingVendorsList ? 'Loading...' : 'Select Vendor'}}"
+                                            optionValue="Id" appendTo="body">
+                                        </p-dropdown></span>
+                                </div>
+
+                                <div class="form-group"
+                                    *ngIf="rowData.data.Key !== 'ImportReport' && rowData.data.Key !== 'ActiveInventoryMoreThan30DaysWithNoSpend' && rowData.data.Key !== 'PendingActivationInventoryMoreThan30DaysWithNoSpend' && rowData.data.Key !== 'PendingDisconnectionInventoryMoreThan30DaysWithNoSpend' && rowData.data.Key !== 'PendingDisconnectionInventoryMoreThan30DaysWithSpend'">
+                                    
+                                    <label class="form-label" *ngIf="rowData.data.Key !== 'VendorProductsByContract'">Payable Account</label>
+                                    <label class="form-label" *ngIf="rowData.data.Key === 'VendorProductsByContract'">Account</label>
+                                    <span><p-dropdown [options]="billingAccount" optionLabel="AccountNumber"
+                                            (onChange)="reportsInvoiceMonths()" [filter]="true" filterBy="AccountNumber"
+                                            formControlName="BillingAccountHierarchyId" [disabled]="loadingPayableAcc"
+                                            placeholder="{{loadingPayableAcc ? 'Loading...' : 'Select Payable Account'}}"
+                                            appendTo="body" optionValue="Id">
+                                        </p-dropdown></span>
+                                </div>
+
+                                <div class="form-group"
+                                    *ngIf="rowData.data.Key === 'InventoryWithNotes' || rowData.data.Key === 'VendorProductsByContract' ">
+                                    <label class="form-label">Vendor Product</label>
+                                    <span>
+                                        <p-dropdown [options]="vendorProductDetails" optionLabel="Name" [filter]="true"
+                                            filterBy="Name" appendTo="body"
+                                            placeholder="{{loadingVendorproducttypes ? 'Loading' : 'Select Vendor Product'}}..."
+                                            [disabled]="loadingVendorproducttypes" formControlName="vendorProductTypeId"
+                                            optionValue="Id">
+                                        </p-dropdown>
+                                    </span>
+                                </div>
+
+                                <div class="form-group radio-minWidth"
+                                    *ngIf="rowData.data.Key === 'InventoryWithNotes'">
+                                    <label class="form-label">Note Status</label>
+                                    <mat-radio-group formControlName="noteStatus">
+                                        <mat-radio-button [value]="true">Active</mat-radio-button>
+                                        <mat-radio-button [value]="false" class="m-l-10">Inactive
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
+                                <div class="form-group mb-2" *ngIf="(rowData.data.Category === 'Spend' || 
+                                ( rowData.data.Category === 'Inventory' &&  rowData.data.Key === 'InventoryWithNotes')) && 
+                                rowData.data.Key !== 'ImportReport'">
+                                    <label class="form-label">Period</label>
+                                    <span><p-dropdown [options]="InvoicePeroid" (onChange)="getInvoicePeriod($event)"
+                                            optionLabel="Name" optionValue="Id" [filter]="true" filterBy="Name"
+                                            formControlName="Period" [disabled]="loadingInvoicePeriod"
+                                            placeholder="{{loadingInvoicePeriod ? 'Loading...' : 'Select Period'}}"
+                                            appendTo="body">
+                                        </p-dropdown></span>
+                                </div>
+
+                                <div class="form-group mb-2"
+                                    *ngIf="rowData.data.Key === 'InvoiceWithNotes' || rowData.data.Key === 'ImportReport' || rowData.data.Key === 'InventoryVarianceByChargeCode'">
+                                    <label class="form-label">Invoice Month *</label>
+                                    <span><p-dropdown [options]="reportsInvoiceMonthsList" optionLabel="label"
+                                            optionValue="Id" [filter]="true" filterBy="label"
+                                            formControlName="invoiceMonth" [disabled]="loadingReportsInvoiceMonthsList"
+                                            placeholder="{{loadingReportsInvoiceMonthsList ? 'Loading...' : 'Select Invoice Month'}}"
+                                            appendTo="body">
+                                        </p-dropdown></span>
+                                    <ng-container
+                                        *ngIf="f.invoiceMonth.invalid && (f.invoiceMonth.touched || isCompanyFormSubmit)">
+                                        <mat-error style="font-size: 12px;" *ngIf="f.invoiceMonth.errors.required">Invoice Month
+                                            is
+                                            required</mat-error>
+                                    </ng-container>
+                                </div>
+
+                                <div class="form-group radio-minWidth"
+                                    *ngIf="rowData.data.Key !== 'InventoryWithNotes' && rowData.data.Key !== 'InvoiceWithNotes' && rowData.data.Key !== 'AllSpendByVendorProduct' && rowData.data.Key !== 'ImportReport'  &&  rowData.data.Key !== 'VendorProductsByContract' && rowData.data.Key !== 'InventoryVarianceByChargeCode' && rowData.data.Key !== 'ActiveInventoryMoreThan30DaysWithNoSpend' && rowData.data.Key !== 'PendingActivationInventoryMoreThan30DaysWithNoSpend' && rowData.data.Key !== 'PendingDisconnectionInventoryMoreThan30DaysWithNoSpend' && rowData.data.Key !== 'PendingDisconnectionInventoryMoreThan30DaysWithSpend'">
+                                    <label class="form-label">Run with Totals?</label>
+                                    <mat-radio-group formControlName="withTotals">
+                                        <mat-radio-button [value]="true">Yes</mat-radio-button>
+                                        <mat-radio-button [value]="false" class="m-l-10">No
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<mat-dialog-actions class="py-3 mt-2" align="center">
+    <button mat-button class="btn btn-primary" [disabled]="saveButtonLoadder" (click)="download()">
+        <span class="spinner-border spinner-border-sm mr-1" role="status" *ngIf="saveButtonLoadder"></span>Run
+    </button>
+</mat-dialog-actions>

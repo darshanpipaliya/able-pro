@@ -1,0 +1,112 @@
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+.accordian-btn-group {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    content: '';
+    top: 4px;
+    left: 10px;
+    z-index: 1;
+
+    .btn.btn-icon.service-tab-btn {
+        width: 32px;
+        height: 32px;
+        z-index: 1;
+    }
+    
+    button.fas.fa-check.c-refresh {
+        border: 0;
+        background: transparent;
+        padding: 0;
+    }
+    
+    .fas.fa-check.c-refresh::before {
+        content: '\f021' !important;
+        font-size: 18px;
+        border: 1px solid #4680ff;
+        color: #4680ff;
+        border-radius: 50%;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+    width: 32px;
+    }
+}
+
+:host ::ng-deep .accordian-section {
+
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+
+}
+
+// .btn.btn-icon.service-tab-btn {
+//     position: absolute;
+//     content: '';
+//     width: 32px;
+//     height: 32px;
+//     top: 5px;
+//     left: 10px;
+//     z-index: 1;
+// }
+
+// .btn.btn-icon.service-tab-btn.second-btn {
+//     position: absolute;
+//     left: 5px !important;
+// }
+
+@media only screen and (max-width: 1199px) {
+    .btn.btn-icon.service-tab-btn {
+        left: 5px;
+    }
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    z-index: 100;
+    right: 45px;
+    top: 13px;
+}
+
+button.close {
+    position: relative;
+    top: -15px;
+    right: -10px;
+}

@@ -89,6 +89,10 @@ export class CostCenterStructureComponent implements OnInit {
       storeType: 'partial',
       cacheBlockSize: 100
     },
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
     enableFiltering: true,
     headerHeight: 35,
     groupHeaderHeight: 37,

@@ -1,0 +1,447 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12 top-btn-group-container header-btn-responsive d-flex" style="flex-wrap: wrap;">
+                        <ng-container *ngFor="let option of buttonOptions">
+                            <button ngDefaultControl class=" btn btn-outline-primary" type="button"
+                                [ngClass]="(option.value === selectedButton) ? 'btn btn-primary active round bg' : 'btn round'"
+                                [value]="option.value" [(ngModel)]="selectedButton"
+                                (click)="goToPage(option);selectedMainTab=0;">
+                                <i [ngClass]="option.icon"></i>&nbsp;{{option.value}}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="!temRoles && hasSuperTemUsers">
+                            <select class="custom-select select-width" [(ngModel)]="selectedTem"
+                                (change)="onChangeTem($event)" [disabled]="wirelinePageName !== 'Table'"
+                                [ngModelOptions]="{standalone: true}"
+                                *ngIf="(variableManageService.wirelineWhichPageEnabled == 'Table' || variableManageService.wirelineWhichPageEnabled == 'Edit') && (selectedButton == 'Wireline' || selectedButton == 'All Inventory' || selectedButton == 'Cloud')">
+                                <option value="all">All</option>
+                                <option *ngFor="let tem of tems" [value]="tem.Id">
+                                    {{tem.AccountName}}
+                                </option>
+                            </select>
+                        </ng-container>
+                        <ng-container *ngIf="hasTemUsers">
+                            <select class="custom-select select-width" [(ngModel)]="selectedCustomer"
+                                [disabled]="loadingCustomerAPI || (wirelinePageName !== 'Table')"
+                                *ngIf="variableManageService.wirelineWhichPageEnabled == 'Table' || variableManageService.wirelineWhichPageEnabled == 'Edit'"
+                                [ngModelOptions]="{standalone: true}">
+                                <option value="" *ngIf="loadingCustomerAPI">Loading...</option>
+                                <option value="all" *ngIf="!loadingCustomerAPI">All</option>
+                                <option *ngFor="let customer of customers"
+                                    [value]="customer.AccountID ? customer.AccountID : customer.Id">
+                                    {{customer.AccountName}}
+                                </option>
+                            </select>
+                        </ng-container>
+
+                        <ng-container>
+                            <button
+                                *ngIf="(variableManageService.wirelineWhichPageEnabled == 'Table' || variableManageService.wirelineWhichPageEnabled == 'Edit')  && selectedButton == buttonName && isShowSearch"
+                                title="Search" class="btn btn-primary" [disabled]="disableTemSearch"
+                                (click)="serachInventory()">Search</button>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="main-banner-section" *ngIf="selectedButton == buttonName">
+                    <div class="table-responsive">
+
+                        <div class="demo2 main">
+                            <nav mat-tab-nav-bar>
+                                <span (click)="changeParentTab(0)" mat-tab-link [active]="selectedMainTab === 0"
+                                    style="color: unset;">
+                                    <i *ngIf="buttonName === 'Wireline' " class="fas fa-clipboard list"
+                                        style="color: #4680ff; font-size: 15px;"></i>
+                                    <i *ngIf="buttonName === 'Cloud' " class="fas fa-cloud"
+                                        style="color: #4680ff; font-size: 15px;"></i>
+                                    <i *ngIf="buttonName === 'All Inventory' " class="fas fa-barcode"></i>
+                                    <span>&nbsp;{{buttonName}} </span>
+                                </span>
+
+
+                                <span style="display: table-cell !important;" *ngIf="tabsArray.length > 0">
+                                    <span style="display: table-cell !important;"
+                                        *ngFor="let tab of tabsArray;let i = index">
+                                        <span *ngIf="tab.tabType=='New'" (click)="changeParentTab(i+1)" mat-tab-link
+                                            [active]="(i+1) === selectedMainTab">
+
+                                            <i *ngIf="buttonName === 'Wireline' " class="fas fa-clipboard list"
+                                                style="color: #4680ff; font-size: 15px;"></i>
+                                            <i *ngIf="buttonName === 'Cloud' " class="fas fa-cloud"
+                                                style="color: #4680ff; font-size: 15px;"></i>
+                                            <i *ngIf="buttonName === 'All Inventory' " class="fas fa-barcode"
+                                                style="color: #4680ff;"></i>&nbsp;Add Inventory&nbsp;
+                                            <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                        </span>
+                                        <span *ngIf="tab.tabType=='Edit'" (click)="changeParentTab(i+1)"
+                                            [active]="(i+1) === selectedMainTab" mat-tab-link>
+                                            <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;<ng-container
+                                                *ngIf="tab?.parentServiceID">{{tab.parentServiceID}}&nbsp;<i
+                                                    class="fas fa-angle-right"></i>&nbsp;</ng-container>{{tab?.rowData?.ServiceNumber
+                                            ? tab?.rowData?.ServiceNumber :
+                                            tab?.rowData?.serviceNumber ? tab?.rowData?.serviceNumber :
+                                            (tab?.rowData?.data?.ServiceNumber) ? tab?.rowData?.data?.ServiceNumber :
+                                            'Service Number'}}&nbsp;
+                                            <mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                        </span>
+                                    </span>
+                                </span>
+                            </nav>
+
+                            <div class="row d-flex mat-tab-link-btn-border align-items-center wireline-edit-all-tab mx-0"
+                                *ngIf="variableManageService.wirelineWhichPageEnabled == 'Table' && selectedButton == buttonName && selectedMainTab === 0">
+
+
+                                <button [ngClass]="{'disabled': isAccountsExport || !accountExist}" title="Export"
+                                    type="button" class=" btn btn-icon btn-outline-success mr-2"
+                                    (click)="!isAccountsExport ? onBtnExportDataAsExcel() : ''">
+                                    <i class="{{isAccountsExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                                </button>
+
+                                <button title="Add Inventory" type="button" *ngIf="isRoleAccess"
+                                    class="btn btn-icon btn-outline-primary" (click)="addNewWireline('New')"><i
+                                        class="fas fa-plus"></i></button>
+                            </div>
+
+                            <div class="row d-flex mat-tab-link-btn-border align-items-center wireline-edit-all-tab mx-0"
+                                *ngIf="variableManageService.wirelineWhichPageEnabled == 'Edit' && selectedButton == 'Wireline' && childInventoryAccess && isChildInventory && isRoleAccess">
+
+                                <button mat-button type="button" class="btn btn-primary"
+                                    (click)="childInventory('change-parent')" [disabled]="!isRowSelected">
+                                    Change Parent
+                                </button>
+                                <button mat-button type="button" class="btn btn-primary ml-2"
+                                    (click)="childInventory('make-individual')" [disabled]="!isRowSelected">
+                                    Make Individual
+                                </button>
+                            </div>
+
+                            <div class="row d-flex mat-tab-link-btn-border align-items-center wireline-edit-all-tab mx-0"
+                                *ngIf="!isTEMUser && (variableManageService.wirelineWhichPageEnabled == 'Edit' || variableManageService.wirelineWhichPageEnabled == 'people' || variableManageService.wirelineWhichPageEnabled == 'location') && selectedButton == 'Wireline' && isInventoryPage && selectedTab !== 0 && !(selectedMainTab > 0 && tabsArray[selectedMainTab-1]?.childInventoryId && tabsArray[selectedMainTab-1]?.fromChildTab)">
+
+                                <button mat-button type="button" class="btn btn-primary"
+                                    (click)="inventoryButton('make-child')"
+                                    [disabled]="loadingDataFromEditApi || !isRoleAccess || isChildDisable">
+                                    Make Child
+                                </button>
+
+                                <button mat-button type="button" class="btn btn-primary ml-2"
+                                    (click)="inventoryButton('add-child-inventory')"
+                                    [disabled]="loadingDataFromEditApi || !isRoleAccess || isChildDisable">
+                                    Add Child Inventory
+                                </button>
+                            </div>
+
+                            <div class="row mat-tab-link-btn-border d-flex align-items-center wireline-edit-all-tab mx-0"
+                                *ngIf="(variableManageService.wirelineWhichPageEnabled == 'Edit' || variableManageService.wirelineWhichPageEnabled == 'people' || 
+                            variableManageService.wirelineWhichPageEnabled == 'location') && selectedButton == buttonName && isInventoryNotes">
+                                <button type="button" class=" btn btn-icon btn-outline-primary"
+                                    title="Add Inventory Note" (click)="setInventoryNotes('add')"
+                                    *ngIf="isInventoryNoteAccess && !temRoles"><i class="fas fa-plus"></i></button>
+
+                                <button *ngIf="!temRoles" type="button" mat-button
+                                    class="btn btn-primary ml-2 btn-text-c" (click)="setInventoryNotes('inactive')"
+                                    [disabled]="!isInventoryNote">
+                                    Make Inactive</button>
+                                <button *ngIf="!temRoles" type="button" mat-button
+                                    class="btn btn-primary ml-2 btn-text-c" (click)="setInventoryNotes('active')"
+                                    [disabled]="!isInventoryNote">
+                                    Make Active</button>
+                            </div>
+                            <div class="row mat-tab-link-btn-border d-flex align-items-center wireline-edit-all-tab mx-0"
+                                *ngIf="!temRoles && variableManageService.wirelineWhichPageEnabled == 'Edit' && selectedChild === 7">
+                                <button type="button" (click)="editContract()" class="btn btn-icon btn-outline-warning"
+                                    title="Link Contract"><i class="fas fa-edit f-14"></i></button>
+                            </div>
+
+                            <div class="row mat-tab-link-btn-border d-flex align-items-center wireline-edit-all-tab mx-0"
+                                *ngIf="variableManageService.wirelineWhichPageEnabled == 'Edit' && selectedContractChild == 1">
+
+                                <button type="button" class="btn btn-icon btn-outline-warning ng-star-inserted"
+                                    [placement]="'left'" [disabled]="isDisablLinkInventory"
+                                    (click)="LinkInventoryCDialog()" title="Link Inventory"
+                                    popoverClass="cost-center-tooltip"><i class="fas fa-edit f-14"></i></button>
+
+
+                            </div>
+                        </div>
+
+                        <div class="" *ngIf="selectedMainTab === 0">
+                            <div class="col-sm-12 col-xl-12">
+                                <ng-template mat-tab-label>
+                                    <b><i class="fas fa-clipboard list" style="color: #4680ff;"> </i><span
+                                            class="mat-tab-list-title">{{buttonName}}</span></b>
+                                </ng-template>
+
+                                <div class="row">
+                                    <div class="col-sm-12 mb-15 px-0">
+                                        <div class="mt-2">
+                                            <app-wireline-p-table [fromWhichPage]="fromWhichPage" [params]="params"
+                                                [payableNumber]="payableNumber" [serviceIds]="serviceIds"
+                                                [selectedTem]="selectedTem" [selectedCustomer]="selectedCustomer"
+                                                [title]="buttonName" (exportAccountData)="exportAccountData($event)"
+                                                (isBillingAccountExist)="isBillingAccountExist($event)" (paramsReset)="paramsReset($event)"
+                                                (rowCellDoubleClicked)="onCellDoubleClicked('Edit',$event)">
+                                            </app-wireline-p-table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="" *ngIf="selectedMainTab !== 0">
+                            <span *ngFor="let tab of tabsArray;let i = index">
+                                <div *ngIf="tab.tabType=='New' && selectedMainTab === i+1">
+                                    <app-add-wireline [selectedTem]="selectedTemTabWise" [currentIndexPage]="i"
+                                        [addData]="tab.rowData" (addWirelineFromData)="addWirelineFromData($event, i)"
+                                        (onWirelineEditEvent)="onWirelineEditEvent($event)"
+                                        (onSaveSendDataParent)="onSaveSendDataParent($event, i)"
+                                        (onWirelineAddEvent)="onWirelineAddEvent($event, i)"
+                                        (wirelinePageName)="wirelinePageNameFn($event)"
+                                        [action]="tab.tabType"></app-add-wireline>
+                                </div>
+                                <div *ngIf="tab.tabType=='Edit' && selectedMainTab === i+1">
+                                    <div class="demo2 main">
+                                        <nav mat-tab-nav-bar>
+                                            <span (click)="childrenChange(0)" mat-tab-link style="color: unset;"
+                                                [active]="selectedChild === 0">
+                                                <i class="icon-size fas fa-tools"
+                                                    style="color: #4680ff;"></i>&nbsp;Inventory Detail
+                                            </span>
+
+                                            <span *ngIf="!(tab.childInventoryId && tab.fromChildTab)" (click)="childrenChange(1)" mat-tab-link style="color: unset;"
+                                                [active]="selectedChild === 1">
+                                                <i class="icon-size fas fa-project-diagram"
+                                                    style="color: #4680ff;"></i>&nbsp;Assignments
+                                            </span>
+
+                                            <span *ngIf="!(tab.childInventoryId && tab.fromChildTab)" (click)="childrenChange(2)" mat-tab-link style="color: unset;"
+                                                [active]="selectedChild === 2">
+                                                <i class="icon-size fas fa-sticky-note"
+                                                    style="color: #4680ff;"></i>&nbsp;Inventory Notes
+                                            </span>
+
+                                            <span *ngIf="!(tab.childInventoryId && tab.fromChildTab)" (click)="childrenChange(3)" mat-tab-link style="color: unset;"
+                                                [active]="selectedChild === 3">
+                                                <i class="icon-size fas fa-child"
+                                                    style="color: #4680ff;"></i>&nbsp;Child Inventory
+                                            </span>
+
+                                            <span *ngIf="!(tab.childInventoryId && tab.fromChildTab)" (click)="childrenChange(4)" mat-tab-link style="color: unset;"
+                                                [active]="selectedChild === 4">
+                                                <i class="icon-size fas fa-file-invoice-dollar"
+                                                    style="color: #4680ff;"></i>&nbsp;Billing
+                                            </span>
+                                            <span *ngIf="!(tab.childInventoryId && tab.fromChildTab)" (click)="childrenChange(7)" mat-tab-link style="color: unset;"
+                                                [active]="selectedChild === 7">
+                                                <img src="assets/images/Contract/fa-solid-fa-file-lock.svg"
+                                                    alt="Contracts Image">&nbsp;Contracts
+                                            </span>
+                                            <span *ngIf="!(tab.childInventoryId && tab.fromChildTab)" (click)="childrenChange(9)" mat-tab-link style="color: unset;"
+                                                [active]="selectedChild === 9">
+                                                <img src="../../../../../../assets/images/fa-sharp-fas-fa-swap.svg"
+                                                    alt="Change Log Image">&nbsp;Change Log
+                                            </span>
+                                            <span *ngIf="selectedChild == 10" mat-tab-link
+                                                [active]="selectedChild === 10">
+                                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="23px"
+                                                    height="auto" viewBox="0 0 211.000000 175.000000"
+                                                    preserveAspectRatio="xMidYMid meet">
+
+                                                    <g transform="translate(0.000000,175.000000) scale(0.100000,-0.100000)"
+                                                        fill="#4680ff" stroke="none">
+                                                        <path d="M190 1669 c-52 -16 -95 -53 -119 -103 -21 -42 -22 -56 -19 -299 l3
+                                                                        -255 30 -43 c57 -80 74 -84 360 -84 286 0 303 4 360 84 l30 43 0 268 0 268
+                                                                        -30 43 c-56 79 -76 84 -345 86 -138 1 -250 -2 -270 -8z m529 -59 c27 -13 46
+                                                                        -33 60 -63 19 -40 21 -60 21 -267 0 -207 -2 -227 -21 -267 -38 -78 -59 -83
+                                                                        -334 -83 -275 0 -296 5 -334 83 -19 40 -21 60 -21 267 0 207 2 227 21 267 37
+                                                                        77 56 82 332 83 217 0 241 -2 276 -20z" />
+                                                        <path
+                                                            d="M324 1471 c-11 -5 -33 -23 -47 -41 -26 -30 -27 -36 -27 -151 l0 -119
+                                                                        34 -38 34 -37 127 0 127 0 34 37 34 38 0 120 0 120 -34 38 -34 37 -114 2 c-62
+                                                                        2 -122 -1 -134 -6z m251 -66 c23 -22 25 -31 25 -125 0 -94 -2 -103 -25 -125
+                                                                        -23 -23 -31 -25 -130 -25 -99 0 -107 2 -130 25 -23 22 -25 31 -25 125 0 94 2
+                                                                        103 25 125 23 23 31 25 130 25 99 0 107 -2 130 -25z" />
+                                                        <path d="M950 1356 l0 -26 215 0 c195 0 220 -2 254 -20 62 -31 81 -82 81 -218
+                                                                        0 -107 1 -112 21 -112 20 0 20 4 17 134 -3 131 -4 135 -33 177 -55 77 -78 84
+                                                                        -332 87 l-223 3 0 -25z" />
+                                                        <path d="M1390 869 c-52 -16 -95 -53 -119 -103 -21 -42 -22 -56 -19 -299 l3
+                                                                        -255 30 -43 c57 -80 74 -84 360 -84 286 0 303 4 360 84 l30 43 0 268 0 268
+                                                                        -30 43 c-56 79 -76 84 -345 86 -138 1 -250 -2 -270 -8z m529 -59 c27 -13 46
+                                                                        -33 60 -63 19 -40 21 -60 21 -267 0 -207 -2 -227 -21 -267 -38 -78 -59 -83
+                                                                        -334 -83 -275 0 -296 5 -334 83 -19 40 -21 60 -21 267 0 207 2 227 21 267 37
+                                                                        77 56 82 332 83 217 0 241 -2 276 -20z" />
+                                                        <path
+                                                            d="M1524 671 c-11 -5 -33 -23 -47 -41 -26 -30 -27 -36 -27 -151 l0 -119
+                                                                        34 -38 34 -37 127 0 127 0 34 37 34 38 0 120 0 120 -34 38 -34 37 -114 2 c-62
+                                                                        2 -122 -1 -134 -6z m251 -66 c23 -22 25 -31 25 -125 0 -94 -2 -103 -25 -125
+                                                                        -23 -23 -31 -25 -130 -25 -99 0 -107 2 -130 25 -23 22 -25 31 -25 125 0 94 2
+                                                                        103 25 125 23 23 31 25 130 25 99 0 107 -2 130 -25z" />
+                                                        <path d="M552 646 c3 -131 4 -135 33 -177 55 -77 78 -84 333 -87 l222 -3 0 25
+                                                                        0 26 -215 0 c-195 0 -220 2 -254 20 -62 31 -81 82 -81 218 0 107 -1 112 -21
+                                                                        112 -20 0 -20 -4 -17 -134z" />
+                                                    </g>
+                                                </svg>&nbsp;Cost Center Structure&nbsp;<mat-icon
+                                                    (click)="removeCCSTab(i)">cancel</mat-icon>
+                                            </span>
+                                            <span *ngFor="let tabb of tabsContractArray;let ii = index">
+                                                <span (click)="childrenContractChange(ii)"
+                                                    *ngIf="tabb.tabType === 'contract' && tabb.pageName === 'Contract Details'"
+                                                    mat-tab-link
+                                                    [active]="tabb.selectedChild === 11 && selectedContractChild === ii">
+                                                    <img src="{{tabb.imgSrc}}"
+                                                        alt="Contracts Image">&nbsp;{{tabb.pageName}}&nbsp;<mat-icon
+                                                        (click)="removeContract(ii, tab.pageName)">cancel</mat-icon>
+                                                </span>
+                                                <span (click)="childrenContractChange(ii)"
+                                                    *ngIf="tabb.tabType === 'contract' && tabb.pageName === 'Contract Inventory' "
+                                                    mat-tab-link
+                                                    [active]="tabb.selectedChild === 12 && selectedContractChild === ii">
+                                                    <i class="ficon fas fa-tools"
+                                                        style="color: #4680ff"></i>&nbsp;{{tabb.pageName}}&nbsp;<mat-icon
+                                                        (click)="removeContract(ii, tabb.pageName)">cancel</mat-icon>
+                                                </span>
+
+                                                <span (click)="childrenContractChange(ii)"
+                                                    *ngIf="tabb.tabType === 'contract' && tabb.pageName === 'Contract Inventory-detail'"
+                                                    mat-tab-link
+                                                    [active]="tabb.selectedChild === 13 && selectedContractChild === ii">
+                                                    <img src="{{tabb.imgSrc}}" alt="Contracts Image">&nbsp;Contract
+                                                    Details - {{tabb.rowData.ContractDocumentName}}&nbsp;<mat-icon
+                                                        (click)="removeContract(ii, tabb.pageName)">cancel</mat-icon>
+                                                </span>
+                                            </span>
+                                        </nav>
+                                    </div>
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 0">
+                                        <app-add-wireline (onWirelineAddEvent)="onWirelineAddEvent($event, i)"
+                                            (onInventoryDataFetch)="onInventoryDataFetch($event)"
+                                            (onSaveSendDataParent)="onSaveSendDataParent($event, i)"
+                                            (onEditedInventory)="onEditedChildInventory($event, i)"
+                                            [selectedButton]="selectedButton"
+                                            [clickOnSearchButton]="clickOnSearchButton"
+                                            [selectedCustomer]="selectedCustomer" [isInventoryPage]="isInventoryPage"
+                                            [addData]="tab.rowData" [buttonAction]="buttonAction"
+                                            [selectedTemDD]="selectedTemDD"
+                                            (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                            (setCustomerDDValueEvent)="setCustomerDDValueEvent($event, i)"
+                                            (setClickFalse)="setClickFalse($event, i)"
+                                            (setChangeLogData)="setChangeLogData($event, i)"
+                                            (onDestroyOutput)="onDestroyOutput($event, i)"
+                                            (wirelinePageName)="wirelinePageNameFn($event)"
+                                            (isSetAction)="isSetNotAction($event)" [action]="tab.tabType"
+                                            [rowData]="tab?.rowData?.ServiceNumber ? tab.rowData : tab.rowData.data"></app-add-wireline>
+                                    </div>
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 1">
+                                        <app-assignments *ngIf="tab.tabType !=='people' && tab.tabType !=='location'"
+                                            [rowData]="tab.rowData.data ? tab.rowData.data : tab.rowData"
+                                            (linkAssignmentData)="addlinkAssignmentData($event, tab.rowData.data)"
+                                            (wirelinePageName)="wirelinePageNameFn($event)"
+                                            (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                            (setCustomerDDValueEvent)="setCustomerDDValueEvent($event, i)"
+                                            [isAssignmentsTab]="isAssignmentsTab" [selectedButton]="selectedButton">
+                                        </app-assignments>
+                                    </div>
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 2">
+                                        <app-inventory-note-table
+                                            [rowData]="tab.rowData.data ? tab.rowData.data : tab.rowData"
+                                            [parentServiceID]="tab.parentServiceID" [serviceIds]="serviceIds"
+                                            [buttonAction]="buttonAction"
+                                            (isInventoryNoteExist)="isInventoryNoteExist($event)"
+                                            (wirelinePageName)="wirelinePageNameFn($event)"
+                                            (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                            (setCustomerDDValueEvent)="setCustomerDDValueEvent($event, i)"
+                                            [isInventoryNotes]="isInventoryNotes" (isSetAction)="isSetNotAction($event)"
+                                            [selectedButton]="selectedButton"></app-inventory-note-table>
+                                    </div>
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 3">
+                                        <app-child-inventory-datatable
+                                            [rowData]="tab.rowData.data ? tab.rowData.data : tab.rowData"
+                                            [serviceIds]="serviceIds" [tabIndex]="index" [buttonAction]="buttonAction"
+                                            (onChildInventory)="onChildInventory($event)"
+                                            (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                            (setCustomerDDValueEvent)="setCustomerDDValueEvent($event, i)"
+                                            [selectedButton]="selectedButton" [isChildInventory]="isChildInventory"
+                                            (wirelinePageName)="wirelinePageNameFn($event)"
+                                            (childClicked)="childClicked($event, i)"
+                                            (isSetAction)="isSetNotAction($event)"
+                                            (onEditedChildInventory)="onEditedChildInventory($event, i)"></app-child-inventory-datatable>
+                                    </div>
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 4">
+                                        <app-add-billing-w [rowData]="tab.rowData.data ? tab.rowData.data : tab.rowData"
+                                            (getIdsArray)="getIdsArray($event)"
+                                            (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                            (setCustomerDDValueEvent)="setCustomerDDValueEvent($event, i)"
+                                            (redirectTab)="redirectTab($event)"
+                                            [pagename]="mappedPagename"></app-add-billing-w>
+                                    </div>
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 5">
+
+                                    </div>
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 7">
+                                        <app-contracts-m [fromTab]="buttonName"
+                                            [rowData]="tab.rowData.data ? tab.rowData.data : tab.rowData"
+                                            [isEditClicked]="isEditClicked"
+                                            (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                            (setCustomerDDValueEvent)="setCustomerDDValueEvent($event, i)"
+                                            (dialogOpenValue)="contractdialogOpenValue($event)"
+                                            (isOpenContainerTab)="isOpenContainerTab($event)"></app-contracts-m>
+                                    </div>
+
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 9">
+                                        <ng-container>
+                                            <app-change-log
+                                                [rowData]="tab.rowData.data ? tab.rowData.data : tab.rowData"
+                                                (setTemDDValueEvent)="setTemDDValueEvent($event, i)"
+                                                (setCustomerDDValueEvent)="setCustomerDDValueEvent($event, i)"
+                                                [column]="columns" [isShowAction]="true" [title]="buttonName"
+                                                [vpInventoryID]=" 
+                                                tab?.rowData?.data?.ChildInventoryId ? tab?.rowData?.data?.ChildInventoryId : 
+                                                tab?.rowData?.data?.VendorProductInventoryId ? tab?.rowData?.data?.VendorProductInventoryId : tab?.rowData?.VendorProductInventoryId"
+                                                [recordChild]="tab?.rowData?.data?.ChildInventoryId ? true : false"></app-change-log>
+                                        </ng-container>
+                                    </div>
+
+                                    <div *ngIf="tab.tabType=='Edit' && selectedChild === 10">
+                                        <app-common-ccs [payload]="payload"></app-common-ccs>
+                                    </div>
+
+                                    <div
+                                        *ngIf="tab.tabType=='Edit' && tabsContractArray.length > 0 && selectedChild == null ">
+                                        <span *ngFor="let tabb of tabsContractArray;let ii = index">
+                                            <ng-container
+                                                *ngIf="tabb.pageName=='Contract Details' && tabb.selectedChild === 11 && selectedContractChild === 0">
+                                                <app-add-edit-contracts [action]="'Edit'" [docType]="tabb.docType"
+                                                    [fromTab]="'inventory'" [contractId]="tabb.addendumId"
+                                                    [addendumId]="tabb.addendumId"
+                                                    [rowData]="tab.rowData.data"></app-add-edit-contracts>
+                                            </ng-container>
+                                            <ng-container *ngIf="tabb.pageName=='Contract Inventory' && tabb.selectedChild === 12 && 
+                                            (selectedContractChild === 1 || tabsContractArray.length === 1)">
+                                                <app-inventory-c [action]="'Edit'" [tabData]="tab.rowData.data"
+                                                    (onLoadContractInventory)="onLoadContractInventory($event)"
+                                                    (disableLinkDialog)="disableLinkDialog($event)"></app-inventory-c>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="tabb.pageName=='Contract Inventory-detail' && tabb.selectedChild === 13 && 
+                                            (selectedContractChild === 2 || tabsContractArray.length === 2)">
+
+                                                <app-add-edit-contracts [action]="'Edit'" [rowData]="tabb.rowData"
+                                                    [fromTab]="'inventory'" [fromInventory]="true"
+                                                    [docType]="'contract'"></app-add-edit-contracts>
+                                            </ng-container>
+                                        </span>
+                                    </div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

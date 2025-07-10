@@ -1,0 +1,228 @@
+/* Responsive Scrollbar Start */
+::-webkit-scrollbar {
+    height: 3px;
+    width: 12px;
+}
+
+.warning-text {
+    color: #ff6666;
+    font-size: 15px !important;
+    font-weight: bold !important;
+}
+
+.warning-active {
+    h4, p, span, label, h3, h2 {
+        color: #ff6666 !important;
+    }
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    -webkit-border-radius: 1ex;
+}
+
+
+p {
+    margin-bottom: 0;
+}
+
+.invoice-overview-label h2 {
+    font-size: 22px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #181d1f;
+}
+
+.invoice-rep h3 {
+    font-size: 13px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 30px;
+
+    // color: #181d1f;
+    span {
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+.invoice-overview-right {
+
+    ul {
+        flex-direction: row;
+        display: flex;
+        justify-content: space-between;
+        overflow: auto;
+
+        li {
+            padding: 0 15px 0 0;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            h3 {
+                font-size: 14px;
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                letter-spacing: normal;
+                font-weight: 500;
+                margin-bottom: 0;
+                color: #181d1f;
+                white-space: nowrap;
+            }
+
+            p {
+                white-space: nowrap;
+            }
+
+            div:nth-of-type(2) {
+                margin-top: 12px;
+                margin-bottom: 8px;
+            }
+
+            div.attachments-wrapper {
+                margin-bottom: 0px !important;
+            }
+
+            i {
+                font-size: 24px;
+            }
+
+            img {
+                width: 18px;
+                &:last-child{
+                    width: 100%;
+                }
+            }
+
+        }
+    }
+}
+
+.invoice-overview-main {
+    margin-bottom: 25px;
+    background-color: #EAEAEA;
+    padding: 12px 10px 10px;
+    border-radius: 12px;
+    // border: 1px solid #181D1F;
+
+    li.list-group-item {
+        background-color: transparent;
+        
+        > div{
+            min-height: 36px;
+        }
+    }
+
+}
+
+.single-button {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+}
+
+.io-cus-btn-group .fas.fa-file-invoice::before {
+    content: '';
+    display: block;
+    background: url('/assets/images/icn-file-invoice-1.png') no-repeat center center;
+    z-index: 10;
+    background-size: 100%;
+    // width: 50px;
+    width: 20px;
+    height: 28px;
+}
+
+.io-cus-btn-group .fas.fa-file-invoice-dollar::before {
+    content: '';
+    display: block;
+    background: url('/assets/images/icn-file-invoice.png') no-repeat center center;
+    z-index: 10;
+    background-size: 100%;
+    // width: 50px;
+    width: 20px;
+    height: 28px;
+}
+
+button.data-issue-btn {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    white-space: nowrap;
+}
+
+button svg{
+    overflow: visible !important;
+}
+
+.differences-red{
+    color: #f44336;
+    // color: rgba(0,0,0,.87);
+}
+
+p.differences-value-r-set{
+    padding-right: 35px;
+}
+
+@media only screen and (max-width: 1366px) {
+    button.data-issue-btn {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    p.differences-value-r-set{
+        padding-right: 15px;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    :host ::ng-deep .row.sandbox-io-lable-col-c-width {
+        .col-xl-3 {
+            flex: 0 0 20% !important;
+            max-width: 20% !important;
+        }
+
+        .col-xl-9 {
+            flex: 0 0 80% !important;
+            max-width: 80% !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 1199px) {
+
+    :host ::ng-deep .padding-1-3,
+    :host ::ng-deep .padding-1-1,
+    :host ::ng-deep .padding-3-1 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .invoice-overview-label h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .invoice-rep h3 {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .invoice-overview-main {
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    p {
+        font-size: 13px !important;
+    }
+
+    .invoice-overview-label h2 {
+        font-size: 20px !important;
+    }
+    
+}

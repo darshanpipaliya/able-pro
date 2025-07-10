@@ -1,0 +1,88 @@
+<div class="row sandbox-io-lable-col-c-width">
+    <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12">
+        <div class="validate-summary-total-left">
+            <div class="validate-summary-total-label">
+                <h2>VBA for Charge Detail</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12" >
+        <div class="sandbox-step-grid">
+            <mat-accordion class="example-headers-align vba-accordion">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                    <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getVBAbyChargeCode()" [ngClass]="{'disabled': recordPublishedOrCompleted}"></button>
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <i class="fas fa-sitemap"></i>&nbsp;Vendor Billing Alias and Vendor by Charge Codes
+                        </mat-panel-title>
+                        
+                        <i class="fas fa-info-circle" (click)="openTooltipDialog()"></i>
+                        <ng-template #tooltipText>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                            <div class="text-left">
+                                <p>
+                                    The Vendor Billing Alias (VBA) is the verbatim name of the Vendor of record that is
+                                    directly providing the service exactly as it is presented in the invoice. Whereas a
+                                    Vendor name is considered the common name or "friendly" name for a provider, the
+                                    Vendor Billing Alias reflects the Vendor name exactly as it is written in the
+                                    invoice. Sometimes the Vendor Billing Alias will match the Vendor. </p>
+
+                                <p>Examples: </p>
+
+                                <p>
+                                    <b>AT&T</b><br/>
+                                    Vendor Billing Alias: AT&T Corporation<br/>
+                                    Vendor: AT&T
+                                </p>
+
+                                <p>
+                                    <b>Lumen</b><br/>
+                                    Vendor Billing Alias: Lumen Technologies, Inc.<br/>
+                                    Vendor: Lumen<br/>
+                                    The use of Vendor Billing Aliases applies not only to the invoice, but also to
+                                    individual charges on the invoice. These are often the same as the invoice Vendor
+                                    Billing Alias but not always. In some cases, a third-party may be billing for
+                                    services on another Vendor's invoice, which would cause the Charge Vendor Billing
+                                    Alias to not match the Vendor Billing Alias of the invoice.
+                                </p>
+
+                                <p class="mb-0">
+                                    <b>OAN</b><br/>
+                                    Charge Vendor Billing Alias: OAN<br/>
+                                    Invoice Vendor Billing Alias: SBC<br/>
+                                    Vendor: AT&T<br/>
+                                    Reason: OAN bills their 1+ service via AT&T's invoice from the old SBC Area
+                                </p>
+                            </div>
+                        </ng-template>
+                    </mat-expansion-panel-header>
+                    
+                    <div class="row">
+                        <div class="col-md-12 px-0">
+                            <ng-container style="height: max-content;">
+                                <app-ag-grid-table [excelBtnEnable]="true" [columnDefs]="columnDefs" [rowData]="rowData"
+                                    [frameworkComponents]="frameworkComponents"
+                                    [rowSelection]="rowSelection" [sheetName]="'Charge Detail'"
+                                    [exportFilename]="'Charge Detail.xlsx'" 
+                                    [defaultColDef]="defaultColDef" [sideBar]="sideBar" [singleClickEdit]="true">
+                                </app-ag-grid-table>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-raised mt-3" (click)="saveVendorAlias()"
+                [disabled]="saveButtonDisabled || recordPublishedOrCompleted">
+                <span class="spinner-border spinner-border-sm mr-2" role="status"
+                    *ngIf="saveButtonDisabled"></span>Save</button>
+        </div>
+    </div>
+</div>

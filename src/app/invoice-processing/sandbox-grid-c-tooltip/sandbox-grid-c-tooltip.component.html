@@ -1,0 +1,105 @@
+<div class="mat-dialog-header">
+    <button type="button" class="close" mat-dialog-close (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div mat-dialog-content class="px-0 m-0">
+    <div class="sandbox-tooltip-table">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sandbox Status</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>No Vendor</td>
+                    <td>Vendor needs to be assigned to the Invoice in order to look
+                        for
+                        a
+                        matching Retrieval Record. </td>
+                </tr>
+                <tr>
+                    <td>No Retrieval Record </td>
+                    <td>No Invoice Retrieval Record was found with a matching
+                        Account.
+                        Or
+                        the Retrieval Record is found but has a start date in the
+                        future.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Incomplete Retrieval Record</td>
+                    <td>We need to open the retrieval record and see what is going
+                        on.
+                        Likely there is no invoice attached to it. </td>
+                </tr>
+                <tr>
+                    <td>No Charges</td>
+                    <td>This invoice has no current charges, and the Amount to Pay is $0.00 or negative. However, there is active inventory on the account that needs to be updated to Disconnected status in the system.</td>
+                </tr>
+                <tr>
+                    <td>Disconnected Account</td>
+                    <td>This invoice has no current charges, with an Amount to Pay of $0.00, negative, or is for a disconnected account.</td>
+                </tr>
+                <tr>
+                    <td>Pending</td>
+                    <td>The Invoice and Data Files or Invoice Upload template are
+                        available to process through the sandbox.</td>
+                </tr>
+                <tr>
+                    <td>Processing</td>
+                    <td>The invoice is being que’d for the sandbox.</td>
+                </tr>
+                <tr>
+                    <td>Working</td>
+                    <td>The Invoice and Data Files or Invoice Upload template are
+                        ‘Accepted for work’ and being worked actively.</td>
+                </tr>
+                <tr>
+                    <td>Completed</td>
+                    <td>Sandbox work is complete and ready for Publishing. </td>
+                </tr>
+                <tr>
+                    <td>Publishing</td>
+                    <td>The invoice is in the process of being sent to Production after the sandbox processes were completed.</td>
+                </tr>
+                <tr>
+                    <td>Published</td>
+                    <td>The invoice has been sent to Production after the sandbox
+                        processes were completed and accepted.</td>
+                </tr>
+                <tr>
+                    <td>Unpublished</td>
+                    <td>This status indicates that the invoice was previously published but required changes that necessitated its removal from production and return to the sandbox for updates. An Unpublished status signifies a priority invoice.</td>
+                </tr>
+                <tr>
+                    <td>Priority Working</td>
+                    <td>This status indicates that an Unpublished invoice is actively being updated by someone to prepare it for republishing.</td>
+                </tr>
+                <tr>
+                    <td>Do Not Process</td>
+                    <td>This is an invoice for an account that has been disconnected, and it is either the final processed invoice or no longer being processed.</td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td>This is an invoice that had a problem with the backend processing.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Data Issue</td>
+                    <td>An issue with Vendor or our data import has been identified
+                        for
+                        this invoice and we are working to resolve it.</td>
+                </tr>
+                <tr>
+                    <td>Deleted</td>
+                    <td>Data file received but will not be processed, either because it was sent in error or the vendor has not yet stopped sending invoices.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

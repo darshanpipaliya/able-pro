@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { api_list } from './api-list';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 import { UrlToolsService } from './url-tools.service';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { api_list } from './api-list';
 
 @Injectable()
 export class SandBoxService {
@@ -130,7 +130,7 @@ export class SandBoxService {
     chargeCodeGroupAndVendorProduct(data: any) {
         return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.step_5.ChargeCodeGroupAndVendorProduct), data);
     }
-    vPABySBInvoiceInventory(data: any) {
+    vPABySBInvoiceInventory(data: { headers?: HttpHeaders | { [header: string]: string | string[]; }; context?: HttpContext; observe?: "body"; params?: HttpParams | { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>; }; reportProgress?: boolean; responseType: "arraybuffer"; withCredentials?: boolean; transferCache?: { includeHeaders?: string[]; } | boolean; }) {
         return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.step_5.VPABySBInvoiceInventory), {}, data);
     }
     getDistributionRules(id: any) {
@@ -168,7 +168,7 @@ export class SandBoxService {
     finalReview(id: any) {
         return this.http.get(this.urlTools.addDynamicURL(api_list.SandBox.step_7.finalReview, { Id : id }));
     }
-    changeSBRepName(sbInvoiceId: any, temUserId: any){
+    changeSBRepName(sbInvoiceId: any,temUserId: any){
         return this.http.put(this.urlTools.addDynamicURL(api_list.SandBox.changeSBRepName, { sbInvoiceId: sbInvoiceId, temUserId: temUserId }), {});
     }
     VPABySBInvoiceInventoryId(id: any, data: any) {
@@ -229,8 +229,8 @@ export class SandBoxService {
     FromOtherSBInvoiceSave(id: any, data: any) {
         return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.step_5.FromOtherSBInvoiceSave, { Id: id }), data );
     }
-    invoiceProcesingStep(id: any) {
-        return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.InvoiceProcesingStep, { id: id }) , {});
+    invoiceProcesingStep(data: any) {
+        return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.InvoiceProcesingStep) , data);
     }
     getDistributionChangeLog(id: any) {
         return this.http.get(this.urlTools.addDynamicURL(api_list.SandBox.distributionRuleLog, { Id: id }));
@@ -239,11 +239,11 @@ export class SandBoxService {
         return this.http.get(this.urlTools.addDynamicURL(api_list.SandBox.invoiceChangeLog, { Id: id }));
     }
 
-    refreshButton(id: any) {
-        return this.http.get(this.urlTools.addDynamicURL(api_list.SandBox.step_5.refreshButtonUrl, { Id: id }));
+    refreshButton(id: any, data?: any) {
+        return this.http.get(this.urlTools.addDynamicURL(api_list.SandBox.step_5.refreshButtonUrl, { Id: id }), this.urlTools.addQueryParams(data));
     }
 
-    markCloseInvoiceFn(data: any) {
+    markCloseInvoiceFn(data: { ticketNumber: any; notes: any; sbInvoiceId: any; }) {
         return this.http.put(this.urlTools.addDynamicURL(api_list.SandBox.MarkCloseInvoice, {}), data);
     }
     chargeValidationByBillingIds(id: any, data: any) {
@@ -251,7 +251,31 @@ export class SandBoxService {
     }
 
     
-    invoiceRuleApply(id: any, queryParams: any) {
+    invoiceRuleApply(id: any, queryParams: { isReRunDistribution: boolean; }) {
         return this.http.get(this.urlTools.addDynamicURL(api_list.SandBox.invoiceApply, { Id: id }), this.urlTools.addQueryParams(queryParams) );
+    }
+
+    getInvoiceStep(sBInvoiceId: number, processing?: boolean): Observable<any> {  
+        const stepData = { SBInvoiceId: sBInvoiceId, NeedToUpdateProcessing: processing ?? true };
+        return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.InvoiceProcesingStep) , stepData);
+    }
+
+    addBulkDistribution(id: any, data: any) {
+        return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.step_4_3.buldDistributionUrl, { Id: id }), data);
+    }
+    distributionRulesBulk(id: any, data: any) {
+        return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.step_4_3.distributionRulesBulk, { Id: id }), data);
+    }
+    specificDistribution(id: any, data: any) {
+        return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.step_7.specificDistributionNeeded, { Id: id }), data);
+    }
+    specificDistributionDetail(id: any, data: any) {
+        return this.http.post(this.urlTools.addDynamicURL(api_list.SandBox.step_7.specificDistributionRuleDetails, { Id: id }), data);
+    }
+    approveInvoice(id: any) {
+        return this.http.put(this.urlTools.addDynamicURL(api_list.SandBox.step_7.approveInvoice, { Id: id }), {});
+    }
+    unpublishCleanUp(id: any) {
+        return this.http.put(this.urlTools.addDynamicURL(api_list.SandBox.step_7.unpublishCleanUp, { Id: id }), {});
     }
 }

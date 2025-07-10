@@ -431,6 +431,10 @@ export class LinkPeopleDialogComponent implements OnInit {
       storeType: 'partial',
       cacheBlockSize: 100
     },
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
   };
 
   onAgGridReady($event: any) {

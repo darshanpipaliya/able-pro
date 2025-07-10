@@ -1,0 +1,32 @@
+<div class="mt-2">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="pb-2 float-right">
+                <button mat-button class="btn btn-primary" cdkFocusInitial (click)="saveLocation()" [disabled]="saveButtonDisabled">
+                    <span class="spinner-border spinner-border-sm" role="status" *ngIf="saveButtonDisabled"></span>
+                    Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="link-location">
+        <div class="fb fb2 example-headers-align">
+            <mat-expansion-panel style="width: 100%;" [expanded]="true" class="table-border-none ">
+                <mat-expansion-panel-header class="math borderc">
+                    <mat-panel-title style="margin-left: 33%; margin-right: 0px !important;">
+                        <i class="ficon fas fa-map-marker-alt"></i>&nbsp;Locations
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="">
+                    <div class="user-activity-log-inner">
+                        <ng-container>
+                            <app-ag-grid-table [rowSelection]="'multiple'" [defaultColDef]="defaultColDef"
+                                [columnDefs]="columnDefs" (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                [rowData]="locationRowData" (onSelectionChangedEvent)="onSelectionChanged($event)" [gridOptions]="gridOptions" (onAgGridReady)="onAgGridReady($event)"></app-ag-grid-table>
+                        </ng-container>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+mat-panel-title {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-right: 0px;
+    font-weight: 700 !important;
+}
+
+mat-expansion-panel {
+    border: solid;
+    // border-radius: 8px;
+    margin-bottom: 0 !important;
+    border-color: #80808061;
+    box-shadow: none !important;
+    border-width: 1px !important;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
+  margin-left: 8px;
+}
+
+:host ::ng-deep .user-activity-log-inner .ag-root-wrapper {
+    border-radius: 12px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel.table-border-none .user-activity-log-inner .ag-root-wrapper{
+    border: none !important;
+    border-radius: 0 !important;
+    // padding: 5px;
+}
+  
+.math {
+    background: #80808061 !important;
+    height: 40px;
+    border-radius: 0;
+}
+
+:host ::ng-deep .assignment-grids .mat-expansion-panel-body {
+    padding: 0 !important;
+}
+:host ::ng-deep .assignment-grids {
+    .mat-expansion-panel-body {
+        padding: 0 !important;
+
+        ag-grid-angular {
+            // height: 600px !important;
+            height: calc(100vh - 290px) !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+
+:host ::ng-deep .mat-expansion-indicator {
+    margin-left: 15px;
+}

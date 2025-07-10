@@ -55,6 +55,10 @@ export class CostCenterStructureMainComponent implements OnInit {
     flex: 1,
   };
   gridOptions: any = {
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
     rowModelType: 'serverSide',
     serverSideInfiniteScrollOptions: {
       storeType: 'partial',

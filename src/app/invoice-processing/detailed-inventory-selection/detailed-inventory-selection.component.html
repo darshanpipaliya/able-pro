@@ -1,0 +1,445 @@
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="validate-summary-total-right sandbox-step-grid">
+            <mat-accordion class="example-headers-align accordion-toggle-btn-right">
+                <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                    <div class="inventory-sel-accordion-left-btn">
+                        <!-- (click)="addChargeCodeDialog()" -->
+                        <button type="submit" class="btn btn-primary btn-raised"
+                            [disabled]="selectedCodeRow.length == 0" (click)="redirectProduct()">Add/Edit from
+                            Invoice</button>
+
+                        <button type="submit" class="btn btn-primary btn-raised"
+                            [disabled]="selectedCodeRow.length == 0" (click)="removeAcc()">Add/Edit from
+                            Inventory</button>
+
+                        <!-- <i class="fas fa-info-circle" (click)="openDialog1()" tooltipClass="tooltip-bg"></i> -->
+                        <ng-template #InventorySelection>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left dialog-data">
+                                <p class="mb-2"><strong>Add/Remove Parent Different Acct:</strong> Select 1 or more
+                                    items from the inventory and group with inventory listed on another invoice to
+                                    assume the Vendor Product, create a new Charge Code Group and create a Parent/Child
+                                    relationship with all the Charge Codes. Example: Ports on 1 invoice and access on
+                                    another.</p>
+
+                                <p class="mb-0"><strong>Add/Remove Vendor Product:</strong> Select 1 or more items from
+                                    the inventory listed here and assign a Vendor Product, create a new Charge Code
+                                    Group and create a Parent/Child relationship with all the Charge Codes</p>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <mat-expansion-panel-header class="math">
+                        <mat-panel-title class="matt">
+                            <i class="ficon fas fa-tools"></i>&nbsp;Detailed Inventory
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <!-- <mat-slide-toggle>View All</mat-slide-toggle> -->
+                        <div class="mat-header-right">
+                            <!-- <button type="button" (click)="refresh()"
+                                                    class="btn btn-primary btn-raised" [disabled]="disableRefres || recordPublishedOrCompleted">Refresh</button> -->
+                            <button style="border: none; background: transparent; margin-right: 0.4rem;" title="Rerun Vendor Products" (click)="rerun()" class="rerun"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="15px" ><path d="M464 6.1c9.5-8.5 24-8.1 33 .9l8 8c9 9 9.4 23.5 .9 33l-85.8 95.9c-2.6 2.9-4.1 6.7-4.1 10.7l0 21.4c0 8.8-7.2 16-16 16l-15.8 0c-4.6 0-8.9 1.9-11.9 5.3L100.7 500.9C94.3 508 85.3 512 75.8 512c-8.8 0-17.3-3.5-23.5-9.8L9.7 459.7C3.5 453.4 0 445 0 436.2c0-9.5 4-18.5 11.1-24.8l111.6-99.8c3.4-3 5.3-7.4 5.3-11.9l0-27.6c0-8.8 7.2-16 16-16l34.6 0c3.9 0 7.7-1.5 10.7-4.1L464 6.1zM432 288c3.6 0 6.7 2.4 7.7 5.8l14.8 51.7 51.7 14.8c3.4 1 5.8 4.1 5.8 7.7s-2.4 6.7-5.8 7.7l-51.7 14.8-14.8 51.7c-1 3.4-4.1 5.8-7.7 5.8s-6.7-2.4-7.7-5.8l-14.8-51.7-51.7-14.8c-3.4-1-5.8-4.1-5.8-7.7s2.4-6.7 5.8-7.7l51.7-14.8 14.8-51.7c1-3.4 4.1-5.8 7.7-5.8zM87.7 69.8l14.8 51.7 51.7 14.8c3.4 1 5.8 4.1 5.8 7.7s-2.4 6.7-5.8 7.7l-51.7 14.8L87.7 218.2c-1 3.4-4.1 5.8-7.7 5.8s-6.7-2.4-7.7-5.8L57.5 166.5 5.8 151.7c-3.4-1-5.8-4.1-5.8-7.7s2.4-6.7 5.8-7.7l51.7-14.8L72.3 69.8c1-3.4 4.1-5.8 7.7-5.8s6.7 2.4 7.7 5.8zM208 0c3.7 0 6.9 2.5 7.8 6.1l6.8 27.3 27.3 6.8c3.6 .9 6.1 4.1 6.1 7.8s-2.5 6.9-6.1 7.8l-27.3 6.8-6.8 27.3c-.9 3.6-4.1 6.1-7.8 6.1s-6.9-2.5-7.8-6.1l-6.8-27.3-27.3-6.8c-3.6-.9-6.1-4.1-6.1-7.8s2.5-6.9 6.1-7.8l27.3-6.8 6.8-27.3c.9-3.6 4.1-6.1 7.8-6.1z"/></svg></button>
+                        
+                            <button type="button" class="fas fa-check c-refresh-speed" (click)="refresh()"
+                                [disabled]="disableRefres || recordPublishedOrCompleted" title="Refresh"></button>
+                        
+                            <i class="fas fa-info-circle second ml-3" (click)="openDialog()"></i>
+                        </div>
+                        <ng-template #tooltipText>
+                            <div class="mat-dialog-header">
+                                <button type="button" class="close" mat-dialog-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="text-left dialog-data-fontSize-13">
+                                <p class="mb-1"><strong>Add/Edit from Invoice</strong></p>
+                                <p class="mb-1">Assign a Vendor Product to selected Charge Codes in the current invoice.
+                                    A Vendor Product's Charge Code Group may include multiple Billing IDs. Use this when
+                                    all items that need to be assigned are not related to another invoice or account and
+                                    all charge codes needed are within the invoice in context.</p>
+
+                                <div class="ml-3">
+                                    <p class="mb-0 "><strong>How to Use:</strong></p>
+                                    <ol class="mb-1">
+                                        <li>Select all Charge Codes that:
+                                            <ul class="mb-0" style="list-style-type: disc;">
+                                                <li>Belong to the Vendor Product being added to inventory</li>
+                                                <li>Are associated with the Vendor Product</li>
+                                            </ul>
+                                        </li>
+                                        <li>Click <strong>Add/Edit from Invoice</strong></li>
+                                    </ol>
+
+                                    <p class="mb-1"><strong>Charge Codes Included:</strong></p>
+                                    <ul class="mb-2">
+                                        <li><strong>Charge Codes included in a Vendor Product:</strong> Product,
+                                            Feature, Usage, or Equipment (only <strong>one</strong> Product-type Charge
+                                            Code per Vendor Product)</li>
+                                        <li><strong>Related Charge Codes:</strong> Taxes, regulatory fees, carrier fees,
+                                            discounts, refunds, etc. on another Billing ID <strong>when the system
+                                                cannot establish the relationship automatically</strong></li>
+                                    </ul>
+                                </div>
+
+                                <p class="mb-1"><strong>Add/Edit from Inventory</strong></p>
+                                <p class="mb-1">Assign a Vendor Product to selected Charge Codes and link them to
+                                    Billing IDs on <strong>Inventory from the same Vendor</strong>. This will allow you
+                                    to add a vendor product from the same or another account to the invoice. Use this
+                                    for scenarios like disconnected inventory or vendor invoices for separate services
+                                    (e.g., site visits, construction). The resulting Vendor Product will include
+                                    multiple Charge Codes.</p>
+
+                                <div class="ml-3">
+                                    <p class="mb-0"><strong>How to Use:</strong></p>
+                                    <ol class="mb-1">
+                                        <li>Select all Charge Codes that:
+                                            <ul class="mb-0" style="list-style-type: disc;">
+                                                <li>Need to be linked to another invoice to retrieve the Vendor Product
+                                                </li>
+                                                <li>Are associated with the Vendor Product</li>
+                                            </ul>
+                                        </li>
+                                        <li>Click <strong>Add/Edit from Inventory</strong></li>
+                                    </ol>
+
+                                    <p class="mb-1"><strong>Charge Codes Included:</strong></p>
+                                    <ul class="mb-0">
+                                        <li><strong>Charge Codes included in a Vendor Product:</strong> Product,
+                                            Feature,
+                                            Usage, or Equipment (only <strong>one</strong> Product-type Charge Code per
+                                            Vendor Product)</li>
+                                        <li><strong>Related Charge Codes:</strong> Taxes, regulatory fees, carrier fees,
+                                            discounts, refunds, etc. on another Billing ID <strong>when the system
+                                                cannot
+                                                establish the relationship automatically</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+
+                            <ng-container style="height: max-content;">
+
+                                <p-treeTable #treeTable [value]="files" filter="true" sortMode="multiple" columnResizeMode="expand" [columns]="displaycols"
+                                [rows]="10" [lazy]="true" (onLazyLoad)="loadNodes($event, true)" [totalRecords]="totalRecords"
+                                [resizableColumns]="true" selectionMode="checkbox" [(selection)]="selectedCodeRow" [scrollable]="true"
+                                [reorderableColumns]="true" (onColResize)="handleColumnResize($event)"> 
+                                <!-- style="overflow-x: scroll;" -->
+        
+                                <ng-template pTemplate="colgroup" let-columns>
+
+                                    <colgroup>
+                                        <ng-container *ngFor="let col of columns">
+                                            <col
+                                                [ngStyle]="{'width': col.width || 'auto', 'min-width': col.width || '100px'}" />
+                                        </ng-container>
+                                    </colgroup>
+                                </ng-template>
+        
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr class="header-row p-treetable-thead-parent">
+                                        <ng-container *ngFor="let col of cols;let i = index">                                            
+                                            <!-- <th *ngIf="i === 0" [attr.colspan]="col.colspan" ttResizableColumn class="parent-header" [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                                            </th> -->
+                                            <ng-container *ngIf="col.isChildren && col.isParentVisible">
+                                                <th [attr.data-parent-id]="col.parent" [attr.colspan]="col.colspan"
+                                                    ttResizableColumn class="parent-header"
+                                                    [ngStyle]="{'width': col.parentWidth || 'auto', 'height': '50px' }">
+                                                    <span>{{ col.header }}</span>
+                                                    <i class='pi pi-fw pi-chevron-right icon-contracted'
+                                                        *ngIf="!innerLoading && col.isChildren && col.isicon == 1 && col.isToggle"
+                                                        (click)="toggleColumn(col.parent , 'close')"></i>
+                                                    <i class='pi pi-fw pi-chevron-left icon-expanded'
+                                                        *ngIf="!innerLoading && col.isChildren && col.isicon == 0 && col.isToggle"
+                                                        (click)="toggleColumn(col.parent , 'open')"></i>
+                                                </th>
+                                            </ng-container>
+                                        </ng-container>
+                                    </tr>
+        
+                                    <tr class="header-row p-treetable-thead-child">
+                                        <ng-container *ngFor="let col of columns">
+                                            <ng-container [ngSwitch]="col.field">
+                                                <th *ngSwitchCase="'checkbox'">
+                                                    <!-- <input (change)="onHeaderCheckboxChange($event)"
+                                                        [(ngModel)]="headerCheckboxData" [checked]="headerCheckboxData"
+                                                        class="checkBox" type="checkbox"> -->
+                                                </th>
+                                                <th *ngSwitchDefault ttResizableColumn ttReorderableColumn
+                                                    (click)="OrderBy(col.field)" class="child-header"
+                                                    [ngStyle]="{'width': col.width || 'auto', 'height': '50px' }">
+                                                    {{ col.childHeader }}
+                                                    <i class='pi pi-arrow-up' *ngIf="col.sorting === 'asc'"></i>
+                                                    <i class='pi pi-arrow-down' *ngIf="col.sorting === 'desc'"></i>
+                                                </th>
+                                            </ng-container>
+                                        </ng-container>
+                                    </tr>
+        
+                                    <tr class="header-row p-treetable-thead-filter">
+                                        <ng-container *ngFor="let col of columns">
+                                            <ng-container *ngIf="col.field == 'checkbox' else alternateTemplate">
+                                                <th>
+                                                    <input (change)="onHeaderCheckboxChange($event)"
+                                                        [(ngModel)]="headerCheckboxData" [checked]="headerCheckboxData"
+                                                        class="checkBox" type="checkbox" [disabled]="loading">
+                                                </th>
+                                            </ng-container>
+                                            <ng-template #alternateTemplate>
+                                                <th class="child-header"
+                                                    [ngStyle]="{'width': col.width || 'auto', 'height': '40px'}">
+                                                    <input type="text" [(ngModel)]="col.valuesset" [disabled]="col.isenable"
+                                                pInputText size="8" *ngIf="col.type === 'text'"
+                                                (input)="filterOutSide($event, col)" style="width: auto" />
+        
+                                                    <input type="text" OnlyNumber [(ngModel)]="col.valuesset"
+                                                        [disabled]="col.isenable" pInputText size="8"
+                                                        *ngIf="col.type === 'numberFilter'" (input)="filterOutSide($event, col)"
+                                                        style="width: auto" />
+        
+                                                    <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender-grid"
+                                                        [disabled]="col.isenable" (ngModelChange)="filterOutSide($event, col)"
+                                                        *ngIf="col.type === 'dateFilter' && !col.isenable"
+                                                        [(ngModel)]="col.valuesset" placeholder="mm-dd-yyyy" appendTo="body"
+                                                        [showIcon]="true">
+                                                    </p-calendar>
+        
+                                                    <input type="text" *ngIf="col.type === 'dateFilter' && col.isenable"
+                                                        [(ngModel)]="col.valuesset" [disabled]="col.isenable" pInputText
+                                                        size="8" style="width: auto" />
+
+                                                    <button type="text" pButton icon="pi pi-filter-icon pi-filter icon-filter"
+                                                        (click)="openContextMenu($event,col )"></button>
+                                                </th>
+                                                </ng-template>
+                                            </ng-container>
+                                    </tr>
+                                </ng-template>
+        
+                                <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                                    <tr class="body-row">
+                                        <ng-container *ngFor="let col of columns;  let i = index">
+                                           
+                                            <ng-container >
+                                                <td [(selection)]="selectedNode"
+                                                    (contextmenu)="showContextMenu($event, contextMenu , rowData[col.field])"
+                                                    class="cell"
+                                                    [ngStyle]="{'width': col.width || 'auto', 'height': '40px', 'text-align': col.field === 'chargeDisplay' || col.field == 'DistributionAmountDistributedDisplay' ? 'right' : 'left'}">
+        
+                                                    <ng-container [ngSwitch]="col.field">
+                                                        <span *ngSwitchCase="'checkbox'">
+                                                            <p-treeTableCheckbox [value]="rowNode"
+                                                                (click)="selectChildCheckbox()">
+                                                            </p-treeTableCheckbox>
+                                                        </span>
+                                                        <span *ngSwitchCase="'BillingId'"> 
+                                                            <div *ngIf="rowData.AccrossInventory; else elseBlock">
+                                                                {{ rowData[col.field] }}
+                                                                <span>
+                                                                  <button class="btn btn-primary grid-cell-btn" style="padding: 2px 8px; font-size: 10px; position: relative; top: -1px; margin-left: 5px;">Added</button>
+                                                                </span>
+                                                            </div>
+                                                            <ng-template #elseBlock>
+                                                                <div>
+                                                                    {{ rowData[col.field] }}
+                                                                </div>
+                                                            </ng-template>
+                                                        </span>
+                                                       
+                                                        <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+                                                    </ng-container>
+        
+                                                </td>
+                                            </ng-container>
+                                        </ng-container>
+                                    
+                                </tr>
+
+                                <!-- <tr class="body-row"
+                                    *ngIf="(innerLoading && expandedNode?.data.VendorProductInventoryId === rowNode.node.data.VendorProductInventoryId && expandedNode?.data.InventoryId === rowNode.node.data.InventoryId) || (isApiAlerdayCall && lastNode?.data.VendorProductInventoryId === rowNode.node.data.VendorProductInventoryId && lastNode?.data.InventoryId === rowNode.node.data.InventoryId)">
+                                    <td class="cell">
+                                        <span class="spinner-border spinner-border-sm" role="status"></span>
+                                    </td>
+                                </tr> -->
+                            </ng-template>
+
+                            <ng-template pTemplate="emptymessage" let-columns>
+                                <tr>
+                                    <td class="cell" [attr.colspan]="columns.length">
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                            *ngIf="loading"></span>
+                                        <span *ngIf="!loading && totalRecords === 0">
+                                            No Record Found
+                                        </span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="footer">
+                                <td class="cell" *ngIf="innerLoading || isApiAlerdayCall">
+                                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                                </td>
+                            </ng-template>
+                        </p-treeTable>
+
+
+                        <div class="custome-side-buttons">
+                            <div class="custome-side-button" [ngClass]="{'active-border': sidebarVisible }">
+                                <!-- vericaltext -->
+                                <a class="custom-side-button-button ag-icon ag-icon-columns" (click)="openSidebar()">
+                                    <!-- <i class="fa fa-check"></i>  -->
+                                    Columns</a>
+                            </div>
+                        </div>
+
+                        <div class="sidebar" *ngIf="sidebarVisible">
+                            <div class="sidebar-content">
+                                <p-tree [value]="filesColumns" selectionMode="checkbox"
+                                    (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
+                                    [(selection)]="selectedFiles"> </p-tree>
+                            </div>
+                        </div>
+                        <p-contextMenu
+                            [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}"
+                            #contextMenu [model]="items"></p-contextMenu>
+
+                    </ng-container>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+            <p-dialog [(visible)]="displayModal" modal="true" [closable]="true" [draggable]="false" [resizable]="false"
+                [dismissableMask]="true" [header]="''" #treeTable
+                [style]="{'left': contextMenuPosition.x + 'px', 'top': contextMenuPosition.y + 'px' ,'position': 'fixed'}">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+
+                            <p-dropdown [(ngModel)]="selectedOption1" class="rounded-inputs20 select-select col-md-12"
+                                [options]="countries" optionValue="name" optionLabel="display" appendTo="body">
+                            </p-dropdown>
+
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                        <div class="col-md-12">
+                            <input type="text" [(ngModel)]="textboxValue1"
+                                placeholder="{{selectedOption1 === 'inrange' ? 'From' : 'Filter...'}}"
+                                (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                        <div class="col-md-12">
+                            <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="textboxValue1"
+                                placeholder="{{selectedOption1 === 'inrange' ? 'From' : 'Filter...'}}"
+                                (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                        <div class="col-md-12">
+                            <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                                (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1" placeholder="mm-dd-yyyy"
+                                appendTo="body" [showIcon]="true"></p-calendar>
+                        </div>
+                    </div>
+
+                    <div *ngIf="selectedOption1 == 'inrange'">
+                        <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                            <div class="col-md-12">
+                                <input type="text" [(ngModel)]="textboxValue1_1" placeholder="To"
+                                    (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                            <div class="col-md-12">
+                                <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="textboxValue1_1" placeholder="To"
+                                    (input)="onFilterChangedFirst($event)" pInputText size="8" style="width: auto" />
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                            <div class="col-md-12">
+                                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender"
+                                    (ngModelChange)="onFilterChangedFirst($event)" [(ngModel)]="textboxValue1_1"
+                                    placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row my-1" *ngIf="displayModal1">
+                        <div class="col-md-12 d-flex justify-content-center condition-label">
+                            <label *ngFor="let radiobutton of radioItems">
+                                <input type="radio" name="options" (click)="model.option = radiobutton"
+                                    [checked]="radiobutton === model.option" />{{ radiobutton }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="displayModal1">
+                        <div class="col-md-12 mb-2">
+
+                            <p-dropdown [(ngModel)]="selectedOption2" class="rounded-inputs20 select-select col-md-12"
+                                [options]="countries" optionValue="name" optionLabel="display" appendTo="body">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'text' ">
+                        <div class="col-md-12">
+                            <input placeholder="{{selectedOption2 === 'inrange' ? 'From' : 'Filter...'}}" type="text"
+                                [(ngModel)]="textboxValue2" pInputText size="8" style="width: auto" />
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'numberFilter' ">
+                        <div class="col-md-12">
+                            <input placeholder="{{selectedOption2 === 'inrange' ? 'From' : 'Filter...'}}" type="text" OnlyNumber [allowNegative]="true"
+                                [(ngModel)]="textboxValue2" pInputText size="8" style="width: auto" />
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="displayModal1 && fieldsName?.type === 'dateFilter' ">
+                        <div class="col-md-12">
+                            <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2"
+                            placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true"></p-calendar>
+                        </div>
+                    </div>
+
+                    <div *ngIf="displayModal1 && selectedOption2 == 'inrange'">
+                        <div class="row" *ngIf="fieldsName?.type === 'text' ">
+                            <div class="col-md-12">
+                                <input type="text" [(ngModel)]="textboxValue2_1" placeholder="To" pInputText size="8"
+                                    style="width: auto" />
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="fieldsName?.type === 'numberFilter' ">
+                            <div class="col-md-12">
+                                <input type="text" OnlyNumber [allowNegative]="true" [(ngModel)]="textboxValue2_1" placeholder="To" pInputText size="8"
+                                    style="width: auto" />
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="fieldsName?.type === 'dateFilter' ">
+                            <div class="col-md-12">
+                                <p-calendar dateFormat="mm-dd-yy" class="p-treeTable-calender" [(ngModel)]="textboxValue2_1" placeholder="mm-dd-yyyy" appendTo="body" [showIcon]="true">
+                                </p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-md-12">
+                            <button type="text" class="btn btn-primary btn-sm" pButton (click)="onFilterChangedValue()">
+                                Apply
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </p-dialog>
+        </div>
+    </div>
+</div>

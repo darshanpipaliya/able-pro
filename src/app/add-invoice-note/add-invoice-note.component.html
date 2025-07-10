@@ -1,0 +1,171 @@
+<div class="mat-dialog-header pb-2">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Add Invoice Note</h5>
+    </div>
+
+    <button type="button" class="close" mat-dialog-close (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div mat-dialog-content>
+
+    <div class="card-body p-0">
+        <div class="container px-0">
+            <form class="editForm" [formGroup]="invoiceNotesForm">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-12 text-right">
+                        <span class="text-c-red">*Required field</span>
+                      </div>
+                    <div class="col-md-12 col-sm-12 col-xl-12 px-0">
+                        <div class="form-group" style="margin-bottom: 20px !important;">
+                            <label class="form-label">Note *</label>
+                            <textarea class="form-control textarea-full-section" formControlName="Note" rows="4"
+                                maxlength="1000" spaceTrimStartEndInput [allowStartWithSpace]="false"
+                                [ngClass]="{'invalid-error': f['Note'].invalid && (f['Note'].touched || isSubmit)}"></textarea>
+                            <span class="textarea-error-span pl-0" style="position: relative;">
+                                <mat-error style="font-size: 12px; position: absolute;" class="textarea-error-disc"
+                                    *ngIf="f['Note'].errors?.['required'] && (f['Note'].touched || isSubmit) ">
+                                    Note is required</mat-error>
+                                <span style="text-align: end;color: gray;">{{f['Note'].value.length ?
+                                    f['Note'].value.length : 0 }}/1000</span>
+                            </span>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0 !important;">
+                            <label class="form-label">Note Type</label>
+                            <mat-radio-group formControlName="PrivateNote">
+                                <mat-radio-button [value]="false">Public
+                                </mat-radio-button>
+                                <mat-radio-button *ngIf="hasSsuperTemUsers" [value]="true" class="m-l-10">Private
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <div class="form-group d-flex">
+                            <label class="form-label">Ticket</label>
+                            <span class="d-flex px-0"><i class="fas fa-ticket-alt mr-2"
+                                    style="font-size: 25px; color: #4680ff;"></i><input type="text"
+                                    formControlName="TicketNumber" maxlength="100" class="form-control"></span>
+                        </div>
+
+                        <div class="form-group d-flex" style="margin-bottom: 0 !important;">
+                            <label class="form-label">Tags</label>
+                            <div class="tags-list">
+                                <ng-container *ngFor="let option of tagList; let i=index;">
+                                    <div class="form-group form-check" formArrayName="Tags">
+                                        <input type="checkbox" [checked]="option.checked" [disabled]="isTEMUser"
+                                            class="form-check-input example-margin" value="{{option.value}}"
+                                            (change)="onUpdateTagsArray(option, $event.target.checked , 'Tags')">
+                                        <label class="form-check-label float-right"
+                                            for="exampleCheck1">{{option.label}}</label>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="text-center my-3">
+                <button mat-button class="btn btn-primary mat-spinner-btn" style="color: #fff;"
+                    [disabled]="saveButtonDisabled || saveButtonDisabledOther" (click)="saveNotes()">
+                    <span class="spinner-border spinner-border-sm" role="status"
+                        *ngIf="saveButtonDisabled"></span>Save</button>
+
+                <button mat-button class="btn btn-primary mat-spinner-btn ml-2" (click)="saveAndAddOther()" style="color: #fff;"
+                    [disabled]="saveButtonDisabled || saveButtonDisabledOther">
+                    <span class="spinner-border spinner-border-sm" role="status" *ngIf="saveButtonDisabledOther"></span>
+                    Save & Add Another</button>
+            </div>
+
+            <div class="row">
+                <div class="col-12 px-0">
+                    <mat-accordion class="example-headers-align add-invoice-note-accordion">
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title class="matt">
+                                    <i class="fas fa-file-invoice-dollar"></i>&nbsp;Invoice Overview
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row m-t-20">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Customer</label>
+                                        <h6>
+                                            {{invoiceOvervewData?.CustomerAccountName}}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Invoice Date</label>
+                                        <h6>
+                                            {{invoiceOvervewData?.InvoiceBillDate}}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Vendor</label>
+                                        <h6>
+                                            {{invoiceOvervewData?.VendorAccountName}}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Pay By Date</label>
+                                        <h6>
+                                            {{invoiceOvervewData?.InvoicePayByDate}}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Invoice Status</label>
+                                        <h6>
+                                            {{invoiceOvervewData?.InvoiceStatusDisplayText}}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Invoice Start Date</label>
+                                        <h6>
+                                            {{invoiceOvervewData?.InvoiceStartDate}}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Payable Account</label>
+                                        <h6>
+                                            {{invoiceOvervewData?.PayableAccountNumber}}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">AP Responsible</label>
+                                        <h6>
+                                            {{invoiceOvervewData?.APResponsible}}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Invoice Number</label>
+                                        <h6>
+                                            {{invoiceOvervewData?.InvoiceNumber}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

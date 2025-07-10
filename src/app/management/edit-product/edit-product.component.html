@@ -1,0 +1,273 @@
+<div class="row">
+    <!-- <div class="col-sm-12 col-xl-12 text-right">
+    <span class="text-c-red">*Required field</span>
+</div> -->
+    <!-- <div class="row col-sm-12 col-xl-12"> -->
+    <div class="col-sm-12 col-xl-12 px-0 card-bottom-none" id="FixedDiv">
+        <app-card cardTitle="" >
+            <form class="editForm" [formGroup]="editProductForm" (ngSubmit)="updateProduct()">
+                <div class="col-sm-12 col-xl-12 text-right rfield">
+                    <span class="text-c-red">*Required field</span>
+                </div>
+                <div class="col-sm-12 col-xl-12 px-0">
+                    <mat-accordion class="example-headers-align">
+                        <div class="row">
+                            <mat-expansion-panel style="width: 100%;" [expanded]="true">
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title class="matt">
+                                        <i class="ficon fas fa-box-open"></i>&nbsp;Product
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Industry *</label>
+                                            <span><p-dropdown [options]="industries" optionLabel="Name" [filter]="true"
+                                                    filterBy="Name" [showClear]="true" placeholder="Select Industry..."
+                                                    formControlName="industryId" appendTo="body" optionValue="Id"
+                                                    [showClear]="false"
+                                                    [ngClass]="{'invalid-error': !f.industryId.valid && (f.industryId.dirty || f.industryId.touched || isProductFormSubmit)}">
+                                                </p-dropdown></span>
+
+                                            <ng-container
+                                                *ngIf="f.industryId.invalid && (f.industryId.touched || isProductFormSubmit)">
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="f.industryId.errors.required">
+                                                    Industry is required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label class="form-label">Status *</label>
+                                            <span> <p-dropdown [options]="statusList" optionLabel="Name"
+                                                    [filter]="false" filterBy="Name" [showClear]="true"
+                                                    placeholder="Select Status..." formControlName="active"
+                                                    appendTo="body" optionValue="Id" [showClear]="false"
+                                                    [ngClass]="{'invalid-error': f.active.invalid && (f.active.touched || isProductFormSubmit)}">
+                                                </p-dropdown></span>
+                                            <ng-container
+                                                *ngIf="f.active.invalid && (f.active.touched || isProductFormSubmit)">
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="f.active.errors.required">Status
+                                                    is
+                                                    required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Service *</label>
+
+                                            <span><p-dropdown [options]="services" optionLabel="Name" [filter]="true"
+                                                    filterBy="Name" [showClear]="true" placeholder="Select Service..."
+                                                    formControlName="serviceId" appendTo="body" optionValue="Id"
+                                                    [showClear]="false"
+                                                    [ngClass]="{'invalid-error': !f.serviceId.valid && (f.serviceId.dirty || f.serviceId.touched || isProductFormSubmit)}">
+                                                </p-dropdown></span>
+
+                                            <ng-container
+                                                *ngIf="f.serviceId.invalid && (f.serviceId.touched || isProductFormSubmit)">
+                                                <mat-error style="font-size: 12px;" *ngIf="f.serviceId.errors.required">
+                                                    Service is required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Service Type *</label>
+                                            <span><p-dropdown [options]="serviceTypes" optionLabel="Name"
+                                                    [filter]="true" filterBy="Name" [showClear]="true"
+                                                    placeholder="Select Service Type..." formControlName="serviceTypeId"
+                                                    appendTo="body" optionValue="Id" [showClear]="false"
+                                                    [ngClass]="{'invalid-error': !f.serviceTypeId.valid && (f.serviceTypeId.dirty || f.industryId.touched || isProductFormSubmit)}">
+                                                </p-dropdown></span>
+
+                                            <ng-container
+                                                *ngIf="f.serviceTypeId.invalid && (f.serviceTypeId.touched || isProductFormSubmit)">
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="f.serviceTypeId.errors.required">
+                                                    Service Type is required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Product *</label>
+                                            <span><p-dropdown [options]="products" optionLabel="Name" [filter]="true"
+                                                    filterBy="Name" [showClear]="true" placeholder="Select Product..."
+                                                    formControlName="productId" appendTo="body" optionValue="Id"
+                                                    [showClear]="false"
+                                                    [ngClass]="{'invalid-error': !f.productId.valid && (f.productId.dirty || f.industryId.touched || isProductFormSubmit)}">
+                                                </p-dropdown></span>
+
+                                            <ng-container
+                                                *ngIf="f.productId.invalid && (f.productId.touched || isProductFormSubmit)">
+                                                <mat-error style="font-size: 12px;" *ngIf="f.productId.errors.required">
+                                                    Product is required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Product Type *</label>
+                                            <span><p-dropdown [options]="productTypes" optionLabel="Name"
+                                                    [disabled]="true" [filter]="true" filterBy="Name" [showClear]="true"
+                                                    placeholder="Select Product Type..." formControlName="productTypeId"
+                                                    appendTo="body" optionValue="Id" [showClear]="false"
+                                                    [ngClass]="{'invalid-error': !f.productTypeId.valid && (f.productTypeId.dirty || f.industryId.touched || isProductFormSubmit)}">
+                                                </p-dropdown></span>
+
+                                            <ng-container
+                                                *ngIf="f.productTypeId.invalid && (f.productTypeId.touched || isProductFormSubmit)">
+                                                <mat-error style="font-size: 12px;"
+                                                    *ngIf="f.productTypeId.errors.required">
+                                                    Product Type is required
+                                                </mat-error>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="w-100">
+                                        <div class="form-group" style="margin-bottom: 0 !important;">
+                                            <label class="form-label mr-3">Default Reconciliation Option *</label>
+                                            <mat-radio-group formControlName="reconAssigmentId">
+                                                <mat-radio-button [ngClass]="{'m-l-10': i !== 0}" class=""
+                                                    *ngFor="let item of reconList; let i = index"
+                                                    [value]="item.Assignment">{{item.Assignment}}
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+                                            
+                                        </div>
+                                        <mat-error style="font-size: 12px;"
+                                                *ngIf="f.reconAssigmentId.errors?.required && (f.reconAssigmentId.touched || isProductFormSubmit) ">
+                                                Default Reconciliation Option is required</mat-error>
+                                    </div>
+                                    <!-- <div class="col-md-12 mb-2 pl-0">
+                                        <div class="form-check pl-0 d-flex">
+                                            <label class="form-check-label pr-1 same-location-lable" for="defaultCheck2"
+                                                style="font-weight: 500;">
+                                                Keep for Production :
+                                            </label>
+                                            <input class="form-check-inner" type="checkbox" id="defaultCheck2"
+                                                formControlName="keepForProduction">
+                                        </div>
+                                    </div> -->
+
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                    </mat-accordion>
+                </div>
+                <div class="mb-3 text-center">
+                    <button type="submit" uiSref="work" [disabled]="(!this.isSuperTEMAdmin) || saveButtonLoadder"
+                        class="btn btn-primary btn-raised b-t-m">
+                        <span class="spinner-border spinner-border-sm mr-1" role="status"
+                            *ngIf="saveButtonLoadder"></span>
+                        Save</button>
+                </div>
+                <mat-accordion class="example-headers-align product-log user-activity-log" multi>
+                    <div class="row">
+                        <mat-expansion-panel style="width: 100%;" [expanded]="true" class="padding-none">
+                            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh" (click)="getProductById()"></button>
+                            <mat-expansion-panel-header class="math">
+                                <mat-panel-title style="margin-left: 50%; margin-right: 0px !important;">
+                                    <i class="ficon fas fas fa-history"></i>&nbsp;History
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="product-log-table">
+                                <div class="" [ngClass]="activityDataSource.length > 0 ? 'tbData': ''">
+                                    <ng-container *ngIf="activityDataSource.length > 0">
+                                        <table mat-table [dataSource]="activityDataSource">
+                                            <ng-container matColumnDef="Protyp">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Product Type </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ProductTypeName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Pro">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Products </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ProductName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="ServiceTyp">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Service Type </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ServiceTypeName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="Service">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Service </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ServiceName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="ind">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Industry </th>
+                                                <td mat-cell *matCellDef="let element">{{element.IndustryName}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="status">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Status </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{element.ProductStructureStatus}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="crtby">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Created By </th>
+                                                <td mat-cell *matCellDef="let element">{{element.CreatedByUser.FirstName
+                                                    +'
+                                                    '+element.CreatedByUser.LastName}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="crtdt">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Created Date </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{convertToDateTime(element.CreationDate)}} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="modfby">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700">Modified By </th>
+                                                <td mat-cell *matCellDef="let element">{{element.ModifiedByUser &&
+                                                    element.ModifiedByUser.FirstName ? element.ModifiedByUser.FirstName
+                                                    :
+                                                    ''}} {{element.ModifiedByUser && element.ModifiedByUser.LastName ?
+                                                    element.ModifiedByUser.LastName : '' }} </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="moddt">
+                                                <th mat-header-cell *matHeaderCellDef class="fw-700"> Modified Date
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{convertToDateTime(element.ModificationDate)}} </td>
+                                            </ng-container>
+
+                                            <!---- <ng-container matColumnDef="Action">
+                                                <th mat-header-cell *matHeaderCellDef> Action</th>
+                                                <td mat-cell *matCellDef="let element"> {{element.Action}} </td>
+                                            </ng-container>-->
+
+
+
+                                            <tr mat-header-row
+                                                *matHeaderRowDef="activityDisplayedColumns; sticky: true">
+                                            </tr>
+                                            <tr mat-row *matRowDef="let row; columns: activityDisplayedColumns;"
+                                                (click)="openModel('Associations')"></tr>
+                                        </table>
+                                    </ng-container>
+                                    <ng-container *ngIf="!activityDataSource.length">
+                                        <div class="text-center">No Record found</div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-accordion>
+            </form>
+        </app-card>
+    </div>
+    <!-- </div> -->
+    <!-- <div class="row mrg col-lg-12 col-xl-12"> -->
+    <!-- <div class="col-lg-12 col-xl-12">
+    <app-card cardTitle="User Activity Log" [options]="false" [hidHeader]="true">
+
+
+
+    </app-card>
+</div> -->
+    <!-- </div> -->
+</div>

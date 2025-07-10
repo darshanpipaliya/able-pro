@@ -1,0 +1,179 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12 px-0">
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row header-btn-responsive">
+                    <ng-container *ngFor="let option of buttonOptions">
+                        <button ngDefaultControl class="bbtn  btn btn-outline-primary" type="button"
+                            [ngClass]="(option.value === 'users') ? 'btn btn-primary active round bg' : 'btn round'"
+                            [value]="option.value" [(ngModel)]="selectedButton"
+                            (click)="goToPage(option.value);selected=0;">
+                            <ng-container *ngIf="option.value === 'tem'"><i class="fas fa-gopuram"> </i>
+                            </ng-container>
+                            <ng-container *ngIf="option.value === 'users'"><i class="fas fa-users"> </i></ng-container>
+                            {{option.label}}
+                        </button>
+                    </ng-container>
+                </div>
+
+                <div class="row btn-group-list1" *ngIf="currentOpenEditPagevar == 'Table'">
+                    <button [ngClass]="{'disabled': isDisabledExport || rowData.length < 1}" title="Export"
+                        type="button" class=" btn btn-icon btn-outline-success m-r-8" [disabled]="rowData.length < 1"
+                        (click)="!isDisabledExport ? onBtnExportDataAsExcel() : ''">
+                        <i class="{{isDisabledExport ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                    </button>
+
+                    <button title="Add User" type="button" *ngIf="viewNEditAccount"
+                        class="btn btn-icon btn-outline-primary" (click)="addUsers()"> <i
+                            class="fas fa-plus"></i></button>
+                </div>
+
+                <div class="row btn-group-list1 edit-user-btn-group" *ngIf="currentOpenEditPagevar == 'Edit'">
+
+                    <button type="button" class="btn btn-icon btn-outline-danger m-r-8" [disabled]="isTemUser"
+                        [placement]="'left'" popoverClass="user-table-tooltip custom-tooltip right-btn-position"
+                        [popoverTitle]="'Select an Action'" [ngbPopover]="htmlContent" title="Forgot/Set New Password">
+                        <i class="fas fa-user-lock"></i></button>
+                    <ng-template #htmlContent>
+                        <div class="text-left ">
+                            <div>
+                                <ul style="padding-left: 15px;">
+                                    <span class="inner-option" (click)="forgotPassword()"> <a> <i
+                                                class="fas fa-angle-right"></i>
+                                            Reset Password</a> </span><br>
+                                    <span class="inner-option" (click)="setNewPassword()"> <a> <i
+                                                class="fas fa-angle-right"></i>
+                                            Set New Password</a>
+                                    </span>
+                                </ul>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <button title="Unlock User" (click)="unlockUser()"
+                        [disabled]="isTemUser || userDataTable.UserAccount === 'Unlocked'"
+                        class="btn btn-icon btn-outline-info has-ripple">
+                        <i class="fas fa-unlock-alt"></i>
+                    </button>
+                    <button title="Lock Account" type="button" (click)="lockUser()"
+                        [disabled]="isTemUser || userDataTable.UserAccount === 'Locked'"
+                        class="btn btn-icon btn-outline-info has-ripple">
+                        <i class="fas fa-lock"></i>
+                    </button>
+
+
+                    <button title="Resend Verification email" (click)="sendEmailVerification()"
+                        [disabled]="userDataTable.EmailVerification === 'Verified' || isTemUser ? true : false"
+                        type="button"
+                        [ngClass]="userDataTable.EmailVerification === 'Verified' || isTemUser? 'btn btn-icon btn-outline-success' : 'btn btn-icon btn-outline-success'"
+                        style="left: 110px;"> <i class="fas fa-envelope"></i></button>
+
+                    <!-- <button title="Add New User" (click)="addUsers()" type="button"
+                        class="btn btn-icon btn-outline-primary " style="left: 166px;">
+                        <i class="fas fa-plus"></i>
+                    </button> -->
+
+                    <!-- <button title="Assume Identity" [disabled]="isTemUser" type="button"  style="left: 166px;"
+                        class="btn btn-icon btn-outline-secondary mr-0" (click)="assumeIdentity(userDataTable.Email)">
+                        <i class="fas fa-user-secret"></i></button> -->
+                </div>
+
+                <div class="table-responsive">
+                    <mat-tab-group [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)"
+                        [ngClass]="{'mat-tab-header-add' : currentOpenEditPagevar === 'Add', 'mat-tab-header-edit' : currentOpenEditPagevar === 'Edit'}"
+                        id="tem-user-table-tab">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <b>
+                                    <i class="fas fa-users" style="color: #4680ff;"> </i>
+                                    Users</b>
+                            </ng-template>
+                            <ng-container>
+
+                            </ng-container>
+                            <div class="col-sm-12 px-0">
+                                <div class="mt-2">
+                                    <mat-accordion class="example-headers-align accordion-grid ">
+                                        <mat-expansion-panel style="width: 100%;" [expanded]="true" [disabled]="true">
+                                            <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                                                (click)="onAgGridReady(this.gridApi.api ? this.gridApi.api : this.gridApi)"></button>
+                                            <mat-expansion-panel-header class="math">
+                                                <mat-panel-title class="matt font-weight-bold">
+                                                    <i class="fas fa-users" style="color: #4680ff;"></i>&nbsp;Users
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <app-ag-grid-table [columnDefs]="columnDefs" [rowData]="rowData"
+                                                [gridOptions]="gridOptions" [rowSelection]="rowSelection"
+                                                [sheetName]="'TEM Users'"
+                                                [exportFilename]="'TEM Users.xlsx'" [defaultColDef]="defaultColDef"
+                                                [sideBar]="sideBar" [singleClickEdit]="true"
+                                                (onCellClickedEvent)="onCellClicked($event)"
+                                                (onAgGridReady)="onAgGridReady($event)"
+                                                (onCellDoubleClickedEvent)="onCellDoubleClicked($event)"
+                                                (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                                (onCellEditingStoppedEvent)="onCellEditingStoppedEventForCL($event.data)">
+                                            </app-ag-grid-table>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                                            <div class="text-right mt-2 mr-3">
+                                            <span>
+                                                {{girdDataCount}} {{girdDataCount > 1 ? 'records' : 'record'}}
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+
+                        <ng-container *ngFor="let userData of editUsersArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-edit" style="color: #4680ff;"></i>&nbsp;
+                                    {{userData.FirstName}}
+                                    {{userData.LastName}}&nbsp;<mat-icon (click)="removeTab(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-edit-tem-user [userData]="userData"
+                                        (onUnlockButtonClick)="onUnlockButtonClick($event)"
+                                        [lockUserInput]="lockUserInput"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)" [isTemUser]="isTemUser"
+                                        (onUserEditEvent)="onUserEditEvent($event, i)"
+                                        (onAddButton)="onAddButton($event)"></app-edit-tem-user>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let user of addUsersArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-user-plus" style="color: #4680ff;"></i>&nbsp;Add User&nbsp;
+                                    <mat-icon (click)="removeUser(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-add-tem-user (onUserAddEvent)="onUserAddEvent($event)"
+                                        (onComponetDestroy)="onComponetDestroy($event, i)" [userData]="user.addData"
+                                        (currentOpenEditPage)="currentOpenEditPage($event)"></app-add-tem-user>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                        <ng-container *ngFor="let upload of uploadUsersArray;let i = index">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <i class="fas fa-cloud-upload-alt" style="color: #4680ff;"> </i>&nbsp;
+                                    Upload&nbsp;
+                                    <mat-icon (click)="removeUploadPage(i)">cancel</mat-icon>
+                                </ng-template>
+                                <ng-template matTabContent>
+                                    <app-files-upload></app-files-upload>
+                                </ng-template>
+                            </mat-tab>
+                        </ng-container>
+                    </mat-tab-group>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

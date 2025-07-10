@@ -65,6 +65,10 @@ export class LinkLocationDialogComponent implements OnInit {
       storeType: 'partial',
       cacheBlockSize: 100
     },
+    rowSelection: {
+      type: 'multiple',
+      enableClickSelection: true
+    },
     headerHeight: 35,
     groupHeaderHeight: 37,
     floatingFiltersHeight: 35
@@ -665,8 +669,11 @@ export class LinkLocationDialogComponent implements OnInit {
           );
       },
     };
-    // this.gridApi.setServerSideDatasource(dataSource);
-    this.gridApi.api!.setGridOption("serverSideDatasource", dataSource);
+    if(this.gridApi.api){
+      this.gridApi.api!.setGridOption("serverSideDatasource", dataSource);
+    } else {
+      this.gridApi!.setGridOption("serverSideDatasource", dataSource);
+    }
   }
 
   saveLocationPrimary() {

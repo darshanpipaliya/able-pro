@@ -1,0 +1,495 @@
+<div class="summary-total-main">
+    <div class="banner">
+        <div *ngIf="openPage !== 'sandbox-grid'">
+            <app-invoice-overview [refreshDatas]="reloadOverview" [sandBoxGridRowData]="sandBoxGridRowData" [openPage]="openPage"
+                (invoiceOverviewDataOutput)="invoiceOverviewDataOutput($event)">
+
+            </app-invoice-overview>
+        </div>
+
+        <!-- Sandbox Grid -->
+        <div *ngIf="openPage === 'sandbox-grid'" class="validate-summary-total-main" style="margin-top: -10px;">
+
+            <div class="row mx-0">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 px-0">
+                    <div class="sandbox-step-grid">
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="true" [disabled]="true">
+                              
+                                <!-- <button type="button" class="fas fa-check c-refresh-speed" title="Refresh"
+                                    (click)="toggle()"></button> -->
+                                    <div class="row btn-group-list">
+                                        <button title="Export" type="button" class="btn btn-icon btn-outline-success custome-export" [disabled]="isDisableSandbox || rowData?.length == 0"
+                                                 (click)="exportData()"><i class="fas fa-file-excel f-14"></i></button>
+    
+                                        <button type="button" class="fas fa-check c-refresh" title="Refresh"
+                                                (click)="toggle()"></button>
+    
+                                        <div class="toggle-btn">
+                                            <mat-slide-toggle (change)="toggleSwitch(event)" ngDefaultControl [(ngModel)]="isFilterData">{{isFilterData ? 'All' :
+                                            'Open'}}</mat-slide-toggle>
+                                        </div>
+                                    </div>
+                                   
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title class="matt">
+                                        <img src="assets/images/sandbox-icon/sand-box-main-step-icon.svg"
+                                            alt="Sandbox icon">&nbsp;Accounts for Processing
+                                    </mat-panel-title>
+                                    <i class="fas fa-info-circle" [placement]="'bottom'" tooltipClass="tooltip-bg"
+                                        [ngbTooltip]="htmlContentSandboxGrid" (click)="SandboxGridTooltip()"></i>
+                                </mat-expansion-panel-header>
+                               
+                                <div class="row">
+                                    <div class="col-md-12 px-0">
+                                        <ng-container style="height: max-content;">
+                                            <app-ag-grid-table [columnDefs]="columnDefs2" [rowData]="sandBoxGridData"
+                                                [gridOptions]="gridOptions" [rowSelection]="'single'"
+                                                [sheetName]="'SandBox'" [sideBar]="sideBar"
+                                                (onCellDoubleClickedEvent)="openPopup($event)" [excelBtnEnable]="true"
+                                                [defaultColDef]="defaultColDef"
+                                                [frameworkComponents]="frameworkComponents"
+                                                [suppressRowClickSelection]="true" [singleClickEdit]="true"
+                                                (onAgGridReady)="onAgGridReady($event)"
+                                                (onAgGridReadyEmit)="onAgGridReadyEmit($event)"
+                                                (filterChanged)="onFilterChanged($event)"
+                                                (onCellValueChangedEvent)="onCellValueChangedEvent($event)">
+                                            </app-ag-grid-table>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-right mt-2 mr-3">
+                                    <span>
+                                        {{invoiceDataCount > 0 ? invoiceDataCount : 0}} records
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Validate Summary Step 1 -->
+        <div *ngIf="openPage === 'vststep1'" class="validate-summary-total-main">
+            <app-summary-total [recordPublishedOrCompleted]="recordPublishedOrCompleted" (callOverview)="reloadOverviewData($event)"
+                [sandBoxGridRowData]="sandBoxGridRowData" (step1Done)="step1DoneFn($event)"
+                (overviewDataOP)="invoiceOverviewDataOutput($event)" (clickOnSaved)="clickOnSavedfn($event)"
+                [overviewData]="overviewData">
+
+            </app-summary-total>
+        </div>
+
+        <!-- VBA Step 2 -->
+        <div *ngIf="openPage === 'vbastep2' && overviewData" class="validate-summary-total-main">
+            <app-charge-detail [recordPublishedOrCompleted]="recordPublishedOrCompleted"
+                [sandBoxGridRowData]="sandBoxGridRowData" (step2Done)="step2DoneFn($event)"
+                (overviewDataOP)="invoiceOverviewDataOutput($event)" (clickOnSaved)="clickOnSavedfn($event)"
+                [overviewData]="overviewData">
+
+            </app-charge-detail>
+        </div>
+    </div>
+</div>
+
+<ng-template #popup1>
+    <div class="dialog-box">
+        <div class="mat-dialog-header">
+            <div>
+                <h5 *ngIf="selectedRowData.SandboxStatusDisplayText === 'No Charges'" class="modal-title"
+                    id="exampleModalLabel">No Current Charges</h5>
+                <h5 *ngIf="selectedRowData.SandboxStatusDisplayText === 'Disconnected Account'" class="modal-title"
+                    id="exampleModalLabel">Disconnected Account</h5>
+                <h5 *ngIf="selectedRowData.SandboxStatusDisplayText === 'Do Not Process'" class="modal-title"
+                    id="exampleModalLabel">Do Not Process</h5>
+            </div>
+
+            <div class="icon-close-btn">
+                <i class="fas fa-info-circle" (click)="openPopupSub()" tooltipClass="tooltip-bg"></i>
+                <ng-template #nccText>
+                    <div class="mat-dialog-header">
+                        <button type="button" class="close" mat-dialog-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="text-left dialog-data"
+                        *ngIf="selectedRowData.SandboxStatusDisplayText === 'No Charges'">
+                        <div>
+                            The system will <strong>mark an invoice as 'No Charges'</strong> when there are <strong>no
+                                current charges</strong>, and the <strong>balance forward is $0 or negative</strong>,
+                            but there is still <strong>inventory on the account</strong> with an <strong>Active or
+                                Pending Disconnection</strong> status.
+                        </div>
+
+                        <div class="mt-2">
+                            <p>To resolve this, <strong>all inventory on the account must be updated to
+                                    'Disconnected'</strong> status. Once this is done, the record can be
+                                <strong>transitioned to 'Disconnected Account'</strong> status and then moved to
+                                <strong>'Do Not Process'</strong> status.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-left dialog-data"
+                        *ngIf="selectedRowData.SandboxStatusDisplayText === 'Disconnected Account' || selectedRowData.SandboxStatusDisplayText === 'Do Not Process'">
+                        <!-- <div>
+                            There are no current charges, the balance forward is $0 or negative, and there is no active
+                            inventory associated with the account.
+                        </div>
+
+                        <div class="mt-2">
+                            The payable account number has been marked as Disconnected.
+                        </div>
+
+                        <div class="mt-0">
+                            Add a note to the account which will be added to this invoice record and the account record.
+                            If necessary, this will also update the account status to Disconnected and clear any open
+                            retrieval records.
+                        </div> -->
+
+                        <p class="mb-2"><strong>‘Account
+                                Disconnected’</strong> status indicates one of two scenarios:</p>
+                        <ul class="mb-0">
+                            <li>
+                                <p class="mb-2">There are <strong>no current
+                                        charges</strong>, the <strong>balance forward is $0 or
+                                        negative</strong>, and there is <strong>no active
+                                        inventory</strong> associated with the account</p>
+                            </li>
+                            <li>
+                                <p class="mb-2">The <strong>payable account
+                                        number</strong> has been <strong>marked as
+                                        ‘Disconnected</strong>’</p>
+                            </li>
+                        </ul>
+                        <p class="mb-0"><strong>Add a note to the
+                                account</strong>, which will be <strong>added to both the
+                                invoice record and the account record</strong>. If necessary, this will also
+                            <strong>update the account status to ‘Disconnected’</strong> and
+                            <strong>clear any open retrieval records</strong>.
+                        </p>
+                    </div>
+                </ng-template>
+
+                <button type="button" class="close" mat-dialog-close>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+
+        <div mat-dialog-content class="no-current-charges">
+            <div class="row dialog-box-body">
+                <div class="col-12">
+                    <div class="attention-box" *ngIf="selectedRowData.SandboxStatusDisplayText === 'No Charges'">
+                        <div class="attention-title">
+                            <h2>Attention!</h2>
+                        </div>
+                        <div class="attention-disc">
+                            <p>This account has active or pending disconnection inventory but has no charges. Please
+                                ensure the inventory is disconnected and then ensure this record is updated to
+                                Disconnected Account and Not Processing.<button title="View Data File" type="button"
+                                    class="btn p-0 ml-1" style="line-height: 0;">
+                                    <img (click)="downloadFile()" src="assets/images/sb-view-data-file-icon.svg"
+                                        alt="View Data File Icon" style="width: 15px;">
+                                </button>
+                                <button [disabled]="!selectedRowData.IsExpectedInvoicePDFAvailable" title="View Invoice"
+                                    (click)="downloadAttachment()" type="button" class="btn p-0 ml-1"
+                                    style="line-height: 0;">
+                                    <img src="assets/images/sb-view-invoice-icon.svg" alt="View Invoice Icon"
+                                        style="width: 15px;">
+
+                                </button>
+                                <button (click)="onBtnExportDataAsExcel()" title="View SB Table Data" type="button"
+                                    class="btn p-0 ml-1" style="line-height: 0;">
+                                    <img src="assets/images/fa-file-chart-column.svg" alt="View SB Table Data Icon"
+                                        style="width: 15px;">
+                                </button><a (click)="openInventory()" class="ml-3">Open
+                                    Inventory</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="dic-a-box"
+                        *ngIf="selectedRowData.SandboxStatusDisplayText === 'Disconnected Account' || selectedRowData.SandboxStatusDisplayText === 'Do Not Process'">
+                        <!-- -->
+                        <form [formGroup]="popupForm" class="editForm" novalidate>
+                            <div class="col-sm-12 col-xl-12 px-0 text-right">
+                                <span class="text-c-red"><i>*Required field</i></span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xl-12 px-0 d-flex justify-content-between mt-1">
+                                <div class="form-group d-flex" style="margin-bottom: 5px !important;">
+                                    <label class="form-label mr-3">Ticket *</label>
+                                    <span class="d-flex px-0">
+                                        <i class="fas fa-ticket-alt" style="font-size: 25px; color: #4680ff;"></i>
+                                        <input formControlName="ticket" type="text" maxlength="100"
+                                            [ngClass]="{'disabled': selectedRowData.SandboxStatusDisplayText === 'Do Not Process'}"
+                                            class="form-control"></span>
+
+                                </div>
+
+                                <div class="d-flex">
+                                    <label class="form-label mr-2 d-flex" style="font-weight: 500;">Attachments</label>
+                                    <div><button (click)="downloadFile()" title="View Data File" type="button"
+                                            class="btn p-0 ml-1" style="line-height: 0;">
+                                            <img src="assets/images/sb-view-data-file-icon.svg"
+                                                alt="View Data File Icon" style="width: 15px;">
+                                        </button>
+                                        <button [disabled]="!selectedRowData.IsExpectedInvoicePDFAvailable"
+                                            (click)="downloadAttachment()" title="View Invoice" type="button"
+                                            class="btn p-0 ml-1" style="line-height: 0;">
+                                            <img src="assets/images/sb-view-invoice-icon.svg" alt="View Invoice Icon"
+                                                style="width: 15px;">
+
+                                        </button>
+                                        <button (click)="onBtnExportDataAsExcel()" title="View SB Table Data"
+                                            type="button" class="btn p-0 ml-1" style="line-height: 0;">
+                                            <img src="assets/images/fa-file-chart-column.svg"
+                                                alt="View SB Table Data Icon" style="width: 15px;">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="f.ticket.invalid && (f.ticket.touched || isCompanyFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.ticket.errors.required">Ticket is
+                                    required
+                                </mat-error>
+                            </ng-container>
+                            <div class="form-group" style="margin-bottom: 0 !important;">
+                                <label class="form-label">Note *</label>
+                                <textarea formControlName="Note" class="form-control textarea-full-section" rows="2"
+                                    maxlength="1000"
+                                    [ngClass]="{'disabled': selectedRowData.SandboxStatusDisplayText === 'Do Not Process'}"></textarea>
+                                <span class="textarea-error-span pl-0" style="position: relative;">
+                                    <span style="text-align: end;color: gray;">{{f.Note.value.length ?
+                                        f.Note.value.length : 0 }}/1000</span>
+                                </span>
+                                <ng-container *ngIf="f.Note.invalid && (f.Note.touched || isCompanyFormSubmit)">
+                                    <mat-error style="font-size: 12px;" style="position: absolute; bottom: 0;" *ngIf="f.Note.errors.required">Note is required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+
+                            <div class="text-center pb-0">
+                                <button mat-button class="btn btn-primary"
+                                    [disabled]="saveButtonDisabled || selectedRowData.SandboxStatusDisplayText === 'Do Not Process'"
+                                    (click)="saveCompany()"><span class="spinner-border spinner-border-sm mr-1"
+                                        role="status" *ngIf="saveButtonDisabled"></span> Close Invoice</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="accordian-c-width invoice-summary-box mt-3">
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="true" [disabled]="true">
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title>
+                                        <i class="fas fa-file-invoice-dollar"></i>&nbsp;Invoice Summary
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Customer</label>
+                                            <span>{{selectedRowData.CustomerAccountName}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Invoice Date</label>
+                                            <span>{{selectedRowData.InvoiceBillDate}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Vendor</label>
+                                            <span>{{selectedRowData.VendorAccountName}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Pay By Date</label>
+                                            <span>{{selectedRowData.PayByDate}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Invoice Status</label>
+                                            <span>{{selectedRowData.SandboxStatusDisplayText}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Invoice Number</label>
+                                            <span>{{selectedRowData.InvoiceNumber}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="true" [disabled]="true">
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title>
+                                        Invoice Information
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Past Due Balance</label>
+                                            <span>{{selectedRowData.summary.PastDueAmount |
+                                                customCurrency: selectedRowData?.CurrencySymbol}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Adjustments</label>
+                                            <span>{{selectedRowData.summary.TotalAdjustment|
+                                                customCurrency: selectedRowData?.CurrencySymbol}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Payment Applied</label>
+                                            <span>{{selectedRowData.summary.PaymentAmount|
+                                                customCurrency: selectedRowData?.CurrencySymbol}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Total Current Charges</label>
+                                            <span>{{selectedRowData.summary.TotalCurrentCharges|
+                                                customCurrency: selectedRowData?.CurrencySymbol}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label"><b>Total Amount Due</b></label>
+                                            <span><b>{{selectedRowData.summary.TotalDueAmount|
+                                                    customCurrency: selectedRowData?.CurrencySymbol}}</b></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label"><b>Amount to Pay</b></label>
+                                            <span><b>{{selectedRowData.summary.AmountToPay|
+                                                    customCurrency: selectedRowData?.CurrencySymbol}}</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion class="example-headers-align account-inventory-box">
+                            <mat-expansion-panel [expanded]="true" [disabled]="true">
+                                <mat-expansion-panel-header class="math">
+                                    <mat-panel-title>
+                                        Account & Inventory Information
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Payable Account Number</label>
+                                            <span>{{selectedRowData.overview.PayableAccountNumber}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label"><b>Account Status</b></label>
+                                            <span><b>{{selectedRowData.overview.BillingAccountStatus}}</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Open Retrieval Records</label>
+                                            <span>{{selectedRowData.overview.ActiveInventory}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Disconnected Date</label>
+                                            <span>{{selectedRowData.overview.DisconnectionDate}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Data Retrieval Method</label>
+                                            <span>{{selectedRowData.overview.DataRetrievalMethod}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Data Processing Method</label>
+                                            <span>{{selectedRowData.overview.DataRetrievalProcessingMethod
+                                                }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label"><b>Inventory Count Active/pending
+                                                    Disco</b></label>
+                                            <span><b>{{selectedRowData.overview.ActiveInventory ?
+                                                    selectedRowData.overview.ActiveInventory : 0}}</b></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12 col-xl-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Inventory Count Disco’d</label>
+                                            <span>{{selectedRowData.overview.DisconnectedInventory ?
+                                                selectedRowData.overview.DisconnectedInventory : 0}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2 text-center">
+            <mat-dialog-actions>
+                <button mat-button class="btn btn-primary" (click)="closePopup()">
+                    Close</button>
+            </mat-dialog-actions>
+        </div>
+        </div>
+    </div>
+
+</ng-template>

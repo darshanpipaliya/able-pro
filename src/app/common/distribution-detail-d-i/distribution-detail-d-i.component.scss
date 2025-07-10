@@ -1,0 +1,100 @@
+:host ::ng-deep .accordion-grid {
+    .mat-expansion-panel-body {
+        padding: 0 15px !important;
+
+        ag-grid-angular {
+            height: 400px !important;
+            padding-bottom: 0 !important;
+
+            .ag-root-wrapper {
+                border-radius: 0 0 4px 4px !important;
+            }
+        }
+
+        .grid-header-wrapper {
+            margin: 0 !important;
+        }
+    }
+}
+button.close {
+    position: relative;
+    top: -10px;
+    right: -6px;
+    color: unset;
+}
+:host ::ng-deep .mat-expansion-panel {
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+:host ::ng-deep .ag-root-wrapper {
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+:host ::ng-deep .accordion-grid.grid1 ag-grid-angular{
+    height: 230px !important;
+}
+
+.math {
+    background: #80808061 !important;
+    height: 40px;
+}
+
+.matt {
+    margin-left: 40%;
+    margin-right: 0px !important;
+}
+
+.mat-expansion-panel-header {
+    border-radius: 0 !important;
+}
+
+:host ::ng-deep .ag-center-cols-viewport .ag-center-cols-container .ag-row .ag-cell {
+    font-size: 12px !important;
+}
+
+i.fas.fa-info-circle {
+    color: #4680ff !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    z-index: 100;
+    right: 40px;
+    top: 13px;
+}
+
+.grid-save-section {
+    position: relative;
+}
+
+.record-count-text {
+    position: absolute;
+    top: -8px;
+    right: 24px;
+}
+
+.summary-total-main{
+    padding: 20px 0 0;
+}
+
+.btn.btn-icon.service-tab-btn {
+    position: absolute;
+    content: '';
+    width: 32px;
+    height: 32px;
+    top: 4px;
+    left: 10px;
+    z-index: 1; 
+}
+
+:host ::ng-deep span.ag-cell-value{
+    white-space: pre !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .record-count-text {
+        right: 0;
+    }
+}

@@ -1,0 +1,147 @@
+<div class="mat-dialog-header pb-2 mb-3">
+    <div>
+        <h5 class="modal-title" id="exampleModalLabel">Add New Charge Code</h5>
+    </div>
+
+    <button type="button" class="close" [mat-dialog-close]="'undefined'">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div mat-dialog-content class="px-0">
+    <div class="card-body p-0">
+        <div class="container">
+            <form [formGroup]="chargeCodeForm">
+                <div class="row mx-0">
+                    <div class="col-sm-12 col-md-6 padding-left-none">
+                        <div class="form-group d-flex align-items-end justify-content-between">
+                            <div style="width: calc(100% - 90px)">
+                                <label class="form-label">Charge Code</label>
+                                <span>
+                                    <input type="text" class="form-control" formControlName="chargeCode"
+                                        [ngClass]="{'invalid-error': !f.chargeCode.valid && (f.chargeCode.dirty || f.chargeCode.touched || isChargeCodeFormSubmit)}">
+                                    <!-- <p style="font-size: 14px;">Pooled Data Plan 500GB</p> -->
+                                </span>
+                                <ng-container
+                                    *ngIf="f.chargeCode.invalid && (f.chargeCode.touched || isChargeCodeFormSubmit)">
+                                    <mat-error style="font-size: 12px;" *ngIf="f.chargeCode.errors.required">Charge Code
+                                        is
+                                        required
+                                    </mat-error>
+                                </ng-container>
+                            </div>
+                            <div>
+                                <img class="media-object" src="assets/images/dummy.png" alt="Img">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Charge Code Name</label>
+                            <span><input type="text" class="form-control" formControlName="chargeCodeName"
+                                    [ngClass]="{'invalid-error': !f.chargeCodeName.valid && (f.chargeCodeName.dirty || f.chargeCodeName.touched || isChargeCodeFormSubmit)}"></span>
+                            <ng-container
+                                *ngIf="f.chargeCodeName.invalid && (f.chargeCodeName.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.chargeCodeName.errors.required">Charge Code
+                                    Name is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Charge Code Type</label>
+                            <span>
+                                <p-dropdown [options]="chargeCodeTypes" appendTo="body" optionLabel="Name"
+                                    [filter]="true" (onChange)="onChargeCodeTypeChange($event)" filterBy="Name"
+                                    formControlName="chargeCodeTypeId" placeholder="Select Charge Code Type..."
+                                    optionValue="Id" [showClear]="false"
+                                    [ngClass]="{'invalid-error': f.chargeCodeTypeId.invalid && ( f.chargeCodeTypeId.dirty || f.chargeCodeTypeId.touched || isChargeCodeFormSubmit)}">
+                                </p-dropdown>
+                            </span>
+                            <ng-container
+                                *ngIf="f.chargeCodeTypeId.invalid && (f.chargeCodeTypeId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.chargeCodeTypeId.errors.required">Charge
+                                    Code Type is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Charge Type</label>
+                            <span>
+                                <p-dropdown [options]="parenttaxTypes" appendTo="body" optionLabel="Name"
+                                    [filter]="true" filterBy="Name" (onChange)="parentChargeType($event)"
+                                    formControlName="chargeTypeId" placeholder="Select Charge Type..."
+                                    optionValue="Id" [showClear]="false"
+                                    [ngClass]="{'invalid-error': f.chargeTypeId.invalid && (f.chargeTypeId.dirty || f.chargeTypeId.touched || isChargeCodeFormSubmit)}">
+                                </p-dropdown>
+                            </span>
+                            <ng-container
+                                *ngIf="f.chargeTypeId.invalid && (f.chargeTypeId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.chargeTypeId.errors.required">Charge
+                                    Type is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                        <div>
+                            <!-- <mat-radio-group>
+                                <mat-radio-button [value]="false" class="my-1"> Set Distribution Rule on this Charge Code<i class="fas fa-info-circle ml-2" [placement]="'auto'"
+                                    container="body" ngbTooltip="Rule created will apply to all records with or without a Billing ID with this Charge Code."
+                                    tooltipClass="tooltip-bg"></i>
+                                </mat-radio-button>
+                                
+                                <mat-radio-button [value]="true">Set Distribution Rule on this Charge Record selected above
+                                </mat-radio-button><i class="fas fa-info-circle ml-2" [placement]="'auto'"
+                                    container="body" ngbTooltip="Rule created will apply only to this Charge Record selected with or without a Billing ID specifically and will not be applied to other records with this Charge Code."
+                                    tooltipClass="tooltip-bg"></i>
+                            </mat-radio-group> -->
+    
+                        </div>
+                        <!-- <div class="form-check pl-0">
+                            <input type="checkbox" id="set-dis-rule" class="form-check-inner">
+                            <label class="form-label pl-1" for="set-dis-rule">Set Distribution Rule</label>
+                        </div> -->
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 padding-right-none">
+                        <div class="form-group">
+                            <label class="form-label">Charge Code Description</label>
+                            <textarea
+                                [ngClass]="{'invalid-error': !f.description.valid && (f.description.dirty || f.description.touched || isChargeCodeFormSubmit)}"
+                                formControlName="description" class="form-control charge-code-disc" rows="4"
+                                placeholder="Acct level plan billed to account for group of pooled lines Shares 500 Domestic GB of data, Domestic Uni Voice and Msg and Uni Inti LD MSG"></textarea>
+                            <ng-container
+                                *ngIf="f.description.invalid && (f.description.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;" *ngIf="f.description.errors.required"> Description
+                                    is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Charge Code Occurrence</label>
+                            <span>
+                                <p-dropdown [options]="codeOccurence" appendTo="body" optionLabel="Occurrence"
+                                    [filter]="true" filterBy="Occurrence" formControlName="chargeCodeOccurrenceId"
+                                    placeholder="Select Occurrence..." optionValue="Id" [showClear]="false"
+                                    [ngClass]="{'invalid-error': f.chargeCodeOccurrenceId.invalid && (f.chargeCodeOccurrenceId.dirty || f.chargeCodeOccurrenceId.touched || isChargeCodeFormSubmit)}">
+                                </p-dropdown>
+                            </span>
+                            <ng-container
+                                *ngIf="f.chargeCodeOccurrenceId.invalid && (f.chargeCodeOccurrenceId.touched || isChargeCodeFormSubmit)">
+                                <mat-error style="font-size: 12px;"
+                                    *ngIf="f.chargeCodeOccurrenceId.errors.required">Charge Code
+                                    Occurence is required
+                                </mat-error>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<mat-dialog-actions align="center">
+    <button mat-button class="btn btn-primary" (click)="saveChargeCode()">Save</button>
+    <!-- <button mat-button class="btn btn-primary">Save and Add Distribution</button> -->
+</mat-dialog-actions>

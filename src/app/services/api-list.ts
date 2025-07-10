@@ -1,4 +1,4 @@
-import { environment } from "../../../src/environments/environment";
+import { environment } from "src/environments/environment";
 
 const baseUrl = environment.base_url;
 
@@ -79,7 +79,7 @@ export const api_list = {
         "Publish": baseUrl + 'sandbox/{Id}/Publish',
         "sandboxstatuses": baseUrl + 'sandboxstatuses',
         "InvoiceOverview" : baseUrl + 'sandbox/{id}/InvoiceOverview',
-        "InvoiceProcesingStep" : baseUrl + 'sandbox/{id}/InvoiceProcesingStep',
+        "InvoiceProcesingStep" : baseUrl + 'sandbox/InvoiceProcesingStep',
         "downloadDataFiles": baseUrl + 'sandbox/{Id}/DownloadDataFiles',
         "downloadBDFFiles": baseUrl + 'sandbox/{Id}/DownloadBdfOrEdiData',
         "changeSBRepName": baseUrl + 'sandbox/{sbInvoiceId}/Rep/{temUserId}',
@@ -123,7 +123,10 @@ export const api_list = {
             'distributionRulesOptions': baseUrl +'distributionRulesOptions',
             'PreDistributionDetails': baseUrl + 'sandbox/{Id}/DistributionEvent/{distributionEventId}/PreDistributionDetails',
             'DistributionDetails': baseUrl + 'sandbox/DistributionEvent/DistributionDetails',
-            'ruleApply': baseUrl + 'sandbox/{Id}/Distribution/Apply'
+            'ruleApply': baseUrl + 'sandbox/{Id}/Distribution/Apply',
+            "buldDistributionUrl": baseUrl + 'sandbox/{Id}/ChargeValidationDetails',
+            "distributionRulesBulk": baseUrl + 'sandbox/DistributionRules/{Id}/Bulk',
+            
         },
         "step_5": {
             "ChargeCodeGroupAndVendorProduct": baseUrl + 'sandbox/ChargeCodeGroupAndVendorProduct',
@@ -148,6 +151,10 @@ export const api_list = {
             "finalReview": baseUrl + 'sandbox/{Id}/FinalReview',
             "unPublish": baseUrl + 'sandbox/{Id}/UnPublish',
             "InvoiceServiceSummaryNew": baseUrl + 'sandbox/InvoiceServiceSummaryNew',
+            "specificDistributionNeeded": baseUrl + 'sandbox/SpecificDistributionNeeded/{Id}',
+            "specificDistributionRuleDetails": baseUrl + 'sandbox/SpecificDistributionRuleDetails/{Id}',
+            "approveInvoice": baseUrl + 'sandbox/{Id}/Approved/true',
+            "unpublishCleanUp": baseUrl + 'sandbox/{Id}/UnPublish/CleanUpInventories'
         },
         'distributionRuleLog': baseUrl + 'sandbox/DistributionRulesLog/{Id}',
         'MarkCloseInvoice': baseUrl + 'sandbox/MarkCloseInvoice',
