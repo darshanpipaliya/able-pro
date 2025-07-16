@@ -11,6 +11,8 @@ import { checkIsValueExists } from 'src/app/services/helper';
 import { SandBoxService } from 'src/app/services/sandbox.service';
 import { WirelineService } from 'src/app/services/wireline.service';
 import { createColumn } from 'src/app/utils/column-utils';
+import { SharedModule } from 'src/app/demo/shared/shared.module';
+import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 
 interface arrDate {
   filterKey: any;
@@ -26,7 +28,9 @@ interface arrDate {
 @Component({
   selector: 'app-final-publish',
   templateUrl: './final-publish.component.html',
-  styleUrls: ['./final-publish.component.scss']
+  styleUrls: ['./final-publish.component.scss'],
+  imports: [SharedModule, PrimgModule],
+  providers: [WirelineService, SandBoxService]
 })
 export class FinalPublishComponent implements OnInit {
 

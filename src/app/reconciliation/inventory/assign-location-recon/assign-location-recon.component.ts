@@ -15,6 +15,7 @@ import { ErrorWarningPopupComponent } from 'src/app/common/error-warning-popup/e
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { InvoiceOverviewIComponent } from 'src/app/common/invoice-overview-i/invoice-overview-i.component';
+import { DropdownCellRendererComponent } from './dropdown-cell-renderer.component';
 
 interface arrDate {
   filterKey: any;
@@ -333,7 +334,7 @@ export class AssignLocationReconComponent implements OnInit {
             filterParams: {
               values: this.passLocation,
             },
-            cellRenderer: 'DropdownCellRendererComponent',
+            cellRenderer: DropdownCellRendererComponent,
             cellRendererParams: {
               onClick: this.onBtnClick1.bind(this)
             }

@@ -95,7 +95,7 @@ export class CostDistributionSubbComponent implements OnInit {
               'display': 'flex',
               'justify-content': 'center'
             },
-            cellRenderer: 'SubActionButtonRender',
+            cellRenderer: SubActionButtonRender,
             cellRendererParams: {
               onClick: this.onBtnClick2.bind(this)
             }

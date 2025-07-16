@@ -9,12 +9,15 @@ import { AgGridTableComponent } from 'src/app/common/ag-grid-table/ag-grid-table
 import { checkIsValueExists } from 'src/app/services/helper';
 import { LocationService } from 'src/app/services/location.service';
 import { SandBoxService } from 'src/app/services/sandbox.service';
+import { ClientSideRowModelModule, ModuleRegistry, ServerSideRowModelModule } from 'ag-grid-enterprise';
 
+ModuleRegistry.registerModules([ServerSideRowModelModule, ClientSideRowModelModule]);
 @Component({
   selector: 'app-parent-inventory-selection',
   templateUrl: './parent-inventory-selection.component.html',
   styleUrls: ['./parent-inventory-selection.component.scss'],
-  imports: [SharedModule, PrimgModule, AgGridTableComponent]
+  imports: [SharedModule, PrimgModule, AgGridTableComponent],
+  providers: [SandBoxService,LocationService]
 })
 export class ParentInventorySelectionComponent implements OnInit {
   @Input() recordPublishedOrCompleted: any;

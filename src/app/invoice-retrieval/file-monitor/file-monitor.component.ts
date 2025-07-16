@@ -5,6 +5,7 @@ import { isValueExist} from '../../services/helper';
 import moment from 'moment';
 import { FileMonitorPtreeTableComponent } from './file-monitor-ptree-table/file-monitor-ptree-table.component';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class FileMonitorComponent implements OnInit {
   rowData: any = [];
   stopSpinner: boolean = false;
   @ViewChild(FileMonitorPtreeTableComponent) private FileMonitorPtreeTableComponent: FileMonitorPtreeTableComponent;
+  @ViewChild(FileMonitorComponent) private fileMonitorCom!: FileMonitorComponent;
+
   rowSelection = 'multiple';
   defaultColDef = {
     editable: false,
@@ -31,6 +34,7 @@ export class FileMonitorComponent implements OnInit {
     floatingFilter: true,
     flex: 1,
   };
+  disabledFileMoniExcel = true;
 
   public autoGroupColumnDef: any = {
     headerName: 'Import ID',
@@ -48,11 +52,13 @@ export class FileMonitorComponent implements OnInit {
   
   @Output() disableExcelbtnOut: EventEmitter<any> = new EventEmitter();
 
-  constructor(private locationService: LocationService) {
+
+  constructor(private locationService: LocationService, private router: Router) {
     this.sideBar = {
       toolPanels: ['columns', 'filters']
-    };   
+    };  
   }
+
 
   ngOnInit(): void {
 
@@ -152,5 +158,13 @@ export class FileMonitorComponent implements OnInit {
   
   disableExcelbtn(data: any) {
     this.disableExcelbtnOut.emit(data);
+  }
+
+  goToPage(url: any) {
+    this.router.navigate([url]);
+  }
+
+  onBtnExportMonitor() {
+    this.fileMonitorCom.onBtnExportDataAsExcel();
   }
 }

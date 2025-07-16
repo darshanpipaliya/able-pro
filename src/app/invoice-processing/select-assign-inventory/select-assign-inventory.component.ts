@@ -15,6 +15,9 @@ import { RadioButtonRender } from './radio-button-ag-grid.component';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { AgGridTableComponent } from 'src/app/common/ag-grid-table/ag-grid-table.component';
+import { ClientSideRowModelModule, ModuleRegistry, ServerSideRowModelModule } from 'ag-grid-enterprise';
+
+ModuleRegistry.registerModules([ServerSideRowModelModule, ClientSideRowModelModule]);
 
 interface arrDate {
   filterKey: any;
@@ -31,7 +34,8 @@ interface arrDate {
   selector: 'app-select-assign-inventory',
   templateUrl: './select-assign-inventory.component.html',
   styleUrls: ['./select-assign-inventory.component.scss'],
-  imports: [SharedModule, PrimgModule, AgGridTableComponent]
+  imports: [SharedModule, PrimgModule, AgGridTableComponent],
+  providers: [WirelineService, SandBoxService]
 })
 export class SelectAssignInventoryComponent implements OnInit {
   dummySource = [];
@@ -1371,7 +1375,7 @@ export class SelectAssignInventoryComponent implements OnInit {
             sortable: true,
             filter: false,
             suppressColumnsToolPanel: true,
-            cellRenderer: 'buttonRenderer',
+            cellRenderer: ButtonRendererComponent,
             cellRendererParams: {
               onClick: this.onBtnClick1.bind(this)
             }
@@ -1476,12 +1480,15 @@ export class SelectAssignInventoryComponent implements OnInit {
                 if (data.TotalCount <= paramsRequest.startRow + 100) {
                   lastRow = data.TotalCount;
                 }
-                params.successCallback(
-                  data.Data.$values,
-                  lastRow
-                );
+                params.success({
+                  rowData: data.Data.$values,
+                  rowCount: lastRow
+                });
               } else {
-                params.successCallback([], 0 );
+                params.success({
+                  rowData: [],
+                  rowCount: 0
+                });
                 let a = this.gridApi.api ? this.gridApi.api : this.gridApi;
                 a?.showNoRowsOverlay();
               }
@@ -1492,14 +1499,21 @@ export class SelectAssignInventoryComponent implements OnInit {
             },
             (error) => {
               this.isShowLoader = true;
-              params.successCallback([], 0 );
+              params.success({
+                rowData: [],
+                rowCount: 0
+              });
               let a = this.gridApi.api ? this.gridApi.api : this.gridApi;
               a?.showNoRowsOverlay();
             }
           );
       },
     };
-    this.gridApi?.setServerSideDatasource(dataSource);
+    if (this.gridApi.api) {
+      this.gridApi.api!.setGridOption("serverSideDatasource", dataSource);
+    } else {
+      this.gridApi!.setGridOption("serverSideDatasource", dataSource);
+    }
   }
 
 

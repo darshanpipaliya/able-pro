@@ -154,7 +154,7 @@ export class AddEditContractsComponent implements OnInit {
             filter: 'agTextColumnFilter',
             editable: false,
             minWidth: 123,
-            cellRenderer: 'DownloadDocCellRendererComponent',
+            cellRenderer: DownloadDocCellRendererComponent,
           },
         ],
       },

@@ -6,11 +6,15 @@ import { Subject } from 'rxjs';
 import { SandBoxService } from 'src/app/services/sandbox.service';
 import { isValuesUndefined, rolePermission } from 'src/app/services/helper';
 import { ErrorWarningPopupComponent } from 'src/app/common/error-warning-popup/error-warning-popup.component';
+import { SharedModule } from 'src/app/demo/shared/shared.module';
+import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 
 @Component({
   selector: 'app-final-review',
   templateUrl: './final-review.component.html',
-  styleUrls: ['./final-review.component.scss']
+  styleUrls: ['./final-review.component.scss'],
+  imports: [SharedModule, PrimgModule],
+  providers: [SandBoxService]
 })
 export class FinalReviewComponent implements OnInit {
   statusList: any;

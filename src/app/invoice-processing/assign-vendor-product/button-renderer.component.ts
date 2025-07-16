@@ -13,10 +13,10 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 
 export class ButtonRendererComponent implements ICellRendererAngularComp {
 
-  params;
+  params: any;
   label: string;
 
-  agInit(params): void {
+  agInit(params: any): void {
     this.params = params;
   }
 
@@ -24,7 +24,7 @@ export class ButtonRendererComponent implements ICellRendererAngularComp {
     return true;
   }
 
-  onClick($event) {
+  onClick($event: any) {
       const params = {
         event: $event,
         rowData: this.params.node.data

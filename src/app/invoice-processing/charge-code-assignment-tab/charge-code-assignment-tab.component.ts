@@ -4,14 +4,14 @@ import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { InvoiceOverviewComponent } from '../invoice-overview/invoice-overview.component';
 import { ChangeCodesComponent } from '../change-codes/change-codes.component';
-import { ChargeCodeAssignmentPtableComponent } from '../charge-code-assignment-ptable/charge-code-assignment-ptable.component';
 import { ChargeCodeAssignment1Component } from '../charge-code-assignment1/charge-code-assignment1.component';
+import { ChargeCodeAssignment2Component } from '../charge-code-assignment2/charge-code-assignment2.component';
 
 @Component({
   selector: 'app-charge-code-assignment-tab',
   templateUrl: './charge-code-assignment-tab.component.html',
   styleUrls: ['./charge-code-assignment-tab.component.scss'],
-  imports: [SharedModule, PrimgModule, InvoiceOverviewComponent, ChangeCodesComponent, ChargeCodeAssignment1Component]
+  imports: [SharedModule, PrimgModule, InvoiceOverviewComponent, ChangeCodesComponent, ChargeCodeAssignment1Component, ChargeCodeAssignment2Component]
 })
 export class ChargeCodeAssignmentTabComponent implements OnInit {
 

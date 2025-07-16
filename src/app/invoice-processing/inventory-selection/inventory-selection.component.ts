@@ -8,6 +8,9 @@ import { checkIsValueExists } from 'src/app/services/helper';
 import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { AgGridTableComponent } from 'src/app/common/ag-grid-table/ag-grid-table.component';
+import { ClientSideRowModelModule, ModuleRegistry, ServerSideRowModelModule } from 'ag-grid-enterprise';
+
+ModuleRegistry.registerModules([ServerSideRowModelModule, ClientSideRowModelModule]);
 
 @Component({
   selector: 'app-inventory-selection',
@@ -192,7 +195,10 @@ export class InventorySelectionComponent implements OnInit {
   }
   onAgGridReady(params: any) {
     this.gridApi = params;
-    params.getToolPanelInstance('filters')!.expandFilters();
+    const filtersToolPanel = this.gridApi.getToolPanelInstance?.('filters');
+    if (filtersToolPanel?.expandFilters) {
+      filtersToolPanel.expandFilters();
+    }
   }
   ngOnInit(): void {
     this.getvendorProductAssignment();

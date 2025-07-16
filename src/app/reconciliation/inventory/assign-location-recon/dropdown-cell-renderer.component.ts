@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 import { Subject } from 'rxjs';
-import { LocationService } from '../../../location.service';
 import { takeUntil } from 'rxjs/operators';
+import { PrimgModule } from 'src/app/demo/shared/primeng.module';
+import { SharedModule } from 'src/app/demo/shared/shared.module';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-dropdown-cell-renderer',
+  imports: [SharedModule, PrimgModule],
   template: `
     <p-dropdown [options]="locationRowData" appendTo="body" placeholder="Select a Address" optionValue="LocationId" optionLabel="LocationDisplayValue" filterBy="LocationDisplayValue"
     (onFilter)="onSearch($event)" [filter]="true" (onChange)="onValueChange($event)">
@@ -44,7 +47,7 @@ export class DropdownCellRendererComponent implements OnInit, ICellRendererAngul
 
   agInit(params: ICellRendererParams): void {
 
-    this.options = params.colDef.filterParams.values[0];
+    this.options = params.colDef?.filterParams?.values[0];
     this.params = params;
   }
 
@@ -60,10 +63,10 @@ export class DropdownCellRendererComponent implements OnInit, ICellRendererAngul
     this.params.onClick(params);
   }
 
-  onSearch(value) {
+  onSearch(value: any) {
     const query = value.filter?.trim()
     const existingFilterIndex = this.options['advanceFilter'].findIndex(
-      (filter) => filter.filterKey === "LocationDisplayValue"
+      (filter: any) => filter.filterKey === "LocationDisplayValue"
     );
 
     if ((query?.length === 1 || query?.length === 2) && query >= 0 ) {
@@ -76,7 +79,7 @@ export class DropdownCellRendererComponent implements OnInit, ICellRendererAngul
   }
 
 
-  search(query, existingFilterIndex) {
+  search(query: any, existingFilterIndex: any) {
     this.isLoading = true; 
 
     if (existingFilterIndex !== -1) {
@@ -101,7 +104,7 @@ export class DropdownCellRendererComponent implements OnInit, ICellRendererAngul
     data['advanceFilter'] = this.options['advanceFilter'];
     data['forDropDown'] = true;
 
-    this._unsubscribeLocation.next();
+    this._unsubscribeLocation.next(true);
     this.locationService
       .getCompanylocationsURL(data)
       .pipe(takeUntil(this._unsubscribeLocation))

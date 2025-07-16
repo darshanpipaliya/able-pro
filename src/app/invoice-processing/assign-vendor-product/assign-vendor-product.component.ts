@@ -32,7 +32,8 @@ interface arrDate {
   selector: 'app-assign-vendor-product',
   templateUrl: './assign-vendor-product.component.html',
   styleUrls: ['./assign-vendor-product.component.scss'],
-  imports: [SharedModule, PrimgModule]
+  imports: [SharedModule, PrimgModule],
+  providers: [WirelineService, SandBoxService]
 })
 export class AssignVendorProductComponent implements OnInit {
   addProductForm: FormGroup;

@@ -1,13 +1,49 @@
 <div class="row">
     <div class="col-sm-12 col-xl-12 px-0 mt-2">
-        <div class="sandbox-step-grid">
-            <div class="row">
-                <div class="col-md-12 px-0">
-                    <app-file-monitor-ptree-table (disableExcelbtn)="disableExcelbtn($event)" >
 
-                    </app-file-monitor-ptree-table>
+        <mat-card class="">
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12 top-btn-group-container header-btn-responsive d-flex" style="flex-wrap: wrap;">
+                        <button class="btn btn-primary" type="button"
+                            (click)="goToPage('/invoices/invoice-retrieval')"><i class="fa-calendar-plus fas ir-c-icon">
+                            </i>
+                            Invoice Retrievals
+                        </button>
+                        <button class="btn btn-primary" type="button"
+                            (click)="goToPage('/invoices/invoice-proccessing')"><i class="ip-c-icon fa-calendar-plus">
+                            </i>
+                            Invoice Processing
+                        </button>
+                        <button class="btn btn-primary" type="button" (click)="goToPage('/invoices/file-monitor')"><i
+                                class="fa-camera">
+                            </i>
+                            File Monitor
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </div>
+
+                <ng-container style="gap: 10px;">
+                    <button [ngClass]="{'disabled': disabledFileMoniExcel}" title="Export" type="button"
+                        class=" btn btn-icon btn-outline-success "
+                        (click)="!disabledFileMoniExcel ? onBtnExportMonitor() : ''">
+                        <i
+                            class="{{disabledFileMoniExcel ? 'spinner-border spinner-border-sm' : 'fas fa-file-excel'}} "></i>
+                    </button>
+
+                </ng-container>
+
+                <div class="sandbox-step-grid">
+                    <div class="row">
+                        <div class="col-md-12 px-0">
+                            <app-file-monitor-ptree-table (disableExcelbtn)="disabledFileMoniExcel = $event">
+
+                            </app-file-monitor-ptree-table>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
     </div>
 </div>

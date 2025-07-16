@@ -15,12 +15,15 @@ import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { AgGridTableComponent } from 'src/app/common/ag-grid-table/ag-grid-table.component';
 import { ChargeCodeAssignmentPtable2Component } from '../charge-code-assignment-ptable2/charge-code-assignment-ptable2.component';
+import { AgGridModule } from 'ag-grid-angular';
+import { ModuleRegistry, ServerSideRowModelModule } from 'ag-grid-enterprise';
 
+ModuleRegistry.registerModules([ServerSideRowModelModule]);
 @Component({
   selector: 'app-charge-code-assignment2',
   templateUrl: './charge-code-assignment2.component.html',
   styleUrls: ['./charge-code-assignment2.component.scss'],
-  imports: [SharedModule, PrimgModule,AgGridTableComponent, ChargeCodeAssignmentPtable2Component]
+  imports: [SharedModule, PrimgModule,AgGridModule, AgGridTableComponent, ChargeCodeAssignmentPtable2Component]
 })
 export class ChargeCodeAssignment2Component implements OnInit {
 

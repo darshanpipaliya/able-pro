@@ -21,6 +21,9 @@ import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { AgGridTableComponent } from 'src/app/common/ag-grid-table/ag-grid-table.component';
 import { UiModalComponent } from '../ui-modal/ui-modal.component';
+import { ClientSideRowModelModule, ModuleRegistry, ServerSideRowModelModule } from 'ag-grid-enterprise';
+
+ModuleRegistry.registerModules([ServerSideRowModelModule, ClientSideRowModelModule]);
 
 @Component({
   selector: 'app-charge-type-datatable',
@@ -418,25 +421,35 @@ export class ChargeTypeDatatableComponent implements OnInit {
                 if (data.TotalCount <= paramsRequest.startRow + 100) {
                   lastRow = data.TotalCount;
                 }
-                params.successCallback(
-                  data.Data.$values,
-                  lastRow
-                );
+                params.success({
+                  rowData: data.Data.$values,
+                  rowCount: lastRow
+                });
               } else {
-                params.successCallback([], 0 );
+                params.success({
+                  rowData: [],
+                  rowCount: 0
+                });
                 this.gridApi.showNoRowsOverlay();
               }
             },
             (error) => {
               this.rowData = [];
               this.stopSpinner = true;
-              params.successCallback([], 0 );
+              params.success({
+                rowData: [],
+                rowCount: 0
+              });
                 this.gridApi.showNoRowsOverlay();
             }
           );
       },
     };
-    this.gridApi.setServerSideDatasource(dataSource);
+    if (this.gridApi.api) {
+      this.gridApi.api!.setGridOption("serverSideDatasource", dataSource);
+    } else {
+      this.gridApi!.setGridOption("serverSideDatasource", dataSource);
+    }
   }
 
   onAgGridReady2($event:any) {
@@ -520,25 +533,35 @@ export class ChargeTypeDatatableComponent implements OnInit {
                 if (data.TotalCount <= paramsRequest.startRow + 100) {
                   lastRow = data.TotalCount;
                 }
-                params.successCallback(
-                  data.Data.$values,
-                  lastRow
-                );
+                params.success({
+                  rowData: data.Data.$values,
+                  rowCount: lastRow
+                });
               } else {
-                params.successCallback([], 0 );
+                params.success({
+                  rowData: [],
+                  rowCount: 0
+                });
                 this.gridApiChargeType.showNoRowsOverlay();
               }
             },
             (error) => {
               this.rowData = [];
               this.stopSpinner = true;
-              params.successCallback([], 0 );
+              params.success({
+                rowData: [],
+                rowCount: 0
+              });
                 this.gridApiChargeType.showNoRowsOverlay();
             }
           );
       },
     };
-    this.gridApiChargeType.setServerSideDatasource(dataSource);
+    if (this.gridApiChargeType.api) {
+      this.gridApiChargeType.api!.setGridOption("serverSideDatasource", dataSource);
+    } else {
+      this.gridApiChargeType!.setGridOption("serverSideDatasource", dataSource);
+    }
   }
 
   ngOnInit(): void {

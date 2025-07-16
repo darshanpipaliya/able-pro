@@ -298,7 +298,7 @@ export class ChildInventoryDatatableComponent implements OnInit, OnDestroy {
               rowData: this.rowData,
               onClick: this.onCellClicked.bind(this)
             },
-            cellRenderer: 'ChildInventoryLinkCellComponent'
+            cellRenderer: ChildInventoryLinkCellComponent
           },
           // {
           //   field: 'BillingId',

@@ -18,12 +18,16 @@ import { SharedModule } from 'src/app/demo/shared/shared.module';
 import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { AgGridTableComponent } from 'src/app/common/ag-grid-table/ag-grid-table.component';
+import { ClientSideRowModelModule, ModuleRegistry, ServerSideRowModelModule } from 'ag-grid-enterprise';
+
+ModuleRegistry.registerModules([ServerSideRowModelModule, ClientSideRowModelModule]);
 
 @Component({
   selector: 'app-cost-distribution-suba',
   templateUrl: './cost-distribution-suba.component.html',
   styleUrls: ['./cost-distribution-suba.component.scss'],
-  imports: [SharedModule, PrimgModule, AgGridModule, AgGridTableComponent]
+  imports: [SharedModule, PrimgModule, AgGridModule, AgGridTableComponent],
+  providers: [WirelineService, InvoiceService]
 })
 export class CostDistributionSubaComponent implements OnInit {
   @ViewChild('treeTable') treeTable!: any;
@@ -168,7 +172,7 @@ export class CostDistributionSubaComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog, private invoiceService: InvoiceService, private wirelineService: WirelineService,
-    private _formBuilder: FormBuilder, private sandboxService: SandBoxService) {
+    private _formBuilder: FormBuilder, private sandboxService: SandBoxService,) {
     this.sideBar = {
       toolPanels: ['columns', 'filters']
     };

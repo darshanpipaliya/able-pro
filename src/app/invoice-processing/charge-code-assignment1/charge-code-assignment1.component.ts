@@ -14,13 +14,17 @@ import { LocationService } from 'src/app/services/location.service';
 import { SandBoxService } from 'src/app/services/sandbox.service';
 import { AgGridTableComponent } from 'src/app/common/ag-grid-table/ag-grid-table.component';
 import { ChargeCodeAssignmentPtableComponent } from '../charge-code-assignment-ptable/charge-code-assignment-ptable.component';
+import { AgGridModule } from 'ag-grid-angular';
+import { ModuleRegistry, ServerSideRowModelModule } from 'ag-grid-enterprise';
+
+ModuleRegistry.registerModules([ServerSideRowModelModule]);
 
 
 @Component({
   selector: 'app-charge-code-assignment1',
   templateUrl: './charge-code-assignment1.component.html',
   styleUrls: ['./charge-code-assignment1.component.scss'],
-  imports: [SharedModule, PrimgModule, AgGridTableComponent, ChargeCodeAssignmentPtableComponent]
+  imports: [SharedModule, PrimgModule, AgGridModule , AgGridTableComponent, ChargeCodeAssignmentPtableComponent]
 })
 export class ChargeCodeAssignment1Component implements OnInit {
   public columnDefs1;

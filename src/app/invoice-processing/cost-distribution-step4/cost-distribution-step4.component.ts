@@ -11,6 +11,9 @@ import { PrimgModule } from 'src/app/demo/shared/primeng.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { AgGridTableComponent } from 'src/app/common/ag-grid-table/ag-grid-table.component';
 import { ErrorWarningPopupComponent } from 'src/app/common/error-warning-popup/error-warning-popup.component';
+import { ClientSideRowModelModule, ModuleRegistry, ServerSideRowModelModule } from 'ag-grid-enterprise';
+
+ModuleRegistry.registerModules([ServerSideRowModelModule, ClientSideRowModelModule]);
 
 @Component({
   selector: 'app-cost-distribution-step4',
@@ -239,7 +242,7 @@ export class CostDistributionStep4Component implements OnInit {
               'display': 'flex',
               'justify-content': 'center'
             },
-            cellRenderer: 'RuleActionButtonRender',
+            cellRenderer: RuleActionButtonRender,
             cellRendererParams: {
               onClick: this.onBtnClick1.bind(this)
             }
@@ -353,7 +356,7 @@ export class CostDistributionStep4Component implements OnInit {
               'display': 'flex',
               'justify-content': 'center'
             },
-            cellRenderer: 'EventRuleActionButtonRender',
+            cellRenderer: EventRuleActionButtonRender,
             cellRendererParams: {
               onClick: this.onBtnClick2.bind(this)
             }

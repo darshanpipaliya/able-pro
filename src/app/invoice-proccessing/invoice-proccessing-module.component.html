@@ -109,6 +109,43 @@
                             </ng-container>
                         </mat-tab>
                         <mat-tab
+                            [disabled]="(!sandBoxGridRowData?.SBInvoiceId || selectedIP == 0 ) || (3 > disabledTab)">
+                            <div class="col-sm-12">
+                                <ng-template mat-tab-label>
+                                    <span class="step-num-circle"><b>
+                                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" height="14px"
+                                                viewBox="0 0 182.000000 162.000000" preserveAspectRatio="xMidYMid meet">
+ 
+                                                <g transform="translate(0.000000,162.000000) scale(0.100000,-0.100000)"
+                                                    fill="#4680ff" stroke="none">
+                                                    <path d="M557 1585 c-67 -23 -127 -99 -127 -160 0 -20 -5 -25 -25 -25 -23 0
+                                        -25 -4 -25 -41 0 -95 31 -109 240 -109 126 0 169 3 195 15 37 18 55 51 55 100
+                                        0 31 -3 35 -25 35 -19 0 -25 5 -25 23 -1 38 -36 103 -71 129 -64 48 -124 58
+                                        -192 33z" />
+                                                    <path d="M1535 1482 c-94 -44 -129 -125 -123 -287 l3 -90 195 0 195 0 3 113
+                                        c2 103 0 119 -22 167 -31 68 -82 104 -157 111 -40 4 -65 0 -94 -14z" />
+                                                    <path d="M142 1379 c-50 -25 -85 -68 -102 -124 -8 -29 -10 -191 -8 -565 3
+                                        -510 4 -526 24 -565 11 -22 40 -53 63 -70 l43 -30 452 -3 452 -3 44 24 c30 16
+                                        55 40 75 72 l30 48 0 546 0 546 -27 47 c-31 51 -79 86 -131 95 l-34 5 -5 -59
+                                        c-7 -73 -34 -128 -86 -175 -63 -57 -93 -63 -312 -63 -193 0 -196 0 -252 28
+                                        -86 42 -138 126 -138 223 0 39 -3 44 -22 44 -13 0 -42 -10 -66 -21z" />
+                                                    <path d="M1417 953 c-4 -3 -7 -172 -7 -375 0 -289 3 -376 14 -401 17 -41 125
+                                        -144 160 -153 14 -3 38 -3 52 0 31 8 140 109 160 148 11 22 14 101 14 408 l0
+                                        380 -193 0 c-107 0 -197 -3 -200 -7z" />
+                                                </g>
+                                            </svg>&nbsp;Charge Code Assignment</b>
+                                        <h5>3</h5>
+                                    </span>
+                                </ng-template>
+                            </div>
+                            <ng-container *ngIf="activatedTab === 3">
+                                <app-charge-code-assignment-tab
+                                    [recordPublishedOrCompleted]="recordPublishedOrCompleted" [selectedTab]="selectedIP"
+                                    (redirectNext)="redirectNext($event)" [sandBoxGridRowData]="sandBoxGridRowData"
+                                    (invoiceOverviewDataOP)="invoiceOverviewDataOP($event)"></app-charge-code-assignment-tab>
+                            </ng-container>
+                        </mat-tab>
+                        <mat-tab
                         [disabled]="(!sandBoxGridRowData?.SBInvoiceId || selectedIP == 0) || (4 > disabledTab) ">
                         <div class="col-sm-12">
                             <ng-template mat-tab-label>

@@ -3,6 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { InvoicesModuleComponent } from "./invoices-module.component";
 import { InvoiceRetrievalsComponent } from "../invoice-retrievals/invoice-retrievals.component";
 import { InvoiceProccessingModuleComponent } from "../invoice-proccessing/invoice-proccessing-module.component";
+import { FileMonitorComponent } from "../invoice-retrieval/file-monitor/file-monitor.component";
+
 
 const routes: Routes = [
   {
@@ -20,6 +22,10 @@ const routes: Routes = [
   {
     path: 'invoice-proccessing',
     component: InvoiceProccessingModuleComponent
+  },
+  {
+    path: 'file-monitor',
+    component: FileMonitorComponent
   },
 ];
 

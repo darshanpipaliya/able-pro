@@ -24,12 +24,14 @@ import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
 import { AgGridTableComponent } from '../common/ag-grid-table/ag-grid-table.component';
 import { ClientSideRowModelModule, ModuleRegistry } from 'ag-grid-community';
 import { ServerSideRowModelModule } from 'ag-grid-enterprise';
+import { CustomCurrencyPipe } from '../custom-pipe/CustomCurrency.pipe';
 ModuleRegistry.registerModules([ClientSideRowModelModule, ServerSideRowModelModule]);
 @Component({
     selector: 'app-invoice-processing',
     templateUrl: './invoice-processing.component.html',
     styleUrls: ['./invoice-processing.component.scss'],
-    imports: [SharedModule, PrimgModule, InvoiceOverviewComponent, SummaryTotalComponent, ChargeDetailComponent, AgGridTableComponent],
+    imports: [SharedModule,CustomCurrencyPipe,  PrimgModule, InvoiceOverviewComponent, SummaryTotalComponent, ChargeDetailComponent, AgGridTableComponent],
+    providers: []
 })
 export class InvoiceProcessingComponent implements OnInit {
 

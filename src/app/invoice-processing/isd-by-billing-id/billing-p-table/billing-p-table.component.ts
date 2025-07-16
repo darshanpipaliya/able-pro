@@ -28,7 +28,8 @@ interface arrDate {
   selector: 'app-billing-p-table',
   templateUrl: './billing-p-table.component.html',
   styleUrls: ['./billing-p-table.component.scss'],
-  imports: [SharedModule, PrimgModule]
+  imports: [SharedModule, PrimgModule],
+  providers: [WirelineService]
 })
 export class BillingPTableComponent implements OnInit {
   @Input() sandBoxGridRowData: any;

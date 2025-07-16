@@ -8,12 +8,15 @@ import { InvoiceProcessingComponent } from '../invoice-processing/invoice-proces
 import { SandBoxService } from '../services/sandbox.service';
 import { ChargeValidationTabComponent } from '../invoice-processing/charge-validation-tab/charge-validation-tab.component';
 import { CostDistributionStep4MainComponent } from '../invoice-processing/cost-distribution-step4-main/cost-distribution-step4-main.component';
+import { ChargeCodeAssignmentTabComponent } from '../invoice-processing/charge-code-assignment-tab/charge-code-assignment-tab.component';
+import { VendorProductAssignmentTabComponent } from '../invoice-processing/vendor-product-assignment-tab/vendor-product-assignment-tab.component';
+import { FinalReviewTabComponent } from '../invoice-processing/final-review-tab/final-review-tab.component';
 
 @Component({
   selector: 'app-invoice-proccessing-module',
   templateUrl: './invoice-proccessing-module.component.html',
   styleUrl: './invoice-proccessing-module.component.scss',
-  imports: [SharedModule, PrimgModule, InvoiceProcessingComponent, ChargeValidationTabComponent, CostDistributionStep4MainComponent],
+  imports: [SharedModule, PrimgModule, InvoiceProcessingComponent, ChargeCodeAssignmentTabComponent, ChargeValidationTabComponent, CostDistributionStep4MainComponent, VendorProductAssignmentTabComponent, FinalReviewTabComponent],
   providers: [SandBoxService]
 })
 export class InvoiceProccessingModuleComponent {
