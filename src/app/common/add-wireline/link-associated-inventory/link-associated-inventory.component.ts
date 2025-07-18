@@ -135,7 +135,7 @@ export class LinkAssociatedInventoryComponent implements OnInit {
         const filterArrayDate:any = [];
         const filterArrayNumber:any = [];
 
-        for (var key in paramsRequest.filterModel) {
+        for (var key in paramsRequest.filterModel) { 
           let data = paramsRequest.filterModel[key];
           let arr;
           let arrDate;
