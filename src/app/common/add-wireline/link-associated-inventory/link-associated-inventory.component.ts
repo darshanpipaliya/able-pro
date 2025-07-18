@@ -154,7 +154,7 @@ export class LinkAssociatedInventoryComponent implements OnInit {
               filterOptionValue2: (data['condition2'] && data['condition2'].dateFrom) ? data['condition2']?.dateFrom.split(' ')[0].toString() : null,
               filterOptionValue2_2: (data['condition2'] && data['condition2'].dateTo) ? data['condition2']?.dateTo.split(' ')[0].toString() : null
             }
-            filterArrayDate.push(arrDate);
+            filterArrayDate.push(arrDate); 
           } else if(key === 'TotalCurrentChargesDisplay') {
             arrNumber = {
               filterKey: key,
